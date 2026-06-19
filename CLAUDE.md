@@ -147,9 +147,12 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
   lesson #2. Griffin + Ruby + Ben → Ajax (pick up skis FMS Ajax 601 E Dean). Bonnie's
   lunch, optional Ajax Tavern après. End: drop at Ajax corral, request Highlands transfer.
   Dinner = **Nice Night** (Casa Tua rec).
-- **Day 3 (Wed Dec 30) — Snowmobile + Pine Creek:** T-Lazy-7 Klondike Lunch snowmobile
-  tour 9 AM (4 hr, 3 doubles, ~$1,575 total). Rest PM. Depart 5:30 PM → **King Cabin
-  Arrival Center 6 PM check-in** → Pine Creek Cookhouse dinner ~7 PM.
+- **Day 3 (Wed Dec 30) — Snowmobile Day:** T-Lazy-7 Klondike Lunch snowmobile tour 9 AM
+  (4 hr, 3 doubles ~$1,575; lunch included; ranch provides suits/boots/helmets). Back ~1:30.
+  PM = downtown Aspen (galleries, Art Museum, shops; gondola is the bluebird alt). Dinner
+  ~7:30 = **French Alpine Bistro** (411 E Hopkins, fondue/raclette) **or cook in** (fondue
+  night). Pine Creek Cookhouse is now the OPTIONAL splurge alternative, not the anchor.
+  Snowmobile single = $375/pp vs double $262.50/pp (each-their-own = +$675 total).
 - **Day 4 (Thu Dec 31) — Highlands + NYE:** Pick up skis FMS Highlands. Ski Aspen
   Highlands. Cloud Nine lunch (call Sept 2026). End: drop skis Highlands corral, request
   Snowmass transfer. NYE dinner **TBD** (Matsuhisa / Bosq / Casa Tua / cook-in). 10:30 PM
