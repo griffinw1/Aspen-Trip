@@ -172,7 +172,7 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
 |--------|--------|---------|
 | Jim | NOT skiing | Optional sightseeing gondola ~$50 |
 | Marcy | Lessons Dec 28+29 | Lift included w/ lessons; 1-day passes after |
-| Stella | Lessons Dec 28+29 | Lift included w/ lessons; 4-day Flex Pass ~$679 |
+| Stella | Lesson Dec 28 ONLY (1 day) | Lift included w/ lesson; 4-day Flex Pass ~$679 |
 | Griffin | Dec 28(opt),29,31,Jan2 | 4-day Flex Pass ~$679 |
 | Ben | Dec 28,29,31,Jan2 | 4-day Flex Pass ~$679 · BRINGS OWN SKIS |
 | Ruby | Dec 29,31,Jan2 (+1 banked) | 4-day Flex Pass ~$679 · BRINGS OWN SKIS |
@@ -191,9 +191,16 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
 - Book: aspensnowmass.com/visit/rentals · 15% discount 24+ hrs ahead
 
 ### Lessons — Buttermilk
-- Marcy + Stella · Adult Beginner Group · Dec 28 + 29 · 9:30 AM–3:30 PM
+- Adult Beginner Group · Marcy: Dec 28 + 29 (both days) · Stella: Dec 28 ONLY (1 day) · 9:30 AM–3:30 PM
 - Request multi-day cohort (same instructor both days). Lift + rentals included.
-- ~$330/day × 2 days × 2 people = $1,320
+- ~$330/day · 3 lesson-days (Marcy 2 + Stella 1) = ~$990
+
+### Ski clothing / outerwear rental (NEW — researched)
+Four Mountain Sports is equipment-focused (sells apparel, not full outerwear rental). For
+jackets/pants/layers use a dedicated clothing rental: **Suit Yourself** (Aspen specialist,
+(970) 920-0295), **Kit Lender** (ships full kits to the house, kitlender.com), **Aspen
+Collection** (premium, Gondola Plaza), **Miller Sports** (skis + apparel by the gondola).
+Lives in the Ski Plan section under "Ski Clothing & Outerwear."
 - Book late Sept 2026 · aspensnowmass.com/lessons · (877) 308-7859
 
 ---
