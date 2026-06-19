@@ -148,7 +148,7 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
   lunch, optional Ajax Tavern après. End: drop at Ajax corral, request Highlands transfer.
   Dinner = **Nice Night** (Casa Tua rec).
 - **Day 3 (Wed Dec 30) — Snowmobile Day:** T-Lazy-7 Klondike Lunch snowmobile tour 9 AM
-  (4 hr, 3 doubles ~$1,575; lunch included; ranch provides suits/boots/helmets). Back ~1:30.
+  (~2.5-3 hr, 3 doubles ~$1,575; lunch + HELMETS ONLY; bring own warm clothing/boots/gloves). Back ~1:30.
   PM = downtown Aspen (galleries, Art Museum, shops; gondola is the bluebird alt). Dinner
   ~7:30 = **French Alpine Bistro** (411 E Hopkins, fondue/raclette) **or cook in** (fondue
   night). Pine Creek Cookhouse is now the OPTIONAL splurge alternative, not the anchor.
@@ -157,6 +157,11 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
   licensed)**. Klondike Lunch runs Tue–Sat 9:30 AM & 12:30 PM, ~2.5–3 hr, lunch +
   suits/boots/helmets included; scheduled tours may share the trail — ask for a PRIVATE
   tour for just our group. Book (970) 925-4614.
+  **GEAR (verified on official tlazy7.com): ranch provides HELMETS ONLY** — everyone
+  (incl. Jim/non-skiers) brings their own warm ski-level clothing, snow/après boots, and
+  gloves. Snowsuits sometimes available — call to confirm. (Aggregator sites wrongly say
+  suits/boots provided; the official site says helmets only.) This means Jim DOES need
+  outerwear for Day 3.
 - **Day 4 (Thu Dec 31) — Highlands + NYE:** Pick up skis FMS Highlands. Ski Aspen
   Highlands. Cloud Nine lunch (call Sept 2026). End: drop skis Highlands corral, request
   Snowmass transfer. NYE dinner **TBD** (Matsuhisa / Bosq / Casa Tua / cook-in). 10:30 PM
