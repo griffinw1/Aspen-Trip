@@ -152,7 +152,11 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
   PM = downtown Aspen (galleries, Art Museum, shops; gondola is the bluebird alt). Dinner
   ~7:30 = **French Alpine Bistro** (411 E Hopkins, fondue/raclette) **or cook in** (fondue
   night). Pine Creek Cookhouse is now the OPTIONAL splurge alternative, not the anchor.
-  Snowmobile single = $375/pp vs double $262.50/pp (each-their-own = +$675 total).
+  Snowmobile breakdown (in doc, Day 3 timeline + Booking [9]): **3 doubles = $1,575
+  ($262.50/pp, current plan); 6 singles = $2,250 ($375/pp, +$675; all 6 must be 18+
+  licensed)**. Klondike Lunch runs Tue–Sat 9:30 AM & 12:30 PM, ~2.5–3 hr, lunch +
+  suits/boots/helmets included; scheduled tours may share the trail — ask for a PRIVATE
+  tour for just our group. Book (970) 925-4614.
 - **Day 4 (Thu Dec 31) — Highlands + NYE:** Pick up skis FMS Highlands. Ski Aspen
   Highlands. Cloud Nine lunch (call Sept 2026). End: drop skis Highlands corral, request
   Snowmass transfer. NYE dinner **TBD** (Matsuhisa / Bosq / Casa Tua / cook-in). 10:30 PM
@@ -185,7 +189,12 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
 - Book 30+ days ahead · aspensnowmass.com · (877) 282-7736
 
 ### Ski rentals — Four Mountain Sports (FMS)
-- **Only Griffin needs rentals.** Ben + Ruby bring their own skis.
+- **Griffin, Stella, and Marcy need rentals** (Ben + Ruby bring their own skis).
+  Marcy + Stella's lesson-day rentals are INCLUDED with the Buttermilk lessons; they
+  rent separately only for the ski days AFTER their lessons:
+  Griffin ~4 days · **Stella 3 days (Dec 29/31/Jan 2)** · **Marcy 2 days (Dec 31/Jan 2)**.
+  Pricing: Standard package ~$45–55/day (~$40–47 booked 24h ahead) → est. Stella ~$150,
+  Marcy ~$100. Book at shop.aspensnowmass.com. Lives in the Ski Plan "Rentals & Transfer" card.
 - All three use FMS mountain-to-mountain transfer: Griffin's is FREE (rental),
   Ben + Ruby pay a small per-transfer fee for personal equipment. Same corral drop.
   **Nobody loads skis in the car** between mountains.
