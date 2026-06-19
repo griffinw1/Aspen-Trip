@@ -70,7 +70,7 @@ img{max-width:100%;display:block;}
 .hero-orn .ln{width:64px;height:1px;background:linear-gradient(90deg,transparent,var(--gold));}
 .hero-orn .ln.r{background:linear-gradient(90deg,var(--gold),transparent);}
 .hero-orn .dia,.sec-rule .dia{width:auto;height:auto;background:none;transform:none;box-shadow:none;color:var(--gold);font-size:15px;line-height:1;}
-.hero-orn .dia::before,.sec-rule .dia::before{content:"\2744";}
+.hero-orn .dia::before,.sec-rule .dia::before{content:"\2744\FE0E";}
 .hero-family{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(21px,4vw,32px);color:#2c3b33;margin-bottom:30px;}
 .hero-meta{display:inline-flex;flex-wrap:wrap;border:1px solid rgba(176,138,62,.45);border-radius:5px;overflow:hidden;background:rgba(255,255,255,.55);}
 .hero-meta .cell{padding:12px 24px;border-right:1px solid rgba(176,138,62,.3);}
@@ -332,10 +332,10 @@ body.gated{overflow:hidden;}
 <body>
 <div id="gate"><div class="gate-inner">
   <div class="gate-eyebrow">Private Trip Itinerary</div>
-  <div class="gate-seal">&#10052;</div>
+  <div class="gate-seal">&#10052;&#65038;</div>
   <h1 class="gate-title">ASPEN</h1>
   <div class="gate-meta">The Wright Family &middot; December 27, 2026 &ndash; January 3, 2027</div>
-  <div class="gate-rule"><span></span><b>&#10052;</b><span></span></div>
+  <div class="gate-rule"><span></span><b>&#10052;&#65038;</b><span></span></div>
   <p class="gate-desc">Seven nights on Red Mountain &mdash; four ski mountains, a snowmobile run to the Maroon Bells, a candlelit sleigh dinner in the backcountry, and New Year&rsquo;s fireworks over Aspen. Here is the whole week, day by day.</p>
   <button class="gate-btn" id="gateBtn">Enter the itinerary <b>&rarr;</b></button>
 </div></div>
@@ -898,9 +898,9 @@ body.gated{overflow:hidden;}
 </section>
 
 <footer>
-  <div class="f-crest"><span>&#10052;</span></div>
+  <div class="f-crest"><span>&#10052;&#65038;</span></div>
   <div class="f-mark">ASPEN</div>
-  <div class="f-orn"><span class="ln"></span><span class="dia">&#10052;</span><span class="ln r"></span></div>
+  <div class="f-orn"><span class="ln"></span><span class="dia">&#10052;&#65038;</span><span class="ln r"></span></div>
   <p class="f-tag">A very good week in the mountains</p>
   <p class="f-sub">The Wright Family &middot; December 27, 2026 &ndash; January 3, 2027</p>
   <p class="f-fine">All times local (MST). Prices, hours, and booking windows shift in peak holiday weeks &mdash; confirm every reservation with the operator before you go. Drawn up with care for a very good trip.</p>
@@ -1039,7 +1039,7 @@ body.gated{overflow:hidden;}
       x.globalAlpha=0.58+0.38*Math.abs(Math.sin(f.d));
       if(f.t){ x.save(); x.translate(f.x,f.y); x.rotate(f.rot);
         x.font=((f.r*6)|0)+'px serif'; x.textAlign='center'; x.textBaseline='middle';
-        x.fillText('\u2744',0,0); x.restore(); f.rot+=f.rs; }
+        x.fillText('\u2744\uFE0E',0,0); x.restore(); f.rot+=f.rs; }
       else { x.beginPath(); x.arc(f.x,f.y,f.r,0,6.283); x.fill(); }
       f.y+=f.s; f.x+=Math.sin(f.d)*f.sw; f.d+=0.008;
       if(f.y>h+12){f.y=-12;f.x=Math.random()*w;}
