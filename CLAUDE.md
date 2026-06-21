@@ -359,3 +359,11 @@ Highest priority if asked: NYE dinner decision + contact sheet.
   the page (title lifted via `padding-bottom:116px` to stay above the fade). **Snow** now
   covers the full screen (removed the edge mask), flakes given a soft slate shadow halo so
   white ❄ glyphs are visible on the light parchment.
+
+### v29 — Budget tab + Booking Timeline
+- New **Budget** tab/panel (`#budget`, in nav after Booking): two estimate tables
+  (Activities & Logistics; Food & Drink) + subtotal/per-person card. Excludes lodging +
+  flights (user's known costs). Estimate ~$13.5–17k excl. lodging/flights (~$2,250–2,850/pp).
+- **Booking Timeline** table at the top of the Booking tab — chronological "When / Book /
+  How", from now → Nov 1 (Bosq NYE Tock, the one hard deadline) → on-trip rentals.
+- Nav is now 8 items (collapses to the Menu button below 1100px).
