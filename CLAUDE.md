@@ -165,7 +165,7 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
 - **Day 4 (Thu Dec 31) — Highlands + NYE:** Pick up skis FMS Highlands. Ski Aspen
   Highlands. **Day 4 lunch = Merry-Go-Round** (casual mid-mtn Highlands, walk-in, ~$30/pp,
   (970) 429-3054); Cloud Nine party-lunch DROPPED (kept as optional aside). End: drop skis Highlands corral, request
-  Snowmass transfer. **NYE dinner = MATSUHISA omakase, 7:30 PM** (~$280/pp, books exactly 30
+  Snowmass transfer. **NYE dinner = MATSUHISA omakase, 8:00 PM** (~$280/pp, books exactly 30
   days out ~Dec 1 on OpenTable; cook-in is the fallback). 10:30 PM
   gondola plaza torchlight + fireworks (also visible from house deck). Midnight return:
   Suburban DD or Uber XL (no free taxi Thursday).
@@ -227,12 +227,12 @@ Lives in the Ski Plan section under "Ski Clothing & Outerwear."
 ## RESTAURANTS (own section in doc, before Booking Reference)
 
 **Nothing is locked/booked yet.** Pine Creek is the Day 3 anchor (pending reservation).
-Steakhouse 316 is recommended for Day 6 but not booked. NYE dinner = Matsuhisa (7:30 PM).
+Steakhouse 316 is recommended for Day 6 but not booked. NYE dinner = Matsuhisa (8:00 PM).
 
 ### Marquee cards in doc
 - **Pine Creek Cookhouse** (Day 3 anchor) — see pricing below
 - **Steakhouse 316** — 316 E Hopkins · ~$180/pp · OpenTable / (970) 920-1893 · Day 6 rec
-- **Matsuhisa** — 303 E Main · ~$280/pp omakase · OpenTable / (970) 544-6628 · **NYE dinner (the pick), 7:30 PM, books ~30 days out (≈ Dec 1)**
+- **Matsuhisa** — 303 E Main · ~$280/pp omakase · OpenTable / (970) 544-6628 · **NYE dinner (the pick), 8:00 PM, books ~30 days out (≈ Dec 1)**
 - **Bosq** — 312 S Mill · ~$275/pp 9-course · Tock opens 60 days prior 9 AM MST
   (= Nov 1, 2026 for Dec 31) · NYE option
 - **Casa Tua** — 403 S Galena · ~$200-250/pp · phone only (970) 920-7277 · closed Oct 15-Dec 9
@@ -279,7 +279,7 @@ Peak season Dec 21 – Jan 5:
 
 ## OPEN ITEMS / POSSIBLE NEXT ADDITIONS (user has not committed to these)
 Claude previously suggested, user has not acted on:
-1. NYE dinner = Matsuhisa (decided, 7:30 PM) — books 30 days out ~Dec 1 on OpenTable
+1. NYE dinner = Matsuhisa (decided, 8:00 PM) — books 30 days out ~Dec 1 on OpenTable
 2. Packing list (was removed earlier; could re-add as compact half-page)
 3. Consolidated budget summary table
 4. Contact / confirmation sheet (flight confirms, Turo host, reservation numbers)
