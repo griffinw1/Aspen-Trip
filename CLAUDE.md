@@ -163,7 +163,8 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
   suits/boots provided; the official site says helmets only.) This means Jim DOES need
   outerwear for Day 3.
 - **Day 4 (Thu Dec 31) — Highlands + NYE:** Pick up skis FMS Highlands. Ski Aspen
-  Highlands. Cloud Nine lunch (call Sept 2026). End: drop skis Highlands corral, request
+  Highlands. **Day 4 lunch = Merry-Go-Round** (casual mid-mtn Highlands, walk-in, ~$30/pp,
+  (970) 429-3054); Cloud Nine party-lunch DROPPED (kept as optional aside). End: drop skis Highlands corral, request
   Snowmass transfer. NYE dinner **TBD** (Matsuhisa / Bosq / Casa Tua / cook-in). 10:30 PM
   gondola plaza torchlight + fireworks (also visible from house deck). Midnight return:
   Suburban DD or Uber XL (no free taxi Thursday).
