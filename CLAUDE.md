@@ -130,13 +130,13 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
 - Ruby travel TBD — assumed arriving morning of Dec 29 in time to ski Ajax
 
 ### Vehicle
-- Cadillac Escalade ESV · Turo · DEN pickup Dec 27 → return Jan 3 · ~$1,200 all-in
+- Chevrolet Suburban (or similar) · Turo · DEN pickup Dec 27 → return Jan 3 · ~$1,200 all-in
 
 ---
 
 ## DAY-BY-DAY (current structure)
 
-- **Day 0 (Sun Dec 27) — Arrival:** Fly DFW→DEN, pick up Escalade, drive to Aspen
+- **Day 0 (Sun Dec 27) — Arrival:** Fly DFW→DEN, pick up Suburban, drive to Aspen
   (grocery stop City Market Glenwood Springs), check in 4 PM, **pick up Griffin's
   rentals at FMS Downtown 5:30 PM** (520 E Durant, open til 7 PM), welcome dinner (cook in).
 - **Day 1 (Mon Dec 28) — Buttermilk Lessons + Snowmass:** Marcy + Stella → Buttermilk
@@ -166,7 +166,7 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
   Highlands. Cloud Nine lunch (call Sept 2026). End: drop skis Highlands corral, request
   Snowmass transfer. NYE dinner **TBD** (Matsuhisa / Bosq / Casa Tua / cook-in). 10:30 PM
   gondola plaza torchlight + fireworks (also visible from house deck). Midnight return:
-  Escalade DD or Uber XL (no free taxi Thursday).
+  Suburban DD or Uber XL (no free taxi Thursday).
 - **Day 5 (Fri Jan 1) — Hot Springs:** Iron Mountain Hot Springs, Glenwood Springs,
   12 PM timed entry ~$50/pp. Cook-in dinner.
 - **Day 6 (Sat Jan 2) — Family Ski + Closing Dinner:** Pick up skis FMS Snowmass. All 6
@@ -258,7 +258,7 @@ Peak season Dec 21 – Jan 5:
 - [1] Lodging — CONFIRMED
 - [2] Flights — booking
 - [3] Ruby travel — TBD
-- [4] Escalade Turo — BOOK SOON
+- [4] Suburban Turo — BOOK SOON
 - [5] Lift tickets — 30+ days ahead
 - [6] Ski rentals FMS — 24+ hrs ahead
 - [7] Buttermilk lessons — Sept 2026
@@ -268,10 +268,10 @@ Peak season Dec 21 – Jan 5:
 ---
 
 ## GETTING AROUND
-- Escalade ESV primary
+- Chevrolet Suburban (or similar) primary
 - Downtowner: free on-demand Aspen 10 AM–11 PM · (970) 705-4438
 - High Mountain Taxi: free Fri/Sat from Rubey Park 12:30/1:00/1:30/2:00 AM · (970) 925-TAXI
-- NYE midnight (Thu): no free taxi — Escalade DD or Uber XL ($40-80 surge)
+- NYE midnight (Thu): no free taxi — Suburban DD or Uber XL ($40-80 surge)
 
 ---
 
