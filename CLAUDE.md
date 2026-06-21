@@ -368,3 +368,12 @@ Highest priority if asked: NYE dinner decision + contact sheet.
 - **Booking Timeline** table at the top of the Booking tab — chronological "When / Book /
   How", from now → Nov 1 (Bosq NYE Tock, the one hard deadline) → on-trip rentals.
 - Nav is now 8 items (collapses to the Menu button below 1100px).
+
+### v30 — Dark (navy) mode toggle
+- Moon/sun button (`#themeToggle`) at the top-right of the nav (in `.nav-right`) toggles
+  `body.dark`, persisted to `localStorage['aspenTheme']`; an inline script after `<body>`
+  applies it pre-paint to avoid a flash. Map `invalidateSize()` fires on toggle.
+- `body.dark { ... }` block (end of `<style>`) overrides the `:root` tokens with the deep
+  navy/blue "Alpenglow Nocturne" palette + re-skins the hardcoded light surfaces (nav,
+  hero scrim/plaque, gate, daynav/tabs, footer, photo-plate frame). Map tiles are inverted
+  via CSS filter for a dark map. Light (white Christmas) remains the default.

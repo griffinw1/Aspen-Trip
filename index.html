@@ -327,9 +327,55 @@ body.gated{overflow:hidden;}
 .gate-btn:hover{background:var(--evergreen-deep);box-shadow:0 12px 28px -10px rgba(31,77,56,.6);}
 .gate-btn b{font-weight:400;font-size:15px;transition:transform .2s;}
 .gate-btn:hover b{transform:translateX(4px);}
+
+/* ===== v30 theme toggle + dark (navy) mode ===== */
+.nav-right{display:flex;align-items:center;gap:10px;}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;line-height:0;
+  background:rgba(176,134,46,.10);border:1px solid var(--gold);color:var(--evergreen);border-radius:6px;padding:6px 9px;transition:all .18s;}
+.theme-toggle:hover{background:var(--gold);color:#fff;}
+.theme-toggle svg{display:block;}
+.theme-toggle .ic-sun{display:none;}
+body.dark .theme-toggle .ic-moon{display:none;}
+body.dark .theme-toggle .ic-sun{display:block;}
+body.dark{
+  --snow:#eaf1f7; --snow-soft:#bccdd9; --muted:#86a0b0; --muted-dk:#5f7787;
+  --evergreen:#d7e6f1; --evergreen-deep:#0a1622; --forest:#7fb0c9;
+  --gold:#C9A05A; --gold-bright:#E6C681; --rose:#E9B6A0; --champagne:#EAD9A8;
+  --glass:rgba(20,38,54,.55); --glass-2:rgba(22,41,58,.9); --glass-line:rgba(201,160,90,.26);
+  --bg-800:#11283a; --ink-shadow:rgba(0,0,0,.55);
+  --alpenglow:linear-gradient(120deg,#E6C681 0%,#C9A05A 55%,#a9842f 100%);
+  background:radial-gradient(130% 80% at 50% -8%, #16384e 0%, #0d1f2e 42%, #07111c 100%) fixed, #07111c;
+  color:var(--snow-soft);
+}
+body.dark .topnav{background:rgba(9,20,32,.74);border-bottom-color:rgba(201,160,90,.16);box-shadow:0 2px 18px -10px rgba(0,0,0,.6);}
+body.dark .topnav.shrink{background:rgba(9,20,32,.92);}
+body.dark .navlinks a:hover{background:rgba(201,160,90,.08);}
+body.dark .navlinks a.active{color:var(--gold-bright);}
+body.dark .navtoggle{background:rgba(201,160,90,.12);}
+body.dark .hero-bg{filter:saturate(.92) contrast(1.02) brightness(.8);}
+body.dark .hero-scrim{background:radial-gradient(120% 80% at 50% 30%, rgba(233,182,160,.14), rgba(9,20,32,0) 55%), linear-gradient(180deg, rgba(7,17,28,.5) 0%, rgba(7,17,28,.32) 38%, rgba(7,17,28,.72) 74%, #07111c 100%);}
+body.dark .hero-inner{background:rgba(12,24,37,.5);border-color:rgba(201,160,90,.36);}
+body.dark .hero h1,body.dark .gate-title{color:#f3f8fc;}
+body.dark .hero-family{color:rgba(255,255,255,.9);}
+body.dark .hero-meta{background:rgba(9,18,30,.35);border-color:rgba(201,160,90,.36);}
+body.dark .daynav{background:rgba(9,20,32,.88);}
+body.dark .daytab{background:rgba(20,38,54,.5);}
+body.dark .totop{background:var(--glass-2);}
+body.dark #gate{background:radial-gradient(120% 90% at 50% 2%, #16384e 0%, #0d1f2e 50%, #07111c 100%);}
+body.dark .gate-inner{background:rgba(12,24,37,.5);border-color:rgba(201,160,90,.4);}
+body.dark .gate-meta{color:rgba(255,255,255,.82);}
+body.dark footer{background:linear-gradient(180deg, rgba(201,160,90,.06), rgba(201,160,90,0) 40%);}
+body.dark #map{background:#0d1f2e;}
+body.dark .leaflet-tile-pane{filter:invert(1) hue-rotate(185deg) brightness(.82) contrast(.9) saturate(.65);}
+body.dark .restcard .ph::after{background:linear-gradient(90deg,rgba(9,18,30,0) 60%,rgba(17,33,47,.5));}
+body.dark .note-sans{color:#9fb6c4;}
+body.dark .pp-frame{background:linear-gradient(180deg,#1a2c3c,#142433);border-color:rgba(201,160,90,.3);}
+@media(max-width:1100px){ body.dark .navlinks{background:rgba(9,20,32,.97);} }
+
 </style>
 </head>
 <body>
+<script>try{if(localStorage.getItem('aspenTheme')==='dark'){document.body.classList.add('dark');}}catch(e){}</script>
 <div id="gate"><div class="gate-inner">
   <div class="gate-eyebrow">Private Trip Itinerary</div>
   <div class="gate-seal">&#10052;&#65038;</div>
@@ -344,8 +390,11 @@ body.gated{overflow:hidden;}
 
 <nav class="topnav" id="topnav">
   <div class="brand">ASPEN<span>Wright Family</span></div>
-  <button class="navtoggle" id="navtoggle" aria-label="Open navigation menu"><span class="nt-ic">&#9776;</span><span class="nt-tx">Menu</span></button>
-  <div class="navlinks" id="navlinks"><a href="#travel">Travel</a><a href="#lodging">Lodging</a><a href="#ski">Ski</a><a href="#itinerary">Itinerary</a><a href="#dining">Restaurants</a><a href="#booking">Booking</a><a href="#budget">Budget</a><a href="#valley">Map</a></div>
+  <div class="nav-right">
+    <div class="navlinks" id="navlinks"><a href="#travel">Travel</a><a href="#lodging">Lodging</a><a href="#ski">Ski</a><a href="#itinerary">Itinerary</a><a href="#dining">Restaurants</a><a href="#booking">Booking</a><a href="#budget">Budget</a><a href="#valley">Map</a></div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark / navy mode" title="Toggle dark / navy mode"><span class="ic-moon"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span><span class="ic-sun"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg></span></button>
+    <button class="navtoggle" id="navtoggle" aria-label="Open navigation menu"><span class="nt-ic">&#9776;</span><span class="nt-tx">Menu</span></button>
+  </div>
 </nav>
 
 <!-- ===================== HERO ===================== -->
@@ -1013,6 +1062,12 @@ body.gated{overflow:hidden;}
   var topnav=document.getElementById('topnav');
   var navlinks=document.getElementById('navlinks'), navtoggle=document.getElementById('navtoggle');
   navtoggle.addEventListener('click',function(){navlinks.classList.toggle('open');navtoggle.classList.add('on');});
+  var themeToggle=document.getElementById('themeToggle');
+  if(themeToggle){themeToggle.addEventListener('click',function(){
+    document.body.classList.toggle('dark');
+    try{localStorage.setItem('aspenTheme',document.body.classList.contains('dark')?'dark':'light');}catch(e){}
+    if(mapInstance){setTimeout(function(){mapInstance.invalidateSize();},60);}
+  });}
 
   var progress=document.getElementById('progress'), totop=document.getElementById('totop');
   function onScroll(){
