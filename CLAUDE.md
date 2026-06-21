@@ -53,9 +53,11 @@ photos. File is ~10 MB because of the embedded photos — that is expected.
   string in `itinerary.html`. Slugs: `hero, lodging, day0_arrival, day1_snowmass,
   day2_ajax, day3_bells, day3_cookhouse, day4_nye, day5_springs, day6_family,
   day7_depart, rest_steak, rest_sushi, rest_italian, rest_alpine, rest_apres`.
-- **`lodging` is now the REAL house photo** (the vaulted great room, from
-  `photos/photo1.avif`). The restaurant + day-banner shots are still generic
-  CC stand-ins the user may replace later.
+- **Real user photos now in (from `photos/`):** lodging (`photo1.avif`), Day 3 French
+  Alpine plate (`frenchalpine.webp`), Day 4 Matsuhisa plate (`matsuhisa.jpg`), and day
+  BANNERS — Day 0 arrival (`arrival.jpg`, winter drive), Day 3 (`snowmobile.jpg`), Day 4
+  (`nye.webp`, fireworks+torchlight over Aspen), Day 5 (`hot springs.jpg`, daytime).
+  Day 1/2/6/7 banners + the restaurant-card stock shots are still generic CC stand-ins.
 
 ---
 
