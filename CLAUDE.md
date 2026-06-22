@@ -380,3 +380,56 @@ Highest priority if asked: NYE dinner decision + contact sheet.
   navy/blue "Alpenglow Nocturne" palette + re-skins the hardcoded light surfaces (nav,
   hero scrim/plaque, gate, daynav/tabs, footer, photo-plate frame). Map tiles are inverted
   via CSS filter for a dark map. Light (white Christmas) remains the default.
+
+### v31 — Signature visual pass + two new tabs + fixes
+New reference/utility tabs, a "signature" visual layer, a shared motion system, and a batch
+of dark-mode + data fixes. Nav is now **11 items** (Travel · Lodging · Ski · Itinerary ·
+Restaurants · Booking · Budget · Contacts · Packing · Photos · Map — collapses to ☰ Menu
+below 1100px; getting full on wide screens, a "More ▾" group is a future cleanup).
+- **New tabs:** **Contacts** (`#contacts`) — tap-to-call `tel:` cards (emergency, travel,
+  activities, dining, getting-around) with fill-in confirmation blanks; **Packing**
+  (`#packing`) — forecast stat cells, the red snowmobile "helmets only / Jim needs outerwear"
+  alert, 8 checklist columns; **Photos** (`#gallery`) — masonry grid built **in JS by reusing
+  the image data-URIs already on the page** (`[data-full]` + inline `background-image`),
+  deduped, lazy-loaded, reusing the existing lightbox (NO base64 duplicated → file stays ~19MB).
+- **Booking dashboard** (`#statboard`) at top of Booking — counts `.bookcard.done/.now/.todo/
+  .pending` live, animates a progress bar when the tab opens (MutationObserver).
+- **Countdown:** gate ticker (D/H/M/S tiles) + a compact segmented nav pill (`#navCount`,
+  centered via topnav `space-between`). States flip to "In Aspen · Day N" / "Until next time"
+  (START `2026-12-27`, END `2027-01-03`). NOTE: the old hero "X days until Aspen" line was
+  REMOVED as redundant (nav pill covers it); the `Mountains 4` hero stat was also removed.
+- **Motion system:** `:root` tokens `--ease-out/-in-out/-spring` + `--dur-1/2/3` (all <300ms)
+  + `--dur-amb` (18s). Route micro-interactions through these.
+- **Signature visuals:** `#alpenglow` (fixed `z-index:-1` via `body{isolation:isolate}`) —
+  drifting + hue-shifting gradient that tints through the glass panels; cool **aurora** in dark.
+  `.hero-glow` (screen-blended alpenglow on the peaks). `.ridgelines` — 3 layered SVG mountain
+  silhouettes at the hero base, parallaxed by the hero scroll handler (`data-speed` 0.34/0.2/
+  0.08), theme-aware fills + snowcap stroke. `#grain` (fixed SVG-turbulence, `mix-blend
+  overlay`/`soft-light`) + `.frostvig` (edge vignette) for printed texture.
+- **Polish:** crafted **SVG weather icons** replace the emoji in `.wx-chip` (sun/snow/cloud,
+  `currentColor`); **count-up** hero stats (`[data-count]`, fires on `aspen:enter` event from
+  the gate); **tab crossfades** (`panelfade`/`fade` on `--dur-3`, day panels animate now);
+  **two-depth parallax snow** (each flake has `z` → size/speed/sway/alpha/blur, drawn far→near).
+- **Fixes:** dark-mode washouts — `.gate-btn` (was `var(--evergreen)` bg, which flips light in
+  dark → gold-sparkle button now), day tabs, and `.chip` pills (had hardcoded white bg → dark
+  override). **Cloud Nine fully removed** (restaurant card, Day 4 note, Budget, Contacts).
+  **Home map pin** moved to the real coords `[39.205983, -106.822458]`.
+- All new motion is `prefers-reduced-motion` guarded and dark-mode aware.
+
+---
+
+## DEPLOYMENT / LIVE LINK
+
+**Live page: https://griffinw1.github.io/Aspen-Trip/** (GitHub Pages).
+
+This working folder (`/Users/griffinwright/code/Aspen Trip 2/`, file `itinerary.html`) is **NOT a
+git repo**. The deploy is a **separate folder + repo**: `/Users/griffinwright/code/Aspen-Trip-deploy/`
+→ remote `github.com/griffinw1/Aspen-Trip`. The deployed file there is named **`index.html`**.
+
+**To publish updates:**
+```
+cp "itinerary.html" "../Aspen-Trip-deploy/index.html"
+cd "../Aspen-Trip-deploy" && git add -A && git commit -m "..." && git push
+```
+Pushing to `origin/main` updates the live Pages site. **Edits in the working copy are NOT live
+until copied to `index.html` and pushed** — always sync before claiming the live link is updated.
