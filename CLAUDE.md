@@ -416,6 +416,40 @@ below 1100px; getting full on wide screens, a "More ▾" group is a future clean
   **Home map pin** moved to the real coords `[39.205983, -106.822458]`.
 - All new motion is `prefers-reduced-motion` guarded and dark-mode aware.
 
+### v32 — Map redesign, immersive Lodging, NYE/eggs, nav consolidation
+- **Map fully redesigned** (`#valley`): swapped OSM/sepia for **Esri World Imagery (satellite)** +
+  a labels overlay (tile-pane filters overridden to show imagery true; dark mode just dims).
+  Category-colored pins (mountains gold / activities blue / dining cranberry / home evergreen) via
+  `CATCOL` in `pin()`, plus a **fly-to place rail** (`#mapRail`, built in JS from `places[]`): tap a
+  chip → `flyTo` that spot + opens its popup. **Default view is the road-snapped Denver→Aspen drive**
+  (`showDrive()` fetches OSRM geometry through DEN → City Market Glenwood → 42 Nighthawk, draws a gold
+  line + 3 stop markers; falls back to `DRIVE_FALLBACK` polyline if the fetch fails; lazy + cached).
+  "Whole valley" chip resets. Legend moved to top-right; caption sits below the map. The earlier
+  ski-transfer "triangle" route was tried and REMOVED (looked half-baked).
+- **Immersive Lodging** (`#lodging`): real house photos (from `photos/`, optimized via `sips` to
+  ~1200px) embedded as an **elevated bento gallery** (`.bento` CSS grid-template-areas) below the
+  location hero — great room (big tile), view, kitchen, deck, hot tub + night view, and a bedroom
+  row tagged with the couple assignments (`.who` pill). Hover zoom + caption; click opens the
+  lightbox. Tiles use `data-bt` (not `data-full`) so the image isn't duplicated — a `[data-bt]`
+  handler opens the lightbox from the tile's own `<img src>`. (Keep base64 single-copy; file ~21MB.)
+- **Photos gallery tab REMOVED** entirely (panel + nav + label + build script) — house photos live in
+  the Lodging bento now. Panels are back to 10.
+- **Nav consolidated** to **6 visible** (Travel · Lodging · Ski · Itinerary · Restaurants · Booking)
+  plus a **"More ▾" dropdown** (`#navmore`: Budget · Contacts · Packing · Map). Hover/click reveals;
+  shows the active underline when a child tab is open (MutationObserver `sync()`); flattens inline
+  on mobile (<1100px). The submenu `<a>`s live inside `#navlinks` so the existing showTab/scroll-spy
+  picks them up automatically.
+- **Booking:** added an **"In progress"** state (blue `.bookcard.inprog` / `.bstatus.inprog` +
+  dashboard tile + `sbProg` count). Suburban [4] → Locked In (Booked); T-Lazy-7 [9] → In progress
+  (email sent, awaiting reply). Dashboard funnel is now Locked / In progress / Book now / To book / Waiting.
+- **Toys:** **NYE fireworks** burst over the Day 4 banner (one-time, canvas, fires when `#d4` becomes
+  active); **easter eggs** — click the hero snowflake (`#snowEgg`) or enter the Konami code → snow
+  surge via `window.snowBurst()` (+ toast); **snow cursor trail** (desktop fine-pointer only, gold ❄
+  drifting off the cursor, throttled + reduced-motion guarded).
+- Removed the redundant hero "days until Aspen" line and the "Mountains 4" hero stat earlier in this arc.
+- All `prefers-reduced-motion` guarded, dark-mode aware. Still pending/deferred: per-person checkable
+  packing list, "Today" auto-focus mode.
+
 ---
 
 ## DEPLOYMENT / LIVE LINK
