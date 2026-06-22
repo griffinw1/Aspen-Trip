@@ -183,6 +183,28 @@ section{padding:74px 0;position:relative;}
 #map{height:480px;border-radius:10px;border:1px solid var(--glass-line);box-shadow:0 20px 48px -28px var(--ink-shadow);background:#ece4d3;}
 .leaflet-tile-pane{filter:sepia(.42) saturate(.72) brightness(1.05) contrast(.95);}
 .map-cap{text-align:center;color:var(--muted);margin-top:14px;font-family:var(--serif);font-style:italic;font-size:15px;}
+.map-legend{position:absolute;bottom:14px;left:14px;z-index:500;display:inline-flex;align-items:center;flex-wrap:wrap;gap:5px 13px;
+  padding:9px 15px;border-radius:12px;background:rgba(255,255,255,.86);border:1px solid var(--glass-line);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 8px 22px -12px var(--ink-shadow);
+  font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.03em;color:var(--snow-soft);max-width:calc(100% - 28px);}
+.map-legend .lg{display:inline-flex;align-items:center;gap:6px;}
+.map-legend .lg i{width:10px;height:10px;border-radius:50%;display:inline-block;box-shadow:0 0 0 1px rgba(255,255,255,.7);}
+body.dark .map-legend{background:rgba(13,28,42,.85);border-color:rgba(201,160,90,.28);color:var(--snow-soft);}
+body.dark .map-legend .lg i{box-shadow:0 0 0 1px rgba(255,255,255,.25);}
+
+/* place fly-to rail */
+.map-rail{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 14px;margin:0;-webkit-overflow-scrolling:touch;scrollbar-width:thin;}
+.map-chip{flex:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:100px;
+  border:1px solid var(--glass-line);background:var(--glass);font-family:var(--sans);font-size:12.5px;font-weight:600;color:var(--snow-soft);
+  white-space:nowrap;transition:transform var(--dur-2) var(--ease-out),box-shadow var(--dur-2) var(--ease-out),border-color var(--dur-2) var(--ease-out);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
+.map-chip:hover{border-color:var(--gold);transform:translateY(-1px);box-shadow:0 8px 18px -10px var(--ink-shadow);}
+.map-chip.active{background:var(--alpenglow);border-color:transparent;color:var(--evergreen-deep);box-shadow:0 8px 20px -10px rgba(196,154,74,.6);}
+.map-chip .dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.6);}
+.map-chip .cd{font-family:var(--serif);font-size:11.5px;font-weight:700;color:var(--gold);}
+.map-chip.active .cd{color:var(--evergreen-deep);}
+.map-chip.reset{color:var(--gold);} .map-chip.reset.active{color:var(--evergreen-deep);}
+body.dark .map-chip.active .cd,body.dark .map-chip.active{color:#10202c;}
 .pin{width:30px;height:30px;background:var(--evergreen);border:2px solid var(--gold);border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(20,40,30,.4);}
 .pin.home{background:var(--gold);}
 .pin span{transform:rotate(45deg);font-family:var(--serif);font-weight:700;font-size:13px;color:var(--champagne);}
@@ -602,6 +624,11 @@ body.dark #grain{opacity:.075;mix-blend-mode:soft-light;}
   background:radial-gradient(120% 100% at 50% 48%, transparent 60%, rgba(176,198,210,.12) 100%);}
 body.dark .frostvig{background:radial-gradient(120% 100% at 50% 48%, transparent 58%, rgba(2,10,20,.4) 100%);}
 
+/* ---- Satellite map: show imagery true (override sepia/invert) ---- */
+.leaflet-tile-pane{filter:none;}
+body.dark .leaflet-tile-pane{filter:brightness(.86) contrast(1.04) saturate(.96);}
+#map{background:#1b2a22;}
+
 </style>
 </head>
 <body>
@@ -1011,8 +1038,15 @@ body.dark .frostvig{background:radial-gradient(120% 100% at 50% 48%, transparent
     <div class="sec-rule"><span class="ln"></span><span class="dia"></span><span class="ln r"></span></div>
     <p class="lead">Everywhere this week, anchored to the house on Red Mountain. Click a pin for detail.</p>
   </div>
-  <div class="reveal"><div id="map"></div>
-  <p class="map-cap">Roaring Fork Valley &middot; home base to four mountains, the hot springs, and the backcountry cookhouse.</p></div>
+  <div class="map-rail reveal" id="mapRail" aria-label="Jump to a place on the map"></div>
+  <div class="reveal" style="position:relative"><div id="map"></div>
+    <div class="map-legend" aria-hidden="true">
+      <span class="lg"><i style="background:#B0863A"></i>Mountains</span>
+      <span class="lg"><i style="background:#3F6E8C"></i>Activities</span>
+      <span class="lg"><i style="background:#9B2D2A"></i>Dining</span>
+      <span class="lg"><i style="background:#1F4D38"></i>Home</span>
+    </div>
+  <p class="map-cap">Aerial view of the Roaring Fork Valley &mdash; tap a place below to fly to it. Home base on Red Mountain, four mountains, the hot springs, and the backcountry cookhouse.</p></div>
 </div>
 </section>
 
@@ -1582,25 +1616,27 @@ body.dark .frostvig{background:radial-gradient(120% 100% at 50% 48%, transparent
   });
 
   /* ---------- Leaflet map ---------- */
-  function pin(letter,home){return L.divIcon({className:'',html:'<div class="pin'+(home?' home':'')+'"><span>'+letter+'</span></div>',iconSize:[30,30],iconAnchor:[15,30],popupAnchor:[0,-30]});}
+  var CATCOL={mountain:'#B0863A',activity:'#3F6E8C',dining:'#9B2D2A',lodging:'#1F4D38',travel:'#7E8B83'};
+  function pin(letter,cat){var col=CATCOL[cat]||'#1F4D38';return L.divIcon({className:'',html:'<div class="pin" style="background:'+col+'"><span>'+letter+'</span></div>',iconSize:[30,30],iconAnchor:[15,30],popupAnchor:[0,-30]});}
   var places=[
-    {n:'42 Nighthawk Drive',d:'Home base · Red Mountain',p:'Three-bed-plus-loft with views of all four mountains. 5 min to downtown.',c:[39.205983,-106.822458],k:'H',home:true},
-    {n:'Aspen Mountain (Ajax)',d:'Day 2 · Silver Queen Gondola',p:'3,000+ ft of vertical straight out of downtown. Pick up skis at 601 E Dean St.',c:[39.1859,-106.8186],k:'2'},
-    {n:'Buttermilk',d:'Days 1–2 · Lessons',p:'Beginner lessons — Marcy both days, Stella Day 1. The best learning terrain of the four mountains.',c:[39.2047,-106.8614],k:'L'},
-    {n:'Aspen Highlands',d:'Day 4 · NYE morning',p:'The locals mountain — steeper, quieter, with the Highland Bowl boot-pack.',c:[39.1817,-106.8556],k:'4'},
-    {n:'Snowmass',d:'Days 1 & 6 · Big mountain + family ski',p:'3,300+ acres. Elk Camp Gondola and Big Burn. ~25 min west.',c:[39.2080,-106.9490],k:'1'},
-    {n:'T-Lazy-7 Ranch',d:'Day 3 · Snowmobile',p:'Klondike Lunch tour toward the Maroon Bells. 3129 Maroon Creek Rd.',c:[39.1719,-106.8556],k:'3'},
-    {n:'Pine Creek Cookhouse',d:'Optional · backcountry dinner',p:'The splurge alternative to French Alpine Bistro for Day 3 — sleigh in from the King Cabin, Ashcroft.',c:[39.0556,-106.7958],k:'3'},
-    {n:'Iron Mountain Hot Springs',d:'Day 5 · Glenwood Springs',p:'16 mineral pools above the Colorado River. 281 Centennial St.',c:[39.5505,-107.3248],k:'5'},
-    {n:'Aspen/Pitkin Airport (ASE)',d:'5 min from the house',p:'Sardy Field. The Suburban comes from DEN, but ASE is the local strip.',c:[39.2236,-106.8687],k:'A'}
+    {n:'42 Nighthawk Drive',s:'Home',d:'Home base · Red Mountain',p:'Three-bed-plus-loft with views of all four mountains. 5 min to downtown.',c:[39.205983,-106.822458],k:'H',cat:'lodging',day:'Base',z:15},
+    {n:'Snowmass',s:'Snowmass',d:'Days 1 & 6 · Big mountain + family ski',p:'3,300+ acres. Elk Camp Gondola and Big Burn. ~25 min west.',c:[39.2080,-106.9490],k:'1',cat:'mountain',day:'D1·6',z:13},
+    {n:'Buttermilk',s:'Buttermilk',d:'Days 1–2 · Lessons',p:'Beginner lessons — Marcy both days, Stella Day 1. The best learning terrain of the four mountains.',c:[39.2047,-106.8614],k:'L',cat:'mountain',day:'D1·2',z:14},
+    {n:'Aspen Mountain (Ajax)',s:'Ajax',d:'Day 2 · Silver Queen Gondola',p:'3,000+ ft of vertical straight out of downtown. Pick up skis at 601 E Dean St.',c:[39.1859,-106.8186],k:'2',cat:'mountain',day:'D2',z:14},
+    {n:'T-Lazy-7 Ranch',s:'Snowmobile',d:'Day 3 · Snowmobile',p:'Klondike Lunch tour toward the Maroon Bells. 3129 Maroon Creek Rd.',c:[39.1719,-106.8556],k:'3',cat:'activity',day:'D3',z:14},
+    {n:'Aspen Highlands',s:'Highlands',d:'Day 4 · NYE morning',p:'The locals mountain — steeper, quieter, with the Highland Bowl boot-pack.',c:[39.1817,-106.8556],k:'4',cat:'mountain',day:'D4',z:14},
+    {n:'Iron Mountain Hot Springs',s:'Hot Springs',d:'Day 5 · Glenwood Springs',p:'16 mineral pools above the Colorado River. 281 Centennial St.',c:[39.5505,-107.3248],k:'5',cat:'activity',day:'D5',z:14},
+    {n:'Pine Creek Cookhouse',s:'Cookhouse',d:'Optional · backcountry dinner',p:'The splurge alternative to French Alpine Bistro for Day 3 — sleigh in from the King Cabin, Ashcroft.',c:[39.0556,-106.7958],k:'P',cat:'dining',day:'Opt',z:13},
+    {n:'Aspen/Pitkin Airport (ASE)',s:'Airport',d:'5 min from the house',p:'Sardy Field. The Suburban comes from DEN, but ASE is the local strip.',c:[39.2236,-106.8687],k:'A',cat:'travel',day:'',z:13}
   ];
   function initMap(){
     if(typeof L==='undefined'){return;}
     var el=document.getElementById('map'); if(!el) return;
     var map=L.map('map',{scrollWheelZoom:false,zoomControl:true}).setView([39.16,-106.95],10);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors',subdomains:'abc',maxZoom:19}).addTo(map);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Imagery &copy; Esri, Maxar, Earthstar Geographics',maxZoom:18}).addTo(map);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,opacity:.92}).addTo(map);
     var g=[];
-    places.forEach(function(pl){var m=L.marker(pl.c,{icon:pin(pl.k,pl.home)}).addTo(map);m.bindPopup('<div class="popup"><div class="pd">'+pl.d+'</div><h4>'+pl.n+'</h4><p>'+pl.p+'</p></div>');g.push(pl.c);});
+    places.forEach(function(pl){var m=L.marker(pl.c,{icon:pin(pl.k,pl.cat)}).addTo(map);m.bindPopup('<div class="popup"><div class="pd">'+pl.d+'</div><h4>'+pl.n+'</h4><p>'+pl.p+'</p></div>');pl._m=m;g.push(pl.c);});
     mapBounds=L.latLngBounds(g);
     mapInstance=map;
     // run once the panel is laid out so tiles size correctly
@@ -1610,8 +1646,37 @@ body.dark .frostvig{background:radial-gradient(120% 100% at 50% 48%, transparent
   function ensureMap(){
     if(typeof L==='undefined'){return;}
     if(!mapInstance){initMap();}
-    else{mapInstance.invalidateSize();if(mapBounds){mapInstance.fitBounds(mapBounds,{padding:[50,50]});}}
+    else{mapInstance.invalidateSize();}
   }
+  /* ---------- place fly-to rail ---------- */
+  function setActiveChip(idx){
+    var chips=document.querySelectorAll('#mapRail .map-chip');
+    for(var i=0;i<chips.length;i++){chips[i].classList.toggle('active',parseInt(chips[i].getAttribute('data-i'),10)===idx);}
+  }
+  function flyTo(i){
+    ensureMap(); var pl=places[i]; if(!pl){return;}
+    var go=function(){if(!mapInstance){return;}mapInstance.flyTo(pl.c,pl.z||14,{duration:1.0});if(pl._m){setTimeout(function(){pl._m.openPopup();},760);}};
+    if(mapInstance&&mapInstance._loaded){go();}else{setTimeout(go,180);}
+    setActiveChip(i);
+  }
+  function resetView(){
+    ensureMap();
+    var go=function(){if(mapInstance&&mapBounds){mapInstance.closePopup();mapInstance.flyToBounds(mapBounds,{padding:[40,40],duration:1.0});}};
+    if(mapInstance&&mapInstance._loaded){go();}else{setTimeout(go,180);}
+    setActiveChip(-1);
+  }
+  function buildRail(){
+    var rail=document.getElementById('mapRail'); if(!rail){return;}
+    var html='<button class="map-chip reset active" data-i="-1"><span class="cd">&#9678;</span>Whole valley</button>';
+    places.forEach(function(pl,i){
+      html+='<button class="map-chip" data-i="'+i+'"><span class="dot" style="background:'+(CATCOL[pl.cat]||'#1F4D38')+'"></span>'+(pl.s||pl.n)+(pl.day?' <span class="cd">'+pl.day+'</span>':'')+'</button>';
+    });
+    rail.innerHTML=html;
+    [].slice.call(rail.querySelectorAll('.map-chip')).forEach(function(b){
+      b.addEventListener('click',function(){var i=parseInt(b.getAttribute('data-i'),10);if(i<0){resetView();}else{flyTo(i);}});
+    });
+  }
+  buildRail();
 
   /* ---------- initial tab ---------- */
   var initial=(location.hash||'').replace('#','');
