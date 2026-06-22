@@ -228,8 +228,9 @@ section{padding:74px 0;position:relative;}
 .bookcard.now{background:rgba(155,45,42,.075);border-color:rgba(155,45,42,.30);border-left:4px solid #9B2D2A;}
 .bookcard.todo{background:rgba(176,134,46,.09);border-color:rgba(176,134,46,.32);border-left:4px solid #B0863A;}
 .bookcard.pending{background:rgba(120,135,128,.09);border-color:rgba(120,135,128,.3);border-left:4px solid #7E8B83;}
+.bookcard.inprog{background:rgba(63,110,140,.10);border-color:rgba(63,110,140,.32);border-left:4px solid #3F6E8C;}
 .bstatus{margin-left:auto;align-self:center;font-family:var(--sans);font-size:8.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:100px;white-space:nowrap;color:#fff;}
-.bstatus.done{background:#2F6B4F;} .bstatus.now{background:#9B2D2A;} .bstatus.todo{background:#B0863A;} .bstatus.pending{background:#7E8B83;}
+.bstatus.done{background:#2F6B4F;} .bstatus.now{background:#9B2D2A;} .bstatus.todo{background:#B0863A;} .bstatus.pending{background:#7E8B83;} .bstatus.inprog{background:#3F6E8C;}
 .bookcard .bh{display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(176,138,62,.28);padding-bottom:9px;margin-bottom:12px;flex-wrap:wrap;}
 .bookcard .bn{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--gold);}
 .bookcard .bt{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--evergreen);line-height:1.15;}
@@ -447,12 +448,13 @@ body.dark .gate-count .gc-unit{background:rgba(9,18,30,.4);}
 .sb-head b{color:var(--evergreen);font-weight:600;}
 .sb-bar-wrap{height:9px;border-radius:100px;background:rgba(176,138,62,.16);overflow:hidden;margin-bottom:18px;}
 .sb-bar{height:100%;width:0;border-radius:100px;background:var(--alpenglow);transition:width 1.1s cubic-bezier(.2,.8,.2,1);}
-.sb-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.sb-tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
 @media(max-width:560px){.sb-tiles{grid-template-columns:repeat(2,1fr);}}
 .sb-tile{text-align:center;padding:15px 8px 12px;border-radius:8px;border:1px solid var(--glass-line);background:rgba(255,255,255,.42);}
 .sb-tile b{display:block;font-family:var(--serif);font-size:31px;font-weight:600;line-height:1;}
 .sb-tile span{display:block;margin-top:6px;font-family:var(--sans);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
 .sb-tile.done b{color:#2f7d52;}
+.sb-tile.inprog b{color:#3F6E8C;}
 .sb-tile.now b{color:var(--rose);}
 .sb-tile.todo b{color:var(--gold);}
 .sb-tile.pending b{color:var(--muted);}
@@ -1139,7 +1141,7 @@ body.dark .frostvig{background:radial-gradient(120% 100% at 50% 48%, transparent
     <span class="eyebrow">Logistics</span>
     <h2>Booking Reference</h2>
     <div class="sec-rule"><span class="ln"></span><span class="dia"></span><span class="ln r"></span></div>
-    <p class="lead">Two things are locked. Everything else still needs to be booked &mdash; listed below in priority order, most urgent first.</p>
+    <p class="lead">Lodging, flights, and the Suburban are locked; the snowmobile request is out. Everything else still needs to be booked &mdash; listed below in priority order.</p>
   </div>
 
   <div class="statboard reveal" id="statboard">
@@ -1147,19 +1149,20 @@ body.dark .frostvig{background:radial-gradient(120% 100% at 50% 48%, transparent
     <div class="sb-bar-wrap"><div class="sb-bar" id="sbBar"></div></div>
     <div class="sb-tiles">
       <div class="sb-tile done"><b id="sbDone">&mdash;</b><span>Locked in</span></div>
+      <div class="sb-tile inprog"><b id="sbProg">&mdash;</b><span>In progress</span></div>
       <div class="sb-tile now"><b id="sbNow">&mdash;</b><span>Book now</span></div>
       <div class="sb-tile todo"><b id="sbTodo">&mdash;</b><span>To book</span></div>
       <div class="sb-tile pending"><b id="sbPend">&mdash;</b><span>Waiting</span></div>
     </div>
-    <div class="sb-foot">Most urgent right now: <b>the T-Lazy-7 snowmobile and the Turo Suburban</b> &mdash; both sell out months ahead. Next hard date: Matsuhisa NYE opens ~Dec 1.</div>
+    <div class="sb-foot">Suburban is <b>booked</b> and the snowmobile email is out (awaiting T-Lazy-7&rsquo;s reply). Next up: <b>lift tickets &amp; Buttermilk lessons</b>, and the Matsuhisa NYE booking opens ~Dec 1.</div>
   </div>
 
   <div class="sub-head reveal">Booking Timeline &middot; What to do when</div>
   <table class="dtable reveal">
     <thead><tr><th>When</th><th>Book</th><th>How</th></tr></thead>
     <tbody>
-      <tr><td>Now (summer)</td><td>Snowmobile &mdash; T-Lazy-7 Klondike tour</td><td>(970) 925-4614 &middot; fills 3+ months ahead</td></tr>
-      <tr><td>Now</td><td>Chevrolet Suburban (or similar) &mdash; Turo</td><td>turo.com &middot; holiday SUVs sell out 60+ days out</td></tr>
+      <tr><td>In progress</td><td>Snowmobile &mdash; T-Lazy-7 Klondike tour</td><td>Email sent &mdash; awaiting reply &middot; follow up (970) 925-4614</td></tr>
+      <tr><td>Done</td><td>Chevrolet Suburban (or similar) &mdash; Turo</td><td>Booked &middot; DEN Dec 27 &rarr; Jan 3</td></tr>
       <tr><td>Sept 2026</td><td>Buttermilk lessons (Marcy + Stella)</td><td>(877) 308-7859 &middot; book as it opens</td></tr>
       <tr><td>Sept&ndash;Oct</td><td>Steakhouse 316 (Day 6)</td><td>OpenTable / (970) 920-1893</td></tr>
       <tr><td><strong>~Dec 1 &middot; 30 days out</strong></td><td><strong>Matsuhisa &mdash; NYE omakase (the pick)</strong></td><td class="note">Books exactly 30 days ahead &mdash; reserve on OpenTable the moment it opens &middot; (970) 544-6628. (Bosq is the alt: Tock opens Nov 1.)</td></tr>
@@ -1186,6 +1189,11 @@ body.dark .frostvig{background:radial-gradient(120% 100% at 50% 48%, transparent
         <div class="brow"><dt>Return</dt><dd>AA 1832 &middot; Jan 3 &middot; 4:55 PM DEN &rarr; 8:00 PM DFW</dd></div>
         <div class="brow"><dt>Note</dt><dd>Main Cabin &middot; ski bags fly free as checked bag on AA</dd></div>
       </div>
+      <div class="bookcard done">
+        <div class="bh"><span class="bn">[4]</span><span class="bt">Vehicle &middot; Chevrolet Suburban</span><span class="bstatus done">Booked</span></div>
+        <div class="brow"><dt>Status</dt><dd>Booked &middot; Turo &middot; DEN pickup Dec 27 &rarr; return Jan 3</dd></div>
+        <div class="brow"><dt>Note</dt><dd>~$1,200 all-in &middot; confirm host handoff details closer to the trip</dd></div>
+      </div>
     </div>
   </div>
 
@@ -1198,18 +1206,14 @@ body.dark .frostvig{background:radial-gradient(120% 100% at 50% 48%, transparent
         <div class="brow"><dt>Detail</dt><dd>411 E Hopkins Ave &middot; fondue / raclette &middot; ~$60/pp &middot; or cook in (no booking)</dd></div>
         <div class="brow"><dt>Alt</dt><dd>Pine Creek Cookhouse is the splurge alternative &mdash; (970) 925-1044, books 8+ wks out, non-refundable</dd></div>
       </div>
-      <div class="bookcard now">
-        <div class="bh"><span class="bn">[9]</span><span class="bt">T-Lazy-7 Snowmobile</span><span class="bstatus now">Book now</span></div>
+      <div class="bookcard inprog">
+        <div class="bh"><span class="bn">[9]</span><span class="bt">T-Lazy-7 Snowmobile</span><span class="bstatus inprog">Email sent</span></div>
+        <div class="brow"><dt>Status</dt><dd><strong>Request emailed &mdash; awaiting T-Lazy-7&rsquo;s reply.</strong> Follow up by phone if no response in a few days &middot; (970) 925-4614</dd></div>
         <div class="brow"><dt>Tour</dt><dd>Klondike Lunch &middot; ~2.5&ndash;3 hr &middot; Tue&ndash;Sat 9:30 AM or 12:30 PM &middot; lunch + <strong>helmets only</strong> (bring warm clothing, snow boots, gloves) &middot; fills 3+ months ahead</dd></div>
         <div class="brow"><dt>3 doubles</dt><dd>$525 &times; 3 = <strong>$1,575</strong> &middot; $262.50/pp &middot; 3 drivers + 3 riders <em>(current plan)</em></dd></div>
         <div class="brow"><dt>6 singles</dt><dd>$375 &times; 6 = <strong>$2,250</strong> &middot; $375/pp &middot; everyone drives (<strong>+$675</strong>; all 6 must be 18+ licensed)</dd></div>
         <div class="brow"><dt>Private?</dt><dd>Scheduled tours can share the trail &mdash; ask for a private tour for just our group</dd></div>
         <div class="brow"><dt>Contact</dt><dd>t-lazy7.com &middot; (970) 925-4614 &middot; 3129 Maroon Creek Rd</dd></div>
-      </div>
-      <div class="bookcard now">
-        <div class="bh"><span class="bn">[4]</span><span class="bt">Vehicle &middot; Chevrolet Suburban</span><span class="bstatus now">Book soon</span></div>
-        <div class="brow"><dt>Why now</dt><dd>Large holiday SUVs at DEN sell out 60+ days ahead</dd></div>
-        <div class="brow"><dt>Platform</dt><dd>turo.com &middot; DEN Dec 27 &rarr; Jan 3 &middot; ~$1,200 all-in</dd></div>
       </div>
       <div class="bookcard todo">
         <div class="bh"><span class="bn">[7]</span><span class="bt">Buttermilk Lessons</span><span class="bstatus todo">To book</span></div>
@@ -1826,9 +1830,9 @@ body.dark .frostvig{background:radial-gradient(120% 100% at 50% 48%, transparent
   var sb=document.getElementById('statboard'); if(!sb){return;}
   function cnt(sel){return document.querySelectorAll(sel).length;}
   function put(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
-  var done=cnt('.bookcard.done'), now=cnt('.bookcard.now'), todo=cnt('.bookcard.todo'), pend=cnt('.bookcard.pending');
-  var total=done+now+todo+pend, pct=total?Math.round(done/total*100):0;
-  put('sbDone',done);put('sbNow',now);put('sbTodo',todo);put('sbPend',pend);
+  var done=cnt('.bookcard.done'), prog=cnt('.bookcard.inprog'), now=cnt('.bookcard.now'), todo=cnt('.bookcard.todo'), pend=cnt('.bookcard.pending');
+  var total=done+prog+now+todo+pend, pct=total?Math.round(done/total*100):0;
+  put('sbDone',done);put('sbProg',prog);put('sbNow',now);put('sbTodo',todo);put('sbPend',pend);
   put('sbCount',done+' of '+total);put('sbPct',pct+'%');
   var bar=document.getElementById('sbBar');
   function fill(){if(bar){requestAnimationFrame(function(){bar.style.width=pct+'%';});}}
