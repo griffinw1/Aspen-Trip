@@ -140,7 +140,10 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
 
 - **Day 0 (Sun Dec 27) — Arrival:** Fly DFW→DEN, pick up Suburban, drive to Aspen
   (grocery stop City Market Glenwood Springs), check in 4 PM, **pick up Griffin's
-  rentals at FMS Downtown 5:30 PM** (520 E Durant, open til 7 PM), welcome dinner (cook in).
+  rentals at FMS Downtown 5:30 PM** (520 E Durant, open til 7 PM). **Welcome dinner = WILD FIG,
+  7:30 PM — LOCKED IN** (315 E Hyman, Mediterranean, ~$50/pp). **Books TWO MONTHS out → reserve
+  Tue Oct 27, 2026** — the earliest deadline on the whole list. Backup: Meat & Cheese (319 E
+  Hopkins) is just as good and takes **no reservations** — walk in. Or cook in.
 - **Day 1 (Mon Dec 28) — Buttermilk Lessons + Snowmass:** Marcy + Stella → Buttermilk
   beginner lesson #1. Griffin + Ben → Snowmass. Ruby not yet arrived. End of day: drop
   Griffin's skis at Snowmass corral requesting Ajax transfer; Ben + Ruby use paid FMS
@@ -148,17 +151,18 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
 - **Day 2 (Tue Dec 29) — Ajax + Lessons #2:** Ruby arrives AM. Marcy + Stella → Buttermilk
   lesson #2. Griffin + Ruby + Ben → Ajax (pick up skis FMS Ajax 601 E Dean). Bonnie's
   lunch, optional Ajax Tavern après. End: drop at Ajax corral, request Highlands transfer.
-  Dinner = **Nice Night** (Casa Tua rec).
-- **Day 3 (Wed Dec 30) — Snowmobile Day:** T-Lazy-7 Klondike Lunch snowmobile tour 9 AM
-  (~2.5-3 hr, 3 doubles ~$1,575; lunch + HELMETS ONLY; bring own warm clothing/boots/gloves). Back ~1:30.
+  Dinner = **CASA TUA, 7:00 PM — LOCKED IN** (403 S Galena, Northern Italian, ~$200-250/pp,
+  phone only (970) 920-7277, not on OpenTable). **Books exactly 30 days out → call Sun Nov 29,
+  2026.** Caveat: the Aspen room is closed Oct 15–Dec 9, so the line may not answer on Nov 29 —
+  keep calling daily until it does.
+- **Day 3 (Wed Dec 30) — Snowmobile Day:** T-Lazy-7 Klondike Lunch snowmobile tour,
+  **BOOKED (July 2026) exactly as planned: 9:30 AM departure, 3 doubles = $1,575
+  ($262.50/pp, 3 drivers + 3 riders)**. ~2.5-3 hr, lunch + HELMETS ONLY; bring own warm
+  clothing/boots/gloves. Back ~1:30.
   PM = downtown Aspen (galleries, Art Museum, shops; gondola is the bluebird alt). Dinner
   ~7:30 = **French Alpine Bistro** (411 E Hopkins, fondue/raclette) **or cook in** (fondue
-  night). Pine Creek Cookhouse is now the OPTIONAL splurge alternative, not the anchor.
-  Snowmobile breakdown (in doc, Day 3 timeline + Booking [9]): **3 doubles = $1,575
-  ($262.50/pp, current plan); 6 singles = $2,250 ($375/pp, +$675; all 6 must be 18+
-  licensed)**. Klondike Lunch runs Tue–Sat 9:30 AM & 12:30 PM, ~2.5–3 hr, lunch +
-  suits/boots/helmets included; scheduled tours may share the trail — ask for a PRIVATE
-  tour for just our group. Book (970) 925-4614.
+  night). **Books exactly 30 days out → reserve on OpenTable Mon Nov 30, 2026.** Pine Creek Cookhouse is now the OPTIONAL splurge alternative, not the anchor.
+  Changes/questions: (970) 925-4614.
   **GEAR (verified on official tlazy7.com): ranch provides HELMETS ONLY** — everyone
   (incl. Jim/non-skiers) brings their own warm ski-level clothing, snow/après boots, and
   gloves. Snowsuits sometimes available — call to confirm. (Aggregator sites wrongly say
@@ -175,7 +179,9 @@ gradient" rule applied to that cover and is moot now (warmth lives in accents).
   12 PM timed entry ~$50/pp. Cook-in dinner.
 - **Day 6 (Sat Jan 2) — Family Ski + Closing Dinner:** Pick up skis FMS Snowmass. All 6
   → Snowmass family ski day (optional). Return Griffin's rentals FMS Snowmass; Ben + Ruby
-  collect own skis. Dinner = **Nice Night · TBD** (Steakhouse 316 rec, NOT locked).
+  collect own skis. **Closing dinner =
+  STEAKHOUSE 316, 7:30 PM — LOCKED IN** (316 E Hopkins, ~$180/pp, OpenTable / (970) 920-1893).
+  **Books exactly 30 days out → reserve Thu Dec 3, 2026.**
   High Mountain Taxi free Sat nights.
 - **Day 7 (Sun Jan 3) — Departure:** Checkout 10 AM, depart 10:30, lunch Frisco/Vail,
   DEN 2:30, AA 1832 4:55 PM.
@@ -228,22 +234,33 @@ Lives in the Ski Plan section under "Ski Clothing & Outerwear."
 
 ## RESTAURANTS (own section in doc, before Booking Reference)
 
-**Nothing is locked/booked yet.** Pine Creek is the Day 3 anchor (pending reservation).
-Steakhouse 316 is recommended for Day 6 but not booked. NYE dinner = Matsuhisa (8:00 PM).
+**Nothing is booked yet, but every night out is decided.** Day 0 = Wild Fig (Dec 27, 7:30 PM),
+Day 2 = Casa Tua (Dec 29, 7 PM), Day 3 = French Alpine Bistro (Dec 30, 7:30 PM), NYE = Matsuhisa
+(Dec 31, 8 PM), Day 6 = Steakhouse 316 (Jan 2, 7:30 PM).
+
+**BOOKING WINDOWS — the whole point:** Wild Fig books **two months out (→ Oct 27, 2026)**; the
+other four book **exactly 30 days out** → Casa Tua Nov 29 · French Alpine Nov 30 · Matsuhisa
+~Dec 1 · Steakhouse 316 Dec 3. Pine Creek is the optional Day 3 splurge alternative.
+**Meat & Cheese takes no reservations** — walk-in only, the backup for any night.
 
 ### Marquee cards in doc
 - **Pine Creek Cookhouse** (Day 3 anchor) — see pricing below
-- **Steakhouse 316** — 316 E Hopkins · ~$180/pp · OpenTable / (970) 920-1893 · Day 6 rec
+- **Steakhouse 316** — 316 E Hopkins · ~$180/pp · OpenTable / (970) 920-1893 ·
+  **DAY 6 CLOSING DINNER (locked in), Sat Jan 2 7:30 PM · books exactly 30 days out ≈ Dec 3**
+- **Wild Fig** — 315 E Hyman · ~$50/pp · Mediterranean ·
+  **DAY 0 WELCOME DINNER (locked in), Sun Dec 27 7:30 PM · books TWO MONTHS out ≈ Oct 27**
 - **Matsuhisa** — 303 E Main · ~$280/pp omakase · OpenTable / (970) 544-6628 · **NYE dinner (the pick), 8:00 PM, books ~30 days out (≈ Dec 1)**
 - **Bosq** — 312 S Mill · ~$275/pp 9-course · Tock opens 60 days prior 9 AM MST
   (= Nov 1, 2026 for Dec 31) · NYE option
-- **Casa Tua** — 403 S Galena · ~$200-250/pp · phone only (970) 920-7277 · closed Oct 15-Dec 9
+- **Casa Tua** — 403 S Galena · ~$200-250/pp · phone only (970) 920-7277 · closed Oct 15-Dec 9 ·
+  **DAY 2 DINNER (the pick), Tue Dec 29 7:00 PM · books exactly 30 days out ≈ Nov 29**
 - **Cloud Nine Alpine Bistro** — mid-mountain Highlands · ~$150/pp · phone (970) 923-8715 ·
   Day 4 lunch · OPENS NOV 26, 2026 for the 26/27 season (it's currently closed only because
   the 25/26 season has ended — it WILL be open for the trip). Call Sept 2026. EXTREME difficulty.
 
 ### Casual options table
-Ajax Tavern, White House Tavern, Meat & Cheese, French Alpine Bistro, Wild Fig,
+Ajax Tavern, White House Tavern, **Meat & Cheese (NO reservations — walk-in only, and good)**,
+French Alpine Bistro, Wild Fig (now the Day 0 anchor),
 Slope Side Tavern, Bonnie's (on-mtn Ajax), Base Camp (on-mtn Snowmass), The Cabin/Lynn Britt (Snowmass)
 
 ### Pine Creek Cookhouse — CONFIRMED PRICING (from official site screenshot)
@@ -267,7 +284,12 @@ Peak season Dec 21 – Jan 5:
 - [6] Ski rentals FMS — 24+ hrs ahead
 - [7] Buttermilk lessons — Sept 2026
 - [8] Iron Mountain Hot Springs — 1-2 wks ahead
-- [9] T-Lazy-7 snowmobile — BOOK NOW (90+ days, fills fast, 3129 Maroon Creek Rd, (970) 925-7040)
+- [10] Day 3 dinner French Alpine — to book, exactly 30 days out (Nov 30)
+- [11] Day 2 dinner Casa Tua — to book, exactly 30 days out (Nov 29), phone only
+- [12] Day 0 dinner Wild Fig — to book, TWO months out (Oct 27) — earliest deadline
+- [13] Day 6 dinner Steakhouse 316 — to book, exactly 30 days out (Dec 3)
+- [14] NYE dinner Matsuhisa — to book, exactly 30 days out (~Dec 1)
+- [9] T-Lazy-7 snowmobile — BOOKED (Klondike Lunch · Dec 30 · 9:30 AM · 3 doubles · $1,575; now in the Locked In group)
 
 ---
 
@@ -467,3 +489,54 @@ cd "../Aspen-Trip-deploy" && git add -A && git commit -m "..." && git push
 ```
 Pushing to `origin/main` updates the live Pages site. **Edits in the working copy are NOT live
 until copied to `index.html` and pushed** — always sync before claiming the live link is updated.
+
+### v33 — Casa Tua locked for Day 2 + 30-day booking windows
+- **Day 2 (Tue Dec 29) dinner is now Casa Tua**, 7:00 PM, party of 6 (was a generic "Nice Night"
+  with Casa Tua / French Alpine / Wild Fig as options). Marked `.tl star` in the Day 2 timeline.
+- **30-day reservation windows surfaced everywhere:** Casa Tua → **Sun Nov 29, 2026** (phone only,
+  (970) 920-7277, not on OpenTable); French Alpine Bistro → **Mon Nov 30, 2026** (OpenTable);
+  Matsuhisa NYE → ~Dec 1 (already there). Booking Timeline table now leads with those three
+  chronological rows; the old "~Dec 9 Casa Tua (if you want it)" and "a few wks ahead French
+  Alpine" rows are gone (ski-clothing kits split into their own row).
+- **New booking card [11] Casa Tua** in "Still To Book" (`.todo`), placed above [10] French Alpine;
+  [10] gained an explicit Book-date row. Added CSS `.bookcard .brow dd.warn` (rose italic) for the
+  closed-Oct-15–Dec-9 caveat.
+- Restaurants lead rewritten (nights chosen, none reserved, all three are 30-day windows); Casa Tua
+  card retitled to the Day 2 pick; Contacts row retagged Day 2.
+- **Budget:** "Casual dinners Days 1 & 2 ~$600" split into "Day 2 dinner · Casa Tua 6 × ~$225 =
+  ~$1,350" + "Casual dinner Day 1 ~$300". Subtotal ~$12,800–16,300 → **~$13,850–17,350**;
+  per-person ~$2,150–2,700 → **~$2,300–2,900**.
+- **Map:** added a cranberry Casa Tua dining pin at [39.1888, -106.8203] (403 S Galena).
+
+### v34 — All five dinners locked (nights chosen, booking windows dated)
+Every night out now has a named restaurant, a time, and a **dated booking alarm**. Nothing is
+actually reserved yet — the dates are when the window opens.
+
+| Night | Restaurant | Window | Book on |
+|---|---|---|---|
+| Day 0 · Sun Dec 27 | **Wild Fig** (315 E Hyman, ~$50/pp) | **2 months out** | **Tue Oct 27, 2026** |
+| Day 2 · Tue Dec 29 | **Casa Tua** (403 S Galena, ~$225/pp, phone only) | 30 days out | Sun Nov 29, 2026 |
+| Day 3 · Wed Dec 30 | **French Alpine Bistro** (411 E Hopkins, ~$60/pp) | 30 days out | Mon Nov 30, 2026 |
+| Day 4 · Thu Dec 31 | **Matsuhisa** (303 E Main, ~$280/pp omakase) | 30 days out | ~Tue Dec 1, 2026 |
+| Day 6 · Sat Jan 2 | **Steakhouse 316** (316 E Hopkins, ~$180/pp) | 30 days out | Thu Dec 3, 2026 |
+
+- **Day 0** welcome dinner changed from "Cook In" → Wild Fig, 7:30 PM (`.tl star`), with
+  **Meat & Cheese named as the walk-in backup — it takes no reservations**, and cook-in still an out.
+- **Day 6** "Nice Night Out · TBD" + its `.open-spot` placeholder → **Steakhouse 316, locked**.
+  That was the last `.open-spot` in the file; there are now none.
+- **Wild Fig marquee card** added as the first restcard — it has no photo, so its `.body` uses
+  `style="grid-column:1/-1"` to span the 2-col `.restcard` grid. (Reuse that trick for photoless cards.)
+- **Booking cards** now [1]–[14]: added [12] Wild Fig, [13] Steakhouse 316, [14] Matsuhisa (the NYE
+  dinner had no card before). Still-To-Book order is the dinner cluster [12][11][10][13][14] then
+  [7][5][6][8][3]. Statboard counts are live off the CSS classes, so no JS change needed.
+- **Booking Timeline** table is fully chronological: Done · Done · Sept (lessons) · **Oct 27 Wild
+  Fig** · Nov 29 Casa Tua · Nov 30 French Alpine · ~Dec 1 Matsuhisa · **Dec 3 Steakhouse** ·
+  ~30 days lift tickets · clothing kits · hot springs · rentals. Dashboard `.sb-foot` rewritten.
+- **Budget:** added "Day 0 dinner · Wild Fig 6 × ~$50 = ~$300". Subtotal **~$14,150–17,650**,
+  per person **~$2,350–2,950**.
+- **Map:** four new cranberry dining pins — Wild Fig [39.1892,-106.8195], Casa Tua
+  [39.1888,-106.8203], Matsuhisa [39.1917,-106.8215], Steakhouse 316 [39.1905,-106.8202].
+- **Contacts:** Wild Fig + Meat & Cheese ("walk-in, no reservations") rows added; Casa Tua and
+  Steakhouse rows retagged with their day + date.
+- Casual table: Meat & Cheese row now says **no reservations — walk-in only**; Wild Fig row
+  points at Day 0.
