@@ -10644,66 +10644,69 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
   var base = (typeof window.ASPEN_MEDIA_BASE === 'string' ? window.ASPEN_MEDIA_BASE : 'media/');
   if (base && base.slice(-1) !== '/') base += '/';
 
-  // Site mix v2 — "epic Christmas". Every file is self-hosted in media/music/ and licensed for a public website.
+  // Site mix v3: "fireside". Cozy, low-key and wintry. Every file is self-hosted in media/music/ and licensed for a public website.
   // t = title, v = version/arrangement, a = artist, d = seconds, f = file, credit = attribution line (as the licence asks)
   var BY = 'CC BY 4.0', BYURL = 'https://creativecommons.org/licenses/by/4.0/';
   var CC0 = 'CC0 1.0 (public domain)', CC0URL = 'https://creativecommons.org/publicdomain/zero/1.0/';
-  var PD = 'Public domain (US Government work)', PDURL = 'https://commons.wikimedia.org/wiki/Template:PD-USGov-Military-Air_Force';
   var TRACKS = [
-    {f:'01-carol-of-the-bells-xennial.mp3', t:'Carol of the Bells', v:'Rock instrumental', a:'Xennial', d:349,
-      license:BY, licenseUrl:BYURL, source:'https://freemusicarchive.org/music/xennial/the-bells-of-yule-a-christmas-instrumental-album/11-carol-of-the-bells/',
-      credit:'“Carol of the Bells” by Xennial, from The Bells of Yule (Free Music Archive), licensed CC BY 4.0'},
-    {f:'02-god-rest-ye-starlifter.mp3', t:'God Rest Ye Merry Gentlemen', v:'Rock band · 2020', a:'Starlifter · U.S. Air Force Band', d:252,
-      license:PD, licenseUrl:PDURL, source:'https://commons.wikimedia.org/wiki/File:God_Rest_Ye_Merry_Gentlemen_(2020)_-_Starlifter_and_Roots_in_Blue_-_United_States_Air_Force_Band_of_Mid-America.mp3',
-      credit:'“God Rest Ye Merry Gentlemen” (2020) — Starlifter and Roots in Blue, United States Air Force Band of Mid-America · public domain (U.S. Government work), via Wikimedia Commons'},
-    {f:'03-bells-of-yule-xennial.mp3', t:'The Bells of Yule', v:'25th Anniversary, Part One', a:'Xennial', d:363,
-      license:BY, licenseUrl:BYURL, source:'https://freemusicarchive.org/music/xennial/the-bells-of-yule-a-christmas-instrumental-album/03-the-bells-of-yule-25th-anniversary-part-one/',
-      credit:'“The Bells of Yule 25th Anniversary Part One” by Xennial, from The Bells of Yule (Free Music Archive), licensed CC BY 4.0'},
-    {f:'04-hyper-jingle-bells.mp3', t:'Hyper Jingle Bells', v:'Up-tempo', a:'Loyalty Freak Music', d:104,
-      license:CC0, licenseUrl:CC0URL, source:'https://freemusicarchive.org/music/Loyalty_Freak_Music/single/hyper-jingle-bells/',
-      credit:'“Hyper Jingle Bells” by Loyalty Freak Music (Free Music Archive) · CC0 1.0'},
-    {f:'05-this-is-christmas-xennial.mp3', t:'This Is Christmas', v:'Jazz', a:'Xennial', d:264,
-      license:BY, licenseUrl:BYURL, source:'https://freemusicarchive.org/music/xennial/the-bells-of-yule-a-christmas-instrumental-album/21-this-is-christmas/',
-      credit:'“This Is Christmas” by Xennial, from The Bells of Yule (Free Music Archive), licensed CC BY 4.0'},
-    {f:'06-joy-to-the-world-synthwave.mp3', t:'Joy to the World', v:'Synthwave', a:'HoliznaCC0', d:273,
-      license:CC0, licenseUrl:CC0URL, source:'https://freemusicarchive.org/music/holiznacc0/a-synth-wave-christmas-special/joy-to-the-world-synth-wave/',
-      credit:'“Joy To The World (Synth Wave)” by HoliznaCC0, from A Synth Wave Christmas Special (Free Music Archive) · CC0 1.0'},
-    {f:'07-we-wish-you-starlifter.mp3', t:'We Wish You a Merry Christmas', v:'Rock band · 2020', a:'Starlifter · U.S. Air Force Band', d:118,
-      license:PD, licenseUrl:PDURL, source:'https://commons.wikimedia.org/wiki/File:We_Wish_You_a_Merry_Christmas_(2020)_-_Starlifter_and_Roots_in_Blue_-_United_States_Air_Force_Band_of_Mid-America.mp3',
-      credit:'“We Wish You a Merry Christmas” (2020) — Starlifter and Roots in Blue, United States Air Force Band of Mid-America · public domain (U.S. Government work), via Wikimedia Commons'},
-    {f:'08-deck-the-halls-b-macleod.mp3', t:'Deck the Halls', v:'Up-tempo (“B”)', a:'Kevin MacLeod', d:260,
-      license:BY, licenseUrl:BYURL, source:'https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100368',
-      credit:'“Deck the Halls B” Kevin MacLeod (incompetech.com) · Licensed under Creative Commons: By Attribution 4.0'}
+    {f:'chill-01-drops-of-melting-snow-axletree.mp3', t:'Drops of Melting Snow', v:'Acoustic · after Holst', a:'Axletree', d:199,
+      license:BY, licenseUrl:BYURL, source:'https://freemusicarchive.org/music/Axletree/music-from-a-hampshire-farm/drops-of-melting-snow-after-holst-abroad-as-i-was-walking/',
+      credit:'“Drops of Melting Snow (after Holst, Abroad as I was walking)” by Axletree, from Music from a Hampshire Farm (Free Music Archive), licensed CC BY 4.0'},
+    {f:'chill-02-silent-night-lofi.mp3', t:'Silent Night', v:'Lo-fi', a:'HoliznaCC0', d:135,
+      license:CC0, licenseUrl:CC0URL, source:'https://freemusicarchive.org/music/holiznacc0/a-lo-fi-christmas-special/silent-night-lo-fi/',
+      credit:'“Silent Night (Lo-Fi)” by HoliznaCC0, from A Lo-Fi Christmas Special (Free Music Archive) · CC0 1.0'},
+    {f:'chill-03-fire-place-lofi.mp3', t:'Fire Place', v:'Winter lo-fi', a:'HoliznaCC0', d:169,
+      license:CC0, licenseUrl:CC0URL, source:'https://freemusicarchive.org/music/holiznacc0/winter-lofi/fire-place/',
+      credit:'“Fire Place” by HoliznaCC0, from Winter Lofi (Free Music Archive) · CC0 1.0'},
+    {f:'chill-04-hibernation-axletree.mp3', t:'Hibernation', v:'Acoustic', a:'Axletree', d:178,
+      license:BY, licenseUrl:BYURL, source:'https://freemusicarchive.org/music/Axletree/music-from-a-hampshire-farm/hibernation/',
+      credit:'“Hibernation” by Axletree, from Music from a Hampshire Farm (Free Music Archive), licensed CC BY 4.0'},
+    {f:'chill-05-oh-holy-night-lofi.mp3', t:'O Holy Night', v:'Lo-fi', a:'HoliznaCC0', d:326,
+      license:CC0, licenseUrl:CC0URL, source:'https://freemusicarchive.org/music/holiznacc0/a-lo-fi-christmas-special/oh-holy-night-lo-fi/',
+      credit:'“Oh Holy Night (Lo-Fi)” by HoliznaCC0, from A Lo-Fi Christmas Special (Free Music Archive) · CC0 1.0'},
+    {f:'chill-06-milk-and-cookies-xennial.mp3', t:'Milk and Cookies', v:'Folk instrumental', a:'Xennial', d:263,
+      license:BY, licenseUrl:BYURL, source:'https://freemusicarchive.org/music/xennial/the-bells-of-yule-a-christmas-instrumental-album/06-milk-and-cookies/',
+      credit:'“Milk and Cookies” by Xennial, from The Bells of Yule (Free Music Archive), licensed CC BY 4.0'},
+    {f:'chill-07-first-snow-lofi.mp3', t:'First Snow', v:'Winter lo-fi', a:'HoliznaCC0', d:172,
+      license:CC0, licenseUrl:CC0URL, source:'https://freemusicarchive.org/music/holiznacc0/winter-lofi/first-snowmp3/',
+      credit:'“First Snow” by HoliznaCC0, from Winter Lofi (Free Music Archive) · CC0 1.0'},
+    {f:'chill-08-winter-chimes-macleod.mp3', t:'Winter Chimes', v:'Gentle chimes & keys', a:'Kevin MacLeod', d:154,
+      license:BY, licenseUrl:BYURL, source:'https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100009',
+      credit:'“Winter Chimes” Kevin MacLeod (incompetech.com) · Licensed under Creative Commons: By Attribution 4.0'}
   ];
   var CREDITS = TRACKS.map(function(x){
     return { title:x.t, artist:x.a, license:x.license, licenseUrl:x.licenseUrl, source:x.source,
       text:x.credit + ' · ' + x.licenseUrl };
   });
 
-  // "Real songs" — official artist/label uploads, played only in YouTube's own visible player.
+  // "Real songs": official artist/label uploads, chill first. They play only in YouTube's own visible player.
   var REAL = [
-    {id:'pWBjl-jPcVM', t:'Wizards in Winter', a:'Trans-Siberian Orchestra'},
-    {id:'2LbmhneqBnE', t:'Christmas Eve / Sarajevo 12/24', a:'Trans-Siberian Orchestra'},
-    {id:'iOBIXhGrFV8', t:'A Mad Russian’s Christmas', a:'Trans-Siberian Orchestra'},
-    {id:'WSUFzC6_fp8', t:'Carol of the Bells', a:'Pentatonix'},
-    {id:'yXQViqx6GMY', t:'All I Want for Christmas Is You', a:'Mariah Carey'},
-    {id:'TFsZy9t-qDc', t:'Rockin’ Around the Christmas Tree', a:'Brenda Lee'},
+    {id:'YvI_FNrczzQ', t:'Christmas Time Is Here (Instrumental)', a:'Vince Guaraldi Trio'},
+    {id:'wKhRnZZ0cJI', t:'The Christmas Song', a:'Nat King Cole'},
+    {id:'v5ryZdpEHqM', t:'White Christmas', a:'Bing Crosby'},
+    {id:'QsMrCFeacS0', t:'Have Yourself a Merry Little Christmas', a:'Ella Fitzgerald'},
+    {id:'Kn4Y3sHyfsg', t:'Skating', a:'Vince Guaraldi Trio'},
+    {id:'RaopJ64lh_I', t:'I Dream of Christmas', a:'Norah Jones'},
+    {id:'sE3uRRFVsmc', t:'Let It Snow! Let It Snow! Let It Snow!', a:'Frank Sinatra'},
+    {id:'l3l83C-we-k', t:'Have Yourself a Merry Little Christmas', a:'Michael Bublé'},
+    {id:'2yjdB6-T-ss', t:'Christmas Makes Me Cry', a:'Kacey Musgraves'},
     {id:'0bhsXykXxfg', t:'It’s Beginning to Look a Lot Like Christmas', a:'Michael Bublé'},
-    {id:'E8gmARGvPlI', t:'Last Christmas', a:'Wham!'},
-    {id:'EM2Fnp_qnE8', t:'Underneath the Tree', a:'Kelly Clarkson'},
-    {id:'nlR0MkrRklg', t:'Santa Tell Me', a:'Ariana Grande'}
+    {id:'TFsZy9t-qDc', t:'Rockin’ Around the Christmas Tree', a:'Brenda Lee'}
   ];
   var EXT = ' target="_blank" rel="noopener noreferrer"';
 
   /* ---------- storage (never throws) ---------- */
-  var KEY = 'aspenMusic_v2';
-  // new playlist → start at the opener; carry over volume / mute / shuffle from the old key
+  var KEY = 'aspenMusic_v3';
+  // v3 (chill): start silent at the opener. Earlier "music on" states are NOT carried over;
+  // mute / shuffle are, and so is a volume someone set themselves (0.55 was the old default).
   function load(){
     try { var v = JSON.parse(localStorage.getItem(KEY)); if (v) return v; } catch(e){}
-    try { var o = JSON.parse(localStorage.getItem('aspenMusic')) || {}; return {vol:o.vol, mute:o.mute, shuf:o.shuf}; } catch(e){ return {}; }
+    var o = {};
+    try { o = JSON.parse(localStorage.getItem('aspenMusic_v2')) || JSON.parse(localStorage.getItem('aspenMusic')) || {}; } catch(e){}
+    return { vol: (typeof o.vol === 'number' && Math.abs(o.vol - 0.55) > 0.005 ? o.vol : undefined), mute: o.mute, shuf: o.shuf };
   }
   var st = load();
-  var S = { on: !!st.on, vol: (typeof st.vol === 'number' ? Math.min(1, Math.max(0, st.vol)) : 0.55),
+  var S = { on: !!st.on, vol: (typeof st.vol === 'number' ? Math.min(1, Math.max(0, st.vol)) : 0.4),
             idx: (st.idx >= 0 && st.idx < TRACKS.length ? st.idx|0 : 0), shuf: !!st.shuf, t: +st.t || 0, mute: !!st.mute };
   function save(){ try { localStorage.setItem(KEY, JSON.stringify({on:S.on, vol:S.vol, idx:S.idx, shuf:S.shuf, mute:S.mute,
     t: Math.floor(loadedIdx === S.idx ? audio.currentTime || 0 : S.t || 0)})); } catch(e){} }
@@ -10899,7 +10902,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     pop.className = 'mu-pop'; pop.id = 'muPop';
     pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Background music player');
     pop.innerHTML =
-      '<div class="mu-head"><div class="mu-meta"><div class="mu-kicker">Trip soundtrack</div>' +
+      '<div class="mu-head"><div class="mu-meta"><div class="mu-kicker">Fireside music</div>' +
         '<div class="mu-title" aria-live="polite"></div><div class="mu-artist"></div></div>' +
         '<button class="mu-x" type="button" aria-label="Close music player">&times;</button></div>' +
       '<div class="mu-tabs" role="tablist" aria-label="Music source">' +
