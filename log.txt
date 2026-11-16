@@ -48,3 +48,28 @@ Mon Nov 16 14:04:43 MT | French Alpine Bistro | 2026-12-17 | party 6 | start -> 
 Mon Nov 16 14:04:44 MT | Matsuhisa            | 2026-12-15 | party 6 | start -> error:Error:Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.opentable.com/restref/client/?rid=
 Mon Nov 16 14:04:44 MT | Matsuhisa            | 2026-12-16 | party 6 | start -> error:Error:Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.opentable.com/restref/client/?rid=
 Mon Nov 16 14:04:44 MT | Matsuhisa            | 2026-12-17 | party 6 | start -> error:Error:Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.opentable.com/restref/client/?rid=
+== run start Mon Nov 16 14:08:17 MT
+Mon Nov 16 14:08:18 MT | Wild Fig             | 2026-12-15 | party 2 | start -> book19
+Mon Nov 16 14:08:18 MT | Wild Fig             | 2026-12-15 | party 6 | start -> book15
+Mon Nov 16 14:08:18 MT | Wild Fig             | 2026-12-16 | party 2 | start -> request
+Mon Nov 16 14:08:19 MT | Wild Fig             | 2026-12-16 | party 6 | start -> request
+Mon Nov 16 14:08:19 MT | Wild Fig             | 2026-12-17 | party 2 | start -> request
+Mon Nov 16 14:08:19 MT | Wild Fig             | 2026-12-17 | party 6 | start -> request
+Mon Nov 16 14:08:20 MT | Casa Tua             | 2026-12-15 | party 2 | start -> book18
+Mon Nov 16 14:08:20 MT | Casa Tua             | 2026-12-15 | party 6 | start -> book18
+Mon Nov 16 14:08:21 MT | Casa Tua             | 2026-12-16 | party 2 | start -> book18
+Mon Nov 16 14:08:22 MT | Casa Tua             | 2026-12-16 | party 6 | start -> book18
+Mon Nov 16 14:08:23 MT | Casa Tua             | 2026-12-17 | party 2 | start -> request
+Mon Nov 16 14:08:23 MT | Casa Tua             | 2026-12-17 | party 6 | start -> request
+Mon Nov 16 14:08:24 MT | Steakhouse 316       | 2026-12-15 | party 2 | start -> book17
+Mon Nov 16 14:08:25 MT | Steakhouse 316       | 2026-12-15 | party 6 | start -> book17
+Mon Nov 16 14:08:25 MT | Steakhouse 316       | 2026-12-16 | party 2 | start -> book17
+Mon Nov 16 14:08:25 MT | Steakhouse 316       | 2026-12-16 | party 6 | start -> book17
+Mon Nov 16 14:08:26 MT | Steakhouse 316       | 2026-12-17 | party 2 | start -> request
+Mon Nov 16 14:08:26 MT | Steakhouse 316       | 2026-12-17 | party 6 | start -> request
+Mon Nov 16 14:08:27 MT | French Alpine Bistro | 2026-12-15 | party 6 | start -> http403
+Mon Nov 16 14:08:28 MT | French Alpine Bistro | 2026-12-16 | party 6 | start -> http403
+Mon Nov 16 14:08:29 MT | French Alpine Bistro | 2026-12-17 | party 6 | start -> http403
+Mon Nov 16 14:08:29 MT | Matsuhisa            | 2026-12-15 | party 6 | start -> http403
+Mon Nov 16 14:08:30 MT | Matsuhisa            | 2026-12-16 | party 6 | start -> http403
+Mon Nov 16 14:08:30 MT | Matsuhisa            | 2026-12-17 | party 6 | start -> http403
