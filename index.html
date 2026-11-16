@@ -306,7 +306,8 @@ footer{position:relative;margin-top:40px;padding:64px 24px 60px;text-align:cente
   .navtoggle .nt-ic{font-size:15px;line-height:1;}
   .navlinks.open ~ .navtoggle,.navtoggle.on{animation:none;}
   .grid2,.grid3,.book{grid-template-columns:1fr;}
-  .restcard{grid-template-columns:1fr;}
+  .restcard{grid-template-columns:minmax(0,1fr);}
+  .restcard > *{min-width:0;}
   .restcard .ph{min-height:190px;}
   .daynav{top:48px;}
 }
@@ -3923,7 +3924,7 @@ body.gated .wh-fab{display:none;}
     <i class="bp-bar"></i>
   </div>
 </article></div>
-  <div class="sub-head reveal">Marco &middot; Minneapolis &harr; Denver &middot; booked</div>
+  <div class="sub-head reveal">Marco &middot; Minneapolis &harr; Denver&nbsp;&middot;&nbsp;booked</div>
   <div class="bpasses"><article class="bpass reveal" aria-label="United Airlines UA 1891, MSP to DEN, Sun Dec 27">
   <div class="bp-main">
     <header class="bp-head"><span class="bp-air">United Airlines</span><span class="bp-kind">Outbound &middot; Boarding pass</span><span class="bp-fno">UA 1891</span></header>
@@ -5189,7 +5190,7 @@ body.gated .wh-fab{display:none;}
   <p class="note-sans reveal" style="margin:2px 0 4px">Sun reflecting off snow at altitude burns fast even at 25&deg;F &mdash; sunscreen and lip balm are not optional. Glenwood (hot springs day) runs a touch milder than Aspen.</p>
 
   <div class="alertbox reveal">
-    <div class="ab-t"><span>&#9888;</span>Snowmobile day &middot; read this</div>
+    <div class="ab-t"><span>&#9888;</span><span>Snowmobile day &middot; read this</span></div>
     <p>T-Lazy-7 provides <b>helmets only</b>. <b>Everyone on the Day 3 tour &mdash; including Jim and anyone not skiing &mdash; must bring their own warm ski-level outerwear, waterproof gloves, and snow boots.</b> If Jim isn&rsquo;t renting ski clothing for the week, he still needs a full warm kit for that morning. (Snowsuits are <em>sometimes</em> available at the ranch &mdash; call (970) 925-4614 to confirm; don&rsquo;t count on it.)</p>
   </div>
 
@@ -14877,6 +14878,7 @@ function apply(anim){
  var p=who&&who!=='everyone'?who:null,B=D.body;
  ORDER.forEach(function(id){B.classList.toggle('wh-p-'+id,p===id);});
  B.classList.toggle('wh-active',!!p); B.classList.toggle('wh-showall',!!p&&showAll);
+ $$('.wh-glue').forEach(function(g){var y=g.querySelector('.wh-you');if(y){y.remove();}var pr=g.parentNode;g.replaceWith(D.createTextNode(g.textContent));if(pr){pr.normalize();}});
  $$('.wh-you').forEach(function(c){c.remove();}); unmark();
  $$('.wh-me').forEach(function(el){el.classList.remove('wh-me','wh-top');});
  $$('.wh-other').forEach(function(el){el.classList.remove('wh-other');});
@@ -14902,7 +14904,7 @@ function apply(anim){
    el.classList.add('wh-top');
    var at=chipAt(el),c=D.createElement('span');
    c.className='wh-you'; c.setAttribute('aria-hidden','true'); c.setAttribute('data-t',isFor(el,p)||has(el.getAttribute('data-wh-hl'),p)?'You':'You book');
-   if(at===el&&el.tagName!=='TD'&&el.children.length){el.insertBefore(c,el.firstChild);c.classList.add('wh-you-lead');}else{at.appendChild(c);} pulse(el);
+   if(at===el&&el.tagName!=='TD'&&el.children.length){el.insertBefore(c,el.firstChild);c.classList.add('wh-you-lead');}else{var lt=at.lastChild,mm=lt&&lt.nodeType===3&&lt.nodeValue.match(/(\S+)\s*$/);if(mm){lt.nodeValue=lt.nodeValue.slice(0,mm.index);var gl=D.createElement('span');gl.className='wh-glue';gl.style.whiteSpace='nowrap';gl.textContent=mm[1];gl.appendChild(c);at.appendChild(gl);}else{at.appendChild(c);}} pulse(el);
   });
   mark(p);
  }
