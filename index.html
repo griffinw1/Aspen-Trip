@@ -11511,8 +11511,10 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
 
       /* ---- Day 0: the Escalade (Jim's beat) ---- */
       var jim = you(['jim']);
-      chapter({d:D0, title:'The Escalade', ey:'Day 0 · DEN → Aspen · 225 miles', line:'Picked up at DEN. Next stop: City Market, then the house.'});
-      add({k:'reveal', dur: RM ? 6000 : (jim ? 14000 : 10000), tod:12 * 60,
+      /* the Escalade reveal is Jim's beat: only his film has it; everyone else gets "The drive" */
+      chapter(jim ? {d:D0, title:'The Escalade', ey:'Day 0 · DEN → Aspen · 225 miles', line:'Picked up at DEN. Next stop: City Market, then the house.'}
+                  : {d:D0, title:'The drive', ey:'Day 0 · DEN → Aspen · 225 miles', line:'West on I-70. Next stop: City Market, then the house.'});
+      if (jim) add({k:'reveal', dur: RM ? 6000 : (jim ? 14000 : 10000), tod:12 * 60,
         spec:{t:CAR.model, list:[CAR.color + ' · ' + CAR.wheels].concat(CAR.specs), plate:CAR.plate, jim:jim},
         lt:{ey:'Day 0 · DEN · the ride for the week', t:CAR.model, w: jim ? CAR.jimLine : 'The Turo pickup at DEN — home base on wheels for the week.', you:jim}});
       var car = function(seg, dur, tod, mode, speed, cam, lt, extra){
