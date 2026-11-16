@@ -7678,7 +7678,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {maxZoom:19, maxNativeZoom:18, opacity:.9, className:'vx-labels'})
     ]);
     base.topo = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {maxZoom:19, maxNativeZoom:18, className:'vx-topo', attribution:'Terrain &copy; Esri, USGS, NPS'});
-    overlays.pistes = L.tileLayer('https://tiles.opensnowmap.org/pistes/{z}/{x}/{y}.png', {maxZoom:19, maxNativeZoom:18, minZoom:9, opacity:.85, className:'vx-pistes', updateWhenZooming:false, keepBuffer:3, attribution:'Runs &copy; <a href="https://www.opensnowmap.org">OpenSnowMap</a> &middot; &copy; OpenStreetMap'});
+    overlays.pistes = L.tileLayer('https://tiles.opensnowmap.org/pistes/{z}/{x}/{y}.png', {maxZoom:19, maxNativeZoom:18, minZoom:9, opacity:.85, className:'vx-pistes', updateWhenZooming:false, keepBuffer:3, attribution:'Runs &copy; <a href="https://www.opensnowmap.org" target="_blank" rel="noopener">OpenSnowMap</a> &middot; &copy; OpenStreetMap'});
     ringLayer = buildRings();
     layerDay = L.layerGroup().addTo(map);
     layerTrip = L.layerGroup().addTo(map);
