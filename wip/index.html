@@ -1759,7 +1759,7 @@ body.dark .vx.full{background:#07111c;}
 .vx-stage .vx-3d{position:absolute;inset:0;z-index:500;background:#1b2a22;overflow:hidden;}
 body.dark .vx-stage .vx-3d{background:#07111c;}
 .vx-stage.is3d #vxMap{visibility:hidden;}
-.vx-stage.is3d .vx-seg,.vx-stage.is3d [data-t="pistes"],.vx-stage.is3d [data-t="rings"],.vx-stage.is3d [data-t="locate"]{display:none;}
+.vx-stage.is3d .vx-seg:not(.vx-3dmode),.vx-stage.is3d [data-t="pistes"],.vx-stage.is3d [data-t="rings"],.vx-stage.is3d [data-t="locate"]{display:none;}
 .vx-tool.keep span{display:inline !important;}
 .vx-tool[data-t="fly"]{background:var(--rose);color:#fff;border-color:transparent;}
 .vx-tool[data-t="fly"][aria-pressed="true"]{background:#143a2a;color:#F3E6C2;}
@@ -1809,6 +1809,8 @@ body.dark .vx .maplibregl-ctrl-attrib a{color:#c9a05a;}
 .vx-veil span{font:500 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#F3E6C2;background:rgba(14,30,22,.72);padding:9px 14px;border-radius:20px;}
 @media (prefers-reduced-motion:reduce){ .vx-stage .vx-veil{-webkit-backdrop-filter:none;backdrop-filter:none;} .vx-tpin,.vx-tlbl,.vx-street span,.vx-blk span{transition:opacity .2s linear;} }
 
+.vx-3dmode[hidden]{display:none !important;}
+
 </style>
 <style id="vx-v40">
 /* ============================================================
@@ -1847,7 +1849,7 @@ body.dark .vx .maplibregl-ctrl-attrib a{color:#c9a05a;}
 body.vt-on .vx.full{padding:0;background:#000;}
 body.vt-on .vx.full .vx-days,body.vt-on .vx.full .vx-side,body.vt-on .vx-tools,body.vt-on .vx-tools-r,body.vt-on .vx-expand,
 body.vt-on .vx-legend,body.vt-on .vx-offer,body.vt-on .vt-cta,body.vt-on .vx-toast,body.vt-on .vx .maplibregl-ctrl-group,
-body.vt-on .vx .maplibregl-cooperative-gesture-screen,body.vt-on #snow{display:none !important;}
+body.vt-on .vx .maplibregl-cooperative-gesture-screen,body.vt-on #snow,body.vt-on .vx .leaflet-control-container{display:none !important;}
 body.vt-on .vx.full .vx-body{display:block;height:100%;}
 body.vt-on .vx.full .vx-stage{height:100%;border:0;border-radius:0;box-shadow:none;}
 body.vt-on .vx .maplibregl-ctrl-bottom-right{bottom:var(--vt-lbB,92px);z-index:3;}
@@ -2034,6 +2036,59 @@ body.vt-on .vt-pin .vx-pin{box-shadow:0 0 0 3px rgba(232,217,176,.45),0 0 18px 4
 .vx-prcred .cesium-widget-credits{position:static !important;display:flex !important;flex-wrap:wrap;align-items:center;gap:2px 6px;
   font-size:10px !important;line-height:1.25;color:#fff !important;background:none !important;padding:0 !important;}
 .vx-prcred .cesium-credit-delimiter{opacity:.5;}
+
+/* ---- v2 film (Cesium) ---- */
+.vt-cs{position:absolute;inset:0;z-index:600;background:#000;}
+.vt-cs .cesium-viewer,.vt-cs .cesium-widget{width:100%;height:100%;}
+.vt-cs canvas{transition:filter .6s linear;}
+.vt-cs .vx-prcred{right:56px;bottom:calc(var(--vt-lbB,92px) + 10px);}
+@media (max-width:639px){ .vt-cs .vx-prcred{right:10px;bottom:auto;top:56px;max-width:44%;padding:3px 6px;} .vt-cs .vx-prcred .cesium-widget-credits{font-size:8.5px !important;line-height:1.2;} .vt-cs .vx-prcred .cesium-credit-logoContainer img{height:12px !important;} }
+.vt.film .vt-tint{display:none;}   /* the canvas itself is graded */
+.vt h2 .vt-asp{font-style:italic;letter-spacing:.06em;text-transform:none;color:#E8C26A;}
+.vt.gating .vt-frame::after{content:"Loading the valley…";background:linear-gradient(90deg,rgba(232,217,176,.35),#F3E6C2,rgba(232,217,176,.35)) 0 0/200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;position:absolute;left:50%;top:18px;transform:translateX(-50%);z-index:9;
+  font:500 10.5px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:rgba(232,217,176,.75);animation:vtShim 2.4s linear infinite;}
+@keyframes vtShim{to{background-position:-200% 0;}}
+@keyframes vtPulse{50%{opacity:.35;}}
+.vt.gating .vt-resume{display:none;}
+/* the Escalade spec card: same reserved zone as the photo (desktop right column / phone top-left) */
+.vt-spec{right:clamp(16px,3.2vw,44px);top:clamp(14px,2.6vh,28px);width:min(30%,320px);padding:16px 18px 14px;
+  background:linear-gradient(160deg,rgba(18,18,22,.86),rgba(8,8,10,.78));border:1px solid rgba(232,194,106,.35);border-radius:6px;
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 22px 50px -18px rgba(0,0,0,.85);}
+.vt-spec h5{font:500 24px/1.1 var(--serif);color:#fff;margin:6px 0 10px;}
+.vt-spec ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;}
+.vt-spec li{font:400 13px/1.35 var(--sans);color:#e9e2cf;padding-left:14px;position:relative;}
+.vt-spec li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:1px;background:#E8C26A;}
+.vt-plate{display:inline-block;margin-top:12px;font:600 12px/1 var(--sans);letter-spacing:.24em;color:#111;background:#f2efe6;padding:6px 10px;border-radius:3px;border:1px solid #9a8f6a;}
+.vt.narrow .vt-spec{left:12px;right:auto;top:12px;width:min(50%,230px);padding:12px 14px;}
+.vt.narrow .vt-spec h5{font-size:19px;}
+@media (max-height:520px){ .vt-spec{width:min(26%,260px);} .vt-spec ul{gap:3px;} }
+
+/* ---- the Escalade reveal (photo or placeholder silhouette) ---- */
+.vt-reveal{position:absolute;inset:0;z-index:1;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .8s var(--ease-out),visibility 0s linear .8s;
+  background:radial-gradient(120% 90% at 50% 55%,#1b1c22 0%,#0a0a0d 55%,#000 100%);}
+.vt-reveal.on{opacity:1;visibility:visible;transition:opacity .8s var(--ease-out),visibility 0s;}
+.vt-rv-img{position:absolute;inset:-3%;background-size:cover;background-position:center;filter:contrast(1.05) saturate(.95);}
+.vt-reveal.on .vt-rv-img,.vt-reveal.on .vt-sil-box,.vt-reveal.on .vt-flares{animation:vtPush var(--vt-rd,10s) cubic-bezier(.25,.1,.25,1) forwards;}
+@keyframes vtPush{from{transform:scale(1);}to{transform:scale(1.1);}}
+.vt-rv-img::after{content:"";position:absolute;inset:0;background:radial-gradient(110% 80% at 50% 55%,transparent 45%,rgba(0,0,0,.7) 100%),linear-gradient(0deg,rgba(0,0,0,.55),transparent 40%);}
+.vt-flares{position:absolute;inset:-3%;pointer-events:none;}
+.vt-rv-sil{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:min(74%,760px);text-align:center;}
+.vt.narrow .vt-rv-sil{top:52%;width:92%;}
+.vt-sil-box{position:relative;}
+.vt-sil{width:100%;height:auto;display:block;filter:drop-shadow(0 0 18px rgba(232,194,106,.25));}
+.vt-rv-sil span{display:block;margin-top:16px;font:500 10.5px/1 var(--sans);letter-spacing:.26em;text-transform:uppercase;color:rgba(232,217,176,.55);}
+.vt-rv-sil::after{content:"";position:absolute;left:4%;right:4%;top:78%;height:30px;background:radial-gradient(50% 50% at 50% 50%,rgba(232,194,106,.18),transparent 70%);}
+.vt-flare{position:absolute;width:0;height:0;}
+.vt-flare::before{content:"";position:absolute;left:-60px;top:-60px;width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,252,240,1) 0%,rgba(255,236,190,.65) 18%,rgba(255,214,140,.18) 45%,transparent 70%);opacity:.9;}
+.vt-flare::after{content:"";position:absolute;left:-180px;top:-2px;width:360px;height:4px;border-radius:4px;
+  background:linear-gradient(90deg,transparent,rgba(255,240,205,.75),transparent);filter:blur(1px);opacity:.9;}
+.vt-reveal.on .vt-flare::before,.vt-reveal.on .vt-flare::after{animation:vtFlare var(--vt-rd,10s) ease-out forwards;}
+@keyframes vtFlare{0%,14%{opacity:0;transform:scale(.4);}22%{opacity:1;transform:scale(1.15);}30%{opacity:.85;transform:scale(1);}100%{opacity:.9;transform:scale(1.05);}}
+.vt-rv-cap{position:absolute;right:clamp(16px,3.2vw,44px);bottom:clamp(14px,2.6vh,28px);font:italic 400 14px/1.3 var(--serif);color:rgba(243,230,194,.75);}
+.vt-reveal.paused *,.vt-reveal.paused *::before,.vt-reveal.paused *::after{animation-play-state:paused !important;}
+@media (prefers-reduced-motion:reduce){ .vt-reveal.on .vt-rv-img,.vt-reveal.on .vt-sil-box,.vt-reveal.on .vt-flares{animation:none;} .vt-reveal.on .vt-flare::before,.vt-reveal.on .vt-flare::after{animation:none;opacity:.9;} }
+.vt.narrow.gating .vt-frame::after{left:auto;right:12px;transform:none;}   /* clear of the spec card (top-left on phones) */
 
 </style>
 <style>
@@ -3545,7 +3600,7 @@ body.gated .wh-fab{display:none;}
 </style>
 </head>
 <body>
-<script>window.ASPEN_MEDIA_BASE="../media/";</script>
+<script>window.ASPEN_MEDIA_BASE="../media/";window.ASPEN_MODEL_BASE="../media/models/";</script>
 <script>try{if(localStorage.getItem('aspenTheme')!=='light'){document.body.classList.add('dark');}}catch(e){document.body.classList.add('dark');}</script>
 <!-- ===== BLOCK A · boot constant — paste right after the <body> theme script ===== -->
 <script>
@@ -8573,7 +8628,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
    ============================================================ */
 (function(){
   "use strict";
-  var DATA = {"places":{"home":{"n":"42 Nighthawk Drive","s":"Home","c":[39.205983,-106.822458],"cat":"home","k":"H","a":"Red Mountain · home base","ph":[["emb_b10debd6a7","The great room"],["emb_f15a54385d","The view from the house"],["emb_a960957e31","The hot tub"]]},"den":{"n":"Denver International (DEN)","s":"DEN","c":[39.8561,-104.6737],"cat":"travel","k":"D","a":"Turo Suburban pickup · AA 2357 / AA 1832","ph":[["dp_den_tent","Landing at DEN — the snow-covered tent roof of the Jeppesen Terminal"]]},"citymkt":{"n":"City Market · Glenwood Springs","s":"City Market","c":[39.53866,-107.32321],"cat":"travel","k":"G","a":"Groceries, alcohol, fuel — far cheaper than Aspen","ph":[["d0_canyon_1","I-70 threads Glenwood Canyon above the Colorado River"],["d0_canyon_3","The drive west through the canyon"]]},"fmsdt":{"n":"Four Mountain Sports · Downtown","s":"FMS Downtown","c":[39.18732,-106.81829],"cat":"activity","k":"R","a":"520 E Durant · rentals, 9 AM–5 PM · two blocks from the gondola","ph":[]},"wildfig":{"n":"Wild Fig","s":"Wild Fig","c":[39.18892,-106.82075],"cat":"dining","k":"W","a":"305 S Mill (Hyman + Mill) · Mediterranean","ph":[["d0_wildfig_1","Wild Fig’s dining room — red banquettes, snow outside"],["d0_wildfig_2","The marble bar"],["d0_wildfig_3","Bar burger and a glass of red"]]},"bellyup":{"n":"Belly Up Aspen","s":"Belly Up","c":[39.18743,-106.81896],"cat":"activity","k":"B","a":"450 S Galena · Cloonee · 21+","ph":[["d0_bellyup_1","A packed floor at Belly Up"],["d0_bellyup_2","DJs on the Belly Up stage"],["d0_bellyup_3","Hands up"]]},"buttermilk":{"n":"Buttermilk","s":"Buttermilk","c":[39.2055,-106.8606],"cat":"mountain","k":"L","a":"Ski school base · beginner lessons","ph":[["dp_bm_view","Buttermilk — wide, gentle beginner terrain"],["d1_school","Look for the red jacket — that’s your instructor"]]},"snowmass":{"n":"Snowmass Base Village","s":"Snowmass","c":[39.20971,-106.94787],"cat":"mountain","k":"S","a":"3,300+ acres · Elk Camp + Big Burn","ph":[["d1_snowmass_2","The view from Elk Camp"],["d1_snowmass_3","Snowmass groomers on a bluebird day"],["d6_mall","Snowmass base village at dusk"]]},"whitehouse":{"n":"White House Tavern","s":"White House","c":[39.19022,-106.82058],"cat":"dining","k":"T","a":"302 E Hopkins · casual","ph":[["d1_wh_1","The little white house on Hopkins"],["d1_wh_4","The famous sandwiches"]]},"gondola":{"n":"Silver Queen Gondola","s":"Gondola Plaza","c":[39.18645,-106.81822],"cat":"mountain","k":"A","a":"601 E Dean · Gondola Plaza, Ajax base (no FMS shop here)","ph":[["d2_ajax_1","The Silver Queen Gondola climbing Ajax"],["d2_ajax_3","Galena Street runs straight into the mountain"]]},"bonnies":{"n":"Bonnie’s","s":"Bonnie’s","c":[39.16179,-106.82438],"cat":"dining","k":"b","a":"Mid-mountain Ajax · lunch","ph":[["d2_bonnies_1","Bonnie’s sits mid-mountain on Ajax"]]},"tavern":{"n":"Ajax Tavern","s":"Ajax Tavern","c":[39.18655,-106.81795],"cat":"dining","k":"t","a":"The Little Nell · après patio","ph":[["d2_tavern_1","Après on the Ajax Tavern patio"],["d2_tavern_2","The Ajax Tavern burger"]]},"casatua":{"n":"Casa Tua","s":"Casa Tua","c":[39.18755,-106.81914],"cat":"dining","k":"C","a":"403 S Galena · Northern Italian","ph":[["d2_casatua_1","The Library room"],["d2_casatua_2","The bar and fireplace"],["d2_casatua_3","Casa Tua at dusk"]]},"tlazy7":{"n":"T-Lazy-7 Ranch","s":"T-Lazy-7","c":[39.16662,-106.87843],"cat":"activity","k":"7","a":"3129 Maroon Creek Rd · Klondike Lunch tour","ph":[["d3_tlazy7_1","Doubles lined up below the Maroon Bells"],["d3_tlazy7_4","Inside the cabin"]]},"bells":{"n":"Maroon Bells · Maroon Lake","s":"Maroon Bells","c":[39.09678,-106.94546],"cat":"activity","k":"M","a":"Turnaround of the snowmobile tour","ph":[["d3_tlazy7_5","The Maroon Bells in winter"],["d3_tlazy7_2","A T-Lazy-7 guide at the Bells"]]},"downtown":{"n":"Downtown Aspen · the malls","s":"Downtown","c":[39.18865,-106.81905],"cat":"activity","k":"d","a":"Galleries, Art Museum, shops","ph":[["d3_downtown_1","The Hyman Avenue mall in winter"],["d3_downtown_2","Cooper Avenue"],["d3_downtown_3","Galena Street under Aspen Mountain"]]},"frenchalp":{"n":"French Alpine Bistro","s":"French Alpine","c":[39.18995,-106.81935],"cat":"dining","k":"F","a":"400 E Hopkins · downstairs at Mill · fondue + raclette","ph":[["d3_fa_1","Copper, candlelight, fondue"],["d3_fa_2","The Jungfraubahn poster room"]]},"highlands":{"n":"Aspen Highlands","s":"Highlands","c":[39.1823,-106.8556],"cat":"mountain","k":"4","a":"Base village · FMS Highlands","ph":[["d4_highlands_1","Highland Bowl, on Highland Peak"],["d4_highlands_2","Prayer flags at the 12,392 ft summit"]]},"mgr":{"n":"Merry-Go-Round","s":"Merry-Go-Round","c":[39.15955,-106.86582],"cat":"dining","k":"m","a":"Mid-mountain Highlands · walk-in","ph":[["d4_mgr_1","Merry-Go-Round’s deck"]]},"nyeplaza":{"n":"Gondola Plaza · torchlight + fireworks","s":"Fireworks","c":[39.18685,-106.81835],"cat":"activity","k":"✦","a":"~7:30 torchlight · 8:00 fireworks","ph":[["d4_nye_1","Fireworks over the torch-lit face of Ajax"],["d4_nye_2","The 8 PM fireworks over downtown"]]},"matsuhisa":{"n":"Matsuhisa","s":"Matsuhisa","c":[39.19063,-106.82029],"cat":"dining","k":"N","a":"303 E Main · omakase","ph":[["d4_mat_1","Matsuhisa Aspen — the sushi bar"],["d4_mat_3","New-style sashimi, yellowtail jalapeño"]]},"iron":{"n":"Iron Mountain Hot Springs","s":"Hot Springs","c":[39.55526,-107.33626],"cat":"activity","k":"5","a":"281 Centennial Dr · 16 pools","ph":[["d5_iron_1","Riverside pools in winter"],["d5_iron_2","Steam on the terraced pools"]]},"s316":{"n":"Steakhouse 316","s":"Steakhouse 316","c":[39.19021,-106.82002],"cat":"dining","k":"6","a":"316 E Hopkins · closing dinner","ph":[["rest_s316_1","Prime filet in the skillet"]]},"jbar":{"n":"J-Bar · Hotel Jerome","s":"J-Bar","c":[39.19092,-106.81952],"cat":"dining","k":"J","a":"Hotel Jerome · 330 E Main · nightcap","ph":[["d6_jbar_1","The historic J-Bar at Hotel Jerome"],["d6_jbar_2","Last call"]]},"vail":{"n":"Vail Village (or Frisco)","s":"Vail","c":[39.6403,-106.3742],"cat":"dining","k":"V","a":"Lunch stop · Frisco is ~30 min further east","ph":[["d7_drive_2","The top of Vail Pass"],["d7_drive_1","Dillon Reservoir, frozen, on the way home"]]},"pinecreek":{"n":"Pine Creek Cookhouse","s":"Cookhouse","c":[39.0556,-106.7958],"cat":"dining","k":"P","a":"Optional Day III splurge · sleigh from King Cabin","ph":[["rest_pinecreek_1","The cabin at dusk"],["rest_pinecreek_2","The sleigh ride in"]]},"riogrande":{"n":"Rio Grande parking garage","s":"Rio Grande garage","c":[39.19144,-106.81781],"cat":"travel","k":"P","a":"427 Rio Grande Pl · park here for Day 0 evening","ph":[],"town":1},"meatcheese":{"n":"Meat & Cheese","s":"Meat & Cheese","c":[39.18988,-106.82038],"cat":"dining","k":"&","a":"319 E Hopkins · walk-in only, the backup any night","ph":[],"town":1},"clarks":{"n":"Clark’s Market","s":"Clark’s Market","c":[39.19263,-106.81926],"cat":"travel","k":"$","a":"300 Puppy Smith St · in-town groceries","ph":[],"town":1},"artmuseum":{"n":"Aspen Art Museum","s":"Art Museum","c":[39.18826,-106.81654],"cat":"activity","k":"a","a":"637 E Hyman · galleries + rooftop deck","ph":[],"town":1},"rubey":{"n":"Rubey Park Transit Center","s":"Rubey Park","c":[39.18754,-106.81964],"cat":"travel","k":"r","a":"Durant between Mill + Galena · RFTA buses + High Mountain Taxi pickups","ph":[],"town":1},"wagner":{"n":"Wagner Park","s":"Wagner Park","c":[39.18826,-106.82069],"cat":"activity","k":"w","a":"Between Mill + Monarch, Cooper + Durant · the snowy town green","ph":[],"town":1}},"days":[{"id":"d0","r":"0","t":"Arrival","date":"Sun Dec 27","iso":"2026-12-27","stops":[{"p":"den","time":"9:51 AM","what":"Land · pick up the Suburban","who":"Everyone (Marco meets at baggage claim)"},{"p":"citymkt","time":"~12:30 PM","what":"Groceries + fuel","via":"drive"},{"p":"home","time":"4:00 PM","what":"Check in · hot tub","via":"drive"},{"p":"fmsdt","time":"~4:15 PM","what":"Griffin + Marco grab rentals (closes 5 PM)","via":"drive","note":"Park at the Rio Grande garage"},{"p":"wildfig","time":"6:30 PM","what":"Welcome dinner","via":"walk","star":1},{"p":"bellyup","time":"9:30 PM","what":"Cloonee · doors 8:30","via":"walk","star":1,"who":"The four with tickets"}]},{"id":"d1","r":"I","t":"Snowmass","date":"Mon Dec 28","iso":"2026-12-28","stops":[{"p":"buttermilk","time":"8:45 AM","what":"Lesson #1","via":"drive","from":"home","who":"Marcy + Stella"},{"p":"snowmass","time":"9:00 AM","what":"Ski Snowmass","via":"drive","from":"home","who":"Griffin · Ben · Marco","star":1,"note":"3 PM: drop skis at FMS Snowmass, request transfer to FMS Downtown"},{"p":"whitehouse","time":"7:00 PM","what":"Casual dinner","via":"drive","from":"home","note":"Meat & Cheese is the walk-in backup"}]},{"id":"d2","r":"II","t":"Ajax","date":"Tue Dec 29","iso":"2026-12-29","stops":[{"p":"buttermilk","time":"8:30 AM","what":"Lesson #2","via":"drive","from":"home","who":"Marcy"},{"p":"fmsdt","time":"9:00 AM","what":"Pick up skis · transferred overnight","via":"drive","from":"home","who":"Griffin · Marco · Ben","note":"No FMS shop at the gondola — skis wait at FMS Downtown"},{"p":"gondola","time":"9:15 AM","what":"Up the Silver Queen Gondola","via":"walk"},{"p":"bonnies","time":"12:30 PM","what":"Lunch on the mountain","via":"lift"},{"p":"fmsdt","time":"2:45 PM","what":"Ski down · drop skis, request the Highlands transfer","via":"ski","from":"bonnies"},{"p":"tavern","time":"3:00 PM","what":"Après (optional)","via":"walk"},{"p":"casatua","time":"7:00 PM","what":"Dinner","via":"drive","from":"home","star":1}]},{"id":"d3","r":"III","t":"Snowmobile","date":"Wed Dec 30","iso":"2026-12-30","stops":[{"p":"tlazy7","time":"9:30 AM","what":"Klondike Lunch tour departs","via":"drive","from":"home","note":"Helmets only — bring your own warm gear","star":1},{"p":"bells","time":"~11:00 AM","what":"Maroon Bells turnaround","via":"sled"},{"p":"downtown","time":"2:30 PM","what":"Afternoon in town","via":"drive","from":"tlazy7"},{"p":"frenchalp","time":"7:30 PM","what":"Fondue dinner","via":"walk","star":1}]},{"id":"d4","r":"IV","t":"NYE","date":"Thu Dec 31","iso":"2026-12-31","stops":[{"p":"highlands","time":"9:10 AM","what":"Skis at FMS Highlands","via":"drive","from":"home"},{"p":"mgr","time":"12:30 PM","what":"Lunch mid-mountain","via":"lift"},{"p":"nyeplaza","time":"~7:30 PM","what":"Torchlight + 8 PM fireworks","via":"drive","from":"home","star":1},{"p":"matsuhisa","time":"8:45 PM","what":"NYE omakase","via":"walk","star":1,"note":"No free taxi Thursday — DD or Uber XL home"}]},{"id":"d5","r":"V","t":"Hot Springs","date":"Fri Jan 1","iso":"2027-01-01","stops":[{"p":"iron","time":"12:00 PM","what":"Timed entry","via":"drive","from":"home","star":1},{"p":"home","time":"7:00 PM","what":"Cook-in dinner","via":"drive"}]},{"id":"d6","r":"VI","t":"Family Ski","date":"Sat Jan 2","iso":"2027-01-02","stops":[{"p":"snowmass","time":"8:50 AM","what":"All six ski together","via":"drive","from":"home","star":1},{"p":"s316","time":"7:30 PM","what":"Closing dinner","via":"drive","from":"home","star":1},{"p":"jbar","time":"Late","what":"Nightcap · free High Mountain Taxi","via":"walk"}]},{"id":"d7","r":"VII","t":"Departure","date":"Sun Jan 3","iso":"2027-01-03","stops":[{"p":"home","time":"10:00 AM","what":"Checkout · depart 10:30"},{"p":"vail","time":"12:30 PM","what":"Lunch","via":"drive","viaPts":[[39.545,-107.33]]},{"p":"den","time":"2:30 PM","what":"Return the Suburban · fly home","via":"drive"}]}],"town":{"b":[[39.1857,-106.8226],[39.1929,-106.8152]],"places":["fmsdt","riogrande","wildfig","bellyup","casatua","frenchalp","s316","whitehouse","meatcheese","matsuhisa","jbar","clarks","artmuseum","rubey","gondola","nyeplaza","tavern","wagner"],"lp":{"bellyup":"r","casatua":"l","fmsdt":"r","rubey":"l","s316":"t","whitehouse":"l","meatcheese":"b","frenchalp":"r","matsuhisa":"l","jbar":"r","nyeplaza":"l","gondola":"b","tavern":"r","wagner":"l","wildfig":"l","artmuseum":"r","clarks":"r","riogrande":"r"},"walks":[{"d":"d0","t":"Arrival night","when":"4:15 → 9:30 PM","legs":[["fmsdt","riogrande","drive"],["riogrande","wildfig","walk"],["wildfig","bellyup","walk"]]},{"d":"d1","t":"Casual night","when":"7:00 PM","legs":[["whitehouse","meatcheese","walk"]],"note":"Meat & Cheese is the walk-in backup — across the street"},{"d":"d2","t":"Casa Tua","when":"7:00 PM","legs":[["rubey","casatua","walk"]],"note":"Drop-off at Rubey Park, or park in the Rio Grande garage"},{"d":"d3","t":"Fondue night","when":"7:30 PM","legs":[["downtown","frenchalp","walk"]]},{"d":"d4","t":"New Year’s Eve","when":"~7:30 → 8:45 PM","legs":[["nyeplaza","matsuhisa","walk"]]},{"d":"d6","t":"Closing night","when":"7:30 PM → late","legs":[["s316","jbar","walk"]]}],"streets":[["Main St",39.1903,-106.81637,14],["Hopkins Ave",39.1895,-106.81655,14],["Hyman Ave",39.18815,-106.8172,14],["Cooper Ave",39.18752,-106.81715,14],["Durant Ave",39.1868,-106.8173,14],["Monarch St",39.188,-106.8214,-76],["Mill St",39.1881,-106.82007,-76],["Galena St",39.1901,-106.81815,-76],["Hunter St",39.189,-106.81707,-76],["Aspen St",39.18995,-106.822,-76]]},"facts":{"den":["DEN covers about 33,500 acres — the largest airport in North America by land area.","https://en.wikipedia.org/wiki/Denver_International_Airport"],"citymkt":["Doc Holliday died in Glenwood Springs in 1887; a memorial stands in Linwood Cemetery above town.","https://en.wikipedia.org/wiki/Doc_Holliday"],"home":["Aspen sits at about 7,900 ft. It began as a silver-mining camp in 1879.","https://en.wikipedia.org/wiki/Aspen,_Colorado"],"buttermilk":["Buttermilk has hosted the Winter X Games since 2002.","https://en.wikipedia.org/wiki/Buttermilk_(ski_area)"],"snowmass":["Snowmass opened in 1967; its 4,406 ft of vertical is among the most in the U.S.","https://en.wikipedia.org/wiki/Snowmass_(ski_area)"],"gondola":["Aspen Mountain opened in 1946 — its Lift-1 was then the longest chairlift in the world.","https://en.wikipedia.org/wiki/Aspen_Mountain_(ski_area)"],"bonnies":["Aspen Mountain has no beginner (green) runs at all.","https://en.wikipedia.org/wiki/Aspen_Mountain_(ski_area)"],"tlazy7":["In winter, Maroon Creek Road past the ranch is closed to cars — the Bells are reached on snow.","https://en.wikipedia.org/wiki/Maroon_Bells"],"bells":["Maroon Peak (14,156 ft) and North Maroon Peak (14,014 ft) are both Colorado fourteeners.","https://en.wikipedia.org/wiki/Maroon_Bells"],"downtown":["Aspen’s silver boom collapsed in the Panic of 1893; skiing revived the town after World War II.","https://en.wikipedia.org/wiki/Aspen,_Colorado"],"highlands":["Highland Bowl tops out at 12,392 ft — skiers hike the last stretch, skis on their shoulders.","https://en.wikipedia.org/wiki/Aspen_Highlands"],"mgr":["Aspen Highlands opened in 1958.","https://en.wikipedia.org/wiki/Aspen_Highlands"],"nyeplaza":["The Silver Queen Gondola rises about 3,300 vertical feet to Ajax’s 11,212-ft summit.","https://en.wikipedia.org/wiki/Aspen_Mountain_(ski_area)"],"matsuhisa":["Nobu Matsuhisa opened his first U.S. restaurant, Matsuhisa, in Beverly Hills in 1987.","https://en.wikipedia.org/wiki/Nobu_Matsuhisa"],"iron":["Iron Mountain Hot Springs opened in 2015, with 16 mineral pools along the Colorado River.","https://www.ironmountainhotsprings.com/"],"jbar":["Hotel Jerome opened in 1889; the J-Bar’s “Aspen Crud” bourbon milkshake dates to Prohibition.","https://en.wikipedia.org/wiki/Hotel_Jerome"],"vail":["Vail opened in December 1962. Vail Pass, on the drive home, crests at 10,662 ft.","https://en.wikipedia.org/wiki/Vail_Ski_Resort"]},"chapters":{"d0":["Fly in, drive the canyon, check in on Red Mountain — then Wild Fig and Cloonee.",["The I-70 stretch through Glenwood Canyon opened in 1992, one of the last pieces of the Interstate system.","https://en.wikipedia.org/wiki/Glenwood_Canyon"]],"d1":["Lessons at Buttermilk for Marcy and Stella; the rest take on Snowmass.",null],"d2":["Up the Silver Queen for a day on Ajax, then Casa Tua.",null],"d3":["Snowmobiles to the Maroon Bells, an afternoon in town, fondue night.",null],"d4":["Highlands by day — torchlight, fireworks and Matsuhisa by night.",null],"d5":["A slow New Year’s Day in the Glenwood hot springs.",null],"d6":["One last day on Snowmass, then the closing dinner at 316.",null],"d7":["Checkout, the long drive over Vail Pass, and home.",null]}};
+  var DATA = {"places":{"home":{"n":"42 Nighthawk Drive","s":"Home","c":[39.205983,-106.822458],"cat":"home","k":"H","a":"Red Mountain · home base","ph":[["emb_b10debd6a7","The great room"],["emb_f15a54385d","The view from the house"],["emb_a960957e31","The hot tub"]]},"den":{"n":"Denver International (DEN)","s":"DEN","c":[39.8561,-104.6737],"cat":"travel","k":"D","a":"Turo Suburban pickup · AA 2357 / AA 1832","ph":[["dp_den_tent","Landing at DEN — the snow-covered tent roof of the Jeppesen Terminal"]]},"citymkt":{"n":"City Market · Glenwood Springs","s":"City Market","c":[39.53866,-107.32321],"cat":"travel","k":"G","a":"Groceries, alcohol, fuel — far cheaper than Aspen","ph":[["d0_canyon_1","I-70 threads Glenwood Canyon above the Colorado River"],["d0_canyon_3","The drive west through the canyon"]]},"fmsdt":{"n":"Four Mountain Sports · Downtown","s":"FMS Downtown","c":[39.18732,-106.81829],"cat":"activity","k":"R","a":"520 E Durant · rentals, 9 AM–5 PM · two blocks from the gondola","ph":[]},"wildfig":{"n":"Wild Fig","s":"Wild Fig","c":[39.18892,-106.82075],"cat":"dining","k":"W","a":"305 S Mill (Hyman + Mill) · Mediterranean","ph":[["d0_wildfig_1","Wild Fig’s dining room — red banquettes, snow outside"],["d0_wildfig_2","The marble bar"],["d0_wildfig_3","Bar burger and a glass of red"]]},"bellyup":{"n":"Belly Up Aspen","s":"Belly Up","c":[39.18743,-106.81896],"cat":"activity","k":"B","a":"450 S Galena · Cloonee · 21+","ph":[["d0_bellyup_1","A packed floor at Belly Up"],["d0_bellyup_2","DJs on the Belly Up stage"],["d0_bellyup_3","Hands up"]]},"buttermilk":{"n":"Buttermilk","s":"Buttermilk","c":[39.2055,-106.8606],"cat":"mountain","k":"L","a":"Ski school base · beginner lessons","ph":[["dp_bm_view","Buttermilk — wide, gentle beginner terrain"],["d1_school","Look for the red jacket — that’s your instructor"]]},"snowmass":{"n":"Snowmass Base Village","s":"Snowmass","c":[39.20971,-106.94787],"cat":"mountain","k":"S","a":"3,300+ acres · Elk Camp + Big Burn","ph":[["d1_snowmass_2","The view from Elk Camp"],["d1_snowmass_3","Snowmass groomers on a bluebird day"],["d6_mall","Snowmass base village at dusk"]]},"whitehouse":{"n":"White House Tavern","s":"White House","c":[39.19022,-106.82058],"cat":"dining","k":"T","a":"302 E Hopkins · casual","ph":[["d1_wh_1","The little white house on Hopkins"],["d1_wh_4","The famous sandwiches"]]},"gondola":{"n":"Silver Queen Gondola","s":"Gondola Plaza","c":[39.18645,-106.81822],"cat":"mountain","k":"A","a":"601 E Dean · Gondola Plaza, Ajax base (no FMS shop here)","ph":[["d2_ajax_1","The Silver Queen Gondola climbing Ajax"],["d2_ajax_3","Galena Street runs straight into the mountain"]]},"bonnies":{"n":"Bonnie’s","s":"Bonnie’s","c":[39.16179,-106.82438],"cat":"dining","k":"b","a":"Mid-mountain Ajax · lunch","ph":[["d2_bonnies_1","Bonnie’s sits mid-mountain on Ajax"]]},"tavern":{"n":"Ajax Tavern","s":"Ajax Tavern","c":[39.18655,-106.81795],"cat":"dining","k":"t","a":"The Little Nell · après patio","ph":[["d2_tavern_1","Après on the Ajax Tavern patio"],["d2_tavern_2","The Ajax Tavern burger"]]},"casatua":{"n":"Casa Tua","s":"Casa Tua","c":[39.18755,-106.81914],"cat":"dining","k":"C","a":"403 S Galena · Northern Italian","ph":[["d2_casatua_1","The Library room"],["d2_casatua_2","The bar and fireplace"],["d2_casatua_3","Casa Tua at dusk"]]},"tlazy7":{"n":"T-Lazy-7 Ranch","s":"T-Lazy-7","c":[39.16662,-106.87843],"cat":"activity","k":"7","a":"3129 Maroon Creek Rd · Klondike Lunch tour","ph":[["d3_tlazy7_1","Doubles lined up below the Maroon Bells"],["d3_tlazy7_4","Inside the cabin"]]},"bells":{"n":"Maroon Bells · Maroon Lake","s":"Maroon Bells","c":[39.09678,-106.94546],"cat":"activity","k":"M","a":"Turnaround of the snowmobile tour","ph":[["d3_tlazy7_5","The Maroon Bells in winter"],["d3_tlazy7_2","A T-Lazy-7 guide at the Bells"]]},"downtown":{"n":"Downtown Aspen · the malls","s":"Downtown","c":[39.18865,-106.81905],"cat":"activity","k":"d","a":"Galleries, Art Museum, shops","ph":[["d3_downtown_1","The Hyman Avenue mall in winter"],["d3_downtown_2","Cooper Avenue"],["d3_downtown_3","Galena Street under Aspen Mountain"]]},"frenchalp":{"n":"French Alpine Bistro","s":"French Alpine","c":[39.18995,-106.81935],"cat":"dining","k":"F","a":"400 E Hopkins · downstairs at Mill · fondue + raclette","ph":[["d3_fa_1","Copper, candlelight, fondue"],["d3_fa_2","The Jungfraubahn poster room"]]},"highlands":{"n":"Aspen Highlands","s":"Highlands","c":[39.1823,-106.8556],"cat":"mountain","k":"4","a":"Base village · FMS Highlands","ph":[["d4_highlands_1","Highland Bowl, on Highland Peak"],["d4_highlands_2","Prayer flags at the 12,392 ft summit"]]},"mgr":{"n":"Merry-Go-Round","s":"Merry-Go-Round","c":[39.15955,-106.86582],"cat":"dining","k":"m","a":"Mid-mountain Highlands · walk-in","ph":[["d4_mgr_1","Merry-Go-Round’s deck"]]},"nyeplaza":{"n":"Gondola Plaza · torchlight + fireworks","s":"Fireworks","c":[39.18685,-106.81835],"cat":"activity","k":"✦","a":"~7:30 torchlight · 8:00 fireworks","ph":[["d4_nye_1","Fireworks over the torch-lit face of Ajax"],["d4_nye_2","The 8 PM fireworks over downtown"]]},"matsuhisa":{"n":"Matsuhisa","s":"Matsuhisa","c":[39.19063,-106.82029],"cat":"dining","k":"N","a":"303 E Main · omakase","ph":[["d4_mat_1","Matsuhisa Aspen — the sushi bar"],["d4_mat_3","New-style sashimi, yellowtail jalapeño"]]},"iron":{"n":"Iron Mountain Hot Springs","s":"Hot Springs","c":[39.55526,-107.33626],"cat":"activity","k":"5","a":"281 Centennial Dr · 16 pools","ph":[["d5_iron_1","Riverside pools in winter"],["d5_iron_2","Steam on the terraced pools"]]},"s316":{"n":"Steakhouse 316","s":"Steakhouse 316","c":[39.19021,-106.82002],"cat":"dining","k":"6","a":"316 E Hopkins · closing dinner","ph":[["rest_s316_1","Prime filet in the skillet"]]},"jbar":{"n":"J-Bar · Hotel Jerome","s":"J-Bar","c":[39.19092,-106.81952],"cat":"dining","k":"J","a":"Hotel Jerome · 330 E Main · nightcap","ph":[["d6_jbar_1","The historic J-Bar at Hotel Jerome"],["d6_jbar_2","Last call"]]},"vail":{"n":"Vail Village (or Frisco)","s":"Vail","c":[39.6403,-106.3742],"cat":"dining","k":"V","a":"Lunch stop · Frisco is ~30 min further east","ph":[["d7_drive_2","The top of Vail Pass"],["d7_drive_1","Dillon Reservoir, frozen, on the way home"]]},"pinecreek":{"n":"Pine Creek Cookhouse","s":"Cookhouse","c":[39.0556,-106.7958],"cat":"dining","k":"P","a":"Optional Day III splurge · sleigh from King Cabin","ph":[["rest_pinecreek_1","The cabin at dusk"],["rest_pinecreek_2","The sleigh ride in"]]},"riogrande":{"n":"Rio Grande parking garage","s":"Rio Grande garage","c":[39.19144,-106.81781],"cat":"travel","k":"P","a":"427 Rio Grande Pl · park here for Day 0 evening","ph":[],"town":1},"meatcheese":{"n":"Meat & Cheese","s":"Meat & Cheese","c":[39.18988,-106.82038],"cat":"dining","k":"&","a":"319 E Hopkins · walk-in only, the backup any night","ph":[],"town":1},"clarks":{"n":"Clark’s Market","s":"Clark’s Market","c":[39.19263,-106.81926],"cat":"travel","k":"$","a":"300 Puppy Smith St · in-town groceries","ph":[],"town":1},"artmuseum":{"n":"Aspen Art Museum","s":"Art Museum","c":[39.18826,-106.81654],"cat":"activity","k":"a","a":"637 E Hyman · galleries + rooftop deck","ph":[],"town":1},"rubey":{"n":"Rubey Park Transit Center","s":"Rubey Park","c":[39.18754,-106.81964],"cat":"travel","k":"r","a":"Durant between Mill + Galena · RFTA buses + High Mountain Taxi pickups","ph":[],"town":1},"wagner":{"n":"Wagner Park","s":"Wagner Park","c":[39.18826,-106.82069],"cat":"activity","k":"w","a":"Between Mill + Monarch, Cooper + Durant · the snowy town green","ph":[],"town":1}},"days":[{"id":"d0","r":"0","t":"Arrival","date":"Sun Dec 27","iso":"2026-12-27","stops":[{"p":"den","time":"9:51 AM","what":"Land · pick up the Suburban","who":"Everyone (Marco meets at baggage claim)"},{"p":"citymkt","time":"~12:30 PM","what":"Groceries + fuel","via":"drive"},{"p":"home","time":"4:00 PM","what":"Check in · hot tub","via":"drive"},{"p":"fmsdt","time":"~4:15 PM","what":"Griffin + Marco grab rentals (closes 5 PM)","via":"drive","note":"Park at the Rio Grande garage"},{"p":"wildfig","time":"6:30 PM","what":"Welcome dinner","via":"walk","star":1},{"p":"bellyup","time":"9:30 PM","what":"Cloonee · doors 8:30","via":"walk","star":1,"who":"The four with tickets"}]},{"id":"d1","r":"I","t":"Snowmass","date":"Mon Dec 28","iso":"2026-12-28","stops":[{"p":"buttermilk","time":"8:45 AM","what":"Lesson #1","via":"drive","from":"home","who":"Marcy + Stella"},{"p":"snowmass","time":"9:00 AM","what":"Ski Snowmass","via":"drive","from":"home","who":"Griffin · Ben · Marco","star":1,"note":"3 PM: drop skis at FMS Snowmass, request transfer to FMS Downtown"},{"p":"whitehouse","time":"7:00 PM","what":"Casual dinner","via":"drive","from":"home","note":"Meat & Cheese is the walk-in backup"}]},{"id":"d2","r":"II","t":"Ajax","date":"Tue Dec 29","iso":"2026-12-29","stops":[{"p":"buttermilk","time":"8:30 AM","what":"Lesson #2","via":"drive","from":"home","who":"Marcy"},{"p":"fmsdt","time":"9:00 AM","what":"Pick up skis · transferred overnight","via":"drive","from":"home","who":"Griffin · Marco · Ben","note":"No FMS shop at the gondola — skis wait at FMS Downtown"},{"p":"gondola","time":"9:15 AM","what":"Up the Silver Queen Gondola","via":"walk"},{"p":"bonnies","time":"12:30 PM","what":"Lunch on the mountain","via":"lift"},{"p":"fmsdt","time":"2:45 PM","what":"Ski down · drop skis, request the Highlands transfer","via":"ski","from":"bonnies"},{"p":"tavern","time":"3:00 PM","what":"Après (optional)","via":"walk"},{"p":"casatua","time":"7:00 PM","what":"Dinner","via":"drive","from":"home","star":1}]},{"id":"d3","r":"III","t":"Snowmobile","date":"Wed Dec 30","iso":"2026-12-30","stops":[{"p":"tlazy7","time":"9:30 AM","what":"Klondike Lunch tour departs","via":"drive","from":"home","note":"Helmets only — bring your own warm gear","star":1},{"p":"bells","time":"~11:00 AM","what":"Maroon Bells turnaround","via":"sled"},{"p":"downtown","time":"2:30 PM","what":"Afternoon in town","via":"drive","from":"tlazy7"},{"p":"frenchalp","time":"7:30 PM","what":"Fondue dinner","via":"walk","star":1}]},{"id":"d4","r":"IV","t":"NYE","date":"Thu Dec 31","iso":"2026-12-31","stops":[{"p":"highlands","time":"9:10 AM","what":"Skis at FMS Highlands","via":"drive","from":"home"},{"p":"mgr","time":"12:30 PM","what":"Lunch mid-mountain","via":"lift"},{"p":"nyeplaza","time":"~7:30 PM","what":"Torchlight + 8 PM fireworks","via":"drive","from":"home","star":1},{"p":"matsuhisa","time":"8:45 PM","what":"NYE omakase","via":"walk","star":1,"note":"No free taxi Thursday — DD or Uber XL home"}]},{"id":"d5","r":"V","t":"Hot Springs","date":"Fri Jan 1","iso":"2027-01-01","stops":[{"p":"iron","time":"12:00 PM","what":"Timed entry","via":"drive","from":"home","star":1},{"p":"home","time":"7:00 PM","what":"Cook-in dinner","via":"drive"}]},{"id":"d6","r":"VI","t":"Family Ski","date":"Sat Jan 2","iso":"2027-01-02","stops":[{"p":"snowmass","time":"8:50 AM","what":"All six ski together","via":"drive","from":"home","star":1},{"p":"s316","time":"7:30 PM","what":"Closing dinner","via":"drive","from":"home","star":1},{"p":"jbar","time":"Late","what":"Nightcap · free High Mountain Taxi","via":"walk"}]},{"id":"d7","r":"VII","t":"Departure","date":"Sun Jan 3","iso":"2027-01-03","stops":[{"p":"home","time":"10:00 AM","what":"Checkout · depart 10:30"},{"p":"vail","time":"12:30 PM","what":"Lunch","via":"drive","viaPts":[[39.545,-107.33]]},{"p":"den","time":"2:30 PM","what":"Return the Suburban · fly home","via":"drive"}]}],"town":{"b":[[39.1857,-106.8226],[39.1929,-106.8152]],"places":["fmsdt","riogrande","wildfig","bellyup","casatua","frenchalp","s316","whitehouse","meatcheese","matsuhisa","jbar","clarks","artmuseum","rubey","gondola","nyeplaza","tavern","wagner"],"lp":{"bellyup":"r","casatua":"l","fmsdt":"r","rubey":"l","s316":"t","whitehouse":"l","meatcheese":"b","frenchalp":"r","matsuhisa":"l","jbar":"r","nyeplaza":"l","gondola":"b","tavern":"r","wagner":"l","wildfig":"l","artmuseum":"r","clarks":"r","riogrande":"r"},"walks":[{"d":"d0","t":"Arrival night","when":"4:15 → 9:30 PM","legs":[["fmsdt","riogrande","drive"],["riogrande","wildfig","walk"],["wildfig","bellyup","walk"]]},{"d":"d1","t":"Casual night","when":"7:00 PM","legs":[["whitehouse","meatcheese","walk"]],"note":"Meat & Cheese is the walk-in backup — across the street"},{"d":"d2","t":"Casa Tua","when":"7:00 PM","legs":[["rubey","casatua","walk"]],"note":"Drop-off at Rubey Park, or park in the Rio Grande garage"},{"d":"d3","t":"Fondue night","when":"7:30 PM","legs":[["downtown","frenchalp","walk"]]},{"d":"d4","t":"New Year’s Eve","when":"~7:30 → 8:45 PM","legs":[["nyeplaza","matsuhisa","walk"]]},{"d":"d6","t":"Closing night","when":"7:30 PM → late","legs":[["s316","jbar","walk"]]}],"streets":[["Main St",39.1903,-106.81637,14],["Hopkins Ave",39.1895,-106.81655,14],["Hyman Ave",39.18815,-106.8172,14],["Cooper Ave",39.18752,-106.81715,14],["Durant Ave",39.1868,-106.8173,14],["Monarch St",39.188,-106.8214,-76],["Mill St",39.1881,-106.82007,-76],["Galena St",39.1901,-106.81815,-76],["Hunter St",39.189,-106.81707,-76],["Aspen St",39.18995,-106.822,-76]]},"facts":{"den":["DEN covers about 33,500 acres — the largest airport in North America by land area.","https://en.wikipedia.org/wiki/Denver_International_Airport"],"citymkt":["Doc Holliday died in Glenwood Springs in 1887; a memorial stands in Linwood Cemetery above town.","https://en.wikipedia.org/wiki/Doc_Holliday"],"home":["Aspen sits at about 7,900 ft. It began as a silver-mining camp in 1879.","https://en.wikipedia.org/wiki/Aspen,_Colorado"],"buttermilk":["Buttermilk has hosted the Winter X Games since 2002.","https://en.wikipedia.org/wiki/Buttermilk_(ski_area)"],"snowmass":["Snowmass opened in 1967; its 4,406 ft of vertical is among the most in the U.S.","https://en.wikipedia.org/wiki/Snowmass_(ski_area)"],"gondola":["Aspen Mountain opened in 1946 — its Lift-1 was then the longest chairlift in the world.","https://en.wikipedia.org/wiki/Aspen_Mountain_(ski_area)"],"bonnies":["Aspen Mountain has no beginner (green) runs at all.","https://en.wikipedia.org/wiki/Aspen_Mountain_(ski_area)"],"tlazy7":["In winter, Maroon Creek Road past the ranch is closed to cars — the Bells are reached on snow.","https://en.wikipedia.org/wiki/Maroon_Bells"],"bells":["Maroon Peak (14,156 ft) and North Maroon Peak (14,014 ft) are both Colorado fourteeners.","https://en.wikipedia.org/wiki/Maroon_Bells"],"downtown":["Aspen’s silver boom collapsed in the Panic of 1893; skiing revived the town after World War II.","https://en.wikipedia.org/wiki/Aspen,_Colorado"],"highlands":["Highland Bowl tops out at 12,392 ft — skiers hike the last stretch, skis on their shoulders.","https://en.wikipedia.org/wiki/Aspen_Highlands"],"mgr":["Aspen Highlands opened in 1958.","https://en.wikipedia.org/wiki/Aspen_Highlands"],"nyeplaza":["The Silver Queen Gondola rises about 3,300 vertical feet to Ajax’s 11,212-ft summit.","https://en.wikipedia.org/wiki/Aspen_Mountain_(ski_area)"],"matsuhisa":["Nobu Matsuhisa opened his first U.S. restaurant, Matsuhisa, in Beverly Hills in 1987.","https://en.wikipedia.org/wiki/Nobu_Matsuhisa"],"iron":["Iron Mountain Hot Springs opened in 2015, with 16 mineral pools along the Colorado River.","https://www.ironmountainhotsprings.com/"],"jbar":["Hotel Jerome opened in 1889; the J-Bar’s “Aspen Crud” bourbon milkshake dates to Prohibition.","https://en.wikipedia.org/wiki/Hotel_Jerome"],"vail":["Vail opened in December 1962. Vail Pass, on the drive home, crests at 10,662 ft.","https://en.wikipedia.org/wiki/Vail_Ski_Resort"]},"chapters":{"d0":["Fly in, drive the canyon, check in on Red Mountain — then Wild Fig and Cloonee.",["The I-70 stretch through Glenwood Canyon opened in 1992, one of the last pieces of the Interstate system.","https://en.wikipedia.org/wiki/Glenwood_Canyon"]],"d1":["Lessons at Buttermilk for Marcy and Stella; the rest take on Snowmass.",null],"d2":["Up the Silver Queen for a day on Ajax, then Casa Tua.",null],"d3":["Snowmobiles to the Maroon Bells, an afternoon in town, fondue night.",null],"d4":["Highlands by day — torchlight, fireworks and Matsuhisa by night.",null],"d5":["A slow New Year’s Day in the Glenwood hot springs.",null],"d6":["One last day on Snowmass, then the closing dinner at 316.",null],"d7":["Checkout, the long drive over Vail Pass, and home.",null]},"film":{"den_out":"arfrFjg{}RAj@Af@?p@C`N?`C?h@@h@Bf@Dj@Ff@Ff@Jh@Jf@Jd@DLDNJ\\DJHRL\\HRTb@LVRVLNDBVV\\ZVRTPVPXNDBPJXJVJVHXHZDXFZDZ@V@vB@?a@?_@vAGhC?VATARCVGRGTIRIPIRMRMRQPSNQNQPWzC{EBE`EaGxCsEz@oAr@gAl@}@RSVUXOVKTIZIXEZATAP?R?bA@zA@fD?hB?~KAz@Bl@@n@Fh@Lf@Rf@V","tunnel":"y|gqFlxeeSxAtB`ArAl@v@l@n@hAtAr@|@jHfIlArAhE|EpBvBrAtAhCdCbPfOtHfH`B`Bv@x@h@p@j@z@h@z@\\n@\\z@f@rARr@Tz@P~@Nv@LbAJz@LzADdABnA@`DEpN?lB@lAB|@Bn@Dn@Fl@VbBLt@v@dCZx@pB`Fj@pA\\x@tAzDh@zBXxANbALvA","canyon":"itopF`kmmSf@|@Zz@pExN`@~@Zn@d@v@~A`C~CrEd@z@Zz@Tp@XhAhBlIf@`Bj@tAjAvBn@bAr@fA^l@p@dAp@z@b@f@f@f@n@j@p@p@t@f@x@l@lCxAnE`C\\Rt@f@r@`@\\Zh@l@r@dAfBrCPVXb@v@x@bC|Bz@bAl@jAd@vAVpAHn@Dn@@|@Aj@E|@Gr@Q|@S|@Yt@Sb@Yj@_@j@o@r@g@d@wC|BuAjAk@l@e@j@W^_@r@Ub@g@rA[jASjAM~@IfAIzASjEWfGCl@IfAO~Aa@|Cg@|Cs@pDQp@SbAo@hC]zBEt@Et@CbAGlBArA?`A?hABvC@jAArAElBKtBSrDG~@M`AKh@Oj@Qd@M\\S\\[d@MPo@n@o@`@w@f@k@^sClBe@^UT]d@]f@]l@Wl@[v@Qt@Ov@Kp@Gt@GhAA`A@`AJnALfAThA\\lA`@vAb@lAb@jAZz@Xj@Zd@Zb@^`@TRh@^XN\\Rv@`@n@\\dAf@v@\\t@`@r@ZbAn@jA`AvAnAt@r@t@t@h@r@`@l@b@x@`@bARr@","citymkt_in":"_vjpFzm`nSP?P?~EFP?R@|EHP?R?~EDF?lEFH?hEHn@CVEJGlDkB`@QXGAz@?L?j@?l@A`@?L}AA","co82":"welnFzkgkSzBw@x@_@R]xByAbL}HfBmArB{AZClCmBl@a@`Ak@`Aa@l@W|@Yj@OnAc@r@IfAIn@ElABd@@vAPpGPlDJjGHlBBjB@zAGxAOp@Kb@MrAg@|@[|@c@r@c@z@o@Xu@^_@|@{@xA_APQbAeAhAmATUrCmDrAsBxBuDbBmDdAcCx@kBx@_C|AaF~@{Cp@{CVw@J[t@cCfAkD|@cCRe@`@_Al@mAXk@bA}Bl@kAr@kAXc@lA{AbF_I","home_in":"ucfnF~u}jSIOMKGEQEO?OBOFOL}ApAOHOLQPABa@j@sAjBYTKFMBM@K?YEWOcAq@SOWSW[a@_@a@QYGa@?e@@a@BiAF[?]CUEOEMEmAe@YIaASWCSAYByCp@WH[LsAh@aAFK@gALwA^o@R_Af@_DdBSHSK@J?^@l@DjAEt@i@zEW~BS|@Uf@Yz@O|@MGGGEICIKe@EEGAE?EB??"}};
   var PRE  = {"routes":{"d0:1":{"g":"arfrFjg{}Rj@r`@~M`NzRoC`[ia@|a@D|J|LwAvkPzE~g@vQdf@|W`Yf^zM`wCdB|eAfVpyAtAjJtF|DhMmKlj@mo@jcQ[|bDoI~~@kAbwA`C`bGcV|_BqCnlCvDfp@c@`bAoHl^jI`c@O|hAgVrx@bTf`BqAryDzFxr@rX|dA|JnMjtBlEpT~Hbv@pi@z`BzwBzcApiBdrBrzA|ZzZvD~MaDpx@cLtp@u@hz@}P|Y}Gh[kIdt@xBzm@wJpqA_Rrs@uDn{@m[~pBtDnSndAv~ArBn]mOpq@oa@~g@{Kt\\mCxfAqRfj@dEhi@aFjh@|@rt@eWnp@_XluAiP`_@gVvY_s@zc@i_@vJmMd]rK`a@gDxXdG~_@yQ`j@cChY|HlXlH~rA_Dpi@`ZjcA}EndAvB|w@gf@zxCo_@ny@}PrS_Cbd@om@zgB_FpcAz@ns@mNdvCvZ~jC~M|r@vm@lp@zy@reCjiAdx@jq@zQriAjJxL`Ftr@~bAxOpbAdSlg@iMd_CzD~wAeBz\\~F~g@lCdpAeHpm@bX~iBsKzoAc_@rbA{Q|z@tBtxBjg@~kAjoAxxAfBdo@vN`j@Nl{DdMdr@_ApbAjPnj@zCvz@nUv]|UnNpT|Xb^d`AlVdz@zIjpAph@hqApF|o@n\\j~@n_@vl@np@~oB`VnMfi@uAvQ~GvSf^z_@lZbXbc@hm@zh@jn@xkAdiAr]rOjK`[tz@`QzWhJzEpZvAtb@xa@h`@dRdX~CfYhR|Os@tl@w\\hRvGfT|]dO`Jl_AwMxNxAnN|VfAv|@hIdf@_A~YoWbvAeEzm@pBzk@kH`Vmn@|^eRh]kp@p_@khAgFkz@h_@aw@pr@sOrYoY~L{sAbvAmPjAsP{Kwd@wLmOtB_KzL}GhXk@`eA_Tbm@ac@vZcdAr[eaAcJ_M`EgVpw@ccA`bB{Ubs@iDrfBdc@~nEqYlkCjBpi@~Sjo@rr@fwAjb@`r@le@~g@|j@z|Aha@j[vCzTwLpl@eH|E{TrAgInLqSv~@wGfaAsO`a@uF|`@cW|]g[rdBgb@phAaD~p@fNvhAe\\nbAM~wAsJxq@kWza@}e@xpBzA`p@}LnaARxx@}Vdo@eUfW{fAz_@oXbC_JxGyO`{@qaAtk@aa@rbAkFnz@}s@fg@qM~i@rGxtAtTlj@nI|e@faAloBvaAbfArVn`Af@zt@`Ypg@zVjzBjt@p_Clt@vpAzD`PeCrr@jN~o@kIdrAtL~wAkEdn@jDjk@_OxwAhC``@cBfl@hB|oBzIjeBsV~oAsAl\\xDl]td@``BzCnbBnWtuA}TpcCaDnrApUpmBx^bu@fg@hyA~KdKtXtDbIdIrJtfAkBt^xd@~^~Onh@xBv^b]ln@hKrq@zVvL|EfJdTnnAxw@h{@pX|v@lBjk@pU`PhJhUzXv\\yAx`AvC`WhGnGfZlFpa@~aAvo@tp@e@~PkS|Y{LpbB}PpQoCrLlFlWrZrTlErLsGbe@jCf\\aGlt@xGh~@bKfOpo@jc@lM|[wD~VtDcNhLgAFaLjl@r@|HwCaBpE","min":216,"mi":181.6},"d0:2":{"g":"kiipF`q`nS`BqExb@vClNwBR|PvXyOt`@uIvPaOhR_n@b\\s`@z`@oVx[|@pdAcYdt@esAx[yhA`k@uk@pLmFxqAeM|i@mTdcDkvChSqv@pFuj@{E}h@Lq}@t[_zBvq@akKxXsz@fWq}AlPkc@~`@{e@ffAk^d{@ybAdHcg@sGms@jG{{AxJwZltByrCx[odA~VkRtUq_@vY{qDbYmjAzo@gv@n]qPrMw@bq@yb@|Sml@xXaa@dL{b@~_BqrBhnDi~@l}@_m@dTcZxzAky@tMaDxi@`@jVwQpf@ujAh[_e@jB}y@rINhNciAoWkMiKtIuXoGgYjIwEhU","min":63,"mi":41.8},"d0:3":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@~AsMjPxDOrA","min":6,"mi":1.7},"d0:4":{"g":"_wdnFp}}jSa@|CgCo@o@dFoA[a@nD","min":5,"mi":0.2},"d0:5":{"g":"kaenFxl~jS`@oDnAZn@eFfCn@DY","min":4,"mi":0.2},"d1:0":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@iNbiAaIkBmD`[BxCv@fL]nJ}@fAsApDkPbXeI~OsBhFuJlZeGzNuCfFqCvD{L`NnDnH^rAfFm@f@Df@bAAv@iGzJwEhC_GzEa@hAX~@t@Lz@q@lAgCp@Qt@ZlF}B?j@qE`JGV\\b@v@YjHyElBi@fBR|CGvAYj@k@nDAt@c@dAM`Bk@Zu@XIdCtBhDhB|@rBwAmMu@}@u@uBm@mENwCWu@k@a@]A{GvBoBnAW??i@dBaCIi@aAFyBQ}HaDWDQ`@","min":20,"mi":6.5},"d1:1":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@iNbiAaIkBmD`[BxCv@fL]nJ}@fAsApDkPbXeI~OsBhF_Md_@{DbJuCfFiExFcK~K}CdBeE|AwBb@cER{Zg@gANsBE{F^qExA{_@hXa@CyVlIua@hVkEnEoHzMoA~AsDzCkRxJcB`B}HfKgBpAmKfEqFrDwB`AcBd@aKzALpBv@~CbDlF|AnD~OzJpD`ErG|FzDvErB~CpB|EbCdDvCrF|D|FxBdHtApCjEdG~@lCpD|PTdDFpHrBzNxBvHfC~FvIxMtHrE~FzGrHdGrCdDtDfCBjAr@`AH~@g@|JBrVz@tC|CdEpBzFrDbFhB`D|@bAf@NjAL|@MbGqCj@CbAXt@bAnCrGbClE~IpMrClI`HpDr@dAbAVvDzBvAtAv@nCzC~Pl@zFH|BW|Ba@dAPX`A?r@XLxCVGPqA","min":25,"mi":12.1},"d1:2":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaArDu@lBXzC`AfGAjEbD|@T`Ac@hCmDlCwB`AEpAhCzAbA~K|DnDx@q@lFjCn@","min":5,"mi":1.5},"d2:0":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@iNbiAaIkBmD`[BxCv@fL]nJ}@fAsApDkPbXeI~OsBhFuJlZeGzNuCfFqCvD{L`NnDnH^rAfFm@f@Df@bAAv@iGzJwEhC_GzEa@hAX~@t@Lz@q@lAgCp@Qt@ZlF}B?j@qE`JGV\\b@v@YjHyElBi@fBR|CGvAYj@k@nDAt@c@dAM`Bk@Zu@XIdCtBhDhB|@rBwAmMu@}@u@uBm@mENwCWu@k@a@]A{GvBoBnAW??i@dBaCIi@aAFyBQ}HaDWDQ`@","min":20,"mi":6.5},"d2:1":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@~AsMjPxDOrA","min":6,"mi":1.7},"d2:2":{"g":"_wdnFp}}jSNsAfBb@CL","min":1,"mi":0.1},"d2:5":{"g":"_wdnFp}}jSNsAfBb@","min":1,"mi":0.1},"d2:6":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@~AsMvRrEo@pFq@Q","min":6,"mi":1.8},"d3:0":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@iNbiAaIkBmD`[BxCv@fLWnIOt@s@p@Cp@PZrBl@|CxBxA~At@nB~@bKTj]JvAb@x@dA^tOB|CVr[p\\`IpFvFfMfDhAzFdA`DrAr@nAL|AF|BQ`FPxB^bCbA|Bj@~@jBtA|Cf@|@p@vChGdBdFfJ|HbEfIhDlDfBzF|@lEvFzJr@f@pCBpARh@^n@bAfCfH","min":17,"mi":5.8},"d3:1":{"g":"_v`nFztikSnAbD~AbBfGfDfChBrBNz@`@vHfHhH`DfPdK|D~ChPdPxMfGrNxH`GlGl@nAl@XhAErGf@hCx@hQ~RnNvDvLpE|@p@rFnG~AbAhEt@lUzBpDx@hJjGxGdD`BzAhCxEjDdDtGrCbLnDhDpCpC|AxO|ErFjAvKfGlGvBxBlAfCvG~LnUz@dGhChFh@`G^fBjD`HzBxL\\z_@VtAz@jBx@v@zLjGbEzGnBdItB`Dp@bChAtBFjEkB|GHVf@E","min":14,"mi":6.2},"d3:2":{"g":"_v`nFztikSgCgHo@cAi@_@qASqCCs@g@wF{J}@mEgB{FiDmDcEgIgJ}HeBeFwCiG}@q@}Cg@kBuAk@_AcA}B_@cCQyBPaFG}BM}As@oAaDsA{FeAgDiAwFgMaIqFs[q\\}CWuOCeA_@c@y@KwAUk]_@kF_@wCu@oByA_B}CyBo@cATkNcAkL@wEdDeWX_@d@GbGtAxOkpAlKdCMfA","min":13,"mi":4.7},"d3:3":{"g":"g_enFhb~jSa@~CkAYBOsD_A","min":3,"mi":0.1},"d4:0":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@iNbiAaIkBgDbYAvEv@fLWnIOt@s@p@Cp@PZrBl@|CxBxA~At@nB~@bKTj]JvAb@x@dA^tOB|CVxCrCrPzQxEtEzB|AjC|AX}@HqAV_@h@If@Nr@z@","min":12,"mi":4.2},"d4:2":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@~AsMvRrEM`A","min":6,"mi":1.7},"d4:3":{"g":"usdnF`~}jS_@tDsFwAkAQCJ}FqAyAbL_B_@","min":9,"mi":0.4},"d5:0":{"g":"glhnFrw~jSvEiUfYkItXnGhKuInWjMiNbiAaIkByChy@y^fp@oVrq@eSdXyPbIiu@nB{_@hX_y@l_@iWn\\u{@pk@wmD~{@k`BxuBiOpg@uUj\\}Sll@mq@~a@sg@nN_x@v|@}Md`@qGfg@}XlrDqUl^aW|Qk[reA_tB`qC}Kn^gG`{AdHfr@eHbg@yt@f|@seAz^md@xf@iU~j@wWx|AyTfj@eu@d{Ke[bxBGn~@pEzh@{F|i@{T~w@c`DnsCip@rVcjA~JgMzE{l@~m@s[zhAep@`oAchA|[q[Wcc@hWmZh_@{Vxt@sMrIu^xHlA~^mh@dGg]lSgYmHue@zG^_m@eIHaKrL_PXkEpSxIh[qQfF","min":68,"mi":44.1},"d5:1":{"g":"gslpFpacnSpQgFyIi[jEqS`Pl@~J{NdII_@~l@te@{GfYlHf]mSfl@aIgEc]t^yHrMsIlWit@bZc_@va@oWr_@RdhAg^zm@gmAx[yhAnm@{m@hxA_Qpn@{UdcDkvChSqv@pFuj@{E}h@Lq}@t[_zBvq@akKxXsz@fWq}AlPkc@~`@{e@ffAk^d{@ybAdHcg@sGms@jG{{AxJwZltByrCx[odA~VkRtUq_@vY{qDbYmjAzo@gv@n]qPrMw@bq@yb@|Sml@xXaa@dL{b@~_BqrBhnDi~@l}@_m@dTcZxzAky@tMaDxi@`@jVwQpf@ujAh[_e@jB}y@rINhNciAoWkMiKtIuXoGgYjIwEhU","min":69,"mi":44.2},"d6:0":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@iNbiAaIkBmD`[BxCv@fL]nJ}@fAsApDkPbXeI~OsBhF_Md_@{DbJuCfFiExFcK~K}CdBeE|AwBb@cER{Zg@gANsBE{F^qExA{_@hXa@CyVlIua@hVkEnEoHzMoA~AsDzCkRxJcB`B}HfKgBpAmKfEqFrDwB`AcBd@aKzALpBv@~CbDlF|AnD~OzJpD`ErG|FzDvErB~CpB|EbCdDvCrF|D|FxBdHtApCjEdG~@lCpD|PTdDFpHrBzNxBvHfC~FvIxMtHrE~FzGrHdGrCdDtDfCBjAr@`AH~@g@|JBrVz@tC|CdEpBzFrDbFhB`D|@bAf@NjAL|@MbGqCj@CbAXt@bAnCrGbClE~IpMrClI`HpDr@dAbAVvDzBvAtAv@nCzC~Pl@zFH|BW|Ba@dAPX`A?r@XLxCVGPqA","min":25,"mi":12.1},"d6:1":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaArDu@lBXzC`AfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|D`GxAWrB","min":5,"mi":1.4},"d6:2":{"g":"}henFlh~jSReBiDs@In@","min":2,"mi":0.1},"d7:1":{"g":"glhnFrw~jSvEiUfYkItXnGhKuInWjMiNbiAaIkByChy@y^fp@oVrq@eSdXyPbIiu@nB{_@hX_y@l_@iWn\\u{@pk@wmD~{@k`BxuBiOpg@uUj\\}Sll@mq@~a@sg@nN_x@v|@}Md`@qGfg@}XlrDqUl^aW|Qk[reA_tB`qC}Kn^gG`{AdHfr@eHbg@yt@f|@seAz^md@xf@iU~j@wWx|AyTfj@eu@d{Ke[bxBGn~@pEzh@gFxg@uSjw@}aDfvCip@rVcjA~JgMzE{l@~m@s[zhAep@`oAchA|[q[Wcc@hWmZh_@{Vxt@sMrIu^xHlA~^mh@dGg]lScVgH{`@rDfF{EeN|H^_m@yM|BmD~I|BlFpBi\\aMm[kNqOe`@aSeKmOqG}~@vFiu@kCuZlG_f@yE{L}YyVeEuMdBiOlQ_RbL}cBbTo\\GcS{k@yi@wd@ifA_b@cNeDyWzBk~@_f@}v@eTgMwAqk@oZoy@mv@mx@kVisAm\\_U}K{r@w[qk@uCaa@yOqg@cd@q]nAi`@eKuhAmGcHcVeCyNaLge@iyA_b@kw@qSkoBhDonAbT_iBF{X}WwuAkCu`Bcf@_eB}Ce]hY_iBiImhBK_zCyCo_@|QurAcFgp@|Dqs@qFkxAvIywAiRqk@cAiy@ev@kuAiv@yeCwUwsBiZcl@Mcr@{Uw~@s}@weAmb@kcAa`@{g@oKsl@yTkg@wGkmAjAwYvIwUrt@{g@|Eay@lc@_gA`~@kf@bLot@fJuNh]mErlAod@nQyUfTaj@nCiPaB{k@xLg}@gBcs@je@{nBvYag@hIgl@GczAt\\q`A}MklAlB{i@fb@eiAd]yiBzVm]tE}]vPyd@tH}gAtRkz@`HcIl\\yGjMql@wB{U_b@c\\}i@m|Amc@{e@gb@yp@agAsbCwEc\\jAg`@lF}VnUuDI_U","min":135,"mi":104.4},"d7:2":{"g":"ig}pFndghSUnVgPnAnKsoB{b@{fEv@}wAvYcaAnfAoeBdQul@~OyI~}@lIbeA_\\p]iUbYgo@fB}iA~FoXvL}LvOq@zs@bYrNcAfuA{vApXeLrPsZ`v@sp@b`Ak_@|x@dHjX{A~i@iWjZka@nb@mWxKia@~Ao`AtQouAt@ov@eI}f@c@gv@iIoWaPgIyy@dN}Og@oa@mh@}LkFkMz@{c@vZcP`@aYwRiX_Dq_@_Rca@o`@gd@_GiQyUa^_`AeLuIgfAw\\ip@_kA_p@al@iWkb@y_@gZ_Uq_@{QoHwo@XqXyWuf@w`Ba]ch@s^uaAkG_r@oh@iqAaIslAcXe~@i_@waAsRgXsWuNoTu\\{Cmz@gP_j@bAqeA_Lyo@M_yDwOwk@gB{m@}GwO_hAclAmf@klAyAcwBlPcw@z_@ccA~KcqA_XsjBbHkm@oCiqA{Fcf@dB{^_E_wAvNamB}@gRgSwf@cPccAms@qcAcwAgQmq@_RegAgv@wz@gfCqm@gp@}M_r@e[wmCnN}rCu@gu@|EybApm@ehB|Byc@nQgTr^}w@ff@wyCwBuw@`FicAcZsfAdDeh@qFytAwIuW~BmY|Pyh@iGs^`E}[yKo`@hMa\\d^_Jzq@ib@vWi[zUok@zSekAnV}n@aAgt@dFeg@iEck@lRmi@nCmfAtLc^v`@_g@rOur@_De_@idAu~AqCqRv[kqB|Cix@~Qur@xJioAkBks@hIis@|Ga[dQyZp@uy@|Kuo@rDey@mEyP_WcWwvBq~AieAikBq}A_tBss@gh@eYcLctBgEaJwLqXkdAyF}k@jAa`E_PmrAtQgfABmkAgIi^rHu`@uCauBtCshCjVqcBcBw}F`A}wArI_`Ad@akDhl@glObSmwAiGiSiMcIwwAgAgmAiW}nCy@a^mL}W}WwPeb@}F}j@fBwaQ}K_Pk`@JsMvWdDhMo[vX}O[gI{FmCkg@","min":151,"mi":121.3}},"fromHome":{"den":[283,224.6],"citymkt":[63,41.7],"fmsdt":[6,1.7],"wildfig":[5,1.5],"bellyup":[6,1.8],"buttermilk":[20,6.5],"snowmass":[25,12.1],"whitehouse":[5,1.5],"gondola":[6,1.7],"bonnies":[33,4.5],"tavern":[6,1.7],"casatua":[6,1.8],"tlazy7":[17,5.8],"bells":[31,12.1],"downtown":[5,1.6],"frenchalp":[5,1.4],"highlands":[12,4.2],"mgr":[45,7.7],"nyeplaza":[6,1.7],"matsuhisa":[5,1.4],"iron":[68,44.1],"s316":[5,1.4],"jbar":[5,1.4],"vail":[135,104.4],"pinecreek":[36,13.8],"riogrande":[4,1.3],"meatcheese":[5,1.4],"clarks":[4,1.3],"artmuseum":[6,1.7],"rubey":[6,1.7],"wagner":[5,1.6]},"town":{"fmsdt>riogrande":{"g":"{xdnF||}jSNsAkPyD_BrMoDy@sBq@XsAlAuBNL","min":2,"m":850},"riogrande>wildfig":{"g":"crenFzy}jSOMmAtBQt@LD?NbCp@l@FHL~@LvIxBCNjAXa@nD","min":8,"m":594},"wildfig>bellyup":{"g":"kaenFxl~jS`@oDnAZn@eFfCn@DY","min":4,"m":317},"whitehouse>meatcheese":{"g":"sienFtk~jS@I`@HHm@","min":1,"m":45},"rubey>casatua":{"g":"wxdnFze~jSTkB_@K","min":1,"m":67},"downtown>frenchalp":{"g":"g_enFhb~jSa@~CkAYBOsD_A","min":3,"m":226},"nyeplaza>matsuhisa":{"g":"usdnF`~}jS_@tDsFwAU?u@QCJyEiAc@GyAbL_B_@","min":9,"m":659},"s316>jbar":{"g":"}henFlh~jSReBiDs@In@","min":2,"m":164}}};
   var ELEV = {"home":2477,"den":1637,"citymkt":1781,"fmsdt":2419,"wildfig":2415,"bellyup":2418,"buttermilk":2401,"snowmass":2556,"whitehouse":2411,"gondola":2423,"bonnies":3181,"tavern":2423,"casatua":2420,"tlazy7":2517,"bells":2920,"downtown":2418,"frenchalp":2414,"highlands":2464,"mgr":3043,"nyeplaza":2418,"matsuhisa":2411,"iron":1743,"s316":2411,"jbar":2412,"vail":2493,"pinecreek":2914,"riogrande":2406,"meatcheese":2413,"clarks":2401,"artmuseum":2418,"rubey":2417,"wagner":2414};   /* ground elevation (m) per place — for the Google Earth 3D links */
   var P = DATA.places, DAYS = DATA.days, ROUTES = PRE.routes, FROMHOME = PRE.fromHome;
@@ -8675,8 +8730,8 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     return 'https://earth.google.com/web/@' + pl.c[0] + ',' + pl.c[1] + ',' + el + 'a,' + (wide ? 2800 : 650) + 'd,35y,' + (TOWNSET[pk] ? 194 : 0) + 'h,65t,0r';
   }
   function deepLinks(pk, cls){
-    return '<a class="' + cls + '" href="' + appleUrl(pk) + '" target="_blank" rel="noopener" title="Open in Apple Maps (tap the 3D / Flyover button there)">' + ICON.fold + 'Apple Maps</a>'
-      + '<a class="' + cls + '" href="' + earthUrl(pk) + '" target="_blank" rel="noopener" title="Open in Google Earth — photorealistic 3D">' + ICON.globe + 'Earth 3D</a>';
+    return '<a class="' + cls + '" href="' + appleUrl(pk) + '" target="_blank" rel="noopener noreferrer" title="Open in Apple Maps (tap the 3D / Flyover button there)">' + ICON.fold + 'Apple Maps</a>'
+      + '<a class="' + cls + '" href="' + earthUrl(pk) + '" target="_blank" rel="noopener noreferrer" title="Open in Google Earth — photorealistic 3D">' + ICON.globe + 'Earth 3D</a>';
   }
   function legFor(day, i){
     var s = day.stops[i], prev = i > 0 ? day.stops[i-1].p : null, from = s.from || prev;
@@ -8738,13 +8793,17 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       + '<button class="vx-tool" data-t="rings" aria-pressed="false" title="Distance from the house">' + ICON.ring + '<span>Rings</span></button>'
       + (TOWN ? '<button class="vx-tool" data-t="town" aria-pressed="false" title="Drill down into downtown Aspen, on foot">' + ICON.town + '<span>Downtown</span></button>' : '')
       + '<button class="vx-tool keep" data-t="3d" aria-pressed="false" title="Real 3D terrain + buildings">' + ICON.cube + '<span>3D</span></button>'
-      + (CESIUM_TOKEN ? '<button class="vx-tool keep" data-t="pr" aria-pressed="false" title="Google photorealistic 3D (trees, buildings, the real mountain)">' + ICON.globe + '<span>Photoreal</span></button>' : '')
+      + '<div class="vx-seg vx-3dmode" role="group" aria-label="3D style" hidden><button data-m3="pr" aria-pressed="false" title="Google photorealistic 3D">Photoreal</button><button data-m3="simple" aria-pressed="false" title="Lighter terrain-only 3D for older devices">Simple</button></div>'
       + '<button class="vx-tool keep vx-flybtn" data-t="fly" hidden title="Play this day as a 3D film">' + ICON.play + '<span>Play this day</span></button>'
       ;
     var right = $('vxToolsR');
     if (right) right.innerHTML = '<button class="vx-tool sq" data-t="locate" title="How far am I from the house?" aria-label="Show my location">' + ICON.locate + '</button>'
       + '<button class="vx-tool sq" data-t="fit" title="Fit the map to this day" aria-label="Fit the map to this day">' + ICON.fit + '</button>';
     [].forEach.call(t.querySelectorAll('[data-base]'), function(b){ b.addEventListener('click', function(){ setBase(b.getAttribute('data-base')); }); });
+    [].forEach.call(t.querySelectorAll('[data-m3]'), function(b){ b.addEventListener('click', function(){
+      var m = b.getAttribute('data-m3'); prefs.simple3d = m === 'simple'; savePrefs();
+      if (m === 'simple' && prOn){ closePR(); open3d(); } else if (m === 'pr' && !prOn){ if (is3d) close3d(); openPR(); }
+    }); });
     [].forEach.call(document.querySelectorAll('#vxTools [data-t], #vxToolsR [data-t]'), function(b){
       b.addEventListener('click', function(){
         var k = b.getAttribute('data-t');
@@ -8753,8 +8812,10 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
         else if (k === 'locate'){ locate(); }
         else if (k === 'fit'){ if (is3d) frame3d(true); else fitCurrent(); }
         else if (k === 'town'){ if (townOn) show(townPrev || 'trip', true); else enterTown(true); }
-        else if (k === '3d'){ if (prOn){ closePR(); open3d(); } else if (is3d) close3d(); else open3d(); }
-        else if (k === 'pr'){ if (prOn) closePR(); else openPR(); }
+        else if (k === '3d'){   /* one 3D button: Photoreal by default, Simple if chosen or if Photoreal can't load */
+          if (prOn) closePR(); else if (is3d) close3d();
+          else if (prAvailable() && !prefs.simple3d) openPR(); else open3d();
+        }
         else if (k === 'fly'){ if (dayById(cur) || cur === 'town') startTour(cur, b); }
       });
     });
@@ -8769,8 +8830,10 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     if (r) r.setAttribute('aria-pressed', !!prefs.rings);
     var tw = t.querySelector('[data-t="town"]'), d3 = t.querySelector('[data-t="3d"]'), fl = t.querySelector('[data-t="fly"]');
     if (tw) tw.setAttribute('aria-pressed', !!townOn);
-    var prb = t.querySelector('[data-t="pr"]'); if (prb) prb.setAttribute('aria-pressed', !!prOn);
-    if (d3){ d3.setAttribute('aria-pressed', !!is3d && !prOn); d3.setAttribute('aria-label', is3d ? 'Back to the flat map' : 'Open the 3D view'); }
+    var md = t.querySelector('.vx-3dmode');
+    if (md){ md.hidden = !(is3d || prOn) || !CESIUM_TOKEN || prFailed;
+      [].forEach.call(md.querySelectorAll('[data-m3]'), function(b){ b.setAttribute('aria-pressed', (b.getAttribute('data-m3') === 'pr') === !!prOn); }); }
+    if (d3){ d3.setAttribute('aria-pressed', !!(is3d || prOn)); d3.setAttribute('aria-label', is3d ? 'Back to the flat map' : 'Open the 3D view'); }
     if (fl){
       fl.hidden = !dayById(cur) && cur !== 'town';
       var fs = fl.querySelector('span'); if (fs) fs.textContent = cur === 'town' ? 'Play the walks' : 'Play this day';
@@ -8790,7 +8853,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {maxZoom:19, maxNativeZoom:18, opacity:.9, className:'vx-labels'})
     ]);
     base.topo = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {maxZoom:19, maxNativeZoom:18, className:'vx-topo', attribution:'Terrain &copy; Esri, USGS, NPS'});
-    overlays.pistes = L.tileLayer('https://tiles.opensnowmap.org/pistes/{z}/{x}/{y}.png', {maxZoom:19, maxNativeZoom:18, minZoom:9, opacity:.85, className:'vx-pistes', updateWhenZooming:false, keepBuffer:3, attribution:'Runs &copy; <a href="https://www.opensnowmap.org" target="_blank" rel="noopener">OpenSnowMap</a> &middot; &copy; OpenStreetMap'});
+    overlays.pistes = L.tileLayer('https://tiles.opensnowmap.org/pistes/{z}/{x}/{y}.png', {maxZoom:19, maxNativeZoom:18, minZoom:9, opacity:.85, className:'vx-pistes', updateWhenZooming:false, keepBuffer:3, attribution:'Runs &copy; <a href="https://www.opensnowmap.org">OpenSnowMap</a> &middot; &copy; OpenStreetMap'});
     ringLayer = buildRings();
     layerDay = L.layerGroup().addTo(map);
     layerTrip = L.layerGroup().addTo(map);
@@ -8854,7 +8917,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     var fh = FROMHOME[pk];
     h += '<div class="vx-pop-row">';
     if (pk !== 'home' && fh && !NO_DRIVE[pk]) h += '<span class="vx-chip">' + ICON.car + '~' + fmtMin(fh[0]) + ' from home</span>';
-    h += '<a class="vx-chip go" href="' + gmaps(pl.c) + '" target="_blank" rel="noopener">' + ICON.pin + 'Directions</a>' + deepLinks(pk, 'vx-chip go') + '</div>';
+    h += '<a class="vx-chip go" href="' + gmaps(pl.c) + '" target="_blank" rel="noopener noreferrer">' + ICON.pin + 'Directions</a>' + deepLinks(pk, 'vx-chip go') + '</div>';
     return h + '</div>';
   }
   function bindPopup(m, pk, stop, day){
@@ -9067,7 +9130,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
         + '</span>'
         + (pl.ph.length ? '<span class="vx-th" data-ph="' + esc(s.p) + '" data-pi="0" role="button" tabindex="-1" aria-label="Photos of ' + esc(pl.n) + '"><img src="' + esc(img(pl.ph[0][0])) + '" alt="" loading="lazy">' + (pl.ph.length > 1 ? '<i>' + pl.ph.length + '</i>' : '') + '</span>' : '')
         + '</button>'
-        + '<span class="vx-acts"><a href="' + gmaps(pl.c) + '" target="_blank" rel="noopener">' + ICON.pin + 'Directions</a>'
+        + '<span class="vx-acts"><a href="' + gmaps(pl.c) + '" target="_blank" rel="noopener noreferrer">' + ICON.pin + 'Directions</a>'
         + deepLinks(s.p, 'dl')
         + '<a href="#itinerary" data-open="' + d.id + '">' + 'Itinerary &rarr;</a></span>'
         + '</li>';
@@ -9155,6 +9218,15 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     [].forEach.call(ol.querySelectorAll('.vx-stop[data-i]'), function(li){ cardIO.observe(li); });
   }
 
+  /* every external link in the map, tour and credits opens in a new tab */
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
+    if (!a.closest('#valley, .vx-popwrap, .vx-prcred, .maplibregl-ctrl-attrib, .leaflet-control-attribution, .cesium-credit-lightbox, .vt')) return;
+    var href = a.getAttribute('href') || '';
+    if (!/^https?:/i.test(href) || a.origin === location.origin) return;
+    e.preventDefault(); window.open(a.href, '_blank', 'noopener,noreferrer');
+  }, true);
+
   /* ---------- photos (reuse the page lightbox #lb) ---------- */
   function openPhoto(pk, pi){
     var pl = P[pk]; if (!pl || !pl.ph[pi]) return;
@@ -9183,7 +9255,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       meLayer = L.layerGroup([
         L.circle(c, {radius: Math.min(pos.coords.accuracy, 800), className:'vx-me-acc', interactive:false}),
         L.marker(c, {icon:L.divIcon({className:'vx-pinwrap', html:'<div class="vx-me"></div>', iconSize:[18,18], iconAnchor:[9,9]}), zIndexOffset:2000})
-          .bindPopup('<div class="vx-pop"><div class="vx-pop-ey">You are here</div><h4>' + (mi < 0.1 ? 'At the house' : (mi < 10 ? mi.toFixed(1) : Math.round(mi)) + ' mi from the house') + '</h4><p>As the crow flies. <a href="' + gmaps(P.home.c) + '" target="_blank" rel="noopener">Directions home</a></p></div>', {className:'vx-popwrap'})
+          .bindPopup('<div class="vx-pop"><div class="vx-pop-ey">You are here</div><h4>' + (mi < 0.1 ? 'At the house' : (mi < 10 ? mi.toFixed(1) : Math.round(mi)) + ' mi from the house') + '</h4><p>As the crow flies. <a href="' + gmaps(P.home.c) + '" target="_blank" rel="noopener noreferrer">Directions home</a></p></div>', {className:'vx-popwrap'})
       ]).addTo(map);
       if (mi > 300) { toast('You’re ' + Math.round(mi) + ' mi from Aspen — showing the valley instead.'); return; }
       map.flyTo(c, Math.max(map.getZoom(), 14), {duration: RM ? 0 : 0.8});
@@ -9419,7 +9491,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
           + '<span class="vx-txt"><span class="vx-time">' + (dl.length ? 'Day ' + esc(dl.join(' · ')) : 'Good to know') + '</span>'
           + '<span class="vx-title">' + esc(pl.n) + '</span><span class="vx-what">' + esc(pl.a) + '</span></span>'
           + (pl.ph.length ? '<span class="vx-th" data-ph="' + esc(k) + '" data-pi="0" role="button" tabindex="-1" aria-label="Photos of ' + esc(pl.n) + '"><img src="' + esc(img(pl.ph[0][0])) + '" alt="" loading="lazy"></span>' : '')
-          + '</button><span class="vx-acts"><a href="' + gmaps(pl.c) + '" target="_blank" rel="noopener">' + ICON.pin + 'Directions</a>' + deepLinks(k, 'dl') + '</span></li>';
+          + '</button><span class="vx-acts"><a href="' + gmaps(pl.c) + '" target="_blank" rel="noopener noreferrer">' + ICON.pin + 'Directions</a>' + deepLinks(k, 'dl') + '</span></li>';
       }
     });
     ol.innerHTML = h;
@@ -9542,9 +9614,9 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       sources:{
         img:{type:'raster', tiles:[SRC3.img], tileSize:256, maxzoom:18, attribution:'Imagery &copy; Esri, Maxar, Earthstar Geographics'},
         dem:{type:'raster-dem', tiles:[SRC3.dem], tileSize:256, maxzoom:15, encoding:'terrarium',
-          attribution:'Terrain: <a href="https://registry.opendata.aws/terrain-tiles/" target="_blank" rel="noopener">AWS Terrain Tiles</a> (USGS 3DEP, SRTM, GMTED)'},
+          attribution:'Terrain: <a href="https://registry.opendata.aws/terrain-tiles/" target="_blank" rel="noopener noreferrer">AWS Terrain Tiles</a> (USGS 3DEP, SRTM, GMTED)'},
         hs:{type:'raster-dem', tiles:[SRC3.dem], tileSize:256, maxzoom:15, encoding:'terrarium'},
-        ofm:{type:'vector', url:SRC3.ofm, attribution:'<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> &copy; OpenMapTiles &middot; &copy; OpenStreetMap contributors'}
+        ofm:{type:'vector', url:SRC3.ofm, attribution:'<a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a> &copy; OpenMapTiles &middot; &copy; OpenStreetMap contributors'}
       },
       layers:[
         {id:'img', type:'raster', source:'img', paint:{'raster-brightness-max': dk ? 0.8 : 1, 'raster-saturation': -0.05, 'raster-fade-duration': 150}},
@@ -10094,7 +10166,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     segs.forEach(function(g){
       var w = (g.t1 - g.t0) / tl.total * 100, ticks = '';
       if (g.c) g.c.stops.forEach(function(s){ ticks += '<i class="tk' + (s.star ? ' st' : '') + '" style="left:' + ((s.t0 - g.t0) / (g.t1 - g.t0) * 100).toFixed(2) + '%"></i>'; });
-      h += '<div class="vt-seg" title="' + esc(g.c ? 'Day ' + g.c.d.r + ' · ' + g.c.d.t : 'Opening') + '" style="flex:0 0 ' + w.toFixed(3) + '%"><b><s></s></b>' + ticks + '</div>';
+      h += '<div class="vt-seg" title="' + esc(g.c ? (g.c.title || ('Day ' + g.c.d.r + ' · ' + g.c.d.t)) : 'Opening') + '" style="flex:0 0 ' + w.toFixed(3) + '%"><b><s></s></b>' + ticks + '</div>';
     });
     sc.innerHTML = h; sc.setAttribute('aria-valuemax', Math.round(tl.total / 1000));
     T.segs = segs; T.segEls = [].slice.call(sc.querySelectorAll('.vt-seg'));
@@ -10386,7 +10458,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
   function play(){ if (!T) return; if (T.t >= T.tl.total) T.t = 0; T.playing = true; T.userPaused = false; T.dragged = false; T.force = true; T.flash = T.flash || 0.35; syncPP(); }
   function pause(user){ if (!T) return; T.playing = false; T.userPaused = !!user; syncPP(); }
   function togglePlay(){ if (!T) return; if (T.playing) pause(true); else play(); }
-  function seek(t, flash){ if (!T) return; T.t = clamp(t, 0, T.tl.total - 1); T.force = true; T.parts = []; if (flash) T.flash = 0.6; showUi(); }
+  function seek(t, flash){ if (!T) return; if (T.film){ filmSeek(t); return; } T.t = clamp(t, 0, T.tl.total - 1); T.force = true; T.parts = []; if (flash) T.flash = 0.6; showUi(); }
   function skip(dir){
     var S = T.tl.shots, marks = S.filter(function(s){ return s.k !== 'leg'; }).map(function(s){ return s.t0; });
     var t = T.t, target;
@@ -10415,6 +10487,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     showUi();
   }
   function onResize(){
+    if (T && T.film){ T.narrow = T.el.clientWidth < 640; T.el.classList.toggle('narrow', T.narrow); return; }
     if (!T || !m3) return;
     T.narrow = T.el.clientWidth < 640; T.el.classList.toggle('narrow', T.narrow);
     try { m3.setPadding(tourPad()); } catch(e){}
@@ -10434,6 +10507,8 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     if (T) return;
     if (scope !== 'all' && scope !== 'town' && !dayById(scope)) scope = 'all';
     if (scope === 'town' && !TOWN) scope = 'all';
+    /* v2: the Cesium film whenever Photoreal is available; this MapLibre engine is the fallback */
+    if (webglOK() && prAvailable() && startFilm(scope, from)) return;
     if (!webglOK()){
       var reel = document.querySelector('[data-reel]');
       if (reel){ reel.click(); } else toast('The 3D tour needs WebGL, which this browser has turned off.');
@@ -10445,7 +10520,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     var opened = !is3d, wasFull = vx.classList.contains('full');
     T = {scope:scope, from:from || document.activeElement, opened:opened, wasFull:wasFull, t:0, playing:false, pins:{}, parts:[], si:-1, force:true,
       narrow:false, musicAsk:false, prevCur:cur};
-    try { var mv = localStorage.getItem('aspenTourMusic'); T.musicAsk = window.AspenMusic && mv == null && !musicState(); if (mv === '1' && window.AspenMusic && !musicState()) setMusic(true); } catch(e){}
+    T.musicAsk = !!window.AspenMusic && !musicState();   /* music only ever starts from a tap inside the tour */
     document.body.classList.add('vt-on');
     if (!wasFull) toggleFull(true);
     tourPending = true;
@@ -10493,7 +10568,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     if (t.musicByTour && window.AspenMusic){ try { window.AspenMusic.pause(); } catch(e){} }
     Object.keys(t.pins || {}).forEach(function(k){ t.pins[k].remove(); });
     if (t.head) t.head.remove();
-    tourPREnd(t);
+    tourPREnd(t); stopFilm(t);
     if (t.el) t.el.remove();
     document.body.classList.remove('vt-on');
     if (m3){
@@ -10653,7 +10728,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     syncTools();
     makePR(el).then(function(rec){
       if (!prOn){ rec.destroy(); return; }
-      PRV = rec;
+      PRV = rec; clampPR(rec);
       return rec.ready.then(function(ts){
         if (!prOn || !ts) return;
         var ld = el.querySelector('.vx-3dload'); if (ld) ld.remove();
@@ -10663,6 +10738,26 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     }).catch(function(e){
       prFailed = true; console.warn('[AspenMap photoreal]', e && e.message);
       toast('Photoreal 3D couldn’t load — showing the standard 3D map.'); closePR(); open3d();
+    });
+  }
+  /* Photoreal explorer limits: Google's mesh melts at street level, so keep the eye ≥150 m above
+     whatever is under it, never flatter than 15° below the horizon, and never past 70 km out. */
+  function clampPR(rec){
+    var C = rec.C, v = rec.v, sc = v.scene.screenSpaceCameraController;
+    sc.minimumZoomDistance = 150; sc.maximumZoomDistance = 70000; sc.inertiaZoom = 0.82; sc.inertiaSpin = 0.85; sc.inertiaTranslate = 0.85;
+    var busy = false;
+    v.scene.postRender.addEventListener(function(){
+      if (busy || rec.destroyed) return;
+      var cam = v.camera, c = cam.positionCartographic, fix = false, h = c.height, pitch = cam.pitch;
+      var g = null; try { g = v.scene.sampleHeight(C.Cartographic.clone(c)); } catch(e){}
+      if (g == null || !isFinite(g)) g = 2400;
+      if (h < g + 150){ h = g + 150; fix = true; }
+      if (h > g + 70000){ h = g + 70000; fix = true; }
+      if (pitch > -C.Math.toRadians(15)){ pitch = -C.Math.toRadians(15); fix = true; }
+      if (!fix) return;
+      busy = true;
+      cam.setView({destination:C.Cartesian3.fromRadians(c.longitude, c.latitude, h), orientation:{heading:cam.heading, pitch:pitch, roll:0}});
+      busy = false;
     });
   }
   function drawPR(fly){
@@ -10738,6 +10833,808 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     if (t.pr.el) t.pr.el.remove();
   }
 
+  /* =====================================================================
+     TOUR v2 — "the film". CesiumJS + Google Photorealistic 3D Tiles.
+     A deliberate shot list per chapter (plane → Escalade → nights out → ski days → NYE …),
+     driven from scene.preRender so camera + models update in the same frame Cesium draws.
+     Every chapter is GATED: its card holds on black while each of its shots' camera views
+     is pre-visited and Google tiles load at hold quality — the viewer never sees grey tiles.
+     Personalised by window.AspenWho. Falls back to the MapLibre tour (with a note) if
+     Cesium/tiles can't load, and to the photo reel without WebGL.
+     ===================================================================== */
+  var FILM_FILM = DATA.film || {};   /* full-resolution road segments for car shots (build_film.py) */
+  var MODELS = (window.ASPEN_MODEL_BASE || (MEDIA + 'models/'));
+  /* --- Griffin will send the exact car tomorrow: everything about it lives here --- */
+  var CAR = {
+    model:'2025 Cadillac Escalade', color:'Black', wheels:'22-inch, polished', plate:'ASPEN 26',
+    paint:[0.012, 0.012, 0.014],   /* model paint (linear RGB); only used when the glb is rebuilt */
+    specs:['Air Ride Adaptive Suspension', '6.2L V8'],          /* confirm against the actual trim */
+    photo:null,            /* e.g. 'cars/jim_escalade' → media/cars/jim_escalade.webp (or a full https URL). null = placeholder silhouette */
+    photoCredit:'',        /* caption under the photo, e.g. 'Jim’s Escalade' */
+    flare:[[0.34, 0.56], [0.58, 0.55]],   /* headlight positions in the photo (fraction of width, height) for the flare */
+    jimLine:'Air ride and all — Jim, you’ll feel right at home.'
+  };
+  var NWU = null, FM = null;   /* Transforms.localFrameToFixedFrameGenerator('north','west'), film state */
+  var MT = -7;                 /* Mountain Standard Time offset for the sun */
+
+  /* ---------- geometry ---------- */
+  function brg(a, b){
+    var r = Math.PI / 180, y = Math.sin((b[1]-a[1])*r) * Math.cos(b[0]*r),
+        x = Math.cos(a[0]*r) * Math.sin(b[0]*r) - Math.sin(a[0]*r) * Math.cos(b[0]*r) * Math.cos((b[1]-a[1])*r);
+    return Math.atan2(y, x) / r;
+  }
+  function gcInterp(a, b, f){   /* great-circle point between a,b ([lat,lng]) */
+    var r = Math.PI / 180, la1 = a[0]*r, lo1 = a[1]*r, la2 = b[0]*r, lo2 = b[1]*r;
+    var d = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((la2-la1)/2), 2) + Math.cos(la1)*Math.cos(la2)*Math.pow(Math.sin((lo2-lo1)/2), 2)));
+    if (d < 1e-9) return a.slice();
+    var A = Math.sin((1-f)*d) / Math.sin(d), B = Math.sin(f*d) / Math.sin(d);
+    var x = A*Math.cos(la1)*Math.cos(lo1) + B*Math.cos(la2)*Math.cos(lo2), y = A*Math.cos(la1)*Math.sin(lo1) + B*Math.cos(la2)*Math.sin(lo2), z = A*Math.sin(la1) + B*Math.sin(la2);
+    return [Math.atan2(z, Math.sqrt(x*x + y*y)) / r, Math.atan2(y, x) / r];
+  }
+  function offsetLL(c, bearing, dist){   /* move dist metres along bearing */
+    var r = Math.PI / 180;
+    return [c[0] + dist * Math.cos(bearing*r) / 110540, c[1] + dist * Math.sin(bearing*r) / (111320 * Math.cos(c[0]*r))];
+  }
+  /* road path for a vehicle: tiny simplification (keeps it on the lane) + spline + arc table + heading */
+  function vehPath(ll, eps){
+    var ref = ll[0], xy = ll.map(function(c){ return toXY(ref, c); });
+    var s = simplify(xy, eps || 1.5), pts = catmull(s, Math.max(120, s.length * 8)), cum = [0];
+    for (var j = 1; j < pts.length; j++) cum.push(cum[j-1] + d2(pts[j-1], pts[j]));
+    var len = cum[cum.length - 1] || 1, N = pts.length, hd = new Float32Array(N);
+    for (var k = 0; k < N; k++){
+      var a = posXY(pts, cum, Math.max(0, cum[k] - 12)), b = posXY(pts, cum, Math.min(len, cum[k] + 12));
+      hd[k] = d2(a, b) < 0.5 && k ? hd[k-1] : Math.atan2(b[0] - a[0], b[1] - a[1]) * 180 / Math.PI;
+    }
+    return {ref:ref, pts:pts, cum:cum, len:len, hd:hd, h:null};
+  }
+  function vAt(p, s){   /* {ll, hd, h} at arc length s */
+    s = clamp(s, 0, p.len);
+    var i = idxAt(p.cum, s), j = Math.min(i + 1, p.pts.length - 1), seg = (p.cum[j] - p.cum[i]) || 1, f = clamp((s - p.cum[i]) / seg, 0, 1);
+    var ll = toLL(p.ref, [lerp(p.pts[i][0], p.pts[j][0], f), lerp(p.pts[i][1], p.pts[j][1], f)]);
+    var h = 0; if (p.h){ var q = s / p.len * (p.h.length - 1), qi = Math.floor(q), qf = q - qi; h = lerp(p.h[qi], p.h[Math.min(qi + 1, p.h.length - 1)], qf); }
+    return {ll:ll, hd:angLerp(p.hd[i], p.hd[j], f), h:h};
+  }
+  /* distance travelled with ease-in/ease-out at the ends (arrive = decelerate to a stop) */
+  function travel(u, len, mode){
+    if (mode === 'arrive') return len * (1 - Math.pow(1 - u, 2.2));
+    if (mode === 'depart') return len * Math.pow(u, 1.8);
+    return len * u;
+  }
+
+  /* ---------- who's watching ---------- */
+  function filmWho(){
+    var id = 'everyone', n = null, pp = null;
+    try { id = (window.AspenWho && window.AspenWho.get && window.AspenWho.get()) || 'everyone';
+      pp = window.AspenWho && window.AspenWho.people && window.AspenWho.people[id]; n = pp ? pp.n : null; } catch(e){}
+    return {id:id, n:n, p:pp};
+  }
+  var AA_FIVE = ['griffin', 'stella', 'ben', 'marcy', 'jim'];
+
+  /* ---------- the shot list ---------- */
+  function fl(sh){ return sh; }
+  function filmTimeline(scope){
+    var W = filmWho(), you = function(ids){ return ids.indexOf(W.id) >= 0; };
+    var shots = [], chapters = [], total = 0;
+    function chapter(o){ o.t0 = total; o.shots = []; chapters.push(o); o.i = chapters.length - 1;
+      add({k:'card', dur: RM ? 2600 : 3400, ch:o.i, card:o, cut:true}); return o; }
+    function add(sh){ sh.t0 = total; total += sh.dur; if (sh.ch == null) sh.ch = chapters.length - 1; shots.push(sh); if (chapters[sh.ch]) chapters[sh.ch].shots.push(sh); return sh; }
+    var D0 = DAYS[0], fil = function(k){ return FILM_FILM[k] ? decode(FILM_FILM[k]) : null; };
+    var want = function(id){ return scope === 'all' || scope === id; };
+    var townOnly = scope === 'town';
+
+    if (scope === 'all'){
+      add({k:'title', dur: RM ? 5000 : 7000, ch:-1, cut:true, tod:16 * 60 + 30,
+        cam:function(u){ return {t:[39.205, -106.885, 2500], hd:-48 + 36 * easeSine(u), pt:-17, r:21000}; }});
+    }
+    /* ---- Day 0: the flight ---- */
+    if (want('d0')){
+      chapter({d:D0, title:'The flight', ey:'Day 0 · Sun Dec 27 · 8:36 AM', line:'AA 2357, Dallas to Denver — the week starts at 30,000 feet.'});
+      var dfw = [[32.878993, -97.050926], [32.91581, -97.050736]], den34 = [[39.864092, -104.6872], [39.897017, -104.686815]];
+      add({k:'plane', dur:9000, tod:8 * 60 + 36, plane:'aa', mode:'takeoff', rw:dfw,
+        lt:{ey:'Day 0 · 8:36 AM · DFW', t:'AA 2357 · Dallas → Denver', w: you(AA_FIVE) ? 'You’re on this one — wheels up 8:36, Denver by 9:51.' : 'Griffin, Stella, Ben, Marcy + Jim — wheels up 8:36.', you:you(AA_FIVE)},
+        cam:function(u, v){ return {t:v.ll.concat([v.h + 3]), hd:v.hd + 72 - 12 * u, pt:-15, r:230}; }});
+      add({k:'plane', dur:5200, tod:8 * 60 + 40, plane:'aa', mode:'climb', rw:dfw,
+        cam:function(u, v){ return {t:v.ll.concat([v.h]), hd:v.hd + 14, pt:-12 - 4 * u, r:200 + 60 * u}; }});
+      add({k:'plane', dur:7500, tod:9 * 60 + 25, plane:'aa', mode:'cruise', at:[38.93, -103.55], hd0:303,
+        lt:{ey:'Day 0 · somewhere over eastern Colorado', t:'The Front Range, dead ahead', w:'Denver International sits 5,434 ft up; the Rockies rise right behind it.', fact:null},
+        cam:function(u, v){ return {t:v.ll.concat([v.h]), hd:v.hd - 34 + 6 * u, pt:-3, r:420}; }});
+      add({k:'plane', dur: you(['marco']) ? 7000 : 5200, tod:9 * 60 + 56, plane:'ua', mode:'land', rw:[[39.828321, -104.66056], [39.861256, -104.660175]],
+        lt:{ey:'Day 0 · 9:58 AM · DEN 35L', t:'UA 1891 · Minneapolis → Denver', w: you(['marco']) ? 'That’s you, Marco — 7 minutes behind them. Meet at baggage claim.' : 'Marco lands 7 minutes later. Everyone meets at baggage claim.', you:you(['marco'])},
+        cam:function(u, v){ return {t:v.ll.concat([v.h]), hd:v.hd + 96, pt:-6, r:260}; }});
+      add({k:'plane', dur:10000, tod:9 * 60 + 51, plane:'aa', mode:'land', rw:den34,
+        lt:{ey:'Day 0 · 9:51 AM · DEN 34R', t:'Touchdown, Denver', w:'Bags, the car, and west on I-70.', fact:FACTS.den},
+        cam:function(u, v){ return {t:v.ll.concat([v.h]), hd:v.hd + 6, pt:-13 - 3 * u, r:230 + 30 * u}; }});
+
+      /* ---- Day 0: the Escalade (Jim's beat) ---- */
+      var jim = you(['jim']);
+      chapter({d:D0, title:'The Escalade', ey:'Day 0 · DEN → Aspen · 225 miles', line:'Picked up at DEN. Next stop: City Market, then the house.'});
+      add({k:'reveal', dur: RM ? 6000 : (jim ? 14000 : 10000), tod:12 * 60,
+        spec:{t:CAR.model, list:[CAR.color + ' · ' + CAR.wheels].concat(CAR.specs), plate:CAR.plate, jim:jim},
+        lt:{ey:'Day 0 · DEN · the ride for the week', t:CAR.model, w: jim ? CAR.jimLine : 'The Turo pickup at DEN — home base on wheels for the week.', you:jim}});
+      var car = function(seg, dur, tod, mode, speed, cam, lt, extra){
+        var pts = fil(seg); if (!pts) return;
+        var o = {k:'car', dur:dur, tod:tod, seg:seg, pts:pts, mode:mode, speed:speed, cam:cam, lt:lt};
+        for (var x in extra) o[x] = extra[x];
+        add(o);
+      };
+      car('den_out', 7000, 10 * 60 + 40, 'depart', 30, function(u, v){ return {t:v.ll.concat([v.h + 1]), hd:v.hd + 14, pt:-24, r:360 + 40 * u}; },
+        {ey:'Day 0 · 10:40 AM · Peña Blvd', t:'Leaving DEN', w:'I-70 west — 3½ hours to Glenwood Springs.'});
+      car('tunnel', 8000, 11 * 60 + 25, 'cruise', 34, function(u, v){ return {t:v.ll.concat([v.h + 1]), hd:v.hd - 6, pt:-20, r:460 - 60 * u}; },
+        {ey:'Day 0 · I-70 · 11,158 ft', t:'Eisenhower Tunnel', w:'Under the Continental Divide.', fact:['The Eisenhower Tunnel is the highest point on the Interstate system — 11,158 ft at the west portal.', 'https://en.wikipedia.org/wiki/Eisenhower_Tunnel']},
+        {endFade:true});
+      car('canyon', 9000, 12 * 60 + 10, 'cruise', 32, function(u, v){ return {t:v.ll.concat([v.h + 1]), hd:v.hd + 4 - 8 * u, pt:-40, r:560}; },   /* the open stretch near No Name, high enough to clear the cantilevered deck */
+        {ey:'Day 0 · I-70 · Glenwood Canyon', t:'Glenwood Canyon', w:'Twelve miles of interstate cantilevered over the Colorado River.', fact:CHAP.d0 && CHAP.d0[1]});
+      car('citymkt_in', 8500, 12 * 60 + 30, 'arrive', 0, function(u, v){ return {t:v.ll.concat([v.h + 1]), hd:v.hd + 40 + 30 * u, pt:-32 - 6 * u, r:300 + 20 * u}; },
+        {ey:'Day 0 · ~12:30 PM · Glenwood Springs', t:'City Market', w:'Groceries for the week, alcohol, a full tank — far cheaper than Aspen.', fact:FACTS.citymkt}, {place:'citymkt'});
+      car('co82', 7500, 16 * 60 + 40, 'cruise', 28, function(u, v){ return {t:v.ll.concat([v.h + 1]), hd:v.hd + 8, pt:-22, r:420}; },
+        {ey:'Day 0 · CO-82 · dusk', t:'Into Aspen', w:'Past the airport and Buttermilk, over Castle Creek.'});
+      car('home_in', 11000, 16 * 60 + 58, 'arrive', 0, function(u, v){ return {t:v.ll.concat([v.h + 1]), hd:150 + 50 * easeSine(u), pt:-30 - 6 * u, r:330 - 40 * u}; },
+        {ey:'Day 0 · 4:00 PM · Red Mountain', t:'42 Nighthawk Drive', w:'Home for the week. Porch lights on, hot tub’s warm.', fact:FACTS.home, you:false}, {place:'home', porch:true});
+    }
+    /* ---- the town walks (shared by the full film, day films and "Play the walks") ---- */
+    var walkShots = function(w, opts){
+      var dd = dayById(w.d), legs = w.legs.filter(function(l){ return l[2] === 'walk'; });
+      legs.forEach(function(l, li){
+        var t = townLeg(l), last = li === legs.length - 1, pl = P[l[1]];
+        var ds = dd.stops.filter(function(x){ return x.p === l[1]; })[0];
+        add({k:'walk', dur: RM ? 4000 : clamp(4200 + (t.r ? t.r.m : 300) * 5.5, 5200, 8200), tod: (ds && parseTime(ds.time)) || 19 * 60, pts:t.pts, place:l[1],
+          lt:{ey:'Day ' + dd.r + ' · ' + (ds ? ds.time : w.when), t:P[l[0]].s + ' → ' + pl.s, w:(ds ? ds.what : pl.a) + (t.r ? ' · ' + blocks(t.r.m) + ' blocks, ~' + t.r.min + ' min on foot' : ''),
+            fact:FACTS[l[1]], you: !!(ds && ds.who && W.n && ds.who.toLowerCase().indexOf(W.n.toLowerCase()) >= 0)},
+          photo: pl.ph && pl.ph[0],
+          cam:function(u, v){ return {t:v.ll.concat([v.h + 1.5]), hd:v.hd + 10 * Math.sin(u * 2), pt:-48, r:150}; }});
+      });
+    };
+    var walk = function(id){ for (var i = 0; i < TOWN.walks.length; i++) if (TOWN.walks[i].d === id) return TOWN.walks[i]; return null; };
+    if (want('d0') && !townOnly){
+      chapter({d:D0, title:'Night one', ey:'Day 0 · 4:15 → 9:30 PM · downtown', line:'Rentals at FMS, Wild Fig, then Cloonee at Belly Up.'});
+      if (you(['griffin', 'marco'])) add({k:'hold', dur:5200, tod:16 * 60 + 15, place:'fmsdt',
+        lt:{ey:'Day 0 · ~4:15 PM · 520 E Durant', t:'Your rentals · FMS Downtown', w:(W.p && W.p.rent) || 'Pick up at FMS Downtown before 5 PM.', you:true},
+        cam:function(u){ return {t:P.fmsdt.c.concat([placeH('fmsdt') + 2]), hd:186 + 14 * u, pt:-40, r:220}; }});
+      walkShots(walk('d0'));
+    }
+    if (townOnly){
+      TOWN.walks.forEach(function(w){
+        var dd = dayById(w.d), legs = w.legs.filter(function(l){ return l[2] === 'walk'; }); if (!legs.length) return;
+        chapter({d:dd, title:w.t, ey:'Day ' + dd.r + ' · ' + w.when, line:w.note || ''});
+        walkShots(w);
+      });
+    }
+    /* ---- Day I ---- */
+    if (want('d1') && !townOnly){
+      var d1 = dayById('d1');
+      chapter({d:d1, title:'Snowmass + Buttermilk', ey:'Day I · Mon Dec 28', line:'Lessons at Buttermilk; the rest take on Snowmass.'});
+      add({k:'hold', dur:6200, tod:9 * 60 + 45, place:'buttermilk',
+        lt:{ey:'Day I · 9:45 AM · Summit Express', t:'Buttermilk · first lesson', w: you(['marcy', 'stella']) && W.p ? W.p.snow : 'Marcy + Stella, Max 5 Adult First-Time lesson.', fact:FACTS.buttermilk, you:you(['marcy', 'stella'])},
+        cam:function(u){ return {t:P.buttermilk.c.concat([placeH('buttermilk') + 150]), hd:205 + 14 * u, pt:-19, r:1500}; }});
+      add({k:'hold', dur:6200, tod:11 * 60, place:'snowmass',
+        lt:{ey:'Day I · 9:00 AM · Snowmass', t:'Snowmass', w: you(['griffin', 'ben', 'marco']) && W.p ? W.p.snow : 'Griffin, Ben + Marco — Elk Camp, then the Big Burn.', fact:FACTS.snowmass, you:you(['griffin', 'ben', 'marco'])},
+        cam:function(u){ return {t:P.snowmass.c.concat([placeH('snowmass') + 300]), hd:200 + 18 * u, pt:-18, r:2600}; }});
+    }
+    /* ---- Day II ---- */
+    if (want('d2') && !townOnly){
+      var d2 = dayById('d2');
+      chapter({d:d2, title:'Ajax', ey:'Day II · Tue Dec 29', line:'Up the Silver Queen, Bonnie’s at noon, Casa Tua at 7.'});
+      add({k:'gondola', dur:9500, tod:9 * 60 + 20,
+        lt:{ey:'Day II · 9:15 AM · Silver Queen Gondola', t:'Up Aspen Mountain', w: you(['jim']) ? 'Your sightseeing ride — 14 minutes to the summit.' : '14 minutes from Gondola Plaza to the 11,212-ft summit.', fact:FACTS.gondola, you:you(['jim', 'griffin', 'ben', 'marco'])},
+        cam:function(u, v){ return {t:v.ll.concat([v.h]), hd:v.hd + 82, pt:-4 - 6 * u, r:170}; }});
+      var wc = walk('d2'); if (wc) walkShots(wc);
+    }
+    /* ---- Day III ---- */
+    if (want('d3') && !townOnly){
+      var d3 = dayById('d3');
+      chapter({d:d3, title:'Snowmobile', ey:'Day III · Wed Dec 30', line:'T-Lazy-7 up the closed Maroon Creek Road to the Bells.'});
+      var sp = ROUTES['d3:1'] ? decode(ROUTES['d3:1'].g) : null;
+      if (sp) add({k:'sled', dur:9000, tod:10 * 60 + 15, pts:sp,
+        lt:{ey:'Day III · 9:30 AM · T-Lazy-7', t:'Maroon Creek Road, on snow', w: you(['jim']) && W.p ? W.p.sled : 'Three doubles, everyone in their own warm kit — helmets from the ranch.', fact:FACTS.tlazy7, you:true},
+        cam:function(u, v){ return {t:v.ll.concat([v.h + 1]), hd:v.hd + 6, pt:-20, r:140}; }});
+      add({k:'hold', dur:6500, tod:11 * 60, place:'bells',
+        lt:{ey:'Day III · ~11:00 AM · Maroon Lake', t:'The Maroon Bells', w:'The turnaround — and the photo.', fact:FACTS.bells},
+        cam:function(u){ return {t:[39.072, -106.988, 3900], hd:228 + 6 * u, pt:-5, r:8200 - 600 * u}; }});
+      var w3 = walk('d3'); if (w3) walkShots(w3);
+    }
+    /* ---- Day IV ---- */
+    if (want('d4') && !townOnly){
+      var d4 = dayById('d4');
+      chapter({d:d4, title:'New Year’s Eve', ey:'Day IV · Thu Dec 31', line:'Highlands by day — torchlight, fireworks and Matsuhisa by night.'});
+      add({k:'hold', dur:6000, tod:12 * 60, place:'highlands',
+        lt:{ey:'Day IV · Aspen Highlands', t:'Highland Bowl', w:'The last ski day of 2026.', fact:FACTS.highlands, you:you(['griffin', 'ben', 'marco', 'stella', 'marcy'])},
+        cam:function(u){ return {t:[39.130, -106.856, 3500], hd:188 + 10 * u, pt:-11, r:6200}; }});
+      add({k:'hold', dur: RM ? 6000 : 10500, tod:20 * 60, place:'nyeplaza', fw:[39.1792, -106.8203, 650],
+        lt:{ey:'Day IV · 8:00 PM · Gondola Plaza', t:'Fireworks over Ajax', w:'Torchlight down the face at ~7:30, fireworks at 8.', fact:FACTS.nyeplaza},
+        cam:function(u){ return {t:[39.1812, -106.8197, placeH('nyeplaza') + 260], hd:184 + 6 * u, pt:-10, r:1900 - 150 * u}; }});
+      var w4 = walk('d4'); if (w4) walkShots(w4);
+      add({k:'midnight', dur: RM ? 4500 : 6500, tod:24 * 60, fw:[39.1792, -106.8203, 650],
+        cam:function(u){ return {t:[39.1840, -106.8200, placeH('nyeplaza') + 120], hd:192 - 12 * u, pt:-20, r:2600}; }});
+    }
+    /* ---- Day V ---- */
+    if (want('d5') && !townOnly){
+      var d5 = dayById('d5');
+      chapter({d:d5, title:'Hot springs', ey:'Day V · Fri Jan 1', line:'A slow New Year’s Day in Glenwood’s pools.'});
+      add({k:'hold', dur:8500, tod:12 * 60 + 30, place:'iron', steam:[39.5556, -107.3367],
+        lt:{ey:'Day V · 12:00 PM · Glenwood Springs', t:'Iron Mountain Hot Springs', w:'Sixteen pools above the Colorado River.', fact:FACTS.iron},
+        cam:function(u){ return {t:[39.5556, -107.3367, placeH('iron') + 2], hd:210 + 30 * easeSine(u), pt:-30, r:300}; }});
+    }
+    /* ---- Day VI ---- */
+    if (want('d6') && !townOnly){
+      var d6 = dayById('d6');
+      chapter({d:d6, title:'Closing night', ey:'Day VI · Sat Jan 2', line:'Last day on Snowmass, then Steakhouse 316 and a nightcap at the J-Bar.'});
+      add({k:'hold', dur:5500, tod:11 * 60, place:'snowmass',
+        lt:{ey:'Day VI · Snowmass', t:'One more on Snowmass', w:'All six — the family ski day.', you:true},
+        cam:function(u){ return {t:P.snowmass.c.concat([placeH('snowmass') + 250]), hd:150 + 20 * u, pt:-20, r:2300}; }});
+      var w6 = walk('d6'); if (w6) walkShots(w6);
+    }
+    /* ---- Day VII ---- */
+    if (want('d7') && !townOnly){
+      var d7 = dayById('d7');
+      chapter({d:d7, title:'Home', ey:'Day VII · Sun Jan 3', line:'Checkout at 10, over Vail Pass, and AA 1832 out of Denver.'});
+      add({k:'hold', dur:5500, tod:10 * 60, place:'home',
+        lt:{ey:'Day VII · 10:00 AM', t:'Checkout', w:'Last look from Red Mountain.'},
+        cam:function(u){ return {t:P.home.c.concat([placeH('home') + 2]), hd:200 - 20 * u, pt:-24, r:420 + 200 * u}; }});
+      add({k:'plane', dur:8000, tod:16 * 60 + 22, plane:'aa', mode:'takeoff', rw:[[39.864092, -104.6872], [39.897017, -104.686815]],
+        lt:{ey:'Day VII · 4:22 PM · DEN', t:'AA 1832 · Denver → Dallas', w: you(['marco']) ? 'Your UA 2076 leaves at 6:00 PM.' : 'Wheels up 4:22 — Dallas by 7:30.', you:you(AA_FIVE)},
+        cam:function(u, v){ return {t:v.ll.concat([v.h + 3]), hd:v.hd - 80 + 10 * u, pt:-7, r:170}; }});
+    }
+    add({k:'end', dur: RM ? 4000 : 6500, ch:chapters.length - 1, cut:true, tod:21 * 60, scope:scope,
+      cam:function(u){ return {t:[39.205, -106.885, 2500], hd:-20 + 24 * easeSine(Math.min(1, u)), pt:-16, r:24000}; }});
+    chapters.forEach(function(c, i){ c.t1 = i < chapters.length - 1 ? chapters[i + 1].t0 : total;
+      c.stops = c.shots.filter(function(s){ return s.k !== 'card'; }).map(function(s){ return {t0:s.t0, star:!!(s.lt && s.lt.you)}; }); });
+    shots.forEach(function(s, i){ if (s.k === 'card') s.cut = true; if (i && shots[i-1].endFade) s.cut = true; });
+    /* tile regions: a chapter that travels (DEN → canyon → City Market → Aspen) can't keep every view's tiles in
+       the cache at once, so it is gated region by region — a new region starts at a card or when the shot is
+       >25 km from the region's first shot. Region starts are cuts (a short hold on black covers the load). */
+    var anchor = function(s){
+      if (s.pts) return s.pts[0]; if (s.rw) return s.rw[0]; if (s.at) return s.at;
+      if (s.cam){ try { var c = s.cam(0, {ll:[0, 0], hd:0, h:0}); if (c && c.t && Math.abs(c.t[0]) > 1) return [c.t[0], c.t[1]]; } catch(e){} }
+      return null;
+    };
+    var rg = 0, rStart = null, pend = [];
+    shots.forEach(function(s){
+      var a = anchor(s);
+      if (s.k === 'card' || s.k === 'title' || s.k === 'end'){ rg++; rStart = a; s.rg = rg; pend = a ? [] : [s]; return; }
+      if (s.k === 'reveal'){ s.rg = rg; return; }
+      if (a && rStart && mDist(a, rStart) > 25000){ rg++; rStart = a; s.cut = true; }
+      if (a && !rStart) rStart = a;
+      s.rg = rg;
+    });
+    return {shots:shots, chapters:chapters, total:total, scope:scope, film:true};
+  }
+
+  /* ---------- per-shot vehicle state ---------- */
+  function planeState(sh, u){
+    var rw = sh.rw, hd0, s, h, pitch = 0, ll, g = sh.g0 || 0, rl = mDist(rw ? rw[0] : [0, 0], rw ? rw[1] : [0, 0]);
+    if (sh.mode === 'cruise'){
+      var d = 9000 * u; ll = offsetLL(sh.at, sh.hd0, d - 4500); return {ll:ll, hd:sh.hd0, h:10200, pitch:0, roll:0};
+    }
+    hd0 = brg(rw[0], rw[1]);
+    if (sh.mode === 'takeoff'){   /* roll from 400 m in, rotate at ~1,900 m, climb at ~8° */
+      var e = RM ? 0.6 : u; s = 400 + 2600 * Math.pow(e, 1.55);
+      var air = Math.max(0, s - 2100); h = g + 2.6 + air * Math.tan(8 * Math.PI / 180) * smooth(0, 300, air);
+      pitch = 9 * smooth(1850, 2250, s);
+      return {ll:offsetLL(rw[0], hd0, s), hd:hd0, h:h, pitch:pitch, roll:0};
+    }
+    if (sh.mode === 'climb'){
+      s = 3000 + 4200 * u; h = g + 2.6 + (s - 2100) * Math.tan(8 * Math.PI / 180);
+      return {ll:offsetLL(rw[0], hd0, s), hd:hd0 + 6 * smooth(0.2, 1, u), h:h, pitch:9, roll:-8 * Math.sin(u * Math.PI)};
+    }
+    /* land: 3° glideslope to a touchdown 350 m past the threshold, flare, roll-out */
+    var td = 350, f = RM ? 0.85 : u;
+    s = -3000 + 4300 * (1 - Math.pow(1 - f, 1.35));      /* metres from threshold, decelerating */
+    var hAbove = s < td ? (td - s) * Math.tan(3 * Math.PI / 180) : 0;
+    hAbove *= (1 - 0.55 * smooth(td - 420, td, s));      /* flare */
+    h = g + 2.6 + hAbove;
+    pitch = s < td ? 2.5 + 3.5 * smooth(td - 420, td, s) : 5 * (1 - smooth(td, td + 400, s));
+    return {ll:offsetLL(rw[0], hd0, s), hd:hd0, h:h, pitch:pitch, roll:0};
+  }
+  function vehState(sh, u){
+    var p = sh.vp; if (!p) return null;
+    var span = sh.mode === 'arrive' ? Math.min(p.len, 260) : sh.mode === 'depart' ? Math.min(p.len, sh.speed * sh.dur / 1000 * 0.75) : Math.min(p.len, sh.speed * sh.dur / 1000);
+    var s0 = sh.mode === 'arrive' ? p.len - span : sh.mode === 'cruise' ? Math.max(0, p.len - span) : 0;
+    if (sh.k === 'walk' || sh.k === 'sled') { s0 = 0; span = p.len; }
+    var s = s0 + travel(RM ? 0.7 : u, span, sh.k === 'walk' ? 'lin' : sh.mode);
+    var o = vAt(p, s); o.s = s; return o;
+  }
+  function gondolaState(u){
+    var a = [39.186405, -106.818205], b = [39.151326, -106.819434], hA = placeH('gondola') + 6, hB = 3401 + 8;
+    var f = RM ? 0.5 : easeSine(u) * 0.55;   /* the first half of the ride — base station up past Little Nell */
+    var ll = [lerp(a[0], b[0], f), lerp(a[1], b[1], f)], sag = 40 * Math.sin(f * Math.PI);
+    return {ll:ll, hd:brg(a, b), h:lerp(hA, hB, f) + 35 - sag};
+  }
+
+  /* ---------- camera ---------- */
+  function applyCam(C, v, cam, guard){
+    if (!cam) return;
+    var t = C.Cartesian3.fromDegrees(cam.t[1], cam.t[0], cam.t[2]);
+    var pt = cam.pt, r = cam.r;
+    if (guard && FM && FM.pcap != null){ pt = Math.min(pt, FM.pcap); r = Math.max(r, FM.rcap || r); }
+    v.camera.lookAt(t, new C.HeadingPitchRange(C.Math.toRadians(cam.hd), C.Math.toRadians(pt), r));
+    v.camera.lookAtTransform(C.Matrix4.IDENTITY);
+    if (!guard) return;
+    /* terrain/building guard: if the eye would sit inside or within 25 m of the mesh, tilt down and pull back for the rest of the shot */
+    try {
+      var c = v.camera.positionCartographic, g = v.scene.sampleHeight(C.Cartographic.clone(c));
+      if (g != null && isFinite(g) && c.height < g + 25){ FM.pcap = Math.max(-75, pt - 4); FM.rcap = r * 1.06; }
+    } catch(e){}
+  }
+  function shotState(sh, u){
+    if (sh.k === 'plane') return planeState(sh, u);
+    if (sh.k === 'car' || sh.k === 'walk' || sh.k === 'sled') return vehState(sh, u);
+    if (sh.k === 'gondola') return gondolaState(u);
+    return null;
+  }
+  function shotCam(sh, u){
+    var st = shotState(sh, u);
+    if (sh.k === 'card'){ var nx = FM.tl.shots[FM.tl.shots.indexOf(sh) + 1]; return nx ? shotCam(nx, 0) : null; }
+    if (!sh.cam) return null;
+    return sh.cam(u, st || {ll:[0, 0], hd:0, h:0});
+  }
+
+  /* ---------- models ---------- */
+  function loadModels(C, v){
+    var defs = {aa:'airliner_aa.glb', ua:'airliner_ua.glb', gondola:'gondola.glb', sled:'sled.glb'};   /* the car is lights only in-scene */
+    var out = {};
+    return Promise.all(Object.keys(defs).map(function(k){
+      return C.Model.fromGltfAsync({url:MODELS + defs[k], forwardAxis:C.Axis.X, upAxis:C.Axis.Y, minimumPixelSize: k === 'aa' || k === 'ua' ? 48 : (k === 'car' ? 30 : 16), maximumScale:20000,
+        show:false, scene:v.scene}).then(function(m){ v.scene.primitives.add(m); out[k] = m; }).catch(function(e){ console.warn('[film] model', k, e && e.message); });
+    })).then(function(){ return out; });
+  }
+  function placeModel(C, m, ll, h, hd, pitch, roll){
+    if (!m) return;
+    var pos = C.Cartesian3.fromDegrees(ll[1], ll[0], h);
+    m.modelMatrix = C.Transforms.headingPitchRollToFixedFrame(pos, new C.HeadingPitchRoll(C.Math.toRadians(hd), C.Math.toRadians(pitch || 0), C.Math.toRadians(roll || 0)), C.Ellipsoid.WGS84, NWU);
+    m.show = true;
+  }
+
+  /* ---------- ground heights (Cesium World Terrain + a tile offset), sampled while the card holds ---------- */
+  function sampleGround(C, terr, lls){
+    if (!terr || !lls.length) return Promise.resolve(lls.map(function(){ return 2400; }));
+    var cs = lls.map(function(c){ return C.Cartographic.fromDegrees(c[1], c[0]); });
+    return C.sampleTerrainMostDetailed(terr, cs).then(function(r){ return r.map(function(c){ return c.height || 0; }); }).catch(function(){ return lls.map(function(){ return 2400; }); });
+  }
+  function prepShot(sh){
+    var C = FM.C;
+    if (sh.prepped) return Promise.resolve();
+    sh.prepped = true;
+    if (sh.k === 'car' || sh.k === 'walk' || sh.k === 'sled'){
+      sh.vp = vehPath(sh.pts, sh.k === 'sled' ? 4 : 1.5);
+      var n = clamp(Math.round(sh.vp.len / 25), 8, 90), lls = [];
+      for (var i = 0; i <= n; i++) lls.push(vAt(sh.vp, sh.vp.len * i / n).ll);
+      return sampleGround(C, FM.terr, lls).then(function(hs){
+        for (var k = 0; k < 2; k++) hs = hs.map(function(h, i){ return (hs[Math.max(0, i - 1)] + h + hs[Math.min(hs.length - 1, i + 1)]) / 3; });
+        sh.vp.h = hs;
+      });
+    }
+    if (sh.k === 'plane' && sh.rw){
+      return sampleGround(C, FM.terr, [sh.rw[0], sh.rw[1]]).then(function(hs){ sh.g0 = (hs[0] + hs[1]) / 2; });
+    }
+    return Promise.resolve();
+  }
+
+  /* ---------- tile gating ---------- */
+  function gateChapter(fromShot){
+    var tl = FM.tl, sh0 = tl.shots[fromShot], ci = sh0.ch, list = [];
+    for (var i = fromShot; i < tl.shots.length && (tl.shots[i].rg === sh0.rg || i === fromShot); i++){
+      var s = tl.shots[i];
+      if (s.k === 'reveal') continue;   /* photo reveal: no tiles */
+      list.push(s);
+    }
+    FM.gate = {list:list, i:0, views:[], vi:0, t0:performance.now(), stage:'prep', from:fromShot};
+    /* if this chapter opens with the photo reveal, playback may run through it while tiles load */
+    for (var r = fromShot; r < tl.shots.length && tl.shots[r].ch === ci; r++){ if (tl.shots[r].k === 'reveal'){ FM.gate.freeUntil = tl.shots[r].t0 + tl.shots[r].dur - 1; break; } if (tl.shots[r].k !== 'card') break; }
+    FM.el.classList.add('gating');
+    Promise.all(list.map(prepShot)).then(function(){
+      if (!FM || !FM.gate) return;
+      var vs = [];
+      list.forEach(function(s){ (s.k === 'title' || s.k === 'card' || s.k === 'end' ? [0, 1] : [0, 0.5, 1])   /* start, middle and end of every camera path (3 samples keeps Google's tile quota sane) */.forEach(function(u){ var c = shotCam(s, u); if (c){ c.sse = (s.k === 'plane' || s.k === 'car') ? FM.sseMove : FM.sseHold; vs.push(c); } }); });   /* gate each view at the detail it will actually play at */
+      FM.gate.views = vs; FM.gate.stage = 'views'; FM.gate.vt = 0;
+    });
+  }
+  function gateStep(now){
+    var g = FM.gate; if (!g) return true;
+    var ts = FM.ts, C = FM.C;
+    if (g.stage === 'prep') return now - g.t0 > 25000 ? finishGate() : false;
+    if (g.vi >= g.views.length){
+      /* last step of the hold: put wheels, dots and landing gear on Google's actual surface (bridges, cantilevered
+         highway, runways), not on bare-earth terrain — otherwise the car can sit under the I-70 deck */
+      if (g.stage !== 'heights' && g.stage !== 'done'){ g.stage = 'heights'; g.ht = now;
+        tileHeights(g.list).then(function(){ if (FM && FM.gate === g) g.stage = 'done'; }, function(){ if (FM && FM.gate === g) g.stage = 'done'; }); }
+      if (g.stage === 'done' || now - g.ht > 20000) return finishGate();
+      return false;
+    }
+    if (!g.vt){ var gv = g.views[g.vi]; if (gv.sse && ts) ts.maximumScreenSpaceError = gv.sse; applyCam(C, FM.v, gv); g.vt = now; return false; }
+    var ready = ts && ts.tilesLoaded && now - g.vt > 260;
+    var timeout = now - g.vt > 20000;
+    if (ready || timeout){ if (timeout) FM.slow = (FM.slow || 0) + 1; g.vi++; g.vt = 0; }
+    if (now - g.t0 > 240000) return finishGate();
+    return false;
+  }
+  function median(a, i, w){ var b = a.slice(Math.max(0, i - w), Math.min(a.length, i + w + 1)).sort(function(x, y){ return x - y; }); return b[b.length >> 1]; }
+  function tileHeights(list){
+    var C = FM.C, sc = FM.v.scene, ex = Object.keys(FM.mod || {}).map(function(k){ return FM.mod[k]; }).filter(Boolean), jobs = [];
+    list.forEach(function(sh){
+      if (sh.vp && sh.vp.h){
+        var n = sh.vp.h.length - 1, cs = [];
+        for (var i = 0; i <= n; i++){ var p = vAt(sh.vp, sh.vp.len * i / n).ll; cs.push(C.Cartographic.fromDegrees(p[1], p[0])); }
+        jobs.push(sc.sampleHeightMostDetailed(cs, ex).then(function(r){
+          var hs = r.map(function(c, i){ var h = c && c.height; return h != null && isFinite(h) && Math.abs(h - sh.vp.h[i]) < 60 ? h : sh.vp.h[i]; });
+          hs = hs.map(function(_, i){ return median(hs, i, 3); });                  /* drop trees / overpass spikes */
+          for (var k = 0; k < 2; k++) hs = hs.map(function(h, i){ return (hs[Math.max(0, i - 1)] + h + hs[Math.min(hs.length - 1, i + 1)]) / 3; });
+          sh.vp.h = hs;
+        }).catch(function(){}));
+      }
+      if (sh.k === 'plane' && sh.rw){
+        var a = sh.rw[0], b = sh.rw[1], pts = [0.15, 0.3, 0.5, 0.7].map(function(f){ return C.Cartographic.fromDegrees(lerp(a[1], b[1], f), lerp(a[0], b[0], f)); });
+        jobs.push(sc.sampleHeightMostDetailed(pts, ex).then(function(r){
+          var hs = r.map(function(c){ return c && c.height; }).filter(function(h){ return h != null && isFinite(h); }).sort(function(x, y){ return x - y; });
+          if (hs.length && (sh.g0 == null || Math.abs(hs[hs.length >> 1] - sh.g0) < 60)) sh.g0 = hs[hs.length >> 1];
+        }).catch(function(){}));
+      }
+    });
+    return Promise.all(jobs);
+  }
+  function finishGate(){
+    FM.gate = null; FM.el.classList.remove('gating');
+    FM.ts.maximumScreenSpaceError = FM.sseMove;
+    FM.revealAt = (FM.tl.shots[FM.si] || {}).k === 'reveal' ? 0 : performance.now(); FM.force = true;   /* don't dip over a reveal already playing */
+    return true;
+  }
+
+  /* ---------- light: the tiles are pre-lit, so grade the canvas; models get a matching light ---------- */
+  function filmLight(min, studio){
+    var L = lightAt(min), n = L[0], w = L[1], C = FM.C, sc = FM.v.scene;
+    /* Google's imagery is mixed-season: pull the greens down and lift the whites so it reads as winter */
+    FM.v.canvas.style.filter = studio ? 'none' : 'saturate(' + (0.62 - 0.26 * n).toFixed(3) + ') brightness(' + (1.07 - 0.6 * n).toFixed(3) + ') contrast(1.07) hue-rotate(' + (-6 + 8 * w).toFixed(1) + 'deg) sepia(' + (0.16 * w).toFixed(3) + ')';
+    FM.el.style.setProperty('--vt-night', n.toFixed(3)); FM.el.style.setProperty('--vt-warm', w.toFixed(3));
+    var key = (Math.round(n * 20) + ':' + (studio ? 1 : 0));
+    if (FM.lightKey === key) return n; FM.lightKey = key;
+    var dir = C.Cartesian3.normalize(new C.Cartesian3(0.3, -0.6, -0.75), new C.Cartesian3());
+    sc.light = new C.DirectionalLight({direction:FM.v.camera.directionWC ? C.Cartesian3.add(FM.v.camera.directionWC, C.Cartesian3.multiplyByScalar(FM.v.camera.upWC, -0.6, new C.Cartesian3()), new C.Cartesian3()) : dir,
+      intensity: studio ? 2.2 : 2.6 - 1.9 * n, color: C.Color.fromCssColorString(n > 0.6 ? '#b9c8ff' : (w > 0.4 ? '#ffd9a8' : '#ffffff'))});
+    return n;
+  }
+
+  /* ---------- overlays ---------- */
+  function filmOverlay(sh){
+    var el = FM.el, W = filmWho(), title = null, chap = null, lt = null, end = null, ph = null, sr = el.querySelector('.vt-sr');
+    el.setAttribute('data-k', sh.k === 'card' ? 'chapter' : (sh.k === 'title' || sh.k === 'end' || sh.k === 'midnight' ? sh.k : 'stop'));
+    var c = FM.tl.chapters[sh.ch];
+    el.querySelector('.vt-where').textContent = c ? c.ey.replace(/ · .*/, '') + ' · ' + c.title : (W.n ? W.n + '’s Aspen' : 'The week');
+    el.querySelector('.vt-chl').textContent = c ? c.title : '';
+    if (sh.k === 'title'){
+      var ask = window.AspenMusic && T.musicAsk;
+      title = '<div class="vt-kick">Dec 27, 2026 – Jan 3, 2027</div><h2>' + (W.n ? esc(W.n) + '’s <span class="vt-asp">Aspen</span>' : 'Aspen') + '</h2>'
+        + '<div class="vt-dates">' + (W.n ? 'Your week, start to finish' : 'The Wright family · seven nights on Red Mountain') + '</div>'
+        + (ask ? '<div class="vt-ask"><span>Play with music?</span><button type="button" data-mus="1">♪ Yes</button><button type="button" data-mus="0">No thanks</button></div>' : '');
+      sr.textContent = (W.n ? W.n + '’s Aspen' : 'Aspen') + ' — the tour.';
+    } else if (sh.k === 'card'){
+      var cd = sh.card;
+      chap = '<div class="vt-num">' + esc(cd.d ? cd.d.r : '') + '</div><div class="vt-ct"><div class="vt-ey">' + esc(cd.ey) + '</div><h3>' + esc(cd.title) + '</h3>'
+        + (cd.line ? '<p class="vt-line">' + esc(cd.line) + '</p>' : '') + '</div>';
+      sr.textContent = cd.ey + '. ' + cd.title + '. ' + (cd.line || '');
+    } else if (sh.k === 'midnight'){
+      title = '<div class="vt-kick">Thursday night · Dec 31</div><h2 class="vt-mid">Midnight</h2><div class="vt-dates">Happy 2027</div>';
+      sr.textContent = 'Midnight. Happy 2027.';
+    } else if (sh.k === 'end'){
+      var du = daysUntil(), day = dayById(sh.scope), nx = day ? DAYS[DAYS.indexOf(day) + 1] : null;
+      end = sh.scope === 'town' ? '<div class="vt-kick">Downtown Aspen · on foot</div><h2>Everything’s a few blocks apart</h2>'
+        : day ? '<div class="vt-kick">Day ' + esc(day.r) + ' · ' + esc(day.date) + '</div><h2>That was ' + esc(day.t) + '</h2>'
+        : '<div class="vt-kick">' + (W.n ? esc(W.n) + '’s Aspen' : 'The Wright family · Aspen') + '</div><h2>See you on the mountain</h2><p class="vt-sub">' + (du != null ? du + ' day' + (du === 1 ? '' : 's') + ' to go' : 'Until next time') + '</p>';
+      end += '<div class="vt-endb"><button type="button" class="vt-cta1" data-act="replay">' + ICON.play + 'Replay</button>'
+        + (nx ? '<button type="button" data-act="next">Day ' + esc(nx.r) + ' · ' + esc(nx.t) + ' &rsaquo;</button>' : '')
+        + (sh.scope !== 'all' ? '<button type="button" data-act="all">The whole week</button>' : '')
+        + '<button type="button" data-act="exit">Back to the map</button></div>';
+      sr.textContent = 'See you on the mountain.';
+    }
+    if (sh.lt){
+      var L = sh.lt;
+      lt = '<div class="vt-ey">' + esc(L.ey) + (L.you ? '<b class="vt-you">You</b>' : '') + '</div><h4>' + esc(L.t) + '</h4>'
+        + (L.w ? '<p class="vt-what">' + esc(L.w) + '</p>' : '') + (L.fact ? factHtml(L.fact) : '');
+      sr.textContent = L.t + '. ' + (L.w || '') + (L.fact ? ' Did you know: ' + L.fact[0] : '');
+      duck();
+    }
+    if (sh.spec) setSpec(sh.spec); else hideSpec();
+    if (sh.photo && !COARSE_SMALL()) ph = sh.photo;
+    setZone('.vt-title', title); setZone('.vt-chap', chap); setZone('.vt-lt', lt); setZone('.vt-end', end);
+    var fig = el.querySelector('.vt-photo');
+    if (ph){ fig.querySelector('img').src = img(ph[0]); fig.querySelector('figcaption').textContent = ph[1];
+      fig.classList.remove('on'); void fig.offsetWidth; fig.classList.add('on'); fig.setAttribute('aria-hidden', 'false'); }
+    else { fig.classList.remove('on'); fig.setAttribute('aria-hidden', 'true'); }
+    var a = el.querySelector('.vt-ask');
+    if (a) [].forEach.call(a.querySelectorAll('button'), function(b){ b.addEventListener('click', function(){ T.musicAsk = false; setMusic(b.getAttribute('data-mus') === '1'); a.remove(); }); });
+    [].forEach.call(el.querySelectorAll('.vt-end [data-act]'), function(b){
+      b.addEventListener('click', function(){
+        var act = b.getAttribute('data-act'), sc = FM.tl.scope;
+        if (act === 'replay'){ filmSeek(0); play(); }
+        else if (act === 'exit') exitTour();
+        else if (act === 'all') filmRestart('all');
+        else if (act === 'next'){ var dd = dayById(sc), nn = DAYS[DAYS.indexOf(dd) + 1]; if (nn) filmRestart(nn.id); }
+      });
+    });
+  }
+  function COARSE_SMALL(){ return FM && FM.el && FM.el.clientWidth < 640 && FM.el.clientHeight < 700; }
+  function setSpec(sp){
+    var el = FM.el.querySelector('.vt-spec');
+    el.innerHTML = '<div class="vt-ey">The ride' + (sp.jim ? '<b class="vt-you">You</b>' : '') + '</div><h5>' + esc(sp.t) + '</h5><ul>' + sp.list.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'
+      + (sp.plate ? '<div class="vt-plate">' + esc(sp.plate) + '</div>' : '');
+    el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
+  }
+  function hideSpec(){ var el = FM && FM.el.querySelector('.vt-spec'); if (el) el.classList.remove('on'); }
+  function duck(){
+    var A = window.AspenMusic, a = null; try { a = A && (typeof A.audio === 'function' ? A.audio() : A.audio); } catch(e){}
+    if (!a || typeof a.volume !== 'number' || a.paused) return;
+    clearTimeout(FM.duckT); var base = FM.vol || (FM.vol = a.volume || 1);
+    a.volume = base * 0.55; FM.duckT = setTimeout(function(){ try { a.volume = base; } catch(e){} }, 3200);
+  }
+
+  /* ---------- fireworks + steam (canvas over the frame, anchored to world points) ---------- */
+  function anchorXY(ll, h){
+    var C = FM.C, p = FM.v.scene.cartesianToCanvasCoordinates(C.Cartesian3.fromDegrees(ll[1], ll[0], h)); return p ? [p.x, p.y] : null;
+  }
+  function fxFrame(sh, dt){
+    var cv = T.fx, fr = cv.parentNode, Wd = fr.clientWidth, Hd = fr.clientHeight, dpr = Math.min(2, window.devicePixelRatio || 1);
+    if (cv.width !== Math.round(Wd * dpr) || cv.height !== Math.round(Hd * dpr)){ cv.width = Math.round(Wd * dpr); cv.height = Math.round(Hd * dpr); }
+    var ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, Wd, Hd);
+    var top = T.el.querySelector('.vt-top').offsetHeight, live = T.playing && !FM.gate && !RM;
+    if (sh.fw && live){
+      T.fwClock = (T.fwClock || 0) - dt;
+      if (T.fwClock <= 0){
+        T.fwClock = 260 + Math.random() * 420;
+        var an = anchorXY(sh.fw, sh.fw[2] + 2400) || [Wd / 2, Hd * 0.3];
+        var x = clamp(an[0] + (Math.random() - 0.5) * Wd * 0.5, Wd * 0.1, Wd * 0.9), y = clamp(an[1] - top + (Math.random() - 0.6) * Hd * 0.22, Hd * 0.06, Hd * 0.5);
+        var col = FW_COL[Math.floor(Math.random() * FW_COL.length)], n = Wd < 640 ? 60 : 90, sp = (Wd < 640 ? 0.15 : 0.22) * (0.75 + Math.random() * 0.5);
+        for (var i = 0; i < n; i++){ var a = Math.PI * 2 * i / n + Math.random() * 0.1, v = sp * (0.65 + Math.random() * 0.45);
+          T.parts.push({x:x, y:y, vx:Math.cos(a) * v, vy:Math.sin(a) * v, life:1500 + Math.random() * 700, age:0, c: Math.random() < 0.2 ? '#ffffff' : col, k:'fw'}); }
+      }
+    }
+    if (sh.steam && live && T.parts.length < 260){
+      var sa = anchorXY(sh.steam, ((ELEV && ELEV.iron) || 1743) + GEOID + 3);
+      if (sa) for (var q = 0; q < 2; q++) T.parts.push({x:sa[0] + (Math.random() - 0.5) * 140, y:sa[1] - top, vx:(Math.random() - 0.5) * 0.01, vy:-0.02 - Math.random() * 0.02, life:3500, age:0, k:'st', r:18 + Math.random() * 26});
+    }
+    var keep = [];
+    for (var j = 0; j < T.parts.length; j++){
+      var p = T.parts[j];
+      if (T.playing && !FM.gate){ p.age += dt; if (p.k === 'fw'){ p.vy += 0.00012 * dt; p.vx *= 0.995; p.vy *= 0.995; } p.x += p.vx * dt; p.y += p.vy * dt; }
+      var k = 1 - p.age / p.life; if (k <= 0) continue; keep.push(p);
+      if (p.k === 'st'){
+        ctx.globalCompositeOperation = 'source-over';
+        var gr = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * (1.6 - k * 0.6));
+        gr.addColorStop(0, 'rgba(255,255,255,' + (0.16 * k * (1 - k) * 4).toFixed(3) + ')'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * (1.6 - k * 0.6), 0, Math.PI * 2); ctx.fill();
+        continue;
+      }
+      ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = p.c;
+      ctx.globalAlpha = k * k * 0.22; ctx.beginPath(); ctx.arc(p.x, p.y, 4 + 4 * k, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = k * k; ctx.beginPath(); ctx.arc(p.x, p.y, 1.5 + 1.4 * k, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    T.parts = keep;
+  }
+
+  /* ---------- the per-frame update (runs in Cesium's preRender) ---------- */
+  function filmTick(){
+    /* an exception in preRender would stop Cesium's render loop for good — contain it */
+    try { filmTickInner(); } catch(e){ if (!FM || !FM.warned){ if (FM) FM.warned = true; console.warn('[film] frame error:', e && e.message); } }
+  }
+  function filmTickInner(){
+    if (!T || !FM || T.film !== FM) return;
+    var now = performance.now(), dt = FM.last ? clamp(now - FM.last, 0, 100) : 16; FM.last = now;
+    var C = FM.C, v = FM.v, tl = FM.tl;
+    if (FM.gate){
+      if (!gateStep(now)){
+        /* the Escalade reveal needs no tiles: it plays (card → photo reveal) while the drive's tiles load behind it,
+           and holds at the end of the reveal if they're still not ready */
+        var g = FM.gate, free = g.freeUntil || 0;
+        if (free && T.t <= free){   /* at the end of the reveal, hold on its last frame (not black) until tiles are ready */
+          if (T.playing) T.t = Math.min(free, T.t + dt);   /* paused: keep showing the reveal frame */
+          var fi = FM.si || 0; while (fi < tl.shots.length - 1 && T.t >= tl.shots[fi].t0 + tl.shots[fi].dur) fi++;
+          var fs = tl.shots[fi];
+          if (fi !== FM.si){ FM.si = fi; enterShot(fs); }
+          var fu = clamp((T.t - fs.t0) / fs.dur, 0, 1);
+          revealFrame(fs, fu);
+          FM.el.classList.toggle('gating', T.t >= free);
+          T.dip.style.opacity = (fs.k === 'card' ? 1 - smooth(0.6, 1, fu) : 0).toFixed(3);
+          if (now - (FM.lastScrub || 0) > 120){ FM.lastScrub = now; syncScrub(); }
+          return;
+        }
+        FM.el.classList.add('gating');
+        FM.dip = 1; T.dip.style.opacity = '1'; fxFrame(tl.shots[FM.si] || tl.shots[0], dt); return;
+      }
+    }
+    if (T.playing){ T.t = Math.min(tl.total, T.t + dt); if (T.t >= tl.total){ T.playing = false; T.t = tl.total; syncPP(); } }
+    var i = clamp(FM.si || 0, 0, tl.shots.length - 1), tt = Math.min(T.t, tl.total - 1);
+    while (i < tl.shots.length - 1 && tt >= tl.shots[i].t0 + tl.shots[i].dur) i++;
+    while (i > 0 && tt < tl.shots[i].t0) i--;
+    var sh = tl.shots[i];
+    if (i !== FM.si || FM.force){
+      var newCh = FM.si == null || FM.force || tl.shots[FM.si] == null || tl.shots[FM.si].ch !== sh.ch;
+      FM.si = i;
+      var rkey = sh.rg + ':' + (FM.seekGen || 0);
+      if (FM.gatedRg !== rkey){ FM.gatedRg = rkey; FM.force = false; gateChapter(i); filmOverlay(sh); return; }
+      enterShot(sh);
+    }
+    FM.force = false;
+    var u = clamp((T.t - sh.t0) / sh.dur, 0, 1), st = shotState(sh, u);
+    /* camera: playing, or paused-but-not-dragged (keeps it settled) */
+    if (T.playing || !T.dragged){ var cam = sh.cam ? sh.cam(u, st || {ll:[0, 0], hd:0, h:0}) : (sh.k === 'card' ? shotCam(sh, 0) : null); if (cam) applyCam(C, v, cam, true); }
+    /* models */
+    hideModels(sh);
+    if (sh.k === 'plane' && st){ placeModel(C, FM.mod[sh.plane], st.ll, st.h, st.hd, st.pitch, st.roll); }
+    carLights(sh, st);
+    if (sh.k === 'sled' && st){ placeModel(C, FM.mod.sled, st.ll, st.h + 0.1, st.hd, 0, 0); }
+    if (sh.k === 'gondola' && st){ placeModel(C, FM.mod.gondola, st.ll, st.h - 3.2, st.hd + 90, 0, 0); }
+    if (sh.k === 'walk' && st){ FM.dot.position = C.Cartesian3.fromDegrees(st.ll[1], st.ll[0], st.h + 2); FM.dot.show = true; } else if (FM.dot) FM.dot.show = false;
+    revealFrame(sh, u);
+    var tod = sh.tod || (sh.k === 'card' ? (tl.shots[i + 1] && tl.shots[i + 1].tod) : 12 * 60) || 12 * 60;
+    filmLight(tod, false);
+    /* dips around cuts + the reveal after a gate */
+    var into = T.t - sh.t0, left = sh.t0 + sh.dur - T.t, nx = tl.shots[i + 1], a = 0;
+    if (sh.cut) a = Math.max(a, 1 - smooth(0, RM ? 300 : 700, into));
+    if (nx && nx.cut && sh.k !== 'end') a = Math.max(a, 1 - smooth(0, RM ? 250 : 520, left));
+    if (sh.k === 'card') a = Math.max(a, 1 - smooth(0.25, 0.95, u));   /* cards open on black and fade up into the shot */
+    if (FM.revealAt){ var ra = 1 - smooth(0, 900, now - FM.revealAt); a = Math.max(a, ra); if (ra <= 0) FM.revealAt = 0; }
+    if (!T.playing && !FM.revealAt) a = sh.k === 'card' ? a : 0;
+    T.dip.style.opacity = a.toFixed(3);
+    fxFrame(sh, dt);
+    if (now - (FM.lastScrub || 0) > 120){ FM.lastScrub = now; syncScrub(); }
+    /* SSE: sharper on slow holds, lighter on fast moves */
+    var fast = sh.k === 'plane' || sh.k === 'car';
+    var want = fast ? FM.sseMove : FM.sseHold;
+    if (FM.ts.maximumScreenSpaceError !== want) FM.ts.maximumScreenSpaceError = want;
+  }
+  function hideModels(sh){
+    var M = FM.mod; ['aa', 'ua', 'car', 'sled', 'gondola', 'studio'].forEach(function(k){
+      if (!M[k]) return;
+      var keep = (sh.k === 'plane' && sh.plane === k) || (sh.k === k);
+      if (!keep) M[k].show = false;
+    });
+  }
+  /* ---------- the car in-scene: headlights, taillights and a soft light trail along the real road ---------- */
+  function carLights(sh, st){
+    if (!FM.cl) return;
+    var on = sh.k === 'car' && st && sh.vp;
+    FM.cl.forEach(function(e){ e.show = !!on; });
+    if (!on) return;
+    var C = FM.C, p = sh.vp, hd = vAt(p, Math.min(p.len, st.s + 2.6)), tl = vAt(p, Math.max(0, st.s - 2.6));
+    var side = function(q, off){ return offsetLL(q.ll, q.hd + 90, off); };
+    var hL = side(hd, -0.8), hR = side(hd, 0.8), tL = side(tl, -0.8), tR = side(tl, 0.8);
+    FM.cl[0].position = C.Cartesian3.fromDegrees(hL[1], hL[0], hd.h + 1.0);
+    FM.cl[1].position = C.Cartesian3.fromDegrees(hR[1], hR[0], hd.h + 1.0);
+    FM.cl[2].position = C.Cartesian3.fromDegrees(tL[1], tL[0], tl.h + 1.1);
+    FM.cl[3].position = C.Cartesian3.fromDegrees(tR[1], tR[0], tl.h + 1.1);
+    var tr = [], n = 16, back = Math.min(st.s, 320);
+    for (var k = 0; k <= n; k++){ var q = vAt(p, st.s - back * (1 - k / n)); tr.push(C.Cartesian3.fromDegrees(q.ll[1], q.ll[0], q.h + 1.2)); }
+    FM.trailPos = tr;
+  }
+  function addCarLights(C, v){
+    var pt = function(col, size, glow){ return v.entities.add({position:C.Cartesian3.fromDegrees(0, 0, 0), show:false,
+      point:{pixelSize:size, color:C.Color.fromCssColorString(col), outlineColor:C.Color.fromCssColorString(glow).withAlpha(0.35), outlineWidth:Math.round(size * 0.9),
+        disableDepthTestDistance:Number.POSITIVE_INFINITY}}); };   /* always drawn: no deck or tree hides the lights */
+    FM.trailPos = [C.Cartesian3.fromDegrees(0, 0, 0), C.Cartesian3.fromDegrees(0.0001, 0, 0)];
+    var glow = function(a){ return new C.PolylineGlowMaterialProperty({glowPower:0.35, taperPower:0.4, color:C.Color.fromCssColorString('#ffd68a').withAlpha(a)}); };
+    var trail = v.entities.add({show:false, polyline:{positions:new C.CallbackProperty(function(){ return FM ? FM.trailPos : []; }, false), width:7,
+      arcType:C.ArcType.NONE, material:glow(0.8), depthFailMaterial:glow(0.45)}});
+    FM.cl = [pt('#fffaf0', 8, '#ffe7b0'), pt('#fffaf0', 8, '#ffe7b0'), pt('#ff3b2e', 6, '#ff6a55'), pt('#ff3b2e', 6, '#ff6a55'), trail];
+  }
+  /* ---------- the Escalade reveal: a photo (or a placeholder silhouette), slow push-in + headlight flare ---------- */
+  var CAR_SIL = '<svg class="vt-sil" viewBox="0 0 640 260" aria-hidden="true"><defs><linearGradient id="vtSilG" x1="0" x2="1"><stop offset="0" stop-color="#E8C26A" stop-opacity=".15"/><stop offset=".5" stop-color="#E8C26A" stop-opacity=".9"/><stop offset="1" stop-color="#E8C26A" stop-opacity=".15"/></linearGradient></defs>'
+    + '<path d="M28 178 L34 132 Q38 118 54 114 L150 104 L214 52 Q222 46 236 46 L470 46 Q486 46 494 58 L548 108 L596 116 Q612 120 614 136 L616 178 Q616 186 606 186 L556 186 A44 44 0 0 0 468 186 L196 186 A44 44 0 0 0 108 186 L40 186 Q28 186 28 178 Z M226 60 L176 104 L330 104 L330 60 Z M344 60 L344 104 L520 104 L478 64 Q474 60 466 60 Z" fill="none" stroke="url(#vtSilG)" stroke-width="2.2" stroke-linejoin="round"/>'
+    + '<circle cx="152" cy="190" r="34" fill="none" stroke="#E8C26A" stroke-opacity=".55" stroke-width="2"/><circle cx="512" cy="190" r="34" fill="none" stroke="#E8C26A" stroke-opacity=".55" stroke-width="2"/>'
+    + '<path d="M600 128 L616 132 L616 146 L600 144 Z" fill="#fff6dc" fill-opacity=".9"/></svg>';
+  function revealFrame(sh, u){
+    var el = FM.el.querySelector('.vt-reveal'); if (!el) return;
+    var on = sh.k === 'reveal';
+    FM.host.style.visibility = on ? 'hidden' : '';
+    if (!on){ el.classList.remove('on'); return; }
+    if (!el.classList.contains('on')){
+      el.style.setProperty('--vt-rd', (sh.dur / 1000).toFixed(1) + 's');
+      var ph = CAR.photo ? (/^https?:/.test(CAR.photo) ? CAR.photo : img(CAR.photo)) : null;
+      el.innerHTML = (ph ? '<div class="vt-rv-img" style="background-image:url(&quot;' + esc(ph) + '&quot;)"></div>'
+          : '<div class="vt-rv-sil"><div class="vt-sil-box">' + CAR_SIL + '<i class="vt-flare" style="left:95.3%;top:52.7%"></i></div><span>Photo of Jim’s Escalade coming soon</span></div>')
+        + (ph ? '<div class="vt-flares">' + CAR.flare.map(function(f){ return '<i class="vt-flare" style="left:' + (f[0] * 100) + '%;top:' + (f[1] * 100) + '%"></i>'; }).join('') + '</div>' : '')
+        + (ph && CAR.photoCredit ? '<em class="vt-rv-cap">' + esc(CAR.photoCredit) + '</em>' : '');
+      void el.offsetWidth; el.classList.add('on');
+    }
+    el.classList.toggle('paused', !T.playing);
+  }
+  function enterShot(sh){
+    var C = FM.C; FM.pcap = null; FM.rcap = null;
+    if (FM.porch) FM.porch.show = !!sh.porch;
+    filmOverlay(sh);
+    if (!sh.fw && !sh.steam) T.parts = [];
+    T.fwClock = 0;
+  }
+
+  /* ---------- transport hooks used by the shared player ---------- */
+  function filmSeek(t){
+    if (!FM) return;
+    T.t = clamp(t, 0, FM.tl.total - 1); T.parts = [];
+    FM.seekGen = (FM.seekGen || 0) + 1; FM.force = true; FM.si = null;
+    showUi();
+  }
+  function filmRestart(scope){
+    if (!FM) return;
+    FM.tl = T.tl = filmTimeline(scope); T.scope = scope; buildScrub();
+    T.t = 0; FM.si = null; FM.force = true; FM.seekGen = (FM.seekGen || 0) + 1; play();
+  }
+
+  /* ---------- start / stop ---------- */
+  function startFilm(scope, from){
+    var vx = $('vx'); if (!vx) return false;
+    if (prOn) closePR(); if (is3d) close3d();
+    hideOffer(); if (map) map.closePopup();
+    var wasFull = vx.classList.contains('full');
+    T = {scope:scope, from:from || document.activeElement, opened:false, wasFull:wasFull, t:0, playing:false, pins:{}, parts:[], si:-1, force:true, narrow:false, musicAsk:false, prevCur:cur};
+    T.musicAsk = !!window.AspenMusic && !musicState();   /* music only ever starts from a tap inside the tour */
+    document.body.classList.add('vt-on');
+    if (!wasFull) toggleFull(true);
+    T.tl = {shots:[{k:'title', t0:0, dur:1, ch:-1}], chapters:[], total:1, scope:scope};
+    buildPlayer(); T.el.classList.add('loading', 'film');
+    T.narrow = T.el.clientWidth < 640; T.el.classList.toggle('narrow', T.narrow);
+    T.dip.style.opacity = '1';
+    var spec = document.createElement('div'); spec.className = 'vt-spec vt-z'; T.el.querySelector('.vt-frame').appendChild(spec);
+    var rv = document.createElement('div'); rv.className = 'vt-reveal'; rv.setAttribute('aria-hidden', 'true'); T.el.querySelector('.vt-frame').insertBefore(rv, T.el.querySelector('.vt-frame').firstChild);
+    document.addEventListener('keydown', onKey, true);
+    window.addEventListener('resize', onResize);
+    /* Cesium canvas under the player */
+    var st = stageEl(), host = document.createElement('div'); host.className = 'vt-cs'; st.insertBefore(host, T.el);
+    var mine = T;
+    FM = {host:host, el:T.el, si:null, force:true, sseHold: COARSE ? 16 : 8, sseMove: COARSE ? 28 : 18};
+    T.film = FM;
+    loadCesium().then(function(C){
+      if (T !== mine) return;
+      C.Ion.defaultAccessToken = CESIUM_TOKEN;
+      NWU = NWU || C.Transforms.localFrameToFixedFrameGenerator('north', 'west');
+      var credits = document.createElement('div'); credits.className = 'vx-prcred'; host.appendChild(credits);
+      var v = new C.Viewer(host, {globe:false, skyAtmosphere:new C.SkyAtmosphere(), timeline:false, animation:false, baseLayerPicker:false, geocoder:false,
+        homeButton:false, sceneModePicker:false, navigationHelpButton:false, fullscreenButton:false, infoBox:false, selectionIndicator:false,
+        creditContainer:credits, requestRenderMode:false, useBrowserRecommendedResolution:true, msaaSamples: COARSE ? 1 : 2});
+      v.scene.skyBox.show = false; v.scene.backgroundColor = C.Color.fromCssColorString('#9fc4e4');
+      v.scene.screenSpaceCameraController.enableInputs = true;
+      FM.C = C; FM.v = v;
+      addCarLights(C, v);
+      FM.porch = v.entities.add({position:C.Cartesian3.fromDegrees(P.home.c[1], P.home.c[0], placeH('home') + 5), show:false,   /* porch lights */
+        point:{pixelSize:26, color:C.Color.fromCssColorString('#ffcf7a').withAlpha(0.55), outlineColor:C.Color.fromCssColorString('#ffe9b8').withAlpha(0.25), outlineWidth:14, disableDepthTestDistance:Number.POSITIVE_INFINITY}});
+      FM.dot = v.entities.add({position:C.Cartesian3.fromDegrees(0, 0, 0), show:false,
+        point:{pixelSize:15, color:C.Color.fromCssColorString('#ffd36b'), outlineColor:C.Color.WHITE.withAlpha(0.85), outlineWidth:3, disableDepthTestDistance:Number.POSITIVE_INFINITY}});   /* "you are here" on the walks */
+      /* request throttling (Google rate-limits): fewer parallel requests, no speculative flight preloads,
+         skip requests while the camera is moving fast, and a cache big enough that scrubbing back re-uses tiles */
+      try { C.RequestScheduler.maximumRequestsPerServer = COARSE ? 6 : 10; C.RequestScheduler.maximumRequests = COARSE ? 18 : 30; } catch(e){}
+      var ion = function(){ return C.createGooglePhotorealistic3DTileset(undefined, {maximumScreenSpaceError:FM.sseHold, showCreditsOnScreen:true,
+        cacheBytes:(COARSE ? 256 : 512) * 1024 * 1024, maximumCacheOverflowBytes:(COARSE ? 96 : 256) * 1024 * 1024,   /* bigger caches exhausted GPU memory (untextured white tiles) */
+        preloadFlightDestinations:false, preloadWhenHidden:false, cullRequestsWhileMoving:true, cullRequestsWhileMovingMultiplier:120,
+        dynamicScreenSpaceError:false, foveatedScreenSpaceError:false, skipLevelOfDetail:false}); };   /* dynamic/foveated SSE starve a globe-wide tileset like Google's → flat frames */
+      return Promise.all([ion(), C.CesiumTerrainProvider.fromIonAssetId(1).catch(function(){ return null; }), loadModels(C, v)]).then(function(r){
+        if (T !== mine) return;
+        FM.ts = r[0]; FM.terr = r[1]; FM.mod = r[2];
+        v.scene.primitives.add(FM.ts);
+        FM.ts.tileFailed.addEventListener(function(){ FM.fails = (FM.fails || 0) + 1; });
+        FM.tiles = 0; FM.ts.tileLoad.addEventListener(function(){ FM.tiles++; });
+        /* user drags pause the film (camera hands-off until Resume) */
+        var h = new C.ScreenSpaceEventHandler(v.scene.canvas);
+        [C.ScreenSpaceEventType.LEFT_DOWN, C.ScreenSpaceEventType.WHEEL, C.ScreenSpaceEventType.PINCH_START].forEach(function(ev){ h.setInputAction(function(){ tourUserInput(); }, ev); });
+        FM.handler = h;
+        T.tl = FM.tl = filmTimeline(scope);
+        buildScrub(); T.el.classList.remove('loading');
+        T.t = 0; T.playing = true; FM.si = null; FM.force = true; syncPP(); showUi();
+        v.scene.preRender.addEventListener(filmTick);
+      });
+    }).catch(function(e){
+      console.warn('[film] Photoreal unavailable:', e && e.message);
+      if (T !== mine) return;
+      var sc = T.scope, fr = T.from; exitTour(true);
+      toast('Showing the standard map — 3D photos couldn’t load.');
+      prFailed = true;
+      setTimeout(function(){ startTour(sc, fr); }, 60);
+    });
+    return true;
+  }
+  function stopFilm(t){
+    var f = t && t.film; if (!f) return;
+    try { if (f.v){ f.v.scene.preRender.removeEventListener(filmTick); if (f.handler) f.handler.destroy(); f.v.destroy(); } } catch(e){}
+    if (f.host) f.host.remove();
+    if (FM === f) FM = null;
+  }
+
 
   /* ---------- public ---------- */
   function railActive(id, initial){
@@ -10777,7 +11674,8 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
   }
   window.AspenMap = {ensure:ensure, refresh:refresh, show:show, town:function(){ enterTown(true); },
     open3d:function(){ open3d(); }, close3d:function(){ close3d(); },
-    tour:{play:function(){ startTour('all'); }, day:function(id){ startTour(id || cur); }, exit:function(){ exitTour(); }, get state(){ return T; }},
+    tour:{play:function(){ startTour('all'); }, day:function(id){ startTour(id || cur); }, exit:function(){ exitTour(); }, get state(){ return T; },
+      seek:function(ms){ seek(ms, true); }, pause:function(){ pause(true); }, resume:function(){ play(); }},
     get map(){ return map; }, get map3d(){ return m3; }, get view(){ return cur; }};
 
   /* ---------- boot: markup now, Leaflet when the tab first opens ---------- */
