@@ -2018,6 +2018,41 @@ body.dark .gr-fill{border-color:#e08a86;color:#e08a86;}
   opacity:0;visibility:hidden;transform:translateY(-6px) scale(.98);transform-origin:top right;
   transition:opacity var(--dur-2,220ms) var(--ease-out,ease),transform var(--dur-2,220ms) var(--ease-out,ease),visibility 0s linear var(--dur-2,220ms);}
 .mu-pop.mu-open{opacity:1;visibility:visible;transform:none;transition-delay:0s;}
+/* music v2 — Site mix | Real songs tabs */
+.mu-tabs{display:flex;gap:4px;margin:10px 0 2px;padding:3px;border-radius:999px;background:rgba(176,138,62,.10);}
+.mu-tab{flex:1;min-height:32px;border:0;border-radius:999px;background:none;cursor:pointer;font:inherit;font-size:10.5px;
+  letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--muted,#7E8B83);
+  transition:background var(--dur-1,140ms) var(--ease-out,ease),color var(--dur-1,140ms) var(--ease-out,ease);}
+.mu-tab[aria-selected="true"]{background:var(--alpenglow,linear-gradient(120deg,#C49A4A,#E8D9B0,#B0863A));color:#143a2a;}
+.mu-tab:focus-visible{outline:2px solid var(--gold,#B0863A);outline-offset:2px;}
+.mu-real{display:none;margin-top:10px;}
+.mu-pop.mu-real-on .mu-real{display:block;}
+.mu-pop.mu-real-on .mu-seek,.mu-pop.mu-real-on .mu-ctrls,.mu-pop.mu-real-on .mu-vol,.mu-pop.mu-real-on .mu-err,
+.mu-pop.mu-real-on .mu-foot,.mu-pop.mu-real-on .mu-credits,.mu-pop.mu-real-on .mu-title,.mu-pop.mu-real-on .mu-artist{display:none !important;}
+.mu-rv{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#0d1a14;}
+.mu-rv iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.mu-rv-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  padding:12px;color:#E8D9B0;font-family:var(--serif,Georgia,serif);font-size:16px;line-height:1.3;}
+.mu-rv-ph span{font-family:var(--sans,'Jost',sans-serif);font-size:11px;color:rgba(232,217,176,.7);margin-top:4px;}
+.mu-rv.mu-rv-on .mu-rv-ph{display:none;}
+.mu-rnow{display:none;align-items:center;justify-content:space-between;gap:8px;margin-top:6px;font-size:11px;}
+.mu-pop.mu-rplaying .mu-rnow{display:flex;}
+.mu-rnow-t{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--snow,#1b2a22);}
+.mu-rlink{flex:none;color:var(--gold,#B0863A);text-decoration:none;border-bottom:1px dotted currentColor;}
+.mu-rlist{list-style:none;margin:8px 0 0;padding:0;max-height:min(210px,32vh);overflow:auto;}
+.mu-rbtn{display:flex;flex-direction:column;align-items:flex-start;width:100%;min-height:44px;padding:6px 8px;border:0;border-radius:8px;
+  background:none;cursor:pointer;text-align:left;font:inherit;color:var(--snow-soft,#46544d);}
+.mu-rbtn b{font-weight:500;font-size:13px;color:var(--snow,#1b2a22);}
+.mu-rbtn span{font-size:11px;color:var(--muted,#7E8B83);}
+.mu-rbtn:hover{background:rgba(176,138,62,.10);}
+.mu-rbtn.mu-ron{background:rgba(176,138,62,.18);}
+.mu-rbtn.mu-ron b::before{content:'\25B6\00a0';color:var(--gold,#B0863A);font-size:10px;}
+.mu-rnote{margin:8px 0 0;font-size:10.5px;line-height:1.45;color:var(--muted,#7E8B83);}
+body.dark .mu-tabs{background:rgba(201,160,90,.10);}
+body.dark .mu-tab[aria-selected="true"]{color:#0a1622;}
+body.dark .mu-rbtn:hover{background:rgba(201,160,90,.12);}
+body.dark .mu-rbtn.mu-ron{background:rgba(201,160,90,.2);}
+@media (prefers-reduced-motion:reduce){ .mu-tab{transition:none;} }
 .mu-pop *{box-sizing:border-box;}
 .mu-head{display:flex;align-items:flex-start;gap:10px;}
 .mu-meta{flex:1;min-width:0;}
@@ -2466,6 +2501,206 @@ body.dark .of-card-own .of-img{background:repeating-linear-gradient(45deg,rgba(2
   .of-dinner.is-flash{animation:none;outline:2px solid var(--gold);outline-offset:2px;}
   .of-slider,.of-sitems,.of-occs{scroll-behavior:auto;}
 }
+
+/* ============================================================
+   OUTFITS v1 (Nov 16) — suitcase + mannequin screen (.iv-*)
+   Only this renders for now: the v39 guide/builder/dinner markup is
+   kept in the page but hidden (#outfits.of-v1). The builder panel and
+   suitcase are a deliberate dark-navy "game inventory" object in both
+   themes; the Additions list follows the page theme.
+   ============================================================ */
+#outfits.of-v1 .wrap > :not(.sec-head):not(.iv-topbar):not(#ofInv):not(dialog){display:none!important;}
+.iv-topbar:empty{display:none!important;}
+#outfits.of-v1 .sec-head .eyebrow,#outfits.of-v1 .sec-head .lead{display:none;}
+#outfits.of-v1 .sec-head{margin-bottom:6px;}
+.iv-topbar{display:flex;justify-content:flex-end;max-width:760px;margin:-8px auto 10px;}
+.iv-helpbtn{font-family:var(--sans);font-size:12px;letter-spacing:.06em;color:var(--evergreen);background:transparent;border:1px solid var(--glass-line);
+  border-radius:100px;padding:7px 14px;min-height:34px;cursor:pointer;transition:border-color var(--dur-2) var(--ease-out),color var(--dur-2) var(--ease-out);}
+.iv-helpbtn:hover{border-color:var(--gold);}
+body.dark .iv-helpbtn{color:var(--snow-soft);}
+.iv{max-width:760px;margin:0 auto;display:grid;gap:26px;--iv-ink:#efe6d2;--iv-soft:rgba(239,230,210,.66);--iv-line:rgba(201,160,90,.42);}
+.iv button{font-family:var(--sans);}
+.iv :focus-visible,.iv-helpbtn:focus-visible{outline:2px solid var(--gold-bright,#C49A4A);outline-offset:2px;}
+
+/* day + moment rows */
+.iv-rows{display:grid;gap:10px;min-width:0;}
+.iv-days,.iv-moms{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px;-webkit-overflow-scrolling:touch;}
+.iv-days::-webkit-scrollbar,.iv-moms::-webkit-scrollbar{display:none;}
+.iv-day{flex:none;display:grid;justify-items:center;gap:3px;min-width:58px;padding:7px 10px 6px;border-radius:12px;cursor:pointer;
+  font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--snow-soft);background:rgba(255,255,255,.6);border:1px solid var(--glass-line);
+  transition:background var(--dur-2) var(--ease-out),border-color var(--dur-2) var(--ease-out),color var(--dur-2) var(--ease-out);}
+.iv-day:hover{border-color:var(--gold);}
+.iv-day.is-on{background:#13263a;color:#efe6d2;border-color:transparent;}
+.iv-dots{display:flex;gap:3px;height:6px;}
+.iv-dots i{width:5px;height:5px;border-radius:50%;border:1px solid currentColor;opacity:.55;}
+.iv-dots i.on{background:#C49A4A;border-color:#C49A4A;opacity:1;}
+.iv-mom{flex:none;display:grid;gap:1px;text-align:left;padding:8px 14px;border-radius:12px;cursor:pointer;color:var(--snow);
+  background:transparent;border:1px solid var(--glass-line);transition:background var(--dur-2) var(--ease-out),border-color var(--dur-2) var(--ease-out);}
+.iv-mom b{font-weight:500;font-size:13px;white-space:nowrap;}
+.iv-mom span{font-size:11px;color:var(--muted);white-space:nowrap;}
+.iv-mom:hover{border-color:var(--gold);}
+.iv-mom.is-on{border-color:var(--gold);background:rgba(196,154,74,.12);box-shadow:inset 0 0 0 1px var(--gold);}
+.iv-ok{font-style:normal;color:#C49A4A;font-size:9px;vertical-align:2px;}
+body.dark .iv-day{background:rgba(255,255,255,.05);}
+body.dark .iv-day.is-on{background:var(--alpenglow);color:#0d1f2e;}
+
+/* the builder panel */
+.iv-panel{position:relative;background:radial-gradient(120% 80% at 50% 0%,#1b3349 0%,#13263a 55%,#0e1d2c 100%);color:var(--iv-ink);
+  border:1px solid var(--iv-line);border-radius:20px;padding:24px clamp(14px,4vw,30px) 20px;box-shadow:0 30px 60px -36px rgba(8,18,28,.75),inset 0 1px 0 rgba(255,255,255,.06);}
+.iv-eq{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(10px,3vw,26px);align-items:center;}
+.iv-col{display:grid;gap:12px;}
+.iv-slotwrap{display:grid;justify-items:center;gap:5px;width:76px;}
+.iv-slot{position:relative;width:68px;height:68px;border-radius:15px;border:0;padding:0;cursor:pointer;display:grid;place-items:center;
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.06));
+  box-shadow:inset 0 3px 8px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,160,90,.3);
+  transition:box-shadow var(--dur-2) var(--ease-out),transform var(--dur-2) var(--ease-out);touch-action:manipulation;}
+.iv-slot:hover{box-shadow:inset 0 3px 8px rgba(0,0,0,.5),inset 0 0 0 1px rgba(232,217,176,.7);}
+.iv-ghostic{width:30px;height:30px;color:rgba(232,217,176,.32);display:block;}
+.iv-ghostic svg{width:100%;height:100%;display:block;}
+.iv-sl{max-width:76px;font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--iv-soft);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;line-height:1.3;}
+.iv-slot.is-full{box-shadow:inset 0 0 0 1px rgba(232,217,176,.55),0 0 0 1px rgba(201,160,90,.25),0 8px 18px -10px rgba(0,0,0,.6);}
+.iv-slot.is-full .iv-th{width:60px;height:60px;}
+.iv-slot.is-prev{box-shadow:none;outline:1.5px dashed rgba(232,217,176,.75);outline-offset:-2px;}
+.iv-slot.is-prev .iv-th{opacity:.8;}
+.iv-slot.is-valid{box-shadow:inset 0 3px 8px rgba(0,0,0,.5),inset 0 0 0 1.5px #E8D9B0,0 0 18px rgba(196,154,74,.55);}
+.iv-slot.is-hot{transform:scale(1.06);box-shadow:inset 0 0 0 2px #E8D9B0,0 0 26px rgba(196,154,74,.85);}
+.iv-slot.is-pop,.iv-cell.is-pop{animation:ivPop .32s var(--ease-spring,cubic-bezier(.34,1.56,.64,1));}
+@keyframes ivPop{0%{transform:scale(.86)}60%{transform:scale(1.07)}100%{transform:scale(1)}}
+.iv-stage{display:grid;place-items:center;min-width:0;}
+.iv-fig{width:100%;max-width:190px;height:auto;display:block;overflow:visible;}
+.iv-body{fill:rgba(232,217,176,.07);stroke:rgba(232,217,176,.34);stroke-width:1;}
+.iv-g path,.iv-g ellipse,.iv-g rect{stroke:rgba(232,217,176,.55);stroke-width:.8;}
+.iv-g.is-prev{opacity:.6;}
+.iv-g.is-prev path,.iv-g.is-prev ellipse,.iv-g.is-prev rect{stroke-dasharray:3 2;stroke:#E8D9B0;}
+
+/* item thumbs (light tile so product shots + icons read on navy) */
+.iv-th{position:relative;display:grid;place-items:center;width:100%;height:100%;border-radius:11px;background:#efe9de;overflow:hidden;}
+.iv-th img{width:100%;height:100%;object-fit:contain;display:block;mix-blend-mode:multiply;-webkit-user-drag:none;user-select:none;}
+.iv-th .iv-ic{width:62%;height:62%;display:block;}
+.iv-th .iv-ic svg{width:100%;height:100%;display:block;stroke:#2c3036;}
+.iv-th .iv-ic::after{content:"";position:absolute;right:6px;bottom:6px;width:10px;height:10px;border-radius:50%;background:currentColor;box-shadow:0 0 0 1.5px #efe9de,0 0 0 2.5px rgba(44,48,54,.35);}
+
+/* warmth stat bar */
+.iv-stat{margin-top:22px;}
+.iv-stat-t{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.iv-stat-t b{font-weight:500;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--iv-soft);margin-right:6px;}
+.iv-stat-t span{font-family:var(--serif);font-size:24px;line-height:1;color:var(--iv-ink);}
+.iv-stat-t span i{font-style:normal;font-size:14px;color:var(--iv-soft);}
+.iv-stat-t .iv-rec{font-family:var(--sans);font-size:12px;color:#E8D9B0;letter-spacing:.04em;}
+.iv-bar{position:relative;height:12px;border-radius:100px;background:rgba(0,0,0,.35);box-shadow:inset 0 1px 3px rgba(0,0,0,.6),inset 0 0 0 1px rgba(232,217,176,.14);}
+.iv-band{position:absolute;top:-3px;bottom:-3px;border-radius:100px;background:rgba(201,160,90,.18);border:1px solid rgba(232,217,176,.55);}
+.iv-fill{position:absolute;left:0;top:2px;bottom:2px;border-radius:100px;background:#7f8a93;transition:width var(--dur-3) var(--ease-out),background var(--dur-3) var(--ease-out);max-width:100%;}
+.iv-bar.is-under .iv-fill{background:linear-gradient(90deg,#3f78ad,#6aa7dc);}
+.iv-bar.is-in .iv-fill{background:linear-gradient(90deg,#b8913f,#d9bd72 70%,#9fc7b4);}
+.iv-bar.is-over .iv-fill{background:linear-gradient(90deg,#c9a05a,#e08a5a);}
+.iv-mark{position:absolute;top:-6px;width:3px;height:24px;margin-left:-1.5px;border-radius:2px;background:#fff;box-shadow:0 0 10px rgba(255,255,255,.7);transition:left var(--dur-3) var(--ease-out);}
+.iv-ctx{margin-top:10px;font-size:12px;color:var(--iv-soft);line-height:1.5;}
+.iv-src{display:inline-block;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;border:1px solid rgba(232,217,176,.3);border-radius:100px;padding:1px 7px;margin-left:4px;vertical-align:1px;}
+.iv-warn{margin-top:10px;font-size:13px;line-height:1.45;color:#f2c0a6;padding-left:10px;border-left:2px solid #e08a5a;}
+.iv-acts{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 16px;margin-top:20px;}
+.iv-save{font-size:12.5px;font-weight:500;letter-spacing:.06em;color:#13263a;background:var(--alpenglow);border:0;border-radius:100px;padding:11px 20px;min-height:42px;cursor:pointer;
+  box-shadow:0 8px 20px -10px rgba(196,154,74,.9);transition:transform var(--dur-2) var(--ease-out),opacity var(--dur-2);}
+.iv-save:active{transform:scale(.97);}
+.iv-save[disabled]{opacity:.4;cursor:default;box-shadow:none;}
+.iv-save.is-saved{background:transparent;color:#E8D9B0;box-shadow:inset 0 0 0 1px rgba(232,217,176,.6);}
+.iv-lnk{font-size:12.5px;color:#E8D9B0;background:none;border:0;padding:8px 2px;min-height:36px;cursor:pointer;text-decoration:underline;text-decoration-color:rgba(232,217,176,.4);text-underline-offset:3px;}
+.iv-lnk[disabled]{opacity:.35;cursor:default;}
+.iv-msg{min-height:1.2em;text-align:center;font-size:12px;color:#9fc7b4;margin-top:6px;}
+
+/* suitcase */
+.iv-case{position:relative;padding:14px;border-radius:24px;margin-top:14px;
+  background:linear-gradient(160deg,#8a5d3b 0%,#6e4529 55%,#5a3820 100%);box-shadow:0 26px 50px -30px rgba(40,22,10,.8),inset 0 1px 0 rgba(255,220,180,.25),inset 0 -2px 0 rgba(0,0,0,.25);}
+.iv-handle{position:absolute;left:50%;top:-16px;width:96px;height:22px;margin-left:-48px;border:5px solid #5a3820;border-bottom:0;border-radius:14px 14px 0 0;}
+.iv-case-in{position:relative;border-radius:14px;padding:16px 14px 18px;background:radial-gradient(120% 90% at 50% 0%,#1a3147 0%,#12243a 70%);color:var(--iv-ink);
+  box-shadow:inset 0 2px 10px rgba(0,0,0,.55);}
+.iv-case-in::before{content:"";position:absolute;inset:6px;border-radius:10px;border:1.5px dashed rgba(232,217,176,.28);pointer-events:none;}
+.iv-case.is-hot .iv-case-in{box-shadow:inset 0 2px 10px rgba(0,0,0,.55),0 0 0 2px #E8D9B0;}
+.iv-h{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:.01em;margin:0 0 12px;}
+.iv-case .iv-h{color:var(--iv-ink);text-align:center;}
+.iv-grid{position:relative;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;}
+.iv-cell{position:relative;aspect-ratio:1;border-radius:13px;border:0;padding:5px 5px 18px;cursor:pointer;display:grid;place-items:stretch;
+  background:rgba(255,255,255,.04);box-shadow:inset 0 3px 8px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,160,90,.22);
+  transition:box-shadow var(--dur-2) var(--ease-out),transform var(--dur-2) var(--ease-out);touch-action:manipulation;
+  -webkit-touch-callout:none;-webkit-user-select:none;user-select:none;min-width:0;}
+.iv-cell .iv-th{border-radius:9px;}
+.iv-cell:hover:not(.is-empty){transform:translateY(-1px);box-shadow:inset 0 0 0 1px rgba(232,217,176,.7),0 6px 14px -8px rgba(0,0,0,.6);}
+.iv-cell.is-empty{padding:0;cursor:default;opacity:.55;}
+.iv-cell.is-on{box-shadow:inset 0 0 0 2px #C49A4A,0 0 14px -2px rgba(196,154,74,.6);}
+.iv-cell.is-on::after{content:"";position:absolute;top:6px;left:6px;width:7px;height:7px;border-radius:50%;background:#C49A4A;box-shadow:0 0 0 2px #12243a;}
+.iv-cl{position:absolute;left:4px;right:4px;bottom:3px;font-size:9.5px;line-height:1.3;color:var(--iv-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;}
+.iv-qty{position:absolute;top:6px;right:7px;font-size:10px;font-weight:600;color:#13263a;background:#E8D9B0;border-radius:100px;padding:0 5px;line-height:15px;}
+
+/* additions (page theme) */
+.iv-adds .iv-h{color:var(--evergreen);}
+.iv-agrp{margin-top:16px;}
+.iv-agrp h4{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:0 0 8px;}
+.iv-arow{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;}
+.iv-acard{display:grid;grid-template-columns:64px minmax(0,1fr);grid-template-rows:auto auto;gap:6px 12px;align-items:center;padding:10px;border-radius:14px;
+  background:var(--glass);border:1px solid var(--glass-line);box-shadow:0 12px 26px -22px var(--ink-shadow);}
+.iv-ath{grid-row:1/3;width:64px;height:64px;border-radius:11px;}
+.iv-ameta{min-width:0;display:grid;gap:2px;}
+.iv-ab{font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--snow);}
+.iv-ab .of-tier{font-style:normal;font-weight:500;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;margin-left:4px;}
+.iv-an{font-size:12.5px;line-height:1.35;color:var(--snow-soft);text-decoration:none;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.iv-an:hover{color:var(--evergreen);text-decoration:underline;}
+.iv-ext{font-weight:400;color:var(--muted);}
+.iv-abtns{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;}
+.iv-adds .iv-lnk{color:var(--evergreen);font-size:12px;padding:6px 0;min-height:32px;text-decoration-color:rgba(31,77,56,.35);}
+.iv-adds .iv-lnk.is-on{font-weight:600;}
+.iv-buy{font-size:12px;font-weight:500;color:var(--evergreen);background:rgba(196,154,74,.14);border:1px solid rgba(176,134,58,.55);border-radius:100px;padding:6px 12px;min-height:32px;cursor:pointer;}
+.iv-buy:hover{background:rgba(196,154,74,.25);}
+body.dark .iv-adds .iv-h,body.dark .iv-adds .iv-lnk,body.dark .iv-buy{color:var(--gold-bright);}
+body.dark .iv-buy{background:rgba(201,160,90,.1);}
+body.dark .iv-an:hover{color:var(--gold-bright);}
+
+/* drag ghost, fly, tooltip */
+.iv-drag,.iv-fly{position:fixed;left:0;top:0;z-index:10050;pointer-events:none;border-radius:13px;background:#efe9de;overflow:hidden;display:grid;place-items:center;
+  box-shadow:0 18px 30px -10px rgba(0,0,0,.55),0 0 0 2px #E8D9B0;}
+.iv-drag img,.iv-fly img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;}
+.iv-drag .iv-ic,.iv-fly .iv-ic{width:62%;height:62%;display:block;}
+.iv-drag svg,.iv-fly svg{width:100%;height:100%;stroke:#2c3036;}
+.iv-fly{transition:transform .32s var(--ease-out),opacity .32s var(--ease-out);}
+html.iv-dragging,html.iv-dragging *{cursor:grabbing!important;user-select:none!important;-webkit-user-select:none!important;}
+.iv-tip{position:fixed;z-index:10060;pointer-events:none;font-family:var(--sans);font-size:12px;line-height:1.4;color:#efe6d2;background:#0e1d2c;border:1px solid rgba(232,217,176,.45);
+  border-radius:8px;padding:6px 10px;opacity:0;transform:translateY(4px);transition:opacity var(--dur-1) var(--ease-out),transform var(--dur-1) var(--ease-out);}
+.iv-tip.on{opacity:1;transform:none;}
+
+/* help dialog */
+.iv-help{border:1px solid rgba(201,160,90,.5);border-radius:18px;padding:0;max-width:min(560px,calc(100vw - 24px));width:100%;background:#13263a;color:#efe6d2;box-shadow:0 30px 80px -20px rgba(0,0,0,.6);}
+.iv-help::backdrop{background:rgba(8,16,26,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);}
+.iv-help-in{padding:22px clamp(16px,4vw,28px) 24px;max-height:min(80vh,720px);overflow:auto;}
+.iv-help-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}
+.iv-help h3{font-family:var(--serif);font-size:24px;font-weight:500;color:#efe6d2;margin:0;}
+.iv-x{width:38px;height:38px;border-radius:50%;border:1px solid rgba(232,217,176,.4);background:transparent;color:#efe6d2;font-size:15px;cursor:pointer;flex:none;}
+.iv-help-layers{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:8px;counter-reset:l;}
+.iv-help-layers li{display:grid;grid-template-columns:62px 1fr;gap:10px;font-size:13.5px;line-height:1.45;color:rgba(239,230,210,.85);}
+.iv-help-layers b,.iv-help-x dt{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#E8D9B0;padding-top:3px;}
+.iv-help-x{display:grid;grid-template-columns:76px 1fr;gap:8px 10px;margin:0;padding-top:14px;border-top:1px solid rgba(232,217,176,.2);}
+.iv-help-x dd{margin:0;font-size:13.5px;line-height:1.45;color:rgba(239,230,210,.85);}
+
+/* phone */
+@media (max-width:600px){
+  .iv{gap:22px;}
+  .iv-panel{padding:18px 12px 16px;border-radius:18px;}
+  .iv-eq{gap:8px;}
+  .iv-slotwrap{width:64px;}
+  .iv-slot{width:58px;height:58px;border-radius:13px;}
+  .iv-slot.is-full .iv-th{width:50px;height:50px;}
+  .iv-sl{max-width:64px;font-size:9px;letter-spacing:.08em;}
+  .iv-ghostic{width:26px;height:26px;}
+  .iv-col{gap:10px;}
+  .iv-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
+  .iv-case{padding:10px;}
+  .iv-case-in{padding:14px 10px 14px;}
+  .iv-stat-t span{font-size:21px;}
+}
+@media (max-width:360px){ .iv-slotwrap{width:56px;} .iv-slot{width:52px;height:52px;} .iv-slot.is-full .iv-th{width:44px;height:44px;} }
+@media (prefers-reduced-motion:reduce){
+  .iv-slot,.iv-cell,.iv-fill,.iv-mark,.iv-tip,.iv-day,.iv-mom,.iv-save{transition:none!important;}
+  .iv-slot.is-pop,.iv-cell.is-pop{animation:none!important;}
+}
+
 
 @media (max-width:520px){ .dtable.casual{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%} .dtable.casual td,.dtable.casual th{min-width:84px} }
 @media (max-width:1520px){ #whNav.wh-navpill{padding:3px} #whNav .wh-nt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)} #nvSearchBtn .nv-search-tx,#nvSearchBtn .nv-kbd{display:none} }
@@ -4795,7 +5030,6 @@ body.gated .wh-fab{display:none;}
 
   <dialog class="of-help" id="ofHelp" aria-label="How to layer for Aspen"><div class="of-help-bar"><b>How to layer for Aspen</b><button type="button" class="pdfv-x" id="ofHelpX" aria-label="Close">&times;</button></div><div class="of-help-body"><div id="ofSystem"></div></div></dialog>
 
-  <div class="of-soon"><b>Your closet is being rebuilt</b><span>A mannequin you dress from your suitcase, outfits for every part of each day, and a warmth check against the forecast. Back shortly.</span></div>
   <div class="of-old" hidden>
   <div class="sub-head">Day by Day</div>
   <div class="of-strip" id="ofDays" tabindex="0" aria-label="Day-by-day outfits"></div>
@@ -4881,6 +5115,89 @@ body.gated .wh-fab{display:none;}
    ============================================================ */
 (function () {
   'use strict';
+
+  /* ==================================================================
+     OUTFITS v1 (Nov 16) — the suitcase + mannequin screen.
+     EDIT THESE TWO LISTS from Griffin's messages. Nothing else enters the
+     suitcase: only what's listed in SUITCASE, plus Additions he marks
+     "Bought it" on his device.
+
+     Item fields:
+       id        unique, stable (used for saves)
+       name      full name (tooltip)          short  label on tiles
+       slot      hat | sunglasses | scarf | coat | top | gloves | bottom | shoes
+       kind      drawing on the mannequin: jacket coat tee shirt sweater jeans
+                 trousers sneaker boot beanie shades scarf gloves
+       warmth    0–3   (3 = insulated ski jacket, 1 = jeans / leather gloves, 0.5 = tee)
+       waterproof, windproof   true/false
+       dressy    0 casual · 1 smart · 2 dressy
+       color     hex used for the silhouette on the mannequin
+       qty       optional (shows ×N on the tile)
+       img/url   optional — only a photo of THAT exact product (else a line icon)
+      crop      optional [x%, y%, zoom] to frame a tall product shot in the square tiles
+     ================================================================== */
+  var SUITCASE = {
+    griffin: [
+      { id: 'beta', name: 'Arc’teryx Beta Insulated Jacket · black', short: 'Beta Insulated', slot: 'coat', kind: 'jacket',
+        warmth: 3, waterproof: true, windproof: true, dressy: 0, color: '#1c1f23',
+        img: 'https://images-dynamic-arcteryx.imgix.net/details/1350x1710/F26-X000010866-Beta-Insulated-Jacket-Black-Front-View.jpg',
+        url: 'https://arcteryx.com/ca/en/shop/mens/beta-insulated-jacket-0866' },
+      { id: 'tees', name: 'Fitted tees', short: 'Fitted tees', qty: 4, slot: 'top', kind: 'tee',
+        warmth: 0.5, waterproof: false, windproof: false, dressy: 0, color: '#3a3f46' },
+      { id: 'jeans-black', name: 'Black jeans', short: 'Black jeans', slot: 'bottom', kind: 'jeans',
+        warmth: 1, waterproof: false, windproof: false, dressy: 1, color: '#1d1f22' },
+      { id: 'jeans-indigo', name: 'Dark indigo jeans', short: 'Indigo jeans', slot: 'bottom', kind: 'jeans',
+        warmth: 1, waterproof: false, windproof: false, dressy: 1, color: '#25365a' },
+      { id: 'jeans-brown', name: 'Brown jeans', short: 'Brown jeans', slot: 'bottom', kind: 'jeans',
+        warmth: 1, waterproof: false, windproof: false, dressy: 1, color: '#5c4231' },
+      { id: 'slacks', name: 'Black dress slacks', short: 'Dress slacks', slot: 'bottom', kind: 'trousers',
+        warmth: 1, waterproof: false, windproof: false, dressy: 2, color: '#141619' },
+      { id: 'gats-black', name: 'Maison Margiela Replica GATs · black', short: 'GATs · black', slot: 'shoes', kind: 'sneaker',
+        warmth: 0.5, waterproof: false, windproof: false, dressy: 1, color: '#1b1d20',
+        img: 'https://marais.com.au/cdn/shop/files/XOMARAIS_250731_Product_MENSHOESSNEAKERSReplicaLeatherSneakerinBlack44MMMSS21293S57WS0236P1897900_6517.jpg?v=1754548692&width=1200',
+        url: 'https://marais.com.au/products/replica-leather-suede-sneaker-1', crop: [50, 76, 1.7] },
+      { id: 'gats-brown', name: 'Maison Margiela Replica GATs · brown', short: 'GATs · brown', slot: 'shoes', kind: 'sneaker',
+        warmth: 0.5, waterproof: false, windproof: false, dressy: 1, color: '#6d4b33' },
+      { id: 'colehaan', name: 'Cole Haan boots · black', short: 'Cole Haan boots', slot: 'shoes', kind: 'boot',
+        warmth: 1, waterproof: false, windproof: false, dressy: 2, color: '#16181b' }
+    ]
+  };
+
+  /* Ideas he's considering — NOT in the suitcase. "Bought it → pack" moves one in.
+     pid = product id from the PRODUCTS list (image + link come from there). Men's only. */
+  var ADDITIONS = {
+    griffin: [
+      /* No dress shirts (Griffin, Nov 16: "fitted tees or henleys look nice and are better for going out after"). */
+      { group: 'Fitted tees', slot: 'top', kind: 'tee', warmth: 0.5, waterproof: false, windproof: false, dressy: 1, items: [
+        { pid: 'yitai-rib-tee', short: 'YITAI rib tee', color: '#ece9e1' },
+        { pid: '3sixteen-pima-tee', short: '3sixteen pima tee', color: '#f1efe8' },
+        { pid: 'joe-merino-tee-black', short: 'Johnstons merino tee', color: '#1d1f22' } ] },
+      { group: 'Henleys', slot: 'top', kind: 'henley', warmth: 1, waterproof: false, windproof: false, dressy: 1, items: [
+        { pid: 'yitai-waffle-henley', short: 'YITAI waffle henley', color: '#1d1f22' },
+        { pid: 'am-austin-henley', short: 'Alex Mill henley', color: '#26324a' } ] },
+      /* one elevated layer for the nicer nights — Casa Tua "jackets encouraged", NYE at Matsuhisa */
+      { group: 'Nicer-night layer', slot: 'coat', kind: 'overshirt', warmth: 1.5, waterproof: false, windproof: true, dressy: 2, items: [
+        { pid: 'ss-havana-blazer-navy', short: 'Suitsupply blazer', color: '#1f2a44', kind: 'blazer', warmth: 1 },
+        { pid: 'drakes-wool-overshirt', short: 'Drake’s overshirt', color: '#1f2a44' },
+        { pid: 'mashburn-cashmere-chore', short: 'Mashburn chore jacket', color: '#3a3d42' } ] },
+      { group: 'Sweater · optional', slot: 'top', kind: 'sweater', warmth: 1.5, waterproof: false, windproof: false, dressy: 1, items: [
+        { pid: 'naadam-luxe-crew', short: 'Naadam crew', color: '#3b3f45' },
+        { pid: 'joe-cashmere-crew-charcoal', short: 'Johnstons crew', color: '#44484e' } ] },
+      { group: 'Gloves', slot: 'gloves', kind: 'gloves', warmth: 1, waterproof: false, windproof: true, dressy: 2, items: [
+        { pid: 'dents-rushton-m', short: 'Dents gloves', color: '#2b211b' },
+        { pid: 'hestra-elk-cashmere', short: 'Hestra elk', color: '#1d1f22' },
+        { pid: 'hestra-peccary-cashmere', short: 'Hestra peccary', color: '#1d1f22' } ] },
+      { group: 'Sunglasses', slot: 'sunglasses', kind: 'shades', warmth: 0, waterproof: false, windproof: false, dressy: 1, items: [
+        { pid: 'rayban-wayfarer', short: 'Wayfarer', color: '#111214' },
+        { pid: 'persol-714', short: 'Persol 714', color: '#6b4a2b' },
+        { pid: 'op-gregory-peck-sun', short: 'Gregory Peck', color: '#7a4a2a' } ] },
+      { group: 'Scarf', slot: 'scarf', kind: 'scarf', warmth: 1, waterproof: false, windproof: false, dressy: 1, items: [
+        { pid: 'joe-ribbed-scarf-black', short: 'Johnstons scarf', color: '#1d1f22' },
+        { pid: 'begg-arran-loden', short: 'Begg x Co Arran', color: '#4b5a3c' },
+        { pid: 'inis-herringbone-scarf', short: 'Inis Meáin scarf', color: '#8a8578' } ] }
+    ]
+  };
+
 
   /* ---------------- DATA ---------------- */
   var OUTFITS = {
@@ -5012,9 +5329,9 @@ body.gated .wh-fab{display:none;}
           avoid: ['Heavy wool that will cook you at the club', 'Anything you can’t also wear standing in a crowd'],
           walk: 'Short walk downtown at ~10°F: warm coat, scarf, beanie. The concert crew keeps the coat with them.',
           samples: [
-            { n: 'Easy tailored', ids: ['everlane-oxford-m', 'everlane-cord-pant-m', 'blundstone-566-m', 'quince-overcoat-m'] },
-            { n: 'Soft & polished', ids: ['everlane-tissue-turtleneck-w', 'quince-wool-trouser-w', 'colehaan-shibley-w', 'everlane-long-puffer'] },
-            { n: 'Cozy classic', ids: ['naadam-luxe-crew', 'drmartens-1460-fleece', 'quince-cashmere-scarf', 'quince-cashmere-beanie'] }
+            { n: 'Easy tailored', ids: ['bm-big-oxford-white', 'poolhouse-tokyo', 'blundstone-2241-m', 'yitai-peacoat-black', 'joe-ribbed-scarf-black'] },
+            { n: 'Soft & polished', ids: ['toteme-merino-turtleneck', 'agolde-harper-rinse', 'lacanadienne-heroic', 'am-sloane-coat', 'dents-touch-cashmere-w'] },
+            { n: 'Cozy classic', ids: ['joe-reuben-crew-navy', 'coh-elijah-darkstorm', 'danner-arctic600', 'am-cashmere-beanie'] }
           ] },
         { id: 'bellyup', day: 'd0', when: 'Sun Dec 27 · 9:30 PM', name: 'Cloonee · Belly Up', code: 'casual', build: 'wildfig', who: 'belly',
           dress: { official: false, t: 'Casual club · 21+ with photo ID. Standing GA, warm inside.' },
@@ -5023,8 +5340,8 @@ body.gated .wh-fab{display:none;}
           avoid: ['Bulky parka if there’s no coat check (ask at the door)', 'Anything you’d mind getting a drink spilled on'],
           walk: 'Ride home late (Uber / taxi) — wait outside in the cold, so keep a hat and gloves in a pocket.',
           samples: [
-            { n: 'Club layers', ids: ['everlane-henley-m', 'quince-chino-m', 'drmartens-1460-fleece', 'quince-puffer-m'] },
-            { n: 'Light & dancey', ids: ['everlane-oxford-w', 'quince-wool-trouser-w', 'blundstone-566-w', 'everlane-cabin-beanie'] }
+            { n: 'Club layers', ids: ['yitai-ribbed-sweater-black', 'yitai-selvedge-black', 'thursday-president-black', 'mackage-jay'] },
+            { n: 'Light & dancey', ids: ['frame-silk-blouse', 'frame-palazzo-black', 'blundstone-584-w', 'begg-wispy-navy'] }
           ] },
         { id: 'whitehouse', day: 'd1', when: 'Mon Dec 28 · 7:00 PM', name: 'White House Tavern', code: 'casual', build: 'whitehouse',
           dress: { official: false, t: 'Casual tavern — no dress code. Snow boots welcome.' },
@@ -5033,8 +5350,8 @@ body.gated .wh-fab{display:none;}
           avoid: ['Overthinking it — tired legs, easy night'],
           walk: 'Your everyday town coat.',
           samples: [
-            { n: 'Après cozy', ids: ['naadam-fair-isle', 'everlane-cord-pant-m', 'sorel-caribou-m', 'quince-puffer-m'] },
-            { n: 'Half-zip easy', ids: ['everlane-halfzip-w', 'sorel-joan-of-arctic-w', 'quince-long-parka-w', 'smartwool-rib-beanie'] }
+            { n: 'Après cozy', ids: ['mashburn-flannel-olive', '3sixteen-ct100x', 'sorel-caribou-m', 'am-theo-parka'] },
+            { n: 'Easy knit', ids: ['inis-cashmere-rollneck-w', 'coh-ayla-dynasty', 'stio-colter-boot-w', 'flylow-truckee-parka-w', 'smartwool-rib-beanie'] }
           ] },
         { id: 'casatua', day: 'd2', when: 'Tue Dec 29 · 7:00 PM', name: 'Casa Tua', code: 'dressy', build: 'casatua',
           dress: { official: true, src: 'Casa Tua Aspen reservation page (SevenRooms)',
@@ -5044,9 +5361,9 @@ body.gated .wh-fab{display:none;}
           avoid: ['Ripped jeans, hoodies, sportswear or tracksuits (house rules)', 'Caps or beanies at the table (no caps after 4 PM)', 'Ski clothes, fleece, puffers to the table (check them)'],
           walk: 'Smart coat + scarf; wear snow boots down and change shoes there if your dress shoes have no grip.',
           samples: [
-            { n: 'Tailored', ids: ['quince-overcoat-m', 'everlane-oxford-m', 'quince-wool-pant-m', 'colehaan-stockbridge-m', 'quince-cashmere-scarf'] },
-            { n: 'Soft & polished', ids: ['quince-wool-coat-w', 'quince-merino-blazer-w', 'quince-silk-blouse-w', 'quince-wool-trouser-w', 'colehaan-shibley-w'] },
-            { n: 'Knit dress, warm', ids: ['quince-cashmere-dress-w', 'quince-merino-legging-w', 'blundstone-566-w', 'naadam-triangle-scarf'] }
+            { n: 'Tailored', ids: ['yitai-peacoat-black', 'drakes-oxford-white', 'ss-havana-blazer-navy', 'yitai-wool-trouser-black', 'thursday-president-black', 'hestra-elk-cashmere'] },
+            { n: 'Soft & polished', ids: ['mackage-elodie', 'am-primrose-blazer', 'frame-silk-blouse', 'toteme-evening-trouser', 'lacanadienne-superb'] },
+            { n: 'Knit dress, warm', ids: ['naadam-turtleneck-dress-w', 'smartwool-thermal-bottom-w', 'lacanadienne-heroic', 'begg-arran-stole-black'] }
           ] },
         { id: 'frenchalpine', day: 'd3', when: 'Wed Dec 30 · 7:30 PM', name: 'French Alpine Bistro', code: 'smart-casual', build: 'frenchalpine',
           dress: { official: false, t: 'No posted dress code — cozy smart-casual.' },
@@ -5055,9 +5372,9 @@ body.gated .wh-fab{display:none;}
           avoid: ['Anything delicate — melted cheese and fondue forks', 'Big layers: the room is snug and warm'],
           walk: 'Short walk downtown; town coat and beanie.',
           samples: [
-            { n: 'Fair-isle fondue', ids: ['naadam-fair-isle', 'everlane-cord-pant-m', 'blundstone-566-m', 'everlane-cabin-beanie'] },
-            { n: 'Knit dress', ids: ['naadam-turtleneck-dress-w', 'quince-merino-legging-w', 'sorel-joan-of-arctic-w', 'quince-cashmere-scarf'] },
-            { n: 'Classic crew', ids: ['naadam-luxe-crew', 'drmartens-1460-fleece', 'quince-long-parka-w', 'smartwool-rib-beanie'] }
+            { n: 'Fondue knit', ids: ['naadam-fair-isle', 'poolhouse-austin', 'blundstone-2241-m', 'am-cashmere-beanie'] },
+            { n: 'Knit dress', ids: ['naadam-turtleneck-dress-w', 'smartwool-thermal-bottom-w', 'sorel-joan-of-arctic-w', 'inis-herringbone-scarf'] },
+            { n: 'Classic roll neck', ids: ['drakes-submariner-charcoal', 'frame-lhomme-rinse', 'danner-arctic600', 'begg-arran-loden'] }
           ] },
         { id: 'matsuhisa', day: 'd4', when: 'Thu Dec 31 · 7:30 torchlight → 8:45 PM dinner', name: 'NYE · Torchlight + Matsuhisa', code: 'dressy', build: 'nye',
           dress: { official: false, t: 'No posted dress code found — but it’s New Year’s Eve: the room dresses up. Plan for ~30 min outdoors first.' },
@@ -5066,9 +5383,9 @@ body.gated .wh-fab{display:none;}
           avoid: ['Thin dress shoes on icy sidewalks', 'A light jacket “for looks” at 10°F', 'Heels without a plan for the walk'],
           walk: 'This is the one where the cold layer matters most: long coat + warm gloves + boots with grip. Plan midnight transport (Suburban DD or Uber XL).',
           samples: [
-            { n: 'Black-tie-ish, warm', ids: ['quince-overcoat-m', 'sw-classic-thermal-crew-m', 'everlane-oxford-m', 'quince-wool-pant-m', 'thursday-president-m', 'quince-leather-gloves-m'] },
-            { n: 'Velvet night', ids: ['quince-long-parka-w', 'quince-velvet-dress-w', 'quince-merino-legging-w', 'colehaan-shibley-w', 'quince-leather-gloves-w', 'cg-triangle-scarf'] },
-            { n: 'Sharp & cozy', ids: ['everlane-long-puffer', 'quince-merino-blazer-w', 'everlane-tissue-turtleneck-w', 'quince-wool-trouser-w', 'blundstone-566-w', 'quince-cashmere-beanie'] }
+            { n: 'Black-tie-ish, warm', ids: ['mackage-abraham', 'smartwool-thermal-crew-m', 'drakes-poplin-white', 'drakes-tailored-jacket-navy', 'yitai-wool-trouser-black', 'thursday-president-black', 'hestra-peccary-cashmere'] },
+            { n: 'Night out', ids: ['toteme-shawl-coat', 'toteme-skater-dress', 'smartwool-thermal-bottom-w', 'lacanadienne-superb', 'hestra-hairsheep-pique-w', 'toteme-monogram-scarf'] },
+            { n: 'Sharp & cozy', ids: ['am-sloane-coat', 'am-primrose-blazer', 'toteme-merino-turtleneck', 'frame-palazzo-black', 'blundstone-584-w', 'begg-arran-stole-black'] }
           ] },
         { id: 'steakhouse', day: 'd6', when: 'Sat Jan 2 · 7:30 PM', name: 'Steakhouse 316 → J-Bar', code: 'dressy', build: 'steakhouse',
           dress: { official: false, t: 'No posted dress code found — upscale white-tablecloth; dark, polished looks fit the room.' },
@@ -5077,9 +5394,9 @@ body.gated .wh-fab{display:none;}
           avoid: ['Ski clothes', 'Bright athleisure — it’ll read loud in a dark room'],
           walk: 'Coldest night of the stretch (~5–15°F): warm coat, scarf, gloves. Free High Mountain Taxi home (Saturday).',
           samples: [
-            { n: 'Dark tailored', ids: ['quince-overcoat-m', 'naadam-luxe-crew', 'quince-wool-pant-m', 'colehaan-stockbridge-m', 'quince-leather-gloves-m'] },
-            { n: 'Moody soft', ids: ['quince-wool-coat-w', 'quince-merino-blazer-w', 'everlane-tissue-turtleneck-w', 'everlane-boucle-skirt-w', 'colehaan-shibley-w'] },
-            { n: 'Relaxed dark', ids: ['naadam-luxe-crew', 'everlane-cord-pant-m', 'drmartens-1460-fleece', 'cg-triangle-scarf'] }
+            { n: 'Dark tailored', ids: ['mackage-jay', 'joe-rollneck-black', 'yitai-pleated-trouser-charcoal', 'colehaan-stockbridge-m', 'dents-rushton-m'] },
+            { n: 'Moody soft', ids: ['mackage-elodie', 'toteme-cashmere-crew', 'toteme-evening-trouser', 'lacanadienne-heroic', 'joe-ribbed-scarf-black'] },
+            { n: 'Relaxed dark', ids: ['drakes-cashmere-crew-navy', 'frame-lhomme-rinse', 'blundstone-2241-m', 'inis-herringbone-scarf'] }
           ] }
       ],
 
@@ -5096,8 +5413,98 @@ body.gated .wh-fab{display:none;}
        the page says "Check price". rent:true = outerwear you could rent instead (Ski tab).
        Regenerate with merge_products.py (rewrites between the markers). */
     products: /*BEGIN_PRODUCTS*/[
+      {"id": "am-mill-shirt-white", "name": "Mill Shirt in Cotton Poplin · White", "brand": "Alex Mill", "retailer": "Alex Mill", "url": "https://www.alexmill.com/products/mill-shirt-in-cotton-poplin-in-white", "img": "https://www.alexmill.com/cdn/shop/files/MS049-2156-WHITE-MP001-2113-BLACK-5467_3e0138f5-f637-479a-8dfd-e39d80e55535_1024x1024.jpg?v=1791400128", "slot": "top", "cat": "button-up", "warmth": 1, "tier": "good", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "bellyup"], "rent": false},
+      {"id": "am-mill-shirt-navy", "name": "Mill Shirt in Cotton Poplin · Dark Navy", "brand": "Alex Mill", "retailer": "Alex Mill", "url": "https://www.alexmill.com/products/mill-shirt-in-cotton-poplin-in-dark-navy", "img": "https://www.alexmill.com/cdn/shop/files/MS049-2156-DARK-NAVY-28111_2462dde1-7dfa-43a0-85cc-06a9e1750403_1024x1024.jpg?v=1791400319", "slot": "top", "cat": "button-up", "warmth": 1, "tier": "good", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "bellyup"], "rent": false},
+      {"id": "bm-big-oxford-white", "name": "Big Oxford · White", "brand": "Buck Mason", "retailer": "Buck Mason", "url": "https://www.buckmason.com/products/white-big-oxford", "img": "https://cdn.shopify.com/s/files/1/0123/5065/2473/files/Look_01_03672_5_RT2_1024x.jpg?v=1757551721", "slot": "top", "cat": "button-up", "warmth": 1, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "bellyup", "whitehouse", "travel"], "rent": false},
+      {"id": "bm-california-oxford-lake", "name": "California Oxford BD Shirt · Lake End-on-End", "brand": "Buck Mason", "retailer": "Buck Mason", "url": "https://www.buckmason.com/products/lake-end-on-end-california-oxford-bd-shirt", "img": "https://cdn.shopify.com/s/files/1/0123/5065/2473/files/BM13139.1657_CALIFORNIA-OXFORD-BD-SHIRT_BARLEY-WHITE-BROOK-STRIPE_56950_1_1024x.jpg?v=1783615904", "slot": "top", "cat": "button-up", "warmth": 1, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "frenchalpine", "steakhouse", "whitehouse", "travel"], "rent": false},
+      {"id": "drakes-oxford-white", "name": "White Cotton Oxford Cloth Long Point Collar Shirt", "brand": "Drake's", "retailer": "Drake's", "url": "https://www.drakes.com/products/white-cotton-oxford-cloth-long-point-collar-shirt", "img": "https://www.drakes.com/cdn/shop/files/DR2A4C22944-01000-1_1200x1200.jpg?v=1726383470", "slot": "top", "cat": "button-up", "warmth": 1, "tier": "better", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse"], "rent": false},
+      {"id": "drakes-poplin-skyblue", "name": "Sky Blue Spread Collar End-on-End Poplin Shirt", "brand": "Drake's", "retailer": "Drake's", "url": "https://www.drakes.com/products/sky-blue-cotton-spread-collar-end-on-end-poplin-shirt", "img": "https://www.drakes.com/cdn/shop/files/DR2A4B21798-02200-1_1200x1200.jpg?v=1726391511", "slot": "top", "cat": "button-up", "warmth": 1, "tier": "better", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse"], "rent": false},
+      {"id": "drakes-poplin-white", "name": "White Cotton Poplin Long Point Collar Shirt", "brand": "Drake's", "retailer": "Drake's", "url": "https://www.drakes.com/products/white-cotton-poplin-long-point-collar-shirt", "img": "https://www.drakes.com/cdn/shop/products/DR2A4C22945-01000-1_1200x1200.jpg?v=1673950002", "slot": "top", "cat": "button-up", "warmth": 1, "tier": "splurge", "style": ["dressy"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse"], "rent": false},
+      {"id": "mashburn-flannel-olive", "name": "Spread Collar Sport Shirt in Olive Flannel", "brand": "Sid Mashburn", "retailer": "Sid Mashburn", "url": "https://shopmashburn.com/products/sid-mashburn-spread-collar-sport-shirt-olive-flannel-s78730", "img": "https://shopmashburn.com/cdn/shop/files/S78730_0064_1200x1200.jpg?v=1782914178", "slot": "top", "cat": "button-up", "warmth": 2, "tier": "better", "style": ["classic", "cozy"], "cut": "menswear", "occ": ["frenchalpine", "whitehouse", "wildfig", "steakhouse", "travel"], "rent": false},
+      {"id": "ss-havana-blazer-navy", "name": "Navy Havana Blazer in Pure Wool", "brand": "Suitsupply", "retailer": "Suitsupply", "url": "https://suitsupply.com/en-us/men/jackets/navy-tailored-fit-havana-blazer/C25216.html", "img": "https://cdn.suitsupply.com/image/upload/b_rgb:efefef,bo_200px_solid_rgb:efefef,c_pad,w_2600/b_rgb:efefef,c_pad,dpr_1,w_1200,h_630,f_auto,q_auto,fl_progressive/products/jackets/default/c25216_25", "slot": "mid", "cat": "blazer", "warmth": 2, "tier": "good", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["casatua", "nye", "steakhouse", "wildfig"], "rent": false},
+      {"id": "mashburn-virgil-flannel", "name": "Virgil No. 3 Jacket in Navy/Spruce Blackwatch Flannel", "brand": "Sid Mashburn", "retailer": "Sid Mashburn", "url": "https://shopmashburn.com/products/sid-mashburn-virgil-no-3-jacket-navy-spruce-blackwatch-flannel-s78715", "img": "https://shopmashburn.com/cdn/shop/files/S78715_0152_1200x1200.jpg?v=1793802472", "slot": "mid", "cat": "blazer", "warmth": 2, "tier": "better", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["casatua", "nye", "steakhouse", "frenchalpine"], "rent": false},
+      {"id": "drakes-tailored-jacket-navy", "name": "Navy Wool-Cotton Twill Tailored Jacket", "brand": "Drake's", "retailer": "Drake's", "url": "https://www.drakes.com/products/navy-wool-cotton-twill-tailored-jacket", "img": "https://www.drakes.com/cdn/shop/files/DR2A2B26545-01250-1_1200x1200.jpg?v=1789394551", "slot": "mid", "cat": "blazer", "warmth": 2, "tier": "splurge", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "yitai-wool-trouser-black", "name": "All Season Wool Trousers · Black", "brand": "YITAI", "retailer": "YITAI", "url": "https://www.yitai.la/products/all-season-wool-trousers-black", "img": "https://www.yitai.la/cdn/shop/files/Frame15_26dae734-f475-4b7b-b3f5-09fd59746fc8.png?v=1785931969&width=2048", "slot": "bottom", "cat": "trousers", "warmth": 2, "tier": "good", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse"], "rent": false},
+      {"id": "yitai-pleated-trouser-charcoal", "name": "Pleated Wool Trousers · Charcoal", "brand": "YITAI", "retailer": "YITAI", "url": "https://www.yitai.la/products/pleated-wool-trousers-charcoal-1", "img": "https://www.yitai.la/cdn/shop/files/Frame14_01002c0f-029f-4a2f-8d75-e02a5936cee6.jpg?v=1790285213&width=2048", "slot": "bottom", "cat": "trousers", "warmth": 2, "tier": "good", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse"], "rent": false},
+      {"id": "yitai-ribbed-sweater-black", "name": "Ribbed Sweater · Washed Black", "brand": "YITAI", "retailer": "YITAI", "url": "https://www.yitai.la/products/ribbed-sweater-washed-black", "img": "https://www.yitai.la/cdn/shop/files/RibbedSweater-WashedBlack1.png?v=1794499331&width=2048", "slot": "top", "cat": "sweater", "warmth": 3, "tier": "good", "style": ["classic", "cozy"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "yitai-waffle-sweater-charcoal", "name": "Waffle Knit Sweater · Charcoal", "brand": "YITAI", "retailer": "YITAI", "url": "https://www.yitai.la/products/waffle-knit-sweater-charcoal", "img": "https://www.yitai.la/cdn/shop/files/WaffleKnitSweater-Charcoal1.png?v=1794499403&width=2048", "slot": "top", "cat": "sweater", "warmth": 3, "tier": "good", "style": ["cozy"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "travel", "steakhouse", "cookin"], "rent": false},
+      {"id": "joe-cashmere-crew-charcoal", "name": "Charcoal Cashmere Crew Neck Jumper", "brand": "Johnstons of Elgin", "retailer": "Johnstons of Elgin", "url": "https://www.johnstonsofelgin.com/products/mens-charcoal-cashmere-crew-neck-jumper", "img": "https://johnstonsofelgin.com/cdn/shop/files/KAI05117-HA0700-CHARCOAL-4x5-GREY-v1_flat_lay.jpg?v=1793187465", "slot": "top", "cat": "sweater", "warmth": 3, "tier": "better", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "joe-reuben-crew-navy", "name": "Reuben Navy Cashmere Crew Jumper", "brand": "Johnstons of Elgin", "retailer": "Johnstons of Elgin", "url": "https://www.johnstonsofelgin.com/products/reuben-barra-navy-cashmere-crew-jumper", "img": "https://johnstonsofelgin.com/cdn/shop/files/KAP06051HD7350SFABARRANAVY_570_RT_model_front.jpg?v=1793697481", "slot": "top", "cat": "sweater", "warmth": 3, "tier": "better", "style": ["classic", "cozy"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "joe-rollneck-black", "name": "Classic Black Cashmere Roll Neck", "brand": "Johnstons of Elgin", "retailer": "Johnstons of Elgin", "url": "https://www.johnstonsofelgin.com/products/mens-black-classic-cashmere-roll-neck", "img": "https://johnstonsofelgin.com/cdn/shop/files/KAI05417CashmereRollNeckSweater-SA0900Black.jpg?v=1791808731", "slot": "top", "cat": "turtleneck", "warmth": 3, "tier": "better", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "bellyup"], "rent": false},
+      {"id": "am-jordan-cashmere-olive", "name": "Jordan Sweater in Washed Cashmere", "brand": "Alex Mill", "retailer": "Alex Mill", "url": "https://www.alexmill.com/products/jordan-sweater-in-washed-cashmere-in-heather-olive", "img": "https://www.alexmill.com/cdn/shop/files/MW018-2599-HEATHER-OLIVE-83399_1024x1024.jpg?v=1794338479", "slot": "top", "cat": "sweater", "warmth": 3, "tier": "better", "style": ["cozy", "classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "travel", "steakhouse", "cookin"], "rent": false},
+      {"id": "drakes-submariner-charcoal", "name": "Charcoal Lambswool Submariner Roll Neck", "brand": "Drake's", "retailer": "Drake's", "url": "https://www.drakes.com/products/charcoal-lambswool-submariner-roll-neck-jumper", "img": "https://www.drakes.com/cdn/shop/files/DR2A3F25597-02600-1_1200x1200.jpg?v=1761055522", "slot": "top", "cat": "turtleneck", "warmth": 3, "tier": "better", "style": ["cozy", "classic"], "cut": "menswear", "occ": ["frenchalpine", "whitehouse", "steakhouse", "travel", "wildfig"], "rent": false},
+      {"id": "drakes-cashmere-crew-navy", "name": "Navy Cashmere Crew Neck Jumper", "brand": "Drake's", "retailer": "Drake's", "url": "https://www.drakes.com/products/navy-cashmere-crew-neck-jumper", "img": "https://www.drakes.com/cdn/shop/files/DR2A3A24789-01250-1_1200x1200.jpg?v=1762963520", "slot": "top", "cat": "sweater", "warmth": 3, "tier": "splurge", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "inis-cashmere-aran", "name": "Cashmere Button Aran Sweater", "brand": "Inis Meáin", "retailer": "Inis Meáin", "url": "https://inismeain.ie/products/cashmere-button-aran-sweater", "img": "https://inismeain.ie/cdn/shop/files/Screenshot_2026-10-28_at_13.21.54.png?crop=center&height=1200&v=1793193819&width=1200", "slot": "top", "cat": "sweater", "warmth": 4, "tier": "splurge", "style": ["cozy", "classic"], "cut": "unisex", "occ": ["frenchalpine", "whitehouse", "travel", "cookin", "wildfig"], "rent": false},
+      {"id": "yitai-selvedge-black", "name": "Jet Black Slub Selvedge Denim", "brand": "YITAI", "retailer": "YITAI", "url": "https://www.yitai.la/products/jet-black-slub-denim", "img": "https://www.yitai.la/cdn/shop/files/Frame1_50f6c876-8088-4897-8ce4-1f818303263f.png?v=1786561806&width=2048", "slot": "bottom", "cat": "jeans", "warmth": 2, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "nye", "travel"], "rent": false},
+      {"id": "yitai-selvedge-indigo", "name": "Indigo Slub Selvedge Denim", "brand": "YITAI", "retailer": "YITAI", "url": "https://www.yitai.la/products/indigo-slub-denim", "img": "https://www.yitai.la/cdn/shop/files/Frame6_c64ac10a-2eff-48ce-8077-0fe1f10302dc.png?v=1786611024&width=2048", "slot": "bottom", "cat": "jeans", "warmth": 2, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "travel"], "rent": false},
+      {"id": "coh-elijah-darkstorm", "name": "Elijah Straight in Dark Storm", "brand": "Citizens of Humanity", "retailer": "Citizens of Humanity", "url": "https://citizensofhumanity.com/products/elijah-straight-perform-dark-storm", "img": "https://citizensofhumanity.com/cdn/shop/files/6511-1149_ELIJAH_PERFORM_DENIM_DARK_STORM_0027.jpg?v=1794006939", "slot": "bottom", "cat": "jeans", "warmth": 2, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "steakhouse", "travel"], "rent": false},
+      {"id": "poolhouse-tokyo", "name": "Tokyo Jeans · Straight-Wide Leg", "brand": "Poolhouse New York", "retailer": "Poolhouse New York", "url": "https://poolhousenewyork.com/products/tokyo-jeans-straight-wide-leg", "img": "https://poolhousenewyork.com/cdn/shop/files/desertwashtokyostraightwidevintagebootcutwidelegjeansstraightlegconedenimksdl.jpg?v=1785193929", "slot": "bottom", "cat": "jeans", "warmth": 2, "tier": "better", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "travel"], "rent": false},
+      {"id": "poolhouse-austin", "name": "Austin Jeans · Classic Straight, Cone Denim", "brand": "Poolhouse New York", "retailer": "Poolhouse New York", "url": "https://poolhousenewyork.com/products/austin-jeans-classic-straight-leg", "img": "https://poolhousenewyork.com/cdn/shop/files/AUSTIN_CLASSIC_STRAIGHT_LEG_VINTAGE_DARK_DESERT_WASH_and_RAW_INDIGO_KSD.jpg?v=1789620265", "slot": "bottom", "cat": "jeans", "warmth": 2, "tier": "better", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "travel"], "rent": false},
+      {"id": "frame-lhomme-rinse", "name": "L'Homme Slim · Rinse", "brand": "FRAME", "retailer": "FRAME", "url": "https://frame-store.com/products/lhomme-slim-rinse-1", "img": "https://frame-store.com/cdn/shop/files/LMH0467_RINS_PCK_Front.jpg?v=1789156035", "slot": "bottom", "cat": "jeans", "warmth": 2, "tier": "better", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["wildfig", "bellyup", "casatua", "steakhouse", "nye", "frenchalpine"], "rent": false},
+      {"id": "3sixteen-ct100x", "name": "CT-100x Classic Tapered · Indigo Selvedge", "brand": "3sixteen", "retailer": "3sixteen", "url": "https://www.3sixteen.com/products/ct-100x-classic-tapered-indigo-selvedge", "img": "https://www.3sixteen.com/cdn/shop/products/3sixteen-jean-CT-100x-1_630x.jpg?v=1534364836", "slot": "bottom", "cat": "jeans", "warmth": 2, "tier": "better", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "travel"], "rent": false},
+      {"id": "agolde-harper-rinse", "name": "Harper Straight Jean in Rinse", "brand": "AGOLDE", "retailer": "AGOLDE", "url": "https://agolde.com/products/harper-jean-mid-rise-relaxed-straight-rinse", "img": "https://agolde.com/cdn/shop/files/A9153-1728_HARPER_JEAN_RINSE_0477_62aacc84-9bff-4eb5-8697-a55d688a5dd6.jpg?v=1787862025", "slot": "bottom", "cat": "jeans", "warmth": 2, "tier": "good", "style": ["classic"], "cut": "womenswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "travel"], "rent": false},
+      {"id": "coh-ayla-dynasty", "name": "Ayla Baggy in Dynasty", "brand": "Citizens of Humanity", "retailer": "Citizens of Humanity", "url": "https://citizensofhumanity.com/products/ayla-baggy-dynasty", "img": "https://citizensofhumanity.com/cdn/shop/files/2053B-769_AYLA_BAGGY_DYNASTY_0479.jpg?v=1788221362", "slot": "bottom", "cat": "jeans", "warmth": 2, "tier": "better", "style": ["classic", "cozy"], "cut": "womenswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "travel"], "rent": false},
+      {"id": "frame-palazzo-black", "name": "Le Slim Palazzo · Black", "brand": "FRAME", "retailer": "FRAME", "url": "https://frame-store.com/products/le-slim-palazzo-lsp498m-blk", "img": "https://frame-store.com/cdn/shop/files/LSP498M_BLK_PCK_Front.jpg?v=1789156077", "slot": "bottom", "cat": "jeans", "warmth": 2, "tier": "better", "style": ["dressy", "classic"], "cut": "womenswear", "occ": ["wildfig", "bellyup", "casatua", "steakhouse", "nye", "frenchalpine"], "rent": false},
+      {"id": "yitai-peacoat-black", "name": "Funnel Neck Wool Peacoat · Black", "brand": "YITAI", "retailer": "YITAI", "url": "https://www.yitai.la/products/funnel-neck-wool-peacoat-black", "img": "https://www.yitai.la/cdn/shop/files/FunnelNeckWoolPeacoat-Black1.png?v=1793829250&width=2048", "slot": "outer", "cat": "wool coat", "warmth": 3, "tier": "good", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "am-theo-parka", "name": "Theo Parka in Wool", "brand": "Alex Mill", "retailer": "Alex Mill", "url": "https://www.alexmill.com/products/theo-parka-in-wool-in-dark-navy", "img": "https://www.alexmill.com/cdn/shop/files/MC034-3943-DARK-NAVY-83847_1024x1024.jpg?v=1792435604", "slot": "outer", "cat": "wool coat", "warmth": 3, "tier": "better", "style": ["classic", "cozy"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "mackage-jay", "name": "JAY Double-Face Wool Hooded Jacket", "brand": "Mackage", "retailer": "Mackage", "url": "https://www.mackage.com/products/jay", "img": "https://www.mackage.com/cdn/shop/files/JAY_OTTER-NATURAL_0.jpg?v=1755111278&width=2048", "slot": "outer", "cat": "wool coat", "warmth": 3, "tier": "better", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "mackage-abraham", "name": "ABRAHAM Double-Face Wool Long Hooded Coat", "brand": "Mackage", "retailer": "Mackage", "url": "https://www.mackage.com/products/abraham", "img": "https://www.mackage.com/cdn/shop/files/ABRAHAM_TRENCH-NATURAL_0.jpg?v=1753456603&width=2048", "slot": "outer", "cat": "wool coat", "warmth": 4, "tier": "splurge", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "am-sloane-coat", "name": "Sloane Coat in Wool · Dark Charcoal", "brand": "Alex Mill", "retailer": "Alex Mill", "url": "https://www.alexmill.com/products/sloane-coat-in-wool-in-dark-charcoal", "img": "https://www.alexmill.com/cdn/shop/files/WC051-3345-DARK-CHARCOAL-85801_1024x1024.jpg?v=1790973138", "slot": "outer", "cat": "wool coat", "warmth": 3, "tier": "better", "style": ["classic"], "cut": "womenswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "mackage-elodie", "name": "ELODIE Fitted Houndstooth Wool Coat", "brand": "Mackage", "retailer": "Mackage", "url": "https://www.mackage.com/products/elodie-bht", "img": "https://www.mackage.com/cdn/shop/files/ELODIE-BHT_COFFEE_0.jpg?v=1789587940&width=2048", "slot": "outer", "cat": "wool coat", "warmth": 3, "tier": "better", "style": ["dressy", "classic"], "cut": "womenswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "travel"], "rent": false},
+      {"id": "toteme-shawl-coat", "name": "Shawl Lapel Wool Coat · Black", "brand": "Toteme", "retailer": "Toteme", "url": "https://www.toteme-studio.com/products/shawl-lapel-wool-coat-black", "img": "https://toteme.com/cdn/shop/files/TOTEME_ECOM_PS27_OUTERWEAR_271-WRO0333-001-001_SHAWL_LAPEL_WOOL_COAT_BLACK__927_A.jpg?v=1791299887&width=1500", "slot": "outer", "cat": "wool coat", "warmth": 3, "tier": "splurge", "style": ["dressy", "classic"], "cut": "womenswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "travel"], "rent": false},
+      {"id": "am-primrose-blazer", "name": "Primrose Blazer in Wool · Black", "brand": "Alex Mill", "retailer": "Alex Mill", "url": "https://www.alexmill.com/products/primrose-blazer-in-wool-black", "img": "https://www.alexmill.com/cdn/shop/files/WJ135-4038-BLACK-WP165-4038-BLACK-WS185-3964-WHITE-85244_1024x1024.jpg?v=1791915222", "slot": "mid", "cat": "blazer", "warmth": 2, "tier": "better", "style": ["dressy", "classic"], "cut": "womenswear", "occ": ["casatua", "nye", "steakhouse", "wildfig"], "rent": false},
+      {"id": "frame-silk-blouse", "name": "The Silk Soirée Blouse · Black", "brand": "FRAME", "retailer": "FRAME", "url": "https://frame-store.com/products/the-silk-soir-e-blouse-wf26wbl014-blk", "img": "https://frame-store.com/cdn/shop/files/WF26WBL014_BLK_PCK_Front.jpg?v=1790095641", "slot": "top", "cat": "blouse", "warmth": 1, "tier": "better", "style": ["dressy"], "cut": "womenswear", "occ": ["casatua", "nye", "steakhouse", "wildfig"], "rent": false},
+      {"id": "toteme-merino-turtleneck", "name": "Merino Turtleneck · Charcoal", "brand": "Toteme", "retailer": "Toteme", "url": "https://www.toteme-studio.com/products/merino-turtleneck-charcoal", "img": "https://toteme.com/cdn/shop/files/TOTEME_ECOM_PS27_KNITWEAR_261-WRT0641-YA0226-019_MERINO_TURTLENECK_CHARCOAL_MELANGE__2666_A.jpg?v=1791294455&width=1500", "slot": "top", "cat": "turtleneck", "warmth": 2, "tier": "better", "style": ["classic", "dressy"], "cut": "womenswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "bellyup", "travel"], "rent": false},
+      {"id": "toteme-cashmere-crew", "name": "Classic Cashmere Crew Knit · Oat", "brand": "Toteme", "retailer": "Toteme", "url": "https://www.toteme-studio.com/products/classic-cashmere-crew-knit-oat", "img": "https://toteme.com/cdn/shop/files/TOTEME_ECOM_PS27_KNITWEAR_264-WRT0935-YA0016-031_CLASSIC_CASHMERE_CREW_KNIT_OAT_MELANGE__2039_A_90935977-4a88-4270-8429-50a06d2c52a9.jpg?v=1793287922&width=1500", "slot": "top", "cat": "sweater", "warmth": 3, "tier": "splurge", "style": ["classic", "cozy"], "cut": "womenswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "inis-cashmere-rollneck-w", "name": "Women's 100% Cashmere Roll Neck", "brand": "Inis Meáin", "retailer": "Inis Meáin", "url": "https://inismeain.ie/products/womens-100-cashmere-roll-neck", "img": "https://inismeain.ie/cdn/shop/files/A2437_Women_s_100_Cashmere_RN_in_Brown_Mix_5.jpg?crop=center&height=1200&v=1792100995&width=1200", "slot": "top", "cat": "turtleneck", "warmth": 3, "tier": "splurge", "style": ["cozy", "dressy"], "cut": "womenswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "whitehouse", "travel"], "rent": false},
+      {"id": "toteme-skater-dress", "name": "Wool Skater Dress · Black", "brand": "Toteme", "retailer": "Toteme", "url": "https://www.toteme-studio.com/products/wool-skater-dress-black", "img": "https://toteme.com/cdn/shop/files/TOTEME_ECOM_SEASONAL_DRESSES_FW26_264-WRD0380-YA0008-001-WOOLSKATERDRESS_BLACK__057_A.jpg?v=1783323343&width=1500", "slot": "bottom", "cat": "dress", "warmth": 2, "tier": "splurge", "style": ["dressy"], "cut": "womenswear", "occ": ["nye", "casatua", "steakhouse"], "rent": false},
+      {"id": "toteme-evening-trouser", "name": "Slim Evening Trousers · Black", "brand": "Toteme", "retailer": "Toteme", "url": "https://www.toteme-studio.com/products/slim-evening-trousers-black-2", "img": "https://toteme.com/cdn/shop/files/TOTEME_ECOM_PS27_TROUSERS_271-WRB0377-002-001_SLIM_EVENING_TROUSERS_BLACK__608_A.jpg?v=1791300332&width=1500", "slot": "bottom", "cat": "trousers", "warmth": 1, "tier": "splurge", "style": ["dressy"], "cut": "womenswear", "occ": ["nye", "casatua", "steakhouse"], "rent": false},
+      {"id": "blundstone-2241-m", "name": "Men's All-Terrain Thermal #2241 · Black", "brand": "Blundstone", "retailer": "Blundstone", "url": "https://www.blundstone.com/products/black-premium-waterproof-leather-chelsea-boots-mens-style-2241", "img": "https://cdn.shopify.com/s/files/1/0903/6349/4707/files/product-image_2026-07-31_2241_p_usa_hero.jpg?v=1790053612", "slot": "feet", "cat": "winter boots", "warmth": 4, "tier": "good", "style": ["classic", "sporty"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse", "snowmobile"], "rent": false},
+      {"id": "thursday-president-black", "name": "President StormKing® Lace-Up Boot · Black Matte", "brand": "Thursday Boot Co.", "retailer": "Thursday Boot Co.", "url": "https://www.thursdayboots.com/products/mens-president-lace-up-boot-black-matte-stormking", "img": "https://thursdayboots.com/cdn/shop/files/1024x1024-Men-PresidentStormking-BlackMatte-082525-3.4_6d4a7f1d-5b0b-4318-9286-dca770238f11_1200x1200.jpg?v=1757440906", "slot": "feet", "cat": "dress boots", "warmth": 2, "tier": "good", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "bellyup"], "rent": false},
+      {"id": "danner-arctic600", "name": "Arctic 600 Side-Zip 7\" · Jet Black, 200G", "brand": "Danner", "retailer": "Danner", "url": "https://www.danner.com/arctic-600-side-zip-7-fg-jet-black-mojave-200g.html", "img": "https://i.lfi.media/is/image/LaCrosse/danner_13_pdp/67346", "slot": "feet", "cat": "snow boots", "warmth": 5, "tier": "better", "style": ["sporty", "classic"], "cut": "menswear", "occ": ["travel", "snowmobile", "whitehouse", "frenchalpine", "wildfig", "nye"], "rent": false},
+      {"id": "stio-colter-boot-m", "name": "Men's Colter Waterproof Tall Boot", "brand": "Stio", "retailer": "Stio", "url": "https://www.stio.com/products/mens-colter-waterproof-tall-boot", "img": "https://www.stio.com/cdn/shop/files/200517-030-outer_ab132d8c-86e7-4a47-9e69-afcb35ebaa99_1024x1024.jpg?v=1758825735", "slot": "feet", "cat": "snow boots", "warmth": 5, "tier": "better", "style": ["sporty", "cozy"], "cut": "menswear", "occ": ["travel", "snowmobile", "whitehouse", "frenchalpine", "nye"], "rent": false},
+      {"id": "blundstone-584-w", "name": "Women's Thermal #584 · Rustic Brown", "brand": "Blundstone", "retailer": "Blundstone", "url": "https://www.blundstone.com/products/rustic-brown-premium-waterproof-leather-chelsea-boots-womens-style-584", "img": "https://cdn.shopify.com/s/files/1/0903/6349/4707/files/product-image_2026-07-31_584_p_usa_hero.jpg?v=1790053605", "slot": "feet", "cat": "winter boots", "warmth": 4, "tier": "good", "style": ["classic", "sporty"], "cut": "womenswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse", "snowmobile"], "rent": false},
+      {"id": "lacanadienne-heroic", "name": "Heroic Shearling-Lined Leather Bootie (City Dry waterproof)", "brand": "La Canadienne", "retailer": "La Canadienne", "url": "https://lacanadienneshoes.com/products/heroic-shearling-lined-pebble-leather-bootie", "img": "https://lacanadienneshoes.com/cdn/shop/files/heroic_peb_black_0.jpg?v=1786560961&width=2048", "slot": "feet", "cat": "dress boots", "warmth": 4, "tier": "better", "style": ["classic", "dressy"], "cut": "womenswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "lacanadienne-superb", "name": "Superb Suede Knee-High Boot (City Dry waterproof)", "brand": "La Canadienne", "retailer": "La Canadienne", "url": "https://lacanadienneshoes.com/products/superb-suede-boot", "img": "https://lacanadienneshoes.com/cdn/shop/files/superb_sue_black_0.jpg?v=1786043818&width=2048", "slot": "feet", "cat": "dress boots", "warmth": 3, "tier": "splurge", "style": ["dressy"], "cut": "womenswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "bellyup"], "rent": false},
+      {"id": "stio-colter-boot-w", "name": "Women's Colter Waterproof Tall Boot", "brand": "Stio", "retailer": "Stio", "url": "https://www.stio.com/products/womens-colter-waterproof-tall-boot", "img": "https://www.stio.com/cdn/shop/files/100475-030-outer_1024x1024.jpg?v=1764011200", "slot": "feet", "cat": "snow boots", "warmth": 5, "tier": "better", "style": ["sporty", "cozy"], "cut": "womenswear", "occ": ["travel", "snowmobile", "whitehouse", "frenchalpine", "nye"], "rent": false},
+      {"id": "dents-rushton-m", "name": "Rushton Handsewn Cashmere-Lined Hairsheep Gloves", "brand": "Dents", "retailer": "Dents", "url": "https://www.dents.co.uk/products/mens-heritage-handsewn-three-point-cashmere-lined-leather-gloves-1", "img": "https://www.dentsgloves.com/cdn/shop/products/15-1529-Hunter.jpg?v=1765189231&width=729", "slot": "acc", "cat": "leather gloves", "warmth": 3, "tier": "good", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "dents-touch-cashmere-w", "name": "Women's Touchscreen Cashmere-Lined Leather Gloves", "brand": "Dents", "retailer": "Dents", "url": "https://www.dents.co.uk/products/women-s-touchscreen-cashmere-lined-leather-gloves-with-stud-and-stitch-detail", "img": "https://www.dentsgloves.com/cdn/shop/files/womens-touchscreen-cashmere-leather-gloves-stitch-black.jpg?v=1780063044&width=4500", "slot": "acc", "cat": "leather gloves", "warmth": 3, "tier": "good", "style": ["dressy", "classic"], "cut": "womenswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "hestra-elk-cashmere", "name": "Elk Handsewn Cashmere Gloves · Black", "brand": "Hestra", "retailer": "Hestra", "url": "https://www.hestragloves.us/products/elk-handsewn-cashmere-black", "img": "https://www.hestragloves.us/cdn/shop/files/1776020514390-20800-100_1_Meta.png?v=1776183520", "slot": "acc", "cat": "leather gloves", "warmth": 4, "tier": "better", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "hestra-hairsheep-pique-w", "name": "Hairsheep 3 Bt Piqué Cashmere Gloves · Black", "brand": "Hestra", "retailer": "Hestra", "url": "https://www.hestragloves.us/products/hairsheep-3-bt-pique-cashmere-black", "img": "https://www.hestragloves.us/cdn/shop/files/1776170089155-12380-100_1_Meta.png?v=1776186565", "slot": "acc", "cat": "leather gloves", "warmth": 3, "tier": "better", "style": ["dressy"], "cut": "womenswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "portolano-aspen-deer", "name": "Deer Leather Gloves · “Aspen”", "brand": "Mario Portolano", "retailer": "Mario Portolano", "url": "https://www.marioportolano.com/en/products/guanti-da-uomo-beijing-101b", "img": "https://marioportolano.it/cdn/shop/files/ART101B-4.jpg?v=1732738903", "slot": "acc", "cat": "leather gloves", "warmth": 3, "tier": "better", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "hestra-peccary-cashmere", "name": "Peccary Handsewn Cashmere Gloves · Black", "brand": "Hestra", "retailer": "Hestra", "url": "https://www.hestragloves.us/products/peccary-handsewn-cashmere-black-1", "img": "https://www.hestragloves.us/cdn/shop/files/1776021884793-20080-100_1_Meta.png?v=1776192282", "slot": "acc", "cat": "leather gloves", "warmth": 4, "tier": "splurge", "style": ["dressy"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "joe-ribbed-scarf-black", "name": "Black Cashmere Ribbed Scarf", "brand": "Johnstons of Elgin", "retailer": "Johnstons of Elgin", "url": "https://www.johnstonsofelgin.com/products/black-cashmere-ribbed-scarf", "img": "https://johnstonsofelgin.com/cdn/shop/files/HAA01684_SA0900_BLACK.jpg?v=1791899238", "slot": "acc", "cat": "scarf", "warmth": 3, "tier": "good", "style": ["classic", "dressy"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "begg-wispy-navy", "name": "Wispy Solid Lightweight Cashmere Scarf · Navy", "brand": "Begg x Co", "retailer": "Begg x Co", "url": "https://beggxco.com/products/wispy-solid-square-lightweight-navy-cashmere-scarf", "img": "https://cdn.shopify.com/s/files/1/0559/3333/7655/files/BEGGXCO_AW26_WISPY_SQUARE_NAVY_16-07-26__0005.jpg?v=1787304241", "slot": "acc", "cat": "scarf", "warmth": 2, "tier": "good", "style": ["dressy", "classic"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "begg-arran-loden", "name": "Arran Solid Cashmere Scarf · Loden Green", "brand": "Begg x Co", "retailer": "Begg x Co", "url": "https://beggxco.com/products/arran-solid-loden-green-cashmere-scarf", "img": "https://cdn.shopify.com/s/files/1/0559/3333/7655/files/BEGGXCO_AW26_ARRAN_36_183_LODEN_16-07-26__0003.jpg?v=1787305738", "slot": "acc", "cat": "scarf", "warmth": 3, "tier": "better", "style": ["classic", "cozy"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "begg-arran-stole-black", "name": "Arran Cashmere Stole · Black", "brand": "Begg x Co", "retailer": "Begg x Co", "url": "https://beggxco.com/products/womens-solid-cashmere-stole-black", "img": "https://cdn.shopify.com/s/files/1/0559/3333/7655/files/ArranStoleBlack73x183.jpg?v=1727363394", "slot": "acc", "cat": "scarf", "warmth": 3, "tier": "better", "style": ["dressy"], "cut": "womenswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "travel"], "rent": false},
+      {"id": "inis-herringbone-scarf", "name": "Cashmere Herringbone Scarf", "brand": "Inis Meáin", "retailer": "Inis Meáin", "url": "https://inismeain.ie/products/new-style-cashmere-herringbone-scarf", "img": "https://inismeain.ie/cdn/shop/files/A2691_Cashmere_Herringbone_Scarf_Yellow_Fleck_3x4_Model_1.jpg?crop=center&height=1200&v=1792525524&width=1200", "slot": "acc", "cat": "scarf", "warmth": 3, "tier": "splurge", "style": ["classic", "cozy"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "toteme-monogram-scarf", "name": "Monogram Wool-Cashmere Scarf · Oat/Dark Brown", "brand": "Toteme", "retailer": "Toteme", "url": "https://www.toteme-studio.com/products/monogram-wool-cashmere-scarf-oat-dark-brown", "img": "https://toteme.com/cdn/shop/files/TOTEME_FLATS_PS27_SCARVES_241-WSC1009-FB0091-550_MONOGRAM_WOOL_CASHMERE_SCARF_OAT_DARK_BROWN_front_GB.jpg?v=1790679239&width=1500", "slot": "acc", "cat": "scarf", "warmth": 3, "tier": "splurge", "style": ["classic", "dressy"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "am-cashmere-beanie", "name": "Beanie in Brushed Cashmere · Navy", "brand": "Alex Mill", "retailer": "Alex Mill", "url": "https://www.alexmill.com/products/beanie-in-brushed-cashmere-in-navy", "img": "https://www.alexmill.com/cdn/shop/files/MA079-3971-NAVY-18317_1024x1024.jpg?v=1793719136", "slot": "acc", "cat": "hat", "warmth": 3, "tier": "better", "style": ["classic", "cozy"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "hotsprings"], "rent": false},
+      {"id": "rayban-wayfarer", "name": "RB2140 Original Wayfarer", "brand": "Ray-Ban", "retailer": "Zappos", "url": "https://www.zappos.com/product/7842436/color/163529", "img": "https://m.media-amazon.com/images/I/61vQtFjGh7L._SX700_.jpg", "slot": "eyes", "cat": "sunglasses", "warmth": 0, "tier": "good", "style": ["classic"], "cut": "unisex", "occ": ["travel", "snowmobile", "town-day"], "rent": false},
+      {"id": "smith-lowdown2", "name": "Lowdown 2 ChromaPop (snow-glare lens)", "brand": "Smith", "retailer": "evo", "url": "https://www.evo.com/products/136350-smith-lowdown-2-sunglasses", "img": "https://www.evo.com/cdn/shop/files/product-image-1229599.jpg?v=1767738311", "slot": "eyes", "cat": "sunglasses", "warmth": 0, "tier": "good", "style": ["sporty"], "cut": "unisex", "occ": ["travel", "snowmobile", "town-day", "ski"], "rent": false},
+      {"id": "gl-kinney-sun", "name": "Kinney II Sun", "brand": "Garrett Leight", "retailer": "Garrett Leight", "url": "https://www.garrettleight.com/products/kinney-ii-sun", "img": "https://www.garrettleight.com/cdn/shop/files/Sunglasses-Kinney-II-2158-47-CHW-SFPG15_01.png?crop=center&height=630&v=1785274082&width=1200", "slot": "eyes", "cat": "sunglasses", "warmth": 0, "tier": "better", "style": ["classic"], "cut": "unisex", "occ": ["travel", "snowmobile", "town-day"], "rent": false},
+      {"id": "moscot-lemtosh-sun", "name": "Lemtosh Sun · Gold Titanium (limited)", "brand": "MOSCOT", "retailer": "MOSCOT", "url": "https://moscot.com/products/lemtosh-sun-limited-edition-gold-titanium", "img": "https://moscot.com/cdn/shop/files/Lemtosh-le-sun-color-gold-pos-2.jpg?v=1789576261", "slot": "eyes", "cat": "sunglasses", "warmth": 0, "tier": "better", "style": ["classic"], "cut": "unisex", "occ": ["travel", "snowmobile", "town-day"], "rent": false},
+      {"id": "persol-714", "name": "714 Original · Havana / Green (folding)", "brand": "Persol", "retailer": "Persol", "url": "https://www.persol.com/en-us/products/0po0714-24_31", "img": "https://www.persol.com/cdn/shop/files/0PO0714__24_31__P21__shad__fld_4241c5c0ccda886b3d6a77ea85e2fdcb4f7d16fc8f99f74654dead9278671614.png?v=1792850931", "slot": "eyes", "cat": "sunglasses", "warmth": 0, "tier": "better", "style": ["classic"], "cut": "unisex", "occ": ["travel", "snowmobile", "town-day"], "rent": false},
+      {"id": "op-gregory-peck-sun", "name": "Gregory Peck Sun · Limited Edition", "brand": "Oliver Peoples", "retailer": "Oliver Peoples", "url": "https://www.oliverpeoples.com/en-us/products/0ov5217s-17644c", "img": "https://www.oliverpeoples.com/cdn/shop/files/0OV5217S__17644C__P21__shad__qt_3a041a4d2ae2b30bea199206b43ba3785f8014cc4587d05dd671271c39f8b3b.png?v=1794474168", "slot": "eyes", "cat": "sunglasses", "warmth": 0, "tier": "splurge", "style": ["classic"], "cut": "unisex", "occ": ["travel", "snowmobile", "town-day"], "rent": false},
+      {"id": "stio-environ-jkt-m", "name": "Men's Environ Jacket (3L shell)", "brand": "Stio", "retailer": "Stio", "url": "https://www.stio.com/products/mens-environ-jacket", "img": "https://www.stio.com/cdn/shop/files/200897-301-award26_1024x1024.jpg?v=1792784963", "slot": "outer", "cat": "ski shell", "warmth": 2, "tier": "better", "style": ["sporty"], "cut": "menswear", "occ": ["ski", "snowmobile"], "rent": false},
+      {"id": "stio-environ-pant-m", "name": "Men's Environ Pant", "brand": "Stio", "retailer": "Stio", "url": "https://www.stio.com/products/mens-environ-pant", "img": "https://www.stio.com/cdn/shop/files/200869-001_1275c00e-01e6-44f3-a35b-ebfa56513e87_1024x1024.jpg?v=1788457932", "slot": "bottom", "cat": "ski pants", "warmth": 2, "tier": "better", "style": ["sporty"], "cut": "menswear", "occ": ["ski", "snowmobile"], "rent": false},
+      {"id": "stio-environ-jkt-w", "name": "Women's Environ Jacket (3L shell)", "brand": "Stio", "retailer": "Stio", "url": "https://www.stio.com/products/womens-environ-jacket", "img": "https://www.stio.com/cdn/shop/files/100902-250_43386729-35d3-43c6-acce-09482e30a9d3_1024x1024.jpg?v=1788457936", "slot": "outer", "cat": "ski shell", "warmth": 2, "tier": "better", "style": ["sporty"], "cut": "womenswear", "occ": ["ski", "snowmobile"], "rent": false},
+      {"id": "stio-environ-bib-w", "name": "Women's Environ Bib", "brand": "Stio", "retailer": "Stio", "url": "https://www.stio.com/products/womens-environ-bib", "img": "https://www.stio.com/cdn/shop/files/100901-030_5f35cd1b-2306-4463-ae4b-7c735f783923_1024x1024.jpg?v=1788457932", "slot": "bottom", "cat": "ski pants", "warmth": 2, "tier": "better", "style": ["sporty"], "cut": "womenswear", "occ": ["ski", "snowmobile"], "rent": false},
+      {"id": "stio-turpin-crew-m", "name": "Men's Turpin Ridge Fleece Crew", "brand": "Stio", "retailer": "Stio", "url": "https://www.stio.com/products/mens-turpin-ridge-fleece-crew", "img": "https://www.stio.com/cdn/shop/files/200902-201_1024x1024.jpg?v=1790877503", "slot": "mid", "cat": "fleece", "warmth": 2, "tier": "good", "style": ["sporty", "cozy"], "cut": "menswear", "occ": ["ski", "snowmobile", "travel", "cookin"], "rent": false},
+      {"id": "stio-turpin-mock-w", "name": "Women's Turpin Ridge Fleece Mockneck", "brand": "Stio", "retailer": "Stio", "url": "https://www.stio.com/products/womens-turpin-ridge-fleece-mockneck", "img": "https://www.stio.com/cdn/shop/files/100907-201_1024x1024.jpg?v=1790877240", "slot": "mid", "cat": "fleece", "warmth": 2, "tier": "good", "style": ["sporty", "cozy"], "cut": "womenswear", "occ": ["ski", "snowmobile", "travel", "cookin"], "rent": false},
+      {"id": "joe-cashmere-jogger-m", "name": "Dark Navy Tapered Cashmere Joggers", "brand": "Johnstons of Elgin", "retailer": "Johnstons of Elgin", "url": "https://www.johnstonsofelgin.com/products/dark-navy-tapered-cashmere-joggers", "img": "https://johnstonsofelgin.com/cdn/shop/files/KBP00948_SD7286_DARK_NAVY_00041_RT.png?v=1726648831", "slot": "bottom", "cat": "joggers", "warmth": 3, "tier": "splurge", "style": ["cozy"], "cut": "menswear", "occ": ["cookin", "travel"], "rent": false},
+      {"id": "naadam-cashmere-jogger-w", "name": "Signature Cashmere Jogger · Women's", "brand": "Naadam", "retailer": "Naadam", "url": "https://naadam.co/products/the-essential-cashmere-sweatpants-women", "img": "https://naadam.co/cdn/shop/files/SignatureCashmereCroppedJogger-Oatmeal_1200x1200.jpg?v=1774469161", "slot": "bottom", "cat": "joggers", "warmth": 3, "tier": "better", "style": ["cozy"], "cut": "womenswear", "occ": ["cookin", "travel"], "rent": false},
+      {"id": "naadam-cashmere-jogger-m", "name": "Signature Cashmere Jogger · Men's", "brand": "Naadam", "retailer": "Naadam", "url": "https://naadam.co/products/the-essential-cashmere-sweatpants", "img": "https://naadam.co/cdn/shop/files/The-Off-Duty-Cashmere-Jogger-_CO__Navy-_CO__W_0033_1200x1200.jpg?v=1738638189", "slot": "bottom", "cat": "joggers", "warmth": 3, "tier": "better", "style": ["cozy"], "cut": "menswear", "occ": ["cookin", "travel"], "rent": false},
+      {"id": "stio-glide-jogger-w", "name": "Women's Glide Tech Jogger", "brand": "Stio", "retailer": "Stio", "url": "https://www.stio.com/products/womens-glide-tech-jogger", "img": "https://www.stio.com/cdn/shop/files/100505-420_05582c35-4e21-48e6-96c2-78933dfc8952_1024x1024.jpg?v=1753124291", "slot": "bottom", "cat": "joggers", "warmth": 2, "tier": "good", "style": ["cozy", "sporty"], "cut": "womenswear", "occ": ["cookin", "travel"], "rent": false},
+      {"id": "yitai-rib-tee", "name": "Rib Tee", "brand": "YITAI", "retailer": "YITAI", "url": "https://www.yitai.la/products/rib-tee-white", "img": "https://www.yitai.la/cdn/shop/files/RibbedTee_White_22b711a7-9cda-4292-b2af-139341952f25.jpg?v=1785000450&width=2048", "slot": "top", "cat": "tee", "warmth": 1, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse", "travel"], "rent": false},
+      {"id": "3sixteen-pima-tee", "name": "Pima Pocket T-Shirt · 2-pack", "brand": "3sixteen", "retailer": "3sixteen", "url": "https://www.3sixteen.com/products/pima-pocket-t-shirt-white-2-pack", "img": "https://www.3sixteen.com/cdn/shop/files/3S-06JUNE24-01-TEE-POCKET-WHITE-FRONT_1200x.jpg?v=1720629644", "slot": "top", "cat": "tee", "warmth": 1, "tier": "better", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "travel"], "rent": false},
+      {"id": "joe-merino-tee-black", "name": "Black Superfine Merino T-Shirt", "brand": "Johnstons of Elgin", "retailer": "Johnstons of Elgin", "url": "https://www.johnstonsofelgin.com/products/mens-black-superfine-merino-t-shirt", "img": "https://johnstonsofelgin.com/cdn/shop/files/KDI00515_SA0900blackIMG_6132_RT.jpg?v=1791789573", "slot": "top", "cat": "tee", "warmth": 1, "tier": "splurge", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["wildfig", "bellyup", "casatua", "nye", "steakhouse", "travel"], "rent": false},
+      {"id": "yitai-waffle-henley", "name": "Waffle Henley · Black", "brand": "YITAI", "retailer": "YITAI", "url": "https://www.yitai.la/products/waffle-henley-black", "img": "https://www.yitai.la/cdn/shop/files/WaffleHenley_Black_bd3a99a2-5d9c-4c9d-8165-d77c40984c86.jpg?v=1785000392&width=2048", "slot": "top", "cat": "henley", "warmth": 2, "tier": "good", "style": ["classic", "cozy"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "travel"], "rent": false},
+      {"id": "am-austin-henley", "name": "Austin Henley in Thermal Cotton · Navy", "brand": "Alex Mill", "retailer": "Alex Mill", "url": "https://www.alexmill.com/products/austin-henley-in-thermal-cotton-in-navy-night", "img": "https://www.alexmill.com/cdn/shop/files/MK150-3903-NAVY-NIGHT-72421_ad88e3a1-9f95-4ee9-9bf0-409f11aa7922_1024x1024.jpg?v=1789582086", "slot": "top", "cat": "henley", "warmth": 2, "tier": "better", "style": ["classic", "cozy"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "travel"], "rent": false},
+      {"id": "drakes-wool-overshirt", "name": "Navy Wool Quarter-Zip Overshirt", "brand": "Drake's", "retailer": "Drake's", "url": "https://www.drakes.com/products/navy-wool-quarter-zip-overshirt", "img": "https://www.drakes.com/cdn/shop/files/DR2A1A27552-01250-1MTG_1200x1200.jpg?v=1793800222", "slot": "mid", "cat": "overshirt", "warmth": 2, "tier": "better", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["casatua", "nye", "steakhouse", "frenchalpine", "wildfig"], "rent": false},
+      {"id": "mashburn-cashmere-chore", "name": "Chore Jacket in Charcoal Cashmere Flannel", "brand": "Sid Mashburn", "retailer": "Sid Mashburn", "url": "https://shopmashburn.com/products/sid-mashburn-chore-jacket-charcoal-cashmere-flannel-s77104", "img": "https://shopmashburn.com/cdn/shop/files/S77104_0060_1200x1200.jpg?v=1754490419", "slot": "mid", "cat": "overshirt", "warmth": 2, "tier": "splurge", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["casatua", "nye", "steakhouse", "frenchalpine", "wildfig"], "rent": false},
       {"id": "pata-snowdrifter-jkt-m", "name": "Patagonia Snowdrifter Jacket - Men's", "brand": "Patagonia", "retailer": "evo", "url": "https://www.evo.com/products/241400-patagonia-snowdrifter-jacket-men-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1366488.jpg?v=1790811328", "slot": "outer", "cat": "ski shell", "warmth": 3, "tier": "better", "style": ["sporty", "classic"], "cut": "menswear", "occ": ["ski", "snowmobile"], "rent": true},
-      {"id": "arc-beta-ar-jkt-m", "name": "Arc'teryx Beta AR Jacket - Men's", "brand": "Arc'teryx", "retailer": "evo", "url": "https://www.evo.com/products/255314-arc-teryx-beta-ar-jacket-men-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1172461.jpg?v=1767736163", "slot": "outer", "cat": "ski shell", "warmth": 3, "tier": "splurge", "style": ["sporty"], "cut": "menswear", "occ": ["ski", "snowmobile", "travel"], "rent": true},
+      {"id": "arc-beta-ar-jkt-m", "name": "Arc'teryx Beta AR Jacket - Men's", "brand": "Arc'teryx", "retailer": "evo", "url": "https://www.evo.com/products/255314-arc-teryx-beta-ar-jacket-men-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1172461.jpg?v=1767736163", "slot": "outer", "cat": "ski shell", "warmth": 3, "tier": "splurge", "style": ["sporty"], "cut": "menswear", "occ": ["ski", "snowmobile", "travel", "whitehouse", "bellyup"], "rent": true},
       {"id": "hh-garibaldi-jkt-m", "name": "Helly Hansen Garibaldi 2.0 Jacket", "brand": "Helly Hansen", "retailer": "evo", "url": "https://www.evo.com/products/175499-helly-hansen-garibaldi-2-0-jacket", "img": "https://www.evo.com/cdn/shop/files/product-image-1123578.jpg?v=1777044802", "slot": "outer", "cat": "insulated ski jacket", "warmth": 4, "tier": "good", "style": ["sporty", "classic"], "cut": "menswear", "occ": ["ski", "snowmobile"], "rent": true},
       {"id": "686-woodland-jkt-m", "name": "686 Woodland Insulated Jacket - Men's", "brand": "686", "retailer": "evo", "url": "https://www.evo.com/products/218455-686-woodland-insulated-jacket-men-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1113312.jpg?v=1767733550", "slot": "outer", "cat": "insulated ski jacket", "warmth": 4, "tier": "good", "style": ["sporty"], "cut": "menswear", "occ": ["ski", "snowmobile"], "rent": true},
       {"id": "burton-covert-jkt-m", "name": "Burton Covert 2.0 Jacket - Men's", "brand": "Burton", "retailer": "evo", "url": "https://www.evo.com/products/236794-burton-covert-2-0-jacket-men-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1147520.jpg?v=1767735087", "slot": "outer", "cat": "snowboard jacket", "warmth": 3, "tier": "good", "style": ["sporty"], "cut": "menswear", "occ": ["ski", "snowmobile"], "rent": true},
@@ -5108,7 +5515,7 @@ body.gated .wh-fab{display:none;}
       {"id": "hh-motionista-jkt-w", "name": "Helly Hansen Motionista Lifaloft Jacket - Women's", "brand": "Helly Hansen", "retailer": "evo", "url": "https://www.evo.com/products/237352-helly-hansen-motionista-lifaloft-jacket-women-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1174117.jpg?v=1777044863", "slot": "outer", "cat": "insulated ski jacket", "warmth": 5, "tier": "splurge", "style": ["sporty", "classic"], "cut": "womenswear", "occ": ["ski", "snowmobile"], "rent": true},
       {"id": "686-athena-jkt-w", "name": "686 Athena Insulated Jacket - Women's", "brand": "686", "retailer": "evo", "url": "https://www.evo.com/products/219454-686-athena-insulated-jacket-women-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1123858.jpg?v=1767733987", "slot": "outer", "cat": "insulated ski jacket", "warmth": 4, "tier": "good", "style": ["sporty"], "cut": "womenswear", "occ": ["ski", "snowmobile"], "rent": true},
       {"id": "volcom-westland-jkt-w", "name": "Volcom Westland Insulated Jacket - Women's", "brand": "Volcom", "retailer": "evo", "url": "https://www.evo.com/products/195471-volcom-westland-insulated-jacket-women-s", "img": "https://www.evo.com/cdn/shop/files/product-image-933609.jpg?v=1767754671", "slot": "outer", "cat": "snowboard jacket", "warmth": 4, "tier": "good", "style": ["sporty"], "cut": "womenswear", "occ": ["ski", "snowmobile"], "rent": true},
-      {"id": "flylow-truckee-parka-w", "name": "Flylow Truckee Down Parka - Women's", "brand": "Flylow", "retailer": "evo", "url": "https://www.evo.com/products/250551-flylow-truckee-down-parka-women-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1221405.jpg?v=1767737975", "slot": "outer", "cat": "robe", "warmth": 5, "tier": "splurge", "style": ["cozy", "classic"], "cut": "womenswear", "occ": ["hotsprings", "travel", "snowmobile"], "rent": false},
+      {"id": "flylow-truckee-parka-w", "name": "Flylow Truckee Down Parka - Women's", "brand": "Flylow", "retailer": "evo", "url": "https://www.evo.com/products/250551-flylow-truckee-down-parka-women-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1221405.jpg?v=1767737975", "slot": "outer", "cat": "robe", "warmth": 5, "tier": "splurge", "style": ["cozy", "classic"], "cut": "womenswear", "occ": ["hotsprings", "travel", "snowmobile", "wildfig", "whitehouse", "frenchalpine", "nye", "steakhouse"], "rent": false},
       {"id": "dryrobe-advance-alpine", "name": "Special Edition Dryrobe® Advance Alpine", "brand": "dryrobe", "retailer": "dryrobe", "url": "https://dryrobe.com/products/eclipse-blue-alpine-advance-changing-robe", "img": "https://dryrobe.com/cdn/shop/files/W_AlpineBlueStudio_1_3efcf374-3051-43cb-963f-18cfde3dca1f.jpg?v=1793258851", "slot": "outer", "cat": "robe", "warmth": 5, "tier": "splurge", "style": ["cozy", "sporty"], "cut": "unisex", "occ": ["hotsprings", "travel"], "rent": false},
       {"id": "dryrobe-spa-robe", "name": "Grey Organic Cotton Spa Robe", "brand": "dryrobe", "retailer": "dryrobe", "url": "https://dryrobe.com/products/spa-robe", "img": "https://dryrobe.com/cdn/shop/files/Grid1.jpg?v=1794383117", "slot": "outer", "cat": "robe", "warmth": 2, "tier": "good", "style": ["cozy"], "cut": "unisex", "occ": ["hotsprings", "cookin"], "rent": false},
       {"id": "hh-legendary-pant-m", "name": "Helly Hansen Legendary Pants - Men's", "brand": "Helly Hansen", "retailer": "evo", "url": "https://www.evo.com/products/159336-helly-hansen-legendary-pants-men-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1242309.jpg?v=1767738840", "slot": "bottom", "cat": "ski pants", "warmth": 4, "tier": "good", "style": ["sporty", "classic"], "cut": "menswear", "occ": ["ski", "snowmobile"], "rent": true},
@@ -5146,9 +5553,9 @@ body.gated .wh-fab{display:none;}
       {"id": "sw-full-cushion-otc-w", "name": "Smartwool Full Cushion OTC Socks - Women's", "brand": "Smartwool", "retailer": "evo", "url": "https://www.evo.com/products/225212-smartwool-full-cushion-otc-socks-women-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1314866.jpg?v=1782500861", "slot": "feet", "cat": "ski socks", "warmth": 4, "tier": "good", "style": ["sporty"], "cut": "womenswear", "occ": ["ski", "snowmobile"], "rent": false},
       {"id": "dt-edge-otc-m", "name": "Men's Edge Over-the-Calf Midweight Ski & Snowboard Socks", "brand": "Darn Tough", "retailer": "Darn Tough", "url": "https://www.darntough.com/products/mens-merino-wool-edge-otc-cushioned-midweight-ski-snowboard-socks", "img": "https://darntough.com/cdn/shop/files/8053_Black.png?v=1762322228", "slot": "feet", "cat": "ski socks", "warmth": 3, "tier": "better", "style": ["sporty"], "cut": "menswear", "occ": ["ski", "snowmobile"], "rent": false},
       {"id": "dt-edge-otc-w", "name": "Women's Edge Over-the-Calf Midweight Ski & Snowboard Socks", "brand": "Darn Tough", "retailer": "Darn Tough", "url": "https://www.darntough.com/products/womens-merino-wool-edge-otc-cushioned-midweight-ski-snowboard-socks", "img": "https://darntough.com/cdn/shop/files/8057_Gray.png?v=1762322226", "slot": "feet", "cat": "ski socks", "warmth": 3, "tier": "better", "style": ["sporty"], "cut": "womenswear", "occ": ["ski", "snowmobile"], "rent": false},
-      {"id": "kamik-greenbay4-m", "name": "Greenbay 4 - Men's Winter Boots", "brand": "Kamik", "retailer": "Kamik", "url": "https://kamik.com/products/greenbay-4-mens-winter-boots", "img": "https://www.kamik.com/cdn/shop/files/Product-Image_GREENBAY4_Greenbay-4-Mens-Black-Winter-Boots_BLK_02.jpg?v=1786119971", "slot": "feet", "cat": "snow boots", "warmth": 5, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["travel", "snowmobile", "wildfig", "whitehouse", "frenchalpine", "nye"], "rent": false},
-      {"id": "kamik-snovalley6-w", "name": "Snovalley 6 - Women's Winter Boots", "brand": "Kamik", "retailer": "Kamik", "url": "https://kamik.com/products/snovalley-6-womens-winter-boots", "img": "https://www.kamik.com/cdn/shop/files/Product-Image_SNOVALLEY6_Snovalley-6-Womens-Off-White-Winter-Boots_OWH_02.jpg?v=1787055369", "slot": "feet", "cat": "snow boots", "warmth": 4, "tier": "good", "style": ["classic", "cozy"], "cut": "womenswear", "occ": ["travel", "snowmobile", "wildfig", "whitehouse", "frenchalpine", "nye"], "rent": false},
-      {"id": "merrell-coldpack3-mid-m", "name": "Merrell Coldpack 3 Thermo Mid WP Shoes - Men's", "brand": "Merrell", "retailer": "evo", "url": "https://www.evo.com/products/292163-merrell-coldpack-3-thermo-mid-wp-shoes-men-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1344143.jpg?v=1788290865", "slot": "feet", "cat": "snow boots", "warmth": 3, "tier": "good", "style": ["sporty"], "cut": "menswear", "occ": ["travel", "snowmobile", "wildfig", "whitehouse", "frenchalpine", "nye"], "rent": false},
+      {"id": "kamik-greenbay4-m", "name": "Greenbay 4 - Men's Winter Boots", "brand": "Kamik", "retailer": "Kamik", "url": "https://kamik.com/products/greenbay-4-mens-winter-boots", "img": "https://www.kamik.com/cdn/shop/files/Product-Image_GREENBAY4_Greenbay-4-Mens-Black-Winter-Boots_BLK_02.jpg?v=1786119971", "slot": "feet", "cat": "snow boots", "warmth": 5, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["travel", "snowmobile"], "rent": false},
+      {"id": "kamik-snovalley6-w", "name": "Snovalley 6 - Women's Winter Boots", "brand": "Kamik", "retailer": "Kamik", "url": "https://kamik.com/products/snovalley-6-womens-winter-boots", "img": "https://www.kamik.com/cdn/shop/files/Product-Image_SNOVALLEY6_Snovalley-6-Womens-Off-White-Winter-Boots_OWH_02.jpg?v=1787055369", "slot": "feet", "cat": "snow boots", "warmth": 4, "tier": "good", "style": ["classic", "cozy"], "cut": "womenswear", "occ": ["travel", "snowmobile"], "rent": false},
+      {"id": "merrell-coldpack3-mid-m", "name": "Merrell Coldpack 3 Thermo Mid WP Shoes - Men's", "brand": "Merrell", "retailer": "evo", "url": "https://www.evo.com/products/292163-merrell-coldpack-3-thermo-mid-wp-shoes-men-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1344143.jpg?v=1788290865", "slot": "feet", "cat": "snow boots", "warmth": 3, "tier": "good", "style": ["sporty"], "cut": "menswear", "occ": ["travel", "snowmobile"], "rent": false},
       {"id": "tnf-clyffe-mid", "name": "The North Face Clyffe Mid Insulated Waterproof Shoes - Unisex", "brand": "The North Face", "retailer": "evo", "url": "https://www.evo.com/products/277867-the-north-face-clyffe-mid-insulated-waterproof-shoes-unisex", "img": "https://www.evo.com/cdn/shop/files/product-image-1379412.jpg?v=1791927516", "slot": "feet", "cat": "snow boots", "warmth": 3, "tier": "better", "style": ["sporty", "classic"], "cut": "unisex", "occ": ["travel", "snowmobile", "wildfig", "whitehouse", "frenchalpine", "nye"], "rent": false},
       {"id": "sorel-1964-pac-m", "name": "Men's SOREL 1964 Pac™ Nylon Waterproof", "brand": "Sorel", "retailer": "Zappos", "url": "https://www.zappos.com/p/sorel-1964-pac-nylon-waterproof-black-ancient-fossil/product/9952640/color/695307", "img": "https://m.media-amazon.com/images/I/71UgnnexgJL._SX700_.jpg", "slot": "feet", "cat": "snow boots", "warmth": 5, "tier": "better", "style": ["classic"], "cut": "menswear", "occ": ["travel", "snowmobile", "wildfig", "whitehouse", "frenchalpine", "nye"], "rent": false},
       {"id": "sorel-tivoli-v-w", "name": "Women's SOREL Tivoli™ V Waterproof", "brand": "Sorel", "retailer": "Zappos", "url": "https://www.zappos.com/p/sorel-tivoli-v-waterproof-black-fawn/product/9954584/color/355357", "img": "https://m.media-amazon.com/images/I/61DBL4sr-ZL._SX700_.jpg", "slot": "feet", "cat": "snow boots", "warmth": 4, "tier": "better", "style": ["classic", "dressy"], "cut": "womenswear", "occ": ["travel", "snowmobile", "wildfig", "whitehouse", "frenchalpine", "nye"], "rent": false},
@@ -5188,56 +5595,25 @@ body.gated .wh-fab{display:none;}
       {"id": "burton-impact-short", "name": "Burton Impact Short", "brand": "Burton", "retailer": "evo", "url": "https://www.evo.com/products/250285-burton-impact-short", "img": "https://www.evo.com/cdn/shop/files/product-image-1147588.jpg?v=1767735089", "slot": "acc", "cat": "impact shorts", "warmth": 1, "tier": "good", "style": ["sporty"], "cut": "menswear", "occ": ["ski"], "rent": false},
       {"id": "burton-total-impact-short-w", "name": "Burton Total Impact Short - Women's", "brand": "Burton", "retailer": "evo", "url": "https://www.evo.com/products/250283-burton-total-impact-short-women-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1147583.jpg?v=1767735091", "slot": "acc", "cat": "impact shorts", "warmth": 1, "tier": "better", "style": ["sporty"], "cut": "womenswear", "occ": ["ski"], "rent": false},
       {"id": "187-wrist-guards", "name": "187 Killer Pads Wrist Guards", "brand": "187 Killer Pads", "retailer": "evo", "url": "https://www.evo.com/products/242989-187-killer-pads-wrist-guards", "img": "https://www.evo.com/cdn/shop/files/product-image-1009588.jpg?v=1767729569", "slot": "acc", "cat": "wrist guards", "warmth": 1, "tier": "good", "style": ["sporty"], "cut": "unisex", "occ": ["ski"], "rent": false},
-      {"id": "quince-overcoat-m", "name": "Men's Wool Cashmere Balmacaan Overcoat", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/men/men-s-wool-cashmere-balmacaan-overcoat", "img": "https://images.quince.com/3DLPyppWV2q4aVIKMnkIh9/58dc202558ccde5ede56e030b68e53a2/M-JKT-163-HEACHA-01_EDITED.jpg?fm=webP&q=90&w=1600", "slot": "outer", "cat": "wool coat", "warmth": 3, "tier": "good", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "travel"], "rent": false},
-      {"id": "quince-wool-coat-w", "name": "Wool Cashmere Blazer Coat", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/women/wool-cashmere-classic-single-breasted-coat", "img": "https://images.quince.com/2gnjqGfp5aCSJ6KiBMoRPl/6d1497ddadc07f89aae38ef4ee76e0ea/W-JKT-194-HCHAR-01_EDITED.jpg?fm=webP&q=90&w=1600", "slot": "outer", "cat": "wool coat", "warmth": 3, "tier": "good", "style": ["classic", "dressy"], "cut": "womenswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "travel"], "rent": false},
-      {"id": "quince-long-parka-w", "name": "Responsible Down Hooded Long Parka", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/women/womens-responsible-down-hooded-long-parka", "img": "https://images.quince.com/46uh7ahZyjGVsEpcEYe7NF/09c37a6da56361fcf29640f6d293bed1/W-JKT-111-ATLNAV-01_EDITED.jpg?fm=webP&q=90&w=1600", "slot": "outer", "cat": "parka", "warmth": 5, "tier": "better", "style": ["cozy", "classic"], "cut": "womenswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
-      {"id": "quince-puffer-m", "name": "Lightweight Down Packable Puffer Jacket", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/men/men-s-lightweight-down-puffer-jacket", "img": "https://images.quince.com/13SA7j9tw0YsRoOjOmNYUv/04a878bfeaae4e0e442597e70cd288e3/M-JKT-51-BLK_0174.jpg?fm=webP&q=90&w=1600", "slot": "outer", "cat": "parka", "warmth": 3, "tier": "good", "style": ["sporty", "cozy"], "cut": "menswear", "occ": ["travel", "whitehouse", "bellyup", "frenchalpine"], "rent": false},
-      {"id": "everlane-long-puffer", "name": "EverPuff™ Cloud Long Puffer", "brand": "Everlane", "retailer": "Everlane", "url": "https://www.everlane.com/products/f-otwr-mlc-puff-lng-blk", "img": "https://www.everlane.com/cdn/shop/files/2026-09-27_F-OTWR-MLC-PUFF-LNG-BLK_02.jpg?v=1792425933", "slot": "outer", "cat": "parka", "warmth": 5, "tier": "better", "style": ["cozy", "classic"], "cut": "womenswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
-      {"id": "quince-merino-blazer-w", "name": "Double-Faced Merino Wool Soft Blazer", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/women/double-faced-merino-wool-soft-blazer", "img": "https://images.quince.com/4QfaHGhiUMAXq764LCI7jf/b68eabe44f26a41147a5db799e513200/W-JKT-131-HGRY_1926_EDITED_1.jpg?fm=webP&q=90&w=1600", "slot": "mid", "cat": "blazer", "warmth": 2, "tier": "better", "style": ["dressy", "classic"], "cut": "womenswear", "occ": ["casatua", "nye", "steakhouse", "wildfig"], "rent": false},
-      {"id": "quince-silk-blouse-w", "name": "Washable Stretch Silk Tie Neck Blouse", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/women/washable-stretch-silk-tie-neck-blouse", "img": "https://images.quince.com/4DLR18jf6CCJBsVb6u6wOp/96a3e1dced8f4b57aeb0cecd60d93ada/W-BLO-56-IVRY_1612.jpg?fm=webP&q=90&w=1600", "slot": "top", "cat": "blouse", "warmth": 1, "tier": "better", "style": ["dressy"], "cut": "womenswear", "occ": ["casatua", "nye", "steakhouse"], "rent": false},
       {"id": "smartwool-thermal-crew-m", "name": "Men's Classic Thermal Merino Base Layer Crew Nightfall Summit Soul", "brand": "Smartwool", "retailer": "Smartwool", "url": "https://www.smartwool.com/en-us/products/mens-classic-thermal-merino-base-layer-crew-sw016349", "img": "https://cdn.shopify.com/s/files/1/0910/5172/1073/files/SW016349545-HERO.png?v=1791203951", "slot": "under", "cat": "thermal", "warmth": 3, "tier": "better", "style": ["sporty"], "cut": "menswear", "occ": ["nye", "travel", "bellyup"], "rent": false},
       {"id": "smartwool-thermal-crew-w", "name": "Women's Classic Thermal Merino Base Layer Crew Dark Teal Heather", "brand": "Smartwool", "retailer": "Smartwool", "url": "https://www.smartwool.com/en-us/products/womens-classic-thermal-merino-base-layer-crew-sw016369", "img": "https://cdn.shopify.com/s/files/1/0910/5172/1073/files/SW016369010-HERO.jpg?v=1794533470", "slot": "under", "cat": "thermal", "warmth": 3, "tier": "better", "style": ["sporty"], "cut": "womenswear", "occ": ["nye", "travel"], "rent": false},
       {"id": "smartwool-thermal-bottom-w", "name": "Women's Classic Thermal Merino Base Layer Bottom Dark Teal Heather", "brand": "Smartwool", "retailer": "Smartwool", "url": "https://www.smartwool.com/en-us/products/womens-classic-thermal-merino-base-layer-bottom-sw019242", "img": "https://cdn.shopify.com/s/files/1/0910/5172/1073/files/SW019242010-HERO.jpg?v=1794507549", "slot": "under", "cat": "thermal", "warmth": 3, "tier": "better", "style": ["sporty"], "cut": "womenswear", "occ": ["nye", "casatua", "steakhouse"], "rent": false},
-      {"id": "quince-merino-bottom-m", "name": "100% Merino Wool Cold Weather Base Layer Bottoms", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/men/100-merino-wool-cold-weather-base-layer-bottom", "img": "https://images.quince.com/7hvzyktCnS0eRSbPdQNzM6/d2d092c18f37a64d7c0aa08523dbd23d/M-LGW-2-HCHAR_1413_EDITED_1.jpg?fm=webP&q=90&w=1600", "slot": "under", "cat": "thermal", "warmth": 3, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["nye", "casatua", "steakhouse"], "rent": false},
-      {"id": "quince-merino-legging-w", "name": "100% Merino Wool Cold Weather Base Layer Legging", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/women/100-merino-wool-cold-weather-base-layer-legging", "img": "https://images.quince.com/4DipBsvkFWmEWVLL6hI8f2/3925d910c52b406a0a79a062d73799b7/W-SWT-126-HCHAR_2365_EDITED_1.jpg?fm=webP&q=90&w=1600", "slot": "under", "cat": "thermal", "warmth": 3, "tier": "good", "style": ["classic"], "cut": "womenswear", "occ": ["nye", "casatua", "steakhouse"], "rent": false},
-      {"id": "quince-wool-pant-m", "name": "Stretch Wool Dress Pant", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/men/stretch-wool-dress-pant-slim-fit", "img": "https://images.quince.com/cvJWgssiUBNE1d3tpAYXr/50a09d17f9d9ad9ac629836647159c93/M-PNT-75-CHAMEL-01-EDITED.jpg?fm=webP&q=90&w=1600", "slot": "bottom", "cat": "trousers", "warmth": 2, "tier": "good", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["casatua", "nye", "steakhouse", "wildfig"], "rent": false},
-      {"id": "quince-wool-trouser-w", "name": "Italian Wool Pleated Trouser", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/women/italian-wool-pleated-trouser", "img": "https://images.quince.com/2Q5xULXfJ35wa9KRxFgpZT/98e76fc58f71987f78698d7cfd085cdf/W-PNT-144-CLMLG_0194_EDITED.jpg?fm=webP&q=90&w=1600", "slot": "bottom", "cat": "trousers", "warmth": 2, "tier": "better", "style": ["dressy", "classic"], "cut": "womenswear", "occ": ["casatua", "nye", "steakhouse", "wildfig"], "rent": false},
-      {"id": "everlane-cord-pant-m", "name": "Stretch Corduroy 5-Pocket Pant", "brand": "Everlane", "retailer": "Everlane", "url": "https://www.everlane.com/products/m-btm-fco-5pkt-pnt-tnvy", "img": "https://www.everlane.com/cdn/shop/files/2026-09-13_M-BTM-FCO-5PKT-PNT-TNVY_M1.jpg?v=1788540006", "slot": "bottom", "cat": "trousers", "warmth": 2, "tier": "good", "style": ["classic", "cozy"], "cut": "menswear", "occ": ["wildfig", "frenchalpine", "whitehouse", "travel", "steakhouse"], "rent": false},
-      {"id": "quince-chino-m", "name": "Men's Organic Cotton Stretch Chino Pants", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/men/mens-organic-stretch-cotton-chino-pants---straight-fit", "img": "https://images.quince.com/4hW8NuRVn5HJ1K48SGXg8l/4b409e48d834a03d2beb6f5c2c072223/M-PNT-114-STO-01_EDITED.jpg?fm=webP&q=90&w=1600", "slot": "bottom", "cat": "trousers", "warmth": 1, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "travel"], "rent": false},
-      {"id": "everlane-boucle-skirt-w", "name": "Boucle Maxi Skirt", "brand": "Everlane", "retailer": "Everlane", "url": "https://www.everlane.com/products/f-btm-ble-maxi-skrt-wine", "img": "https://www.everlane.com/cdn/shop/files/2026-11-01_F-BTM-BLE-MAXI-SKRT-WINE_01.jpg?v=1793921551", "slot": "bottom", "cat": "skirt", "warmth": 2, "tier": "better", "style": ["dressy", "cozy"], "cut": "womenswear", "occ": ["casatua", "frenchalpine", "steakhouse", "nye"], "rent": false},
-      {"id": "quince-cashmere-dress-w", "name": "Mongolian Spring Cashmere Turtleneck Midi Sweater Dress", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/women/lightweight-mongolian-cashmere-turtleneck-midi-sweater-dress", "img": "https://images.quince.com/2ZjYnl3qU4dhJ0mILyxRct/fe1fc1148bc3c75b92e415dd3d09b8bc/W-DRS-88-BUR_1795.jpg?fm=webP&q=90&w=1600", "slot": "bottom", "cat": "dress", "warmth": 3, "tier": "better", "style": ["cozy", "dressy"], "cut": "womenswear", "occ": ["frenchalpine", "casatua", "steakhouse", "wildfig"], "rent": false},
-      {"id": "quince-velvet-dress-w", "name": "Stretch Silk Velvet Ruched Midi Dress", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/women/womens-new-stretch-silk-velvet-ruched-midi-dress", "img": "https://images.quince.com/5sc9M1NqaRNM4cByIBpQFw/6df998951ae6f30107507c22e376cffb/W-DRS-220-BLA-151-EDITED.jpg?fm=webP&q=90&w=1600", "slot": "bottom", "cat": "dress", "warmth": 1, "tier": "splurge", "style": ["dressy"], "cut": "womenswear", "occ": ["nye", "casatua", "steakhouse"], "rent": false},
       {"id": "naadam-turtleneck-dress-w", "name": "Signature Cashmino Belted Turtleneck Dress", "brand": "Naadam", "retailer": "Naadam", "url": "https://www.naadam.co/products/signature-cashmino-belted-turtleneck-dress", "img": "https://naadam.co/cdn/shop/files/Signature_Cashmino_Belted_Turtleneck_Dress_Black_0014_1200x1200.jpg?v=1788542816", "slot": "bottom", "cat": "dress", "warmth": 3, "tier": "better", "style": ["cozy", "dressy"], "cut": "womenswear", "occ": ["frenchalpine", "casatua", "steakhouse"], "rent": false},
-      {"id": "quince-sweatpant-m", "name": "Supersoft Fleece Sweatpant", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/men/mens-supersoft-fleece-sweatpant-4948", "img": "https://images.quince.com/3lmibxVOo4ot5HZDLw7LSE/addd1b082616354e5f925c5f9d00a25e/M-PNT-52-NAV-01_EDITED.jpg?fm=webP&q=90&w=1600", "slot": "bottom", "cat": "joggers", "warmth": 2, "tier": "good", "style": ["cozy"], "cut": "menswear", "occ": ["cookin", "travel"], "rent": false},
-      {"id": "quince-sweatpant-w", "name": "Women's Organic Cotton-Blend Everyday Fleece Barrel Sweatpants", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/women/everyday-fleece-barrel-sweatpants---26", "img": "https://images.quince.com/2718uaa7prhVOiKnAXGvI0/452339e6a67b14b7edf65099ed5e745b/W-PNT-297-LIGHEAG_01_EDITED.jpg?fm=webP&q=90&w=1600", "slot": "bottom", "cat": "joggers", "warmth": 2, "tier": "good", "style": ["cozy"], "cut": "womenswear", "occ": ["cookin", "travel"], "rent": false},
-      {"id": "quince-cashmere-jogger", "name": "Mongolian Cashmere Jogger", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/men/cashmere/cashmere-jogger", "img": "https://images.quince.com/GxQgy8jKUb8fgeBfeaRmN/a5e904f3e5869f536d5ad66409baef83/M-PNT-4-BRN_0863.jpg?fm=webP&q=90&w=1600", "slot": "bottom", "cat": "joggers", "warmth": 3, "tier": "splurge", "style": ["cozy"], "cut": "menswear", "occ": ["cookin", "travel"], "rent": false},
-      {"id": "blundstone-566-m", "name": "Black Premium Waterproof Leather Chelsea Boots, Men's Thermal 566 - Blundstone", "brand": "Blundstone", "retailer": "Blundstone", "url": "https://www.blundstone.com/products/black-premium-waterproof-leather-chelsea-boots-mens-style-566", "img": "https://cdn.shopify.com/s/files/1/0903/6349/4707/files/product-image_2026-07-31_566_p_usa_hero.jpg?v=1790053620", "slot": "feet", "cat": "winter boots", "warmth": 3, "tier": "better", "style": ["classic", "sporty"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
-      {"id": "blundstone-566-w", "name": "Black Premium Waterproof Leather Chelsea Boots, Women's Thermal 566 - Blundstone", "brand": "Blundstone", "retailer": "Blundstone", "url": "https://www.blundstone.com/products/black-premium-waterproof-leather-chelsea-boots-womens-style-566", "img": "https://cdn.shopify.com/s/files/1/0903/6349/4707/files/product-image_2026-07-31_566_p_usa_hero.jpg?v=1790053620", "slot": "feet", "cat": "winter boots", "warmth": 3, "tier": "better", "style": ["classic", "sporty"], "cut": "womenswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "blundstone-566-m", "name": "Black Premium Waterproof Leather Chelsea Boots, Men's Thermal 566 - Blundstone", "brand": "Blundstone", "retailer": "Blundstone", "url": "https://www.blundstone.com/products/black-premium-waterproof-leather-chelsea-boots-mens-style-566", "img": "https://cdn.shopify.com/s/files/1/0903/6349/4707/files/product-image_2026-07-31_566_p_usa_hero.jpg?v=1790053620", "slot": "feet", "cat": "winter boots", "warmth": 3, "tier": "good", "style": ["classic", "sporty"], "cut": "menswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "blundstone-566-w", "name": "Black Premium Waterproof Leather Chelsea Boots, Women's Thermal 566 - Blundstone", "brand": "Blundstone", "retailer": "Blundstone", "url": "https://www.blundstone.com/products/black-premium-waterproof-leather-chelsea-boots-womens-style-566", "img": "https://cdn.shopify.com/s/files/1/0903/6349/4707/files/product-image_2026-07-31_566_p_usa_hero.jpg?v=1790053620", "slot": "feet", "cat": "winter boots", "warmth": 3, "tier": "good", "style": ["classic", "sporty"], "cut": "womenswear", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
       {"id": "thursday-president-m", "name": "Men's President StormKing® Lace-Up Boot In Bull Brown", "brand": "Thursday Boot Co.", "retailer": "Thursday Boot Co.", "url": "https://thursdayboots.com/products/mens-president-lace-up-boot-bull-brown-stormking", "img": "https://thursdayboots.com/cdn/shop/files/01-1024x1024-Men-President-StormKing-BullBrown-071026-3.4_1200x1200.jpg?v=1788972834", "slot": "feet", "cat": "dress boots", "warmth": 2, "tier": "good", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "bellyup"], "rent": false},
       {"id": "sorel-caribou-m", "name": "Men's Sorel Caribou™", "brand": "Sorel", "retailer": "Zappos", "url": "https://www.zappos.com/p/sorel-caribou-buff/product/7333155/color/4806", "img": "https://m.media-amazon.com/images/I/716Qus5V4CS._SX700_.jpg", "slot": "feet", "cat": "winter boots", "warmth": 5, "tier": "better", "style": ["sporty"], "cut": "menswear", "occ": ["travel", "whitehouse", "frenchalpine", "nye"], "rent": false},
       {"id": "drmartens-1460-fleece", "name": "1460 Bex Faux Fur-Lined Leather Lace Up Boots in Black Milled Nappa", "brand": "Dr. Martens", "retailer": "Dr. Martens", "url": "https://www.drmartens.com/us/en/1460-bex-fleece-lined-leather-lace-up-boots-black-milled-nappa/p/27960001", "img": "https://cdn.media.amplience.net/i/drmartens/NX_27960001.80", "slot": "feet", "cat": "winter boots", "warmth": 3, "tier": "good", "style": ["classic"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
-      {"id": "colehaan-stockbridge-m", "name": "Men's Stockbridge Chelsea Waterproof Boots in Grey", "brand": "Cole Haan", "retailer": "Cole Haan", "url": "https://www.colehaan.com/products/mens-stockbridge-chelsea-waterproof-boots-c44929", "img": "https://www.colehaan.com/cdn/shop/files/STOCKBRIDGE-CHELS-WP_e_A_C44929-psd.jpg?v=1793181634", "slot": "feet", "cat": "dress boots", "warmth": 2, "tier": "splurge", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse"], "rent": false},
-      {"id": "colehaan-shibley-w", "name": "Women's Shibley Waterproof Lug Buckle Booties in Red", "brand": "Cole Haan", "retailer": "Cole Haan", "url": "https://www.colehaan.com/products/womens-shibley-waterproof-lug-buckle-booties-w39539", "img": "https://www.colehaan.com/cdn/shop/files/SHIBLEY-WP-LG-BCK-BT_e_A_W39539-psd.jpg?v=1793721478", "slot": "feet", "cat": "dress boots", "warmth": 2, "tier": "better", "style": ["dressy", "classic"], "cut": "womenswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "bellyup"], "rent": false},
+      {"id": "colehaan-stockbridge-m", "name": "Men's Stockbridge Chelsea Waterproof Boots in Grey", "brand": "Cole Haan", "retailer": "Cole Haan", "url": "https://www.colehaan.com/products/mens-stockbridge-chelsea-waterproof-boots-c44929", "img": "https://www.colehaan.com/cdn/shop/files/STOCKBRIDGE-CHELS-WP_e_A_C44929-psd.jpg?v=1793181634", "slot": "feet", "cat": "dress boots", "warmth": 2, "tier": "good", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse"], "rent": false},
+      {"id": "colehaan-shibley-w", "name": "Women's Shibley Waterproof Lug Buckle Booties in Red", "brand": "Cole Haan", "retailer": "Cole Haan", "url": "https://www.colehaan.com/products/womens-shibley-waterproof-lug-buckle-booties-w39539", "img": "https://www.colehaan.com/cdn/shop/files/SHIBLEY-WP-LG-BCK-BT_e_A_W39539-psd.jpg?v=1793721478", "slot": "feet", "cat": "dress boots", "warmth": 2, "tier": "good", "style": ["dressy", "classic"], "cut": "womenswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "bellyup"], "rent": false},
       {"id": "ugg-scuff-m", "name": "Men's UGG Scuff", "brand": "UGG", "retailer": "Zappos", "url": "https://www.zappos.com/p/ugg-scuff-chestnut/product/7578714/color/278", "img": "https://m.media-amazon.com/images/I/61yrZcj3QTL._SX700_.jpg", "slot": "feet", "cat": "slippers", "warmth": 3, "tier": "good", "style": ["cozy"], "cut": "menswear", "occ": ["cookin"], "rent": false},
       {"id": "ugg-scuffette-w", "name": "Women's UGG Scuffette II", "brand": "UGG", "retailer": "Zappos", "url": "https://www.zappos.com/p/ugg-scuffette-ii-chestnut-ii/product/107219/color/888138", "img": "https://m.media-amazon.com/images/I/71BZ4NXmoJL._SX700_.jpg", "slot": "feet", "cat": "slippers", "warmth": 3, "tier": "good", "style": ["cozy"], "cut": "womenswear", "occ": ["cookin"], "rent": false},
       {"id": "glerups-boot", "name": "Boot with natural rubber sole - honey - Moss", "brand": "Glerups", "retailer": "Glerups", "url": "https://www.glerups.com/products/boot-with-natural-rubber-sole-honey-moss", "img": "https://www.glerups.com/cdn/shop/files/GR_MOSS_40.png?v=1766397704", "slot": "feet", "cat": "slippers", "warmth": 4, "tier": "better", "style": ["cozy"], "cut": "unisex", "occ": ["cookin"], "rent": false},
-      {"id": "quince-moccasin-m", "name": "Italian Leather Handstitched Moccasin Slipper", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/men/mens-italian-leather-moccasin-slipper", "img": "https://images.quince.com/5b6pQxSWb6FZQXgI5GPl3y/7ad21c4f4b4c012e3509309524b49a53/M-M--11-DARCHO_22007_CROPPED.jpg?fm=webP&q=90&w=1600", "slot": "feet", "cat": "slippers", "warmth": 2, "tier": "good", "style": ["cozy", "classic"], "cut": "menswear", "occ": ["cookin"], "rent": false},
-      {"id": "quince-cashmere-scarf", "name": "Mongolian Cashmere Woven Fringe Scarf", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/unisex/mongolian-cashmere-woven-fringe-scarf", "img": "https://images.quince.com/mXcFoKmLABzT9MNGiu5OB/f0116b5de98f91a106e1bad99896f13d/M-SCV-5-IVRY-02_EDITED.jpg?fm=webP&q=90&w=1600", "slot": "acc", "cat": "scarf", "warmth": 3, "tier": "good", "style": ["classic", "dressy"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
-      {"id": "naadam-triangle-scarf", "name": "Lightweight Cashmere Triangle Scarf", "brand": "Naadam", "retailer": "Naadam", "url": "https://www.naadam.co/products/lightweight-cashmere-triangle-scarf", "img": "https://naadam.co/cdn/shop/files/Signature_Cashmere_Straight_Leg_Pant_CO_Rich_Brown_0157_1200x1200.jpg?v=1790279026", "slot": "acc", "cat": "scarf", "warmth": 2, "tier": "better", "style": ["dressy"], "cut": "unisex", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse"], "rent": false},
+      {"id": "naadam-triangle-scarf", "name": "Lightweight Cashmere Triangle Scarf", "brand": "Naadam", "retailer": "Naadam", "url": "https://www.naadam.co/products/lightweight-cashmere-triangle-scarf", "img": "https://naadam.co/cdn/shop/files/Signature_Cashmere_Straight_Leg_Pant_CO_Rich_Brown_0157_1200x1200.jpg?v=1790279026", "slot": "acc", "cat": "scarf", "warmth": 2, "tier": "good", "style": ["dressy"], "cut": "unisex", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse"], "rent": false},
       {"id": "cg-triangle-scarf", "name": "Triangle Knit Scarf", "brand": "Canada Goose", "retailer": "Canada Goose", "url": "https://www.canadagoose.com/products/triangle-knit-scarf-5646u", "img": "https://www.canadagoose.com/cdn/shop/files/5646U_9846_off_flat_lay_01.png?v=1793868262", "slot": "acc", "cat": "scarf", "warmth": 4, "tier": "splurge", "style": ["cozy", "classic"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
-      {"id": "quince-leather-gloves-m", "name": "Men's Cashmere Lined Leather Gloves", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/men/cashmere-lined-leather-gloves", "img": "https://images.quince.com/5nbQoGLRKQ6tgoV6jvC74a/7cf954d86b2dc5621c73b1fafce49244/Cashmere_Lined_Leather_Tech_Choc_2.jpg?fm=webP&q=90&w=1600", "slot": "acc", "cat": "leather gloves", "warmth": 3, "tier": "good", "style": ["dressy", "classic"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "travel"], "rent": false},
-      {"id": "quince-leather-gloves-w", "name": "Women's Cashmere Lined Leather Gloves", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/women/women-s-cashmere-lined-leather-gloves", "img": "https://images.quince.com/3SKiXmGoAWoySCUWdXnCnz/6ee39eca5560f82fa239a168a170c4f3/Gloves_169994.jpg?fm=webP&q=90&w=1600", "slot": "acc", "cat": "leather gloves", "warmth": 3, "tier": "good", "style": ["dressy", "classic"], "cut": "womenswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "travel"], "rent": false},
-      {"id": "quince-cashmere-beanie", "name": "Cashmere Beanie", "brand": "Quince", "retailer": "Quince", "url": "https://www.quince.com/unisex/cashmere/beanie", "img": "https://images.quince.com/48gunK5Rq7QPTpbBj2muUg/df5cbbd59bc502673186cb74dd268ad6/W-JKT-3-RBURG-01_EDITED.jpg?fm=webP&q=90&w=1600", "slot": "acc", "cat": "hat", "warmth": 3, "tier": "good", "style": ["classic", "cozy"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
       {"id": "smartwool-rib-beanie", "name": "Thermal Merino Rib Beanie Mocha Heather", "brand": "Smartwool", "retailer": "Smartwool", "url": "https://www.smartwool.com/en-us/products/thermal-merino-rib-beanie-sw002990", "img": "https://cdn.shopify.com/s/files/1/0910/5172/1073/files/SW002990P44-HERO.jpg?v=1788276256", "slot": "acc", "cat": "hat", "warmth": 3, "tier": "good", "style": ["sporty", "cozy"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse", "ski", "snowmobile"], "rent": false},
-      {"id": "everlane-cabin-beanie", "name": "The Cabin Beanie", "brand": "Everlane", "retailer": "Everlane", "url": "https://www.everlane.com/products/u-accs-gtb-ht-bn-ltgry", "img": "https://www.everlane.com/cdn/shop/files/U-ACCS-GTB-HT-BN-LTGRY-01.jpg?v=1794531301", "slot": "acc", "cat": "hat", "warmth": 2, "tier": "good", "style": ["cozy"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
-      {"id": "naadam-luxe-crew", "name": "Luxe Cashmere Crewneck Sweater", "brand": "Naadam", "retailer": "Naadam", "url": "https://www.naadam.co/products/luxe-cashmere-crewneck-sweater", "img": "https://naadam.co/cdn/shop/files/Luxe-Cashmere-Crewneck-Sweater-_CO_---Navy_050_9e8456c3-eecd-40b9-ab3c-7e1a1f66b3c7_1200x1200.jpg?v=1762147485", "slot": "top", "cat": "sweater", "warmth": 3, "tier": "better", "style": ["classic", "dressy"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
-      {"id": "naadam-fair-isle", "name": "Luxe Cashmino Fair Isle Jacquard Crewneck Sweater", "brand": "Naadam", "retailer": "Naadam", "url": "https://www.naadam.co/products/luxe-cashmino-fair-isle-jacquard-crewneck-sweater", "img": "https://naadam.co/cdn/shop/files/261006-Naadam_Mens_Cashmino_Fairelsle0059_1200x1200.jpg?v=1793401400", "slot": "top", "cat": "sweater", "warmth": 3, "tier": "better", "style": ["cozy"], "cut": "menswear", "occ": ["frenchalpine", "whitehouse", "wildfig", "cookin", "travel"], "rent": false},
-      {"id": "everlane-henley-m", "name": "Henley in Wool Cashmere", "brand": "Everlane", "retailer": "Everlane", "url": "https://www.everlane.com/products/m-swtr-wlc-hnly-ls-olv", "img": "https://www.everlane.com/cdn/shop/files/2026-11-22_M-SWTR-WLC-HNLY-LS-OLV_M1.jpg?v=1794372122", "slot": "top", "cat": "sweater", "warmth": 2, "tier": "good", "style": ["classic", "cozy"], "cut": "menswear", "occ": ["wildfig", "whitehouse", "frenchalpine", "bellyup", "travel"], "rent": false},
-      {"id": "everlane-cardigan-w", "name": "Boxy V-Neck Cardigan in Midweight Cashmere", "brand": "Everlane", "retailer": "Everlane", "url": "https://www.everlane.com/products/f-swtr-eca-bxy-cdgn-nvy", "img": "https://www.everlane.com/cdn/shop/files/2026-11-15_F-SWTR-ECA-BXY-CDGN-NVY_01.jpg?v=1794370407", "slot": "top", "cat": "sweater", "warmth": 2, "tier": "better", "style": ["classic", "cozy"], "cut": "womenswear", "occ": ["wildfig", "frenchalpine", "casatua", "travel"], "rent": false},
-      {"id": "everlane-tissue-turtleneck-w", "name": "Tissue Long-Sleeve Turtleneck", "brand": "Everlane", "retailer": "Everlane", "url": "https://www.everlane.com/products/f-t-tis-ttl-ls-brnst", "img": "https://www.everlane.com/cdn/shop/files/Reshoot_2026-11-15_F-T-TIS-BOAT-LS-BRNST_01.jpg?v=1794371550", "slot": "top", "cat": "turtleneck", "warmth": 1, "tier": "good", "style": ["classic", "dressy"], "cut": "womenswear", "occ": ["wildfig", "bellyup", "casatua", "nye", "steakhouse"], "rent": false},
-      {"id": "everlane-oxford-m", "name": "Standard-Fit Oxford Shirt", "brand": "Everlane", "retailer": "Everlane", "url": "https://www.everlane.com/products/mens-lightweight-oxford-shirt-standard-blue-stripe", "img": "https://www.everlane.com/cdn/shop/files/2026-08-02_M-BTDN-LOX-STD-LS-BLUSTPE_M1.jpg?v=1792167530", "slot": "top", "cat": "button-up", "warmth": 1, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "casatua", "steakhouse", "nye"], "rent": false},
-      {"id": "everlane-oxford-w", "name": "Oxford Boyfriend Shirt", "brand": "Everlane", "retailer": "Everlane", "url": "https://www.everlane.com/products/womens-oxford-boyfriend-shirt-cashmere-blue", "img": "https://www.everlane.com/cdn/shop/files/Reshoot_2026-10-04_F-BTDN-LOX-BF-LS-BLST_01.jpg?v=1792106270", "slot": "top", "cat": "button-up", "warmth": 1, "tier": "good", "style": ["classic"], "cut": "womenswear", "occ": ["wildfig", "bellyup", "casatua", "steakhouse"], "rent": false},
-      {"id": "everlane-halfzip-w", "name": "The Half-Zip Sweater in Luxe Merino", "brand": "Everlane", "retailer": "Everlane", "url": "https://www.everlane.com/products/f-swtr-boi-hzip-ls-hblu", "img": "https://www.everlane.com/cdn/shop/files/2026-11-15_F-SWTR-BOI-HZIP-LS-HBLU_01.jpg?v=1794369382", "slot": "top", "cat": "sweater", "warmth": 2, "tier": "good", "style": ["sporty", "cozy"], "cut": "womenswear", "occ": ["travel", "whitehouse", "frenchalpine"], "rent": false}
+      {"id": "naadam-luxe-crew", "name": "Luxe Cashmere Crewneck Sweater", "brand": "Naadam", "retailer": "Naadam", "url": "https://www.naadam.co/products/luxe-cashmere-crewneck-sweater", "img": "https://naadam.co/cdn/shop/files/Luxe-Cashmere-Crewneck-Sweater-_CO_---Navy_050_9e8456c3-eecd-40b9-ab3c-7e1a1f66b3c7_1200x1200.jpg?v=1762147485", "slot": "top", "cat": "sweater", "warmth": 3, "tier": "good", "style": ["classic", "dressy"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "naadam-fair-isle", "name": "Luxe Cashmino Fair Isle Jacquard Crewneck Sweater", "brand": "Naadam", "retailer": "Naadam", "url": "https://www.naadam.co/products/luxe-cashmino-fair-isle-jacquard-crewneck-sweater", "img": "https://naadam.co/cdn/shop/files/261006-Naadam_Mens_Cashmino_Fairelsle0059_1200x1200.jpg?v=1793401400", "slot": "top", "cat": "sweater", "warmth": 3, "tier": "good", "style": ["cozy"], "cut": "menswear", "occ": ["frenchalpine", "whitehouse", "wildfig", "cookin", "travel"], "rent": false}
     ]/*END_PRODUCTS*/,
 
     /* ---------------- OUTFIT BUILDER ----------------
@@ -5276,7 +5652,8 @@ body.gated .wh-fab{display:none;}
             { k: 'top', label: 'Top', slot: 'top', cats: ['sweater', 'button-up', 'turtleneck'] },
             { k: 'bottom', label: 'Bottom', slot: 'bottom', cats: ['trousers', 'joggers', 'jeans'] },
             { k: 'feet', label: 'Boots', slot: 'feet', cats: ['snow boots', 'winter boots'] },
-            { k: 'acc', label: 'Hat / scarf', slot: 'acc', cats: ['hat', 'scarf'] }
+            { k: 'acc', label: 'Hat / scarf', slot: 'acc', cats: ['hat', 'scarf'] },
+            { k: 'sun', label: 'Sunglasses · optional', slot: 'eyes', cats: ['sunglasses'], w: 0 }
           ] },
         { id: 'wildfig', label: 'Wild Fig → Belly Up', temp: 10, alias: ['bellyup'], note: 'Casual-nice dinner, then a warm, packed club',
           rows: 'town' },
@@ -5319,7 +5696,7 @@ body.gated .wh-fab{display:none;}
         ]
       },
       /* warmth weight per slot (row.w overrides) */
-      weights: { outer: 2, mid: 1.3, under: 1.2, top: 1, bottom: 1, feet: 0.9, hands: 0.9, head: 0.7, acc: 0.7, swim: 0 }
+      weights: { outer: 2, mid: 1.3, under: 1.2, top: 1, bottom: 1, feet: 0.9, hands: 0.9, head: 0.7, acc: 0.7, eyes: 0, swim: 0 }
     },
 
     /* ---------------- PEOPLE ----------------
@@ -5328,12 +5705,12 @@ body.gated .wh-fab{display:none;}
        owns: true (has it) | false (needs it) | null (unknown)
        looks[dinnerId]: a short personal suggestion once answers are in. */
     people: {
-      griffin: { name: 'Griffin', role: 'Skier · rents skis at FMS',
+      griffin: { name: 'Griffin', cut: 'menswear', role: 'Skier · rents skis at FMS',
         plan: { d1: 'ski', d2: 'ski', d4: 'ski', d6: 'ski' },
         bellyUp: null, style: null, colors: null, hates: null,
         owns: blankOwns(), looks: {},
         extraNeeds: [{ id: 'fms', t: 'Ski rental pickup at FMS Downtown (Day 0, 5:15 PM)' }] },
-      marco: { name: 'Marco', role: 'Snowboarder · renting a snowboard package',
+      marco: { name: 'Marco', cut: 'menswear', role: 'Snowboarder · renting a snowboard package',
         plan: { d1: 'board', d2: 'board', d4: 'board', d6: 'board' },
         bellyUp: null, style: null, colors: null, hates: null,
         owns: blankOwns(), looks: {},
@@ -5350,19 +5727,19 @@ body.gated .wh-fab{display:none;}
           helmet: 'Helmet (add to the board rental, or bring your own)',
           skiSocks: 'Merino snowboard/ski socks'
         } },
-      stella: { name: 'Stella', role: 'Lesson Day I · skis Days II, IV, VI (FMS rental)',
+      stella: { name: 'Stella', cut: 'womenswear', role: 'Lesson Day I · skis Days II, IV, VI (FMS rental)',
         plan: { d1: 'lesson', d2: 'ski', d4: 'ski', d6: 'ski' },
         bellyUp: null, style: null, colors: null, hates: null,
         owns: blankOwns(), looks: {}, extraNeeds: [] },
-      ben: { name: 'Ben', role: 'Skier · brings his own skis',
+      ben: { name: 'Ben', cut: 'menswear', role: 'Skier · brings his own skis',
         plan: { d1: 'ski', d2: 'ski', d4: 'ski', d6: 'ski' },
         bellyUp: null, style: null, colors: null, hates: null,
         owns: blankOwns(), looks: {}, extraNeeds: [] },
-      marcy: { name: 'Marcy', role: 'Beginner · lessons Days I + II, skis IV + VI',
+      marcy: { name: 'Marcy', cut: 'womenswear', role: 'Beginner · lessons Days I + II, skis IV + VI',
         plan: { d1: 'lesson', d2: 'lesson', d4: 'ski', d6: 'ski' },
         bellyUp: null, style: null, colors: null, hates: null,
         owns: blankOwns(), looks: {}, extraNeeds: [] },
-      jim: { name: 'Jim', role: 'Not skiing · still needs outerwear for the snowmobile',
+      jim: { name: 'Jim', cut: 'menswear', role: 'Not skiing · still needs outerwear for the snowmobile',
         plan: { d1: 'nonski', d2: 'nonski', d3: 'nonski', d4: 'nonski', d6: 'nonski' },
         nonSkier: true,
         bellyUp: null, style: null, colors: null, hates: null,
@@ -5886,7 +6263,7 @@ body.gated .wh-fab{display:none;}
   var INITIAL_HASH = location.hash;
   function init() {
     var root = $('outfits'); if (!root || !$('ofPicker')) return;
-    renderPicker(); renderAll();
+    renderPicker(); renderAll(); invInit();
     root.addEventListener('click', onClick);
     root.addEventListener('change', onChange);
     root.addEventListener('error', onImgError, true);
@@ -5906,7 +6283,511 @@ body.gated .wh-fab{display:none;}
     var id0 = hashTarget(INITIAL_HASH) || hashTarget(location.hash);
     if (id0) setTimeout(function () { openOutfit(id0); }, 60);
   }
-  window.AspenOutfits = { open: openOutfit, data: OUTFITS, products: PROD, who: function () { return who; } };
+  /* ================= OUTFITS v1 · suitcase + mannequin (renderer) =================
+     Days → moments (each moment saves its own outfit) → mannequin with 8 slots →
+     warmth bar (outfit vs recommended band) → suitcase grid → additions.
+     Storage (this device): aspenInvFits_v1 {pid:{momentId:{slot:ref}}} · aspenInvBought_v1 {pid:[productId]}
+     · aspenInvMoment_v1 (last moment). ref = 'i:<suitcase id>' | 'p:<product id>' (a try-on / bought addition). */
+  var INV_PERSON = 'griffin';           /* v1 demo: Griffin only; data is keyed by person */
+  var INV_SLOTS = [
+    { k: 'hat', l: 'Hat', side: 'L', ic: 'beanie' }, { k: 'sunglasses', l: 'Sunglasses', side: 'L', ic: 'sun' },
+    { k: 'scarf', l: 'Scarf', side: 'L', ic: 'scarf' }, { k: 'coat', l: 'Coat', side: 'L', ic: 'jacket' },
+    { k: 'top', l: 'Top', side: 'R', ic: 'tee' }, { k: 'gloves', l: 'Gloves', side: 'R', ic: 'glove' },
+    { k: 'bottom', l: 'Bottom', side: 'R', ic: 'pants' }, { k: 'shoes', l: 'Shoes', side: 'R', ic: 'shoe' }
+  ];
+  /* Aspen, typical for each date (Open-Meteo archive, Dec 27–Jan 3 averaged over 2010–2024, town grid
+     ~7,900 ft): hi/lo °F, pSnow = share of years with ≥0.2" of snow that day, wind mph (daily max).
+     Replaced by the live Open-Meteo forecast once the date is within its 16-day window. */
+  var INV_CLIMO = {
+    '2026-12-27': { hi: 30, lo: 9, pSnow: 0.47, wind: 5 }, '2026-12-28': { hi: 29, lo: 9, pSnow: 0.53, wind: 6 },
+    '2026-12-29': { hi: 28, lo: 6, pSnow: 0.47, wind: 6 }, '2026-12-30': { hi: 29, lo: 6, pSnow: 0.47, wind: 6 },
+    '2026-12-31': { hi: 28, lo: 4, pSnow: 0.53, wind: 6 }, '2027-01-01': { hi: 26, lo: 3, pSnow: 0.40, wind: 6 },
+    '2027-01-02': { hi: 28, lo: 2, pSnow: 0.27, wind: 5 }, '2027-01-03': { hi: 32, lo: 4, pSnow: 0.27, wind: 6 }
+  };
+  /* Days + moments, from the itinerary. exp = how cold it feels for that moment:
+     ski (summit ~11,200 ft: −12°F, ridge wind) · sled (snowmobile: wind chill at ~20 mph) · town (evening low + walk)
+     · day (town daytime) · travel · springs (Glenwood, warmer) · home (indoors).
+     carry = slots pre-filled from the day's previous moment when this one is still empty.
+     same = offer "Same as <moment>". req/rule = the one practical check. */
+  var INV_DAYS = [
+    { id: 'd0', date: '2026-12-27', d: 'Sun 27', moments: [
+      { id: 'd0-travel', l: 'Travel', t: 'Flight + drive', exp: 'travel' },
+      { id: 'd0-dinner', l: 'Dinner', t: 'Wild Fig · 6:30', exp: 'town', carry: ['coat', 'bottom', 'shoes'], dressy: 1 },
+      { id: 'd0-out', l: 'Going out', t: 'Belly Up · 9:30', exp: 'late', same: 'd0-dinner' } ] },
+    { id: 'd1', date: '2026-12-28', d: 'Mon 28', moments: [
+      { id: 'd1-ski', l: 'Skiing', t: 'Snowmass', exp: 'ski', rule: 'ski' },
+      { id: 'd1-dinner', l: 'Dinner', t: 'White House · 7', exp: 'town', carry: ['coat'] } ] },
+    { id: 'd2', date: '2026-12-29', d: 'Tue 29', moments: [
+      { id: 'd2-ski', l: 'Skiing', t: 'Ajax', exp: 'ski', rule: 'ski', same: 'd1-ski' },
+      { id: 'd2-apres', l: 'Après', t: 'Ajax Tavern', exp: 'base', carry: ['coat', 'top', 'bottom', 'hat', 'sunglasses'] },
+      { id: 'd2-dinner', l: 'Dinner', t: 'Casa Tua · 7', exp: 'town', carry: ['coat'], dressy: 2, rule: 'casatua' } ] },
+    { id: 'd3', date: '2026-12-30', d: 'Wed 30', moments: [
+      { id: 'd3-sled', l: 'Snowmobile', t: 'T-Lazy-7 · 9:30', exp: 'sled', rule: 'sled' },
+      { id: 'd3-town', l: 'Downtown', t: 'Afternoon', exp: 'day', carry: ['coat', 'sunglasses'] },
+      { id: 'd3-dinner', l: 'Dinner', t: 'French Alpine · 7:30', exp: 'town', carry: ['coat'], dressy: 1 } ] },
+    { id: 'd4', date: '2026-12-31', d: 'Thu 31', moments: [
+      { id: 'd4-ski', l: 'Skiing', t: 'Highlands', exp: 'ski', rule: 'ski', same: 'd1-ski' },
+      { id: 'd4-nye', l: 'NYE night', t: 'Fireworks 8 → Matsuhisa', exp: 'nye', carry: ['coat'], dressy: 2, rule: 'nye' } ] },
+    { id: 'd5', date: '2027-01-01', d: 'Fri 1', moments: [
+      { id: 'd5-springs', l: 'Hot springs', t: 'Iron Mountain · 12', exp: 'springs', rule: 'swim' },
+      { id: 'd5-home', l: 'Night in', t: 'Cook-in', exp: 'home' } ] },
+    { id: 'd6', date: '2027-01-02', d: 'Sat 2', moments: [
+      { id: 'd6-ski', l: 'Skiing', t: 'Snowmass', exp: 'ski', rule: 'ski', same: 'd1-ski' },
+      { id: 'd6-dinner', l: 'Dinner', t: 'Steakhouse 316 · 7:30', exp: 'town', carry: ['coat'], dressy: 2 },
+      { id: 'd6-out', l: 'Nightcap', t: 'J-Bar', exp: 'late', same: 'd6-dinner' } ] },
+    { id: 'd7', date: '2027-01-03', d: 'Sun 3', moments: [
+      { id: 'd7-travel', l: 'Travel', t: 'Checkout 10 → DEN', exp: 'travel', same: 'd0-travel' } ] }
+  ];
+  /* example outfits shipped with the page (Griffin's own pieces only) */
+  var INV_SEED = {
+    griffin: {
+      'd1-ski': { coat: 'i:beta', top: 'i:tees' },
+      'd2-dinner': { coat: 'i:beta', bottom: 'i:slacks', shoes: 'i:colehaan', top: 'i:tees' }
+    }
+  };
+
+  var IV_FITS = 'aspenInvFits_v1', IV_BOUGHT = 'aspenInvBought_v1', IV_MOM = 'aspenInvMoment_v1', IV_WX = 'aspenInvWx_v1';
+  var ivFits = {}, ivBought = {}, ivMom = 'd1-ski', ivDraft = {}, ivSel = null, ivWx = null;
+  try { ivFits = JSON.parse(localStorage.getItem(IV_FITS) || '{}') || {}; } catch (e) { ivFits = {}; }
+  try { ivBought = JSON.parse(localStorage.getItem(IV_BOUGHT) || '{}') || {}; } catch (e) { ivBought = {}; }
+  try { ivMom = localStorage.getItem(IV_MOM) || 'd1-ski'; } catch (e) {}
+  try { var wx0 = JSON.parse(localStorage.getItem(IV_WX) || 'null'); if (wx0 && Date.now() - wx0.t < 6 * 3600e3) ivWx = wx0.d; } catch (e) {}
+
+  function ivSave(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  function ivMoment(id) { var r = null; INV_DAYS.forEach(function (d) { d.moments.forEach(function (m) { if (m.id === id) { r = m; r._day = d; } }); }); return r; }
+  if (!ivMoment(ivMom)) ivMom = 'd1-ski';
+
+  /* ---- items ---- */
+  function addEntry(pid) { var r = null; (ADDITIONS[INV_PERSON] || []).forEach(function (g) { g.items.forEach(function (it) { if (it.pid === pid) r = { g: g, it: it }; }); }); return r; }
+  function prodItem(pid) {
+    var e = addEntry(pid), p = PROD[pid]; if (!e || !p) return null;
+    return { id: pid, ref: 'p:' + pid, name: p.brand + ' — ' + p.name, short: e.it.short, slot: e.g.slot, kind: e.it.kind || e.g.kind, warmth: e.it.warmth !== undefined ? e.it.warmth : e.g.warmth,
+      waterproof: e.g.waterproof, windproof: e.g.windproof, dressy: e.g.dressy, color: e.it.color, img: p.img, url: p.url, brand: p.brand, tier: p.tier, cut: p.cut };
+  }
+  function bought(pid) { return (ivBought[INV_PERSON] || []).indexOf(pid) >= 0; }
+  function suitcase() {
+    var list = (SUITCASE[INV_PERSON] || []).map(function (it) { var c = {}; for (var k in it) c[k] = it[k]; c.ref = 'i:' + it.id; return c; });
+    (ivBought[INV_PERSON] || []).forEach(function (pid) { var p = prodItem(pid); if (p) { p.owned = true; list.push(p); } });
+    return list;
+  }
+  function ivItem(ref) {
+    if (!ref) return null;
+    if (ref.slice(0, 2) === 'i:') { var id = ref.slice(2), r = null; (SUITCASE[INV_PERSON] || []).forEach(function (it) { if (it.id === id) { r = {}; for (var k in it) r[k] = it[k]; r.ref = ref; } }); return r; }
+    var p = prodItem(ref.slice(2)); if (p) p.preview = !bought(ref.slice(2)); return p;
+  }
+
+  /* ---- weather + exposure ---- */
+  function windChill(t, v) { return (t > 50 || v < 3) ? t : 35.74 + 0.6215 * t - 35.75 * Math.pow(v, 0.16) + 0.4275 * t * Math.pow(v, 0.16); }
+  function dayWx(date) { var live = ivWx && ivWx[date]; return live ? { hi: live.hi, lo: live.lo, pSnow: live.pSnow, wind: live.wind, snowIn: live.snowIn, src: 'forecast' } : (function (c) { return { hi: c.hi, lo: c.lo, pSnow: c.pSnow, wind: c.wind, src: 'typical' }; })(INV_CLIMO[date]); }
+  function exposure(m) {
+    var w = dayWx(m._day.date), t, txt;
+    switch (m.exp) {
+      case 'ski': t = windChill(w.hi - 12, Math.max(10, w.wind * 2.5)); txt = 'summit ' + Math.round(t) + '°F with wind'; break;
+      case 'sled': var t0 = w.lo + 0.4 * (w.hi - w.lo); t = windChill(t0, w.wind + 20); txt = Math.round(t) + '°F wind chill at speed'; break;
+      case 'base': t = w.hi - 4; txt = Math.round(t) + '°F at the base'; break;
+      case 'day': t = w.hi - 2; txt = Math.round(t) + '°F downtown'; break;
+      case 'town': t = w.lo + 6; txt = Math.round(t) + '°F on the walk'; break;
+      case 'late': t = w.lo + 3; txt = Math.round(t) + '°F late'; break;
+      case 'nye': t = windChill(w.lo + 4, w.wind); txt = Math.round(t) + '°F at the fireworks'; break;
+      case 'springs': t = w.hi + 8; txt = Math.round(t) + '°F in Glenwood · pools ~100°F'; break;
+      case 'travel': t = w.hi - 5; txt = Math.round(t) + '°F on I-70'; break;
+      default: t = 66; txt = 'indoors';
+    }
+    return { t: t, txt: txt, wx: w };
+  }
+  /* recommended warmth (0–10 scale) for an exposure temp; outfit warmth = Σ item warmth × 1.5 */
+  function recBand(m) {
+    var e = exposure(m), r = Math.max(0.6, Math.min(6.5, (60 - e.t) / 12)) * 1.5;
+    if (m.exp === 'home') r = 1;
+    return { lo: Math.max(0, r - 0.8), hi: Math.min(10, r + 2.2), mid: r, e: e };
+  }
+  function fitScore(f) { var s = 0; INV_SLOTS.forEach(function (sl) { var it = ivItem(f[sl.k]); if (it) s += it.warmth; }); return Math.min(10, s * 1.2); }
+
+  /* one short warning, highest priority first */
+  function ivWarning(m, f) {
+    var it = {}; INV_SLOTS.forEach(function (s) { it[s.k] = ivItem(f[s.k]); });
+    var any = INV_SLOTS.some(function (s) { return it[s.k]; }); if (!any) return '';
+    var w = exposure(m).wx, shoes = it.shoes, snow = w.src === 'forecast' ? (w.snowIn || 0) >= 0.2 : w.pSnow >= 0.45;
+    if (m.rule === 'sled' && !(shoes && shoes.waterproof)) return 'Snowmobile: deep snow — waterproof boots needed.';
+    if (m.rule === 'ski' && !(it.bottom && it.bottom.waterproof)) return 'Ski pants needed — rent or pack a pair.';
+    if (m.rule === 'ski' && !it.gloves) return 'Add waterproof ski gloves.';
+    if (m.rule === 'swim') return 'Hot springs: swim trunks — not in the suitcase yet.';
+    if (snow && m.exp !== 'home' && m.exp !== 'springs' && shoes && !shoes.waterproof) return 'Snow likely — ' + shoes.short + ' aren’t waterproof. Swap to boots.';
+    /* Casa Tua's house rules ban only ripped jeans, hoodies, sleeveless tops (men), sportswear/shorts/caps after 4 PM and sandals —
+       a fitted tee or henley is fine. Jackets are encouraged, never required. */
+    if (m.rule === 'casatua' && !(it.coat && (it.coat.kind === 'blazer' || it.coat.kind === 'overshirt'))) return 'Casa Tua: jackets encouraged — a blazer or overshirt dresses it up.';
+    if (m.rule === 'nye' && shoes && !shoes.waterproof) return 'Icy sidewalks at midnight — boots with grip.';
+    var b = recBand(m), s = fitScore(f);
+    if (s < b.lo) return 'A bit cold for ' + exposure(m).txt.replace(/ with wind| at speed/, '') + ' — add a layer.';
+    if (s > b.hi) return 'Warm — you could skip a layer.';
+    return '';
+  }
+
+  /* ---- outfit for the current moment ---- */
+  function savedFit(pid, mid) {
+    var l = ivFits[pid] && ivFits[pid][mid];
+    if (l === null) return null;
+    return l || (INV_SEED[pid] && INV_SEED[pid][mid]) || null;
+  }
+  function isSaved(mid) { var f = savedFit(INV_PERSON, mid); return !!(f && Object.keys(f).length); }
+  function curFit2() {
+    if (ivDraft[ivMom]) return ivDraft[ivMom];
+    var s = savedFit(INV_PERSON, ivMom), f = {};
+    if (s) { for (var k in s) f[k] = s[k]; }
+    else {
+      /* carry over from the day's previous moment */
+      var m = ivMoment(ivMom), list = m._day.moments, i = list.indexOf(m), prev = i > 0 ? (ivDraft[list[i - 1].id] || savedFit(INV_PERSON, list[i - 1].id)) : null;
+      if (prev && m.carry) m.carry.forEach(function (k) { if (prev[k]) f[k] = prev[k]; });
+    }
+    return (ivDraft[ivMom] = f);
+  }
+  function dirty() { var s = savedFit(INV_PERSON, ivMom) || {}, f = curFit2(); return JSON.stringify(sortObj(s)) !== JSON.stringify(sortObj(f)); }
+  function sortObj(o) { var r = {}; Object.keys(o).sort().forEach(function (k) { if (o[k]) r[k] = o[k]; }); return r; }
+
+  /* ---- SVG mannequin ---- */
+  function mir(d) { return d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g, function (_, x, y) { return (160 - parseFloat(x)) + ' ' + y; }); }
+  var FIG = {
+    head: '<ellipse cx="80" cy="32" rx="15" ry="18"/>', neck: 'M74 48 L74 60 L86 60 L86 48 Z',
+    torso: 'M52 66 Q80 58 108 66 L112 150 L106 176 L54 176 L48 150 Z',
+    armL: 'M52 68 L40 76 L32 132 L30 176 L39 177 L44 134 L54 96 Z',
+    legL: 'M56 174 L79 174 L77 262 L74 326 L60 326 L57 262 Z', legR: 'M81 174 L104 174 L103 262 L100 326 L86 326 L83 262 Z'
+  };
+  var GAR = {
+    teeBody: 'M50 64 Q80 56 110 64 L113 178 L47 178 Z', teeSl: 'M50 64 L36 74 L31 102 L44 106 L50 86 Z',
+    longSl: 'M50 64 L37 74 L29 132 L27 178 L41 179 L45 134 L52 96 Z',
+    coatL: 'M47 62 Q64 55 78 57 L78 210 L42 210 Z', coatSl: 'M47 62 L33 72 L24 132 L23 182 L42 183 L46 136 L54 96 Z', hood: 'M60 57 Q80 44 100 57 L96 64 Q80 58 64 64 Z',
+    pants: 'M54 172 L106 172 L104 262 L101 330 L84 330 L81 204 L79 204 L76 330 L59 330 L56 262 Z',
+    sneaker: 'M55 326 L78 326 L80 341 L50 341 Z', boot: 'M57 310 L78 310 L80 341 L50 341 Z',
+    beanie: 'M64 28 Q64 10 80 10 Q96 10 96 28 Z', band: 'M63 24 L97 24 L97 31 L63 31 Z',
+    scarf: 'M65 52 Q80 61 95 52 L97 60 Q80 70 63 60 Z', tail: 'M86 61 L91 96 L84 98 L80 63 Z'
+  };
+  function gp(d, c, extra) { return '<path d="' + d + '" fill="' + c + '"' + (extra || '') + '/>'; }
+  function figureSVG(f, opts) {
+    opts = opts || {};
+    var it = {}; INV_SLOTS.forEach(function (s) { it[s.k] = ivItem(f[s.k]); });
+    function st(x) { return x && x.preview ? ' class="iv-g is-prev"' : ' class="iv-g"'; }
+    var h = '<svg class="' + (opts.cls || 'iv-fig') + '" viewBox="0 0 160 350" aria-hidden="true" focusable="false">';
+    h += '<g class="iv-body">' + FIG.head + '<path d="' + FIG.neck + '"/><path d="' + FIG.torso + '"/><path d="' + FIG.armL + '"/><path d="' + mir(FIG.armL) + '"/><path d="' + FIG.legL + '"/><path d="' + FIG.legR + '"/>' +
+      '<circle cx="34" cy="184" r="6"/><circle cx="126" cy="184" r="6"/><ellipse cx="66" cy="334" rx="12" ry="6"/><ellipse cx="94" cy="334" rx="12" ry="6"/></g>';
+    if (it.bottom) h += gp(GAR.pants, it.bottom.color, st(it.bottom));
+    if (it.shoes) { var sd = it.shoes.kind === 'boot' ? GAR.boot : GAR.sneaker; h += '<g' + st(it.shoes) + '>' + gp(sd, it.shoes.color) + gp(mir(sd), it.shoes.color) + '</g>'; }
+    if (it.top) {
+      var long = it.top.kind !== 'tee';
+      h += '<g' + st(it.top) + '>' + gp(GAR.teeBody, it.top.color) + gp(long ? GAR.longSl : GAR.teeSl, it.top.color) + gp(mir(long ? GAR.longSl : GAR.teeSl), it.top.color) +
+        (it.top.kind === 'shirt' ? '<path d="M72 60 L80 72 L88 60" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="1.2"/><circle cx="80" cy="90" r="1.2" fill="rgba(0,0,0,.35)"/><circle cx="80" cy="110" r="1.2" fill="rgba(0,0,0,.35)"/><circle cx="80" cy="130" r="1.2" fill="rgba(0,0,0,.35)"/>' : '') + '</g>';
+    }
+    if (it.coat) {
+      var c = it.coat.color;
+      h += '<g' + st(it.coat) + '>' + gp(GAR.coatSl, c) + gp(mir(GAR.coatSl), c) + gp(GAR.coatL, c) + gp(mir(GAR.coatL), c) + (it.coat.kind === 'jacket' ? gp(GAR.hood, c) : '') + '</g>';
+    }
+    if (it.gloves) h += '<g' + st(it.gloves) + '><ellipse cx="34" cy="186" rx="7.5" ry="9.5" fill="' + it.gloves.color + '"/><ellipse cx="126" cy="186" rx="7.5" ry="9.5" fill="' + it.gloves.color + '"/></g>';
+    if (it.scarf) h += '<g' + st(it.scarf) + '>' + gp(GAR.scarf, it.scarf.color) + gp(GAR.tail, it.scarf.color) + '</g>';
+    if (it.hat) h += '<g' + st(it.hat) + '>' + gp(GAR.beanie, it.hat.color) + gp(GAR.band, it.hat.color) + '</g>';
+    if (it.sunglasses) h += '<g' + st(it.sunglasses) + '><rect x="66" y="28" width="12" height="7" rx="3" fill="' + it.sunglasses.color + '"/><rect x="82" y="28" width="12" height="7" rx="3" fill="' + it.sunglasses.color + '"/><path d="M78 31 L82 31" stroke="' + it.sunglasses.color + '" stroke-width="1.5"/></g>';
+    return h + '</svg>';
+  }
+  function ivThumb(it, cls) {
+    var tip = it ? esc(it.name) + ' · warmth ' + it.warmth + '/3 · ' + (it.waterproof ? 'waterproof' : 'not waterproof') : '';
+    return '<span class="' + (cls || 'iv-th') + (it && it.img ? ' has-img' : '') + '"' + (it ? ' data-tip="' + tip + '"' : '') + '>' +
+      (it ? (it.img ? '<img src="' + esc(it.img) + '" alt="" decoding="async" draggable="false"' + (it.crop ? ' style="object-fit:cover;object-position:' + it.crop[0] + '% ' + it.crop[1] + '%;transform:scale(' + it.crop[2] + ');transform-origin:' + it.crop[0] + '% ' + it.crop[1] + '%"' : '') + '>' : '<span class="iv-ic" style="color:' + esc(it.color) + '">' + ivIcon(KIND_IC[it.kind] || 'tag') + '</span>') : '') + '</span>';
+  }
+  var KIND_IC = { jacket: 'jacket', coat: 'coat', blazer: 'blazer', overshirt: 'blazer', henley: 'sweater', tee: 'tee', shirt: 'shirt', sweater: 'sweater', jeans: 'pants', trousers: 'pants', sneaker: 'shoe', boot: 'boot', beanie: 'beanie', shades: 'sun', scarf: 'scarf', gloves: 'glove' };
+  var IV_IC = {
+    jacket: '<path d="M17 8l-7 4-3 12 5 2v14h24V26l5-2-3-12-7-4-4 4h-6z"/><path d="M24 12v28"/>',
+    coat: '<path d="M18 7l-7 4-2 30h8l2-14M30 7l7 4 2 30h-8l-2-14"/><path d="M18 7l6 12 6-12M24 19v22"/>',
+    blazer: '<path d="M17 8l-8 4-1 28h32l-1-28-8-4"/><path d="M17 8l7 16 7-16M24 24v16"/>',
+    tee: '<path d="M18 9l-9 5 3 7 5-2v21h14V19l5 2 3-7-9-5c-1 3-3 4-6 4s-5-1-6-4z"/>',
+    shirt: '<path d="M18 8l-8 5v27h28V13l-8-5"/><path d="M18 8l6 7 6-7M24 15v25"/>',
+    sweater: '<path d="M18 9c1 3 3 4 6 4s5-1 6-4l8 4 3 25h-6l-2-17v20H15V21l-2 17H7l3-25z"/>',
+    pants: '<path d="M14 7h20l2 34h-8l-4-22-4 22h-8z"/><path d="M14 12h20"/>',
+    boot: '<path d="M16 6h10v20l12 6c2 1 3 3 3 5v3H9V30l3-6z"/><path d="M9 36h32"/>',
+    shoe: '<path d="M6 30l3-10 9 2 6 4 12 2c4 1 6 3 6 6v2H6z"/><path d="M6 34h36"/>',
+    glove: '<path d="M16 42V22l-4-6c-1-2 1-4 3-3l3 4V8c0-2 3-2 3 0v9-11c0-2 3-2 3 0v11-9c0-2 3-2 3 0v9-6c0-2 3-2 3 0v16c0 6-2 9-5 11v4z"/>',
+    scarf: '<path d="M14 10c6 4 14 4 20 0l2 6c-6 4-18 4-24 0z"/><path d="M28 18l-2 22 6 1 2-22"/>',
+    beanie: '<path d="M10 32c0-10 6-18 14-18s14 8 14 18z"/><path d="M8 32h32v6H8z"/>',
+    sun: '<path d="M5 20h38"/><path d="M7 20c0 8 3 11 8 11s7-4 7-11M41 20c0 8-3 11-8 11s-7-4-7-11"/>',
+    tag: '<path d="M8 22V8h14l18 18-14 14z"/><circle cx="15" cy="15" r="2.5"/>'
+  };
+  function ivIcon(k) { return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (IV_IC[k] || IV_IC.tag) + '</svg>'; }
+
+  /* ---- render ---- */
+  function invRender() {
+    var root = $('ofInv'); if (!root) return;
+    var m = ivMoment(ivMom), day = m._day, f = curFit2(), band = recBand(m), score = fitScore(f), warn = ivWarning(m, f);
+    var h = '';
+    /* day chips */
+    h += '<div class="iv-rows"><div class="iv-days" role="tablist" aria-label="Day">' + INV_DAYS.map(function (d) {
+      var on = d.id === day.id, dots = d.moments.map(function (mm) { return '<i class="' + (isSaved(mm.id) ? 'on' : '') + '"></i>'; }).join('');
+      return '<button type="button" role="tab" class="iv-day' + (on ? ' is-on' : '') + '" aria-selected="' + on + '" data-iv-day="' + d.id + '"><span>' + esc(d.d) + '</span><span class="iv-dots" aria-label="' + d.moments.filter(function (mm) { return isSaved(mm.id); }).length + ' of ' + d.moments.length + ' planned">' + dots + '</span></button>';
+    }).join('') + '</div>';
+    h += '<div class="iv-moms" role="tablist" aria-label="Moment">' + day.moments.map(function (mm) {
+      var on = mm.id === m.id;
+      return '<button type="button" role="tab" class="iv-mom' + (on ? ' is-on' : '') + '" aria-selected="' + on + '" data-iv-mom="' + mm.id + '"><b>' + esc(mm.l) + (isSaved(mm.id) ? ' <i class="iv-ok" aria-label="saved">●</i>' : '') + '</b><span>' + esc(mm.t) + '</span></button>';
+    }).join('') + '</div></div>';
+    /* builder panel */
+    h += '<section class="iv-panel" aria-label="Outfit builder"><div class="iv-eq">';
+    ['L', 'R'].forEach(function (side, si) {
+      h += '<div class="iv-col iv-col-' + side + '">' + INV_SLOTS.filter(function (s) { return s.side === side; }).map(function (s) {
+        var it = ivItem(f[s.k]), valid = ivSel && ivSel.slot === s.k;
+        return '<div class="iv-slotwrap"><button type="button" class="iv-slot' + (it ? ' is-full' : '') + (it && it.preview ? ' is-prev' : '') + (valid ? ' is-valid' : '') + '" data-iv-slot="' + s.k + '"' + (it ? ' data-iv-drag="' + esc(it.ref) + '" data-iv-from="slot"' : '') +
+          ' aria-label="' + esc(s.l) + (it ? ': ' + esc(it.name) + ' — tap to remove' : ': empty') + '">' +
+          (it ? ivThumb(it, 'iv-th') : '<span class="iv-ghostic">' + ivIcon(s.ic) + '</span>') + '</button><span class="iv-sl">' + esc(it ? it.short : s.l) + '</span></div>';
+      }).join('') + '</div>';
+      if (si === 0) h += '<div class="iv-stage" data-iv-stage="1">' + figureSVG(f) + '</div>';
+    });
+    h += '</div>';
+    /* warmth bar */
+    var cls = score < band.lo ? 'is-under' : score > band.hi ? 'is-over' : 'is-in';
+    var empty = !INV_SLOTS.some(function (s) { return f[s.k]; });
+    h += '<div class="iv-stat"><div class="iv-stat-t"><span><b>Warmth</b> ' + (empty ? '—' : Math.round(score)) + '<i>/10</i></span><span class="iv-rec">Recommended ' + Math.round(band.lo) + '–' + Math.round(band.hi) + '</span></div>' +
+      '<div class="iv-bar ' + (empty ? '' : cls) + '" role="meter" aria-valuemin="0" aria-valuemax="10" aria-valuenow="' + score.toFixed(1) + '" aria-label="Outfit warmth ' + Math.round(score) + ' of 10; recommended ' + Math.round(band.lo) + ' to ' + Math.round(band.hi) + '">' +
+      '<span class="iv-band" style="left:' + (band.lo * 10) + '%;width:' + ((band.hi - band.lo) * 10) + '%"></span><span class="iv-fill" style="width:' + (empty ? 0 : score * 10) + '%"></span>' +
+      (empty ? '' : '<span class="iv-mark" style="left:' + (score * 10) + '%"></span>') + '</div>' +
+      '<p class="iv-ctx">' + esc(longDate(day)) + ' · ' + esc(m.l) + ' · ' + esc(band.e.txt) + ' <span class="iv-src">' + (band.e.wx.src === 'forecast' ? 'forecast' : 'typical') + '</span></p>' +
+      (warn ? '<p class="iv-warn" role="status">' + esc(warn) + '</p>' : '') + '</div>';
+    /* actions */
+    var same = m.same && ivMoment(m.same);
+    h += '<div class="iv-acts"><button type="button" class="iv-save' + (isSaved(m.id) && !dirty() ? ' is-saved' : '') + '" data-iv-act="save"' + (empty && !isSaved(m.id) ? ' disabled' : '') + '>' +
+      (isSaved(m.id) && !dirty() ? 'Saved for ' + esc(day.d) + ' · ' + esc(m.l) + ' ✓' : 'Save for ' + esc(day.d) + ' · ' + esc(m.l)) + '</button>' +
+      (same ? '<button type="button" class="iv-lnk" data-iv-act="same">Same as ' + esc(same.l) + (same._day.id !== day.id ? ' (' + esc(same._day.d) + ')' : '') + '</button>' : '') +
+      '<button type="button" class="iv-lnk" data-iv-act="clear"' + (empty ? ' disabled' : '') + '>Clear</button></div><p class="iv-msg" id="ivMsg" role="status"></p></section>';
+    /* suitcase */
+    var sc = suitcase(), cap = Math.max(16, Math.ceil((sc.length + 3) / 8) * 8);
+    h += '<section class="iv-case" aria-label="Your suitcase"><div class="iv-handle" aria-hidden="true"></div><div class="iv-case-in"><h3 class="iv-h">Your suitcase</h3><div class="iv-grid" id="ivGrid">';
+    for (var i = 0; i < cap; i++) {
+      var it = sc[i];
+      if (!it) { h += '<span class="iv-cell is-empty" aria-hidden="true"></span>'; continue; }
+      var on = INV_SLOTS.some(function (s) { return f[s.k] === it.ref; }), sel = ivSel && ivSel.ref === it.ref;
+      h += '<button type="button" class="iv-cell' + (on ? ' is-on' : '') + (sel ? ' is-sel' : '') + '" data-iv-item="' + esc(it.ref) + '" data-iv-drag="' + esc(it.ref) + '" data-iv-from="case" aria-pressed="' + (sel ? 'true' : 'false') + '" aria-label="' + esc(it.name) + (on ? ' (wearing)' : '') + '">' +
+        ivThumb(it, 'iv-th') + (it.qty ? '<span class="iv-qty">×' + it.qty + '</span>' : '') + '<span class="iv-cl">' + esc(it.short) + '</span></button>';
+    }
+    h += '</div></div></section>';
+    /* additions */
+    h += '<section class="iv-adds" aria-label="Additions"><h3 class="iv-h">Additions</h3>';
+    (ADDITIONS[INV_PERSON] || []).forEach(function (g) {
+      var items = g.items.filter(function (x) { return !bought(x.pid) && PROD[x.pid] && PROD[x.pid].cut !== 'womenswear'; });
+      if (!items.length) return;
+      h += '<div class="iv-agrp"><h4>' + esc(g.group) + '</h4><div class="iv-arow">' + items.map(function (x) {
+        var p = prodItem(x.pid), trying = f[p.slot] === p.ref;
+        return '<article class="iv-acard" data-iv-add="' + esc(x.pid) + '">' + ivThumb(p, 'iv-ath') + '<div class="iv-ameta"><span class="iv-ab">' + esc(p.brand) + ' <span class="iv-ext" aria-hidden="true">↗</span> <i class="of-tier of-tier-' + esc(p.tier) + '">' + esc(p.tier) + '</i></span>' +
+          '<a class="iv-an" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer">' + esc(PROD[x.pid].name) + '</a></div>' +
+          '<div class="iv-abtns"><button type="button" class="iv-lnk' + (trying ? ' is-on' : '') + '" data-iv-try="' + esc(x.pid) + '" aria-pressed="' + trying + '">' + (trying ? 'Trying on' : 'Try on') + '</button>' +
+          '<button type="button" class="iv-buy" data-iv-buy="' + esc(x.pid) + '">Bought it → pack</button></div></article>';
+      }).join('') + '</div></div>';
+    });
+    h += '</section>';
+    root.innerHTML = h;
+    var on2 = root.querySelector('.iv-day.is-on'); if (on2) keepInView(on2);
+    var on3 = root.querySelector('.iv-mom.is-on'); if (on3) keepInView(on3);
+  }
+  function longDate(d) { var p = d.date.split('-'); return d.d.split(' ')[0] + ' ' + (p[1] === '12' ? 'Dec' : 'Jan') + ' ' + (+p[2]); }
+  function keepInView(el) {
+    var p = el.parentNode; if (!p || p.scrollWidth <= p.clientWidth) return;
+    var l = el.offsetLeft - p.offsetLeft, r = l + el.offsetWidth;
+    if (l < p.scrollLeft) p.scrollLeft = Math.max(0, l - 16); else if (r > p.scrollLeft + p.clientWidth) p.scrollLeft = r - p.clientWidth + 16;
+  }
+  function ivFlash(msg) { var el = $('ivMsg'); if (!el) return; el.textContent = msg; clearTimeout(el._t); el._t = setTimeout(function () { el.textContent = ''; }, 2400); }
+
+  /* ---- equip / unequip ---- */
+  function equip(ref, fromEl) {
+    var it = ivItem(ref); if (!it) return;
+    var f = curFit2(); f[it.slot] = ref; ivSel = null; invRender();
+    var slot = document.querySelector('#ofInv .iv-slot[data-iv-slot="' + it.slot + '"]');
+    if (slot && !REDUCED) { slot.classList.add('is-pop'); if (fromEl) ivFly(fromEl, slot); }
+  }
+  function unequip(slotK) { var f = curFit2(); delete f[slotK]; invRender(); }
+  function ivFly(fromEl, toEl) {
+    if (REDUCED || !fromEl || !toEl) return;
+    var a = fromEl.getBoundingClientRect(), b = toEl.getBoundingClientRect(); if (!a.width || !b.width) return;
+    var g = document.createElement('div'); g.className = 'iv-fly'; g.setAttribute('aria-hidden', 'true'); g.innerHTML = fromEl.innerHTML;
+    g.style.left = a.left + 'px'; g.style.top = a.top + 'px'; g.style.width = a.width + 'px'; g.style.height = a.height + 'px';
+    document.body.appendChild(g);
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      g.style.transform = 'translate(' + (b.left - a.left) + 'px,' + (b.top - a.top) + 'px) scale(' + (b.width / a.width) + ')'; g.style.opacity = '0.35';
+    }); });
+    setTimeout(function () { if (g.parentNode) g.parentNode.removeChild(g); }, 360);
+  }
+
+  /* ---- tap handling ---- */
+  var ivSuppress = 0;
+  function invClick(e) {
+    if (Date.now() - ivSuppress < 350) { e.preventDefault(); return; }
+    var t = e.target.closest ? e.target.closest('[data-iv-day],[data-iv-mom],[data-iv-slot],[data-iv-item],[data-iv-act],[data-iv-try],[data-iv-buy],[data-iv-help]') : null;
+    if (!t || !t.closest('#ofInv,#ivHelp,.iv-topbar')) return;
+    if (t.hasAttribute('data-iv-help')) { openHelp(); return; }
+    if (t.hasAttribute('data-iv-day')) { var d = null; INV_DAYS.forEach(function (x) { if (x.id === t.getAttribute('data-iv-day')) d = x; }); if (d) setMoment(d.moments[0].id); return; }
+    if (t.hasAttribute('data-iv-mom')) { setMoment(t.getAttribute('data-iv-mom')); return; }
+    if (t.hasAttribute('data-iv-item')) {
+      var ref = t.getAttribute('data-iv-item');
+      /* tap = put it on (or take it off if already worn) */
+      var it = ivItem(ref), f = curFit2();
+      if (f[it.slot] === ref) { unequip(it.slot); return; }
+      equip(ref, t.querySelector('.iv-th')); return;
+    }
+    if (t.hasAttribute('data-iv-slot')) {
+      var k = t.getAttribute('data-iv-slot');
+      if (ivSel && ivSel.slot === k) { equip(ivSel.ref, null); return; }
+      if (curFit2()[k]) unequip(k);
+      return;
+    }
+    if (t.hasAttribute('data-iv-try')) {
+      var p = prodItem(t.getAttribute('data-iv-try')), f2 = curFit2();
+      if (f2[p.slot] === p.ref) { unequip(p.slot); return; }
+      equip(p.ref, t.closest('.iv-acard').querySelector('.iv-ath')); return;
+    }
+    if (t.hasAttribute('data-iv-buy')) {
+      var pid = t.getAttribute('data-iv-buy'), card = t.closest('.iv-acard'), th = card && card.querySelector('.iv-ath');
+      var from = th ? th.getBoundingClientRect() : null;
+      ivBought[INV_PERSON] = ivBought[INV_PERSON] || []; if (ivBought[INV_PERSON].indexOf(pid) < 0) ivBought[INV_PERSON].push(pid); ivSave(IV_BOUGHT, ivBought);
+      invRender();
+      var cell = document.querySelector('#ofInv .iv-cell[data-iv-item="p:' + pid + '"]');
+      if (cell && from && !REDUCED) {
+        var g = document.createElement('div'); g.className = 'iv-fly'; g.innerHTML = th.innerHTML; g.setAttribute('aria-hidden', 'true');
+        g.style.left = from.left + 'px'; g.style.top = from.top + 'px'; g.style.width = from.width + 'px'; g.style.height = from.height + 'px'; document.body.appendChild(g);
+        var b = cell.getBoundingClientRect();
+        requestAnimationFrame(function () { requestAnimationFrame(function () { g.style.transform = 'translate(' + (b.left - from.left) + 'px,' + (b.top - from.top) + 'px) scale(' + (b.width / from.width) + ')'; g.style.opacity = '.4'; }); });
+        setTimeout(function () { if (g.parentNode) g.parentNode.removeChild(g); cell.classList.add('is-pop'); }, 360);
+      }
+      ivFlash('Packed ' + (prodItem(pid) || {}).short + '.');
+      return;
+    }
+    if (t.hasAttribute('data-iv-act')) {
+      var a = t.getAttribute('data-iv-act'), m = ivMoment(ivMom);
+      if (a === 'save') {
+        ivFits[INV_PERSON] = ivFits[INV_PERSON] || {}; ivFits[INV_PERSON][ivMom] = sortObj(curFit2()); ivSave(IV_FITS, ivFits);
+        invRender(); ivFlash('Saved on this device.');
+      } else if (a === 'clear') { ivDraft[ivMom] = {}; invRender(); }
+      else if (a === 'same') { var s = ivDraft[m.same] || savedFit(INV_PERSON, m.same) || {}, c = {}; for (var k2 in s) c[k2] = s[k2]; ivDraft[ivMom] = c; invRender(); }
+    }
+  }
+  function setMoment(id) { ivMom = id; ivSel = null; try { localStorage.setItem(IV_MOM, id); } catch (x) {} invRender(); }
+
+  /* ---- drag & drop (Pointer Events: mouse, touch, pen) ----
+     Mouse/pen: drag after 6 px. Touch: press-and-hold ~200 ms, then drag (a quick swipe still scrolls).
+     Drop on the mannequin panel → equips into the item's slot. Drag a worn piece off the panel → unequips. */
+  var DG = null;
+  function ivDown(e) {
+    if (e.button > 0) return;
+    var src = e.target.closest ? e.target.closest('[data-iv-drag]') : null; if (!src || !src.closest('#ofInv')) return;
+    DG = { ref: src.getAttribute('data-iv-drag'), from: src.getAttribute('data-iv-from'), el: src, x: e.clientX, y: e.clientY, id: e.pointerId, touch: e.pointerType === 'touch', active: false };
+    if (DG.touch) DG.timer = setTimeout(function () { if (DG && !DG.active) { ivStart(); showTip(src, true); } }, 200);
+  }
+  function ivMove(e) {
+    if (!DG || e.pointerId !== DG.id) return;
+    var d = Math.abs(e.clientX - DG.x) + Math.abs(e.clientY - DG.y);
+    if (!DG.active) {
+      if (DG.touch) { if (d > 10) { clearTimeout(DG.timer); DG = null; } return; }
+      if (d < 6) return; ivStart();
+    }
+    e.preventDefault(); hideTip();
+    DG.g.style.transform = 'translate(' + (e.clientX - DG.w / 2) + 'px,' + (e.clientY - DG.w / 2) + 'px) scale(1.05)';
+    var under = document.elementFromPoint(e.clientX, e.clientY), panel = under && under.closest('.iv-panel');
+    var it = ivItem(DG.ref), slot = it && document.querySelector('#ofInv .iv-slot[data-iv-slot="' + it.slot + '"]');
+    if (slot) slot.classList.toggle('is-hot', !!panel && DG.from !== 'slot');
+    var case_ = document.querySelector('#ofInv .iv-case'); if (case_) case_.classList.toggle('is-hot', DG.from === 'slot' && !panel);
+  }
+  function ivStart() {
+    var it = ivItem(DG.ref); if (!it) { DG = null; return; }
+    DG.active = true;
+    var th = DG.el.querySelector('.iv-th') || DG.el, r = th.getBoundingClientRect();
+    DG.w = Math.max(48, Math.min(72, r.width));
+    var g = document.createElement('div'); g.className = 'iv-drag'; g.setAttribute('aria-hidden', 'true'); g.innerHTML = th.innerHTML;
+    g.style.width = g.style.height = DG.w + 'px'; g.style.transform = 'translate(' + (DG.x - DG.w / 2) + 'px,' + (DG.y - DG.w / 2) + 'px)';
+    document.body.appendChild(g); DG.g = g;
+    document.documentElement.classList.add('iv-dragging');
+    var slot = document.querySelector('#ofInv .iv-slot[data-iv-slot="' + it.slot + '"]'); if (slot && DG.from !== 'slot') slot.classList.add('is-valid');
+    try { DG.el.setPointerCapture(DG.id); } catch (x) {}
+  }
+  function ivUp(e) {
+    if (!DG) return; clearTimeout(DG.timer);
+    var dg = DG; DG = null;
+    if (!dg.active) return;
+    ivSuppress = Date.now();
+    document.documentElement.classList.remove('iv-dragging');
+    if (dg.g && dg.g.parentNode) dg.g.parentNode.removeChild(dg.g);
+    hideTip();
+    var under = document.elementFromPoint(e.clientX, e.clientY), panel = under && under.closest && under.closest('.iv-panel');
+    var it = ivItem(dg.ref);
+    if (dg.from === 'slot') { if (!panel && it) { unequip(it.slot); ivFlash('Back in the suitcase.'); } else invRender(); return; }
+    if (panel && it) equip(dg.ref, null); else invRender();
+  }
+  function ivCancel() { if (!DG) return; clearTimeout(DG.timer); if (DG.g && DG.g.parentNode) DG.g.parentNode.removeChild(DG.g); DG = null; document.documentElement.classList.remove('iv-dragging'); invRender(); }
+
+  /* ---- tooltip (hover; long-press on touch) ---- */
+  var tipEl = null, tipT = 0;
+  function showTip(el, sticky) {
+    var th = el.querySelector('[data-tip]') || el; var txt = th.getAttribute && th.getAttribute('data-tip'); if (!txt) return;
+    if (!tipEl) { tipEl = document.createElement('div'); tipEl.className = 'iv-tip'; tipEl.setAttribute('role', 'tooltip'); document.body.appendChild(tipEl); }
+    tipEl.textContent = txt.replace(/&amp;/g, '&'); tipEl.classList.add('on');
+    var r = el.getBoundingClientRect(), w = Math.min(260, window.innerWidth - 24);
+    tipEl.style.maxWidth = w + 'px';
+    var tw = tipEl.offsetWidth, left = Math.max(12, Math.min(window.innerWidth - tw - 12, r.left + r.width / 2 - tw / 2));
+    var top = r.top - tipEl.offsetHeight - 8; if (top < 8) top = r.bottom + 8;
+    tipEl.style.left = left + 'px'; tipEl.style.top = top + 'px';
+    clearTimeout(tipT); if (sticky) tipT = setTimeout(hideTip, 1800);
+  }
+  function hideTip() { if (tipEl) tipEl.classList.remove('on'); }
+  function ivOver(e) {
+    if (DG && DG.active) return;
+    var el = e.target.closest ? e.target.closest('#ofInv .iv-cell[data-iv-item], #ofInv .iv-slot.is-full') : null;
+    if (el && e.pointerType !== 'touch') showTip(el); else if (!el) hideTip();
+  }
+
+  /* ---- help dialog (the layering guide, from OUTFITS.base.system) ---- */
+  function openHelp() {
+    var d = $('ivHelp');
+    if (!d) {
+      d = document.createElement('dialog'); d.id = 'ivHelp'; d.className = 'iv-help'; d.setAttribute('aria-labelledby', 'ivHelpH');
+      var s = OUTFITS.base.system;
+      d.innerHTML = '<div class="iv-help-in"><div class="iv-help-top"><h3 id="ivHelpH">Dressing for Aspen</h3><button type="button" class="iv-x" data-iv-close aria-label="Close">✕</button></div>' +
+        '<ol class="iv-help-layers">' + s.layers.map(function (l) { return '<li><b>' + esc(l.k) + '</b><span>' + esc(l.t) + '</span></li>'; }).join('') + '</ol>' +
+        '<dl class="iv-help-x">' + s.extras.map(function (x) { return '<dt>' + esc(x.k) + '</dt><dd>' + esc(x.t) + '</dd>'; }).join('') + '</dl></div>';
+      document.body.appendChild(d);
+      d.addEventListener('click', function (e) { if (e.target === d || (e.target.closest && e.target.closest('[data-iv-close]'))) d.close(); });
+    }
+    if (d.showModal) d.showModal(); else d.setAttribute('open', '');
+  }
+
+  /* ---- live forecast once the trip is inside Open-Meteo's 16-day window ---- */
+  function ivForecast() {
+    var start = new Date('2026-12-27T00:00:00-07:00').getTime(), days = (start - Date.now()) / 864e5;
+    if (days > 15 || days < -8 || ivWx || !window.fetch) return;
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=39.19&longitude=-106.82&daily=temperature_2m_max,temperature_2m_min,snowfall_sum,precipitation_probability_max,wind_speed_10m_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=America%2FDenver&forecast_days=16')
+      .then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+        if (!j || !j.daily) return; var d = j.daily, out = {};
+        d.time.forEach(function (t, i) { if (INV_CLIMO[t]) out[t] = { hi: Math.round(d.temperature_2m_max[i]), lo: Math.round(d.temperature_2m_min[i]), snowIn: d.snowfall_sum[i] || 0, pSnow: (d.precipitation_probability_max[i] || 0) / 100, wind: Math.round(d.wind_speed_10m_max[i]) }; });
+        if (Object.keys(out).length) { ivWx = out; ivSave(IV_WX, { t: Date.now(), d: out }); invRender(); }
+      }).catch(function () {});
+  }
+
+  function invInit() {
+    var root = $('outfits'); if (!root || $('ofInv')) return;
+    var wrap = root.querySelector('.wrap') || root, head = wrap.querySelector('.sec-head');
+    root.classList.add('of-v1');
+    /* the page ships its own "Need help?" button + layering dialog (#ofHelpBtn / #ofHelp); only add ours if it's missing */
+    var bar = document.createElement('div'); bar.className = 'iv-topbar';
+    if (!$('ofHelpBtn')) bar.innerHTML = '<button type="button" class="iv-helpbtn" data-iv-help="1">Need help?</button>';
+    var inv = document.createElement('div'); inv.id = 'ofInv'; inv.className = 'iv';
+    if (head) { head.parentNode.insertBefore(bar, head.nextSibling); bar.parentNode.insertBefore(inv, bar.nextSibling); }
+    else { wrap.insertBefore(inv, wrap.firstChild); wrap.insertBefore(bar, inv); }
+    invRender();
+    document.addEventListener('click', invClick);
+    inv.addEventListener('pointerdown', ivDown);
+    document.addEventListener('pointermove', ivMove, { passive: false });
+    document.addEventListener('pointerup', ivUp);
+    document.addEventListener('pointercancel', ivCancel);
+    document.addEventListener('touchmove', function (e) { if (DG && DG.active) e.preventDefault(); }, { passive: false });
+    inv.addEventListener('pointerover', ivOver);
+    inv.addEventListener('pointerleave', hideTip);
+    inv.addEventListener('contextmenu', function (e) { if (e.target.closest && e.target.closest('[data-iv-drag]')) e.preventDefault(); });
+    inv.addEventListener('focusin', function (e) { var el = e.target.closest && e.target.closest('.iv-cell[data-iv-item], .iv-slot.is-full'); if (el && el.matches(':focus-visible')) showTip(el); });
+    inv.addEventListener('focusout', hideTip);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { if (ivSel) { ivSel = null; invRender(); } hideTip(); } });
+    window.addEventListener('scroll', hideTip, { passive: true });
+    ivForecast();
+  }
+
+  window.AspenOutfits = { open: openOutfit, data: OUTFITS, products: PROD, who: function () { return who; }, suitcase: SUITCASE, additions: ADDITIONS };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 
@@ -9813,31 +10694,64 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
   var base = (typeof window.ASPEN_MEDIA_BASE === 'string' ? window.ASPEN_MEDIA_BASE : '../media/');
   if (base && base.slice(-1) !== '/') base += '/';
 
-  var CC = 'CC BY 4.0', CCURL = 'https://creativecommons.org/licenses/by/4.0/';
-  var KM = 'Kevin MacLeod';
-  function src(isrc){ return 'https://incompetech.com/music/royalty-free/index.html?isrc=' + isrc; }
-  // t = title, v = version/arrangement, d = seconds
+  // Site mix v2 — "epic Christmas". Every file is self-hosted in media/music/ and licensed for a public website.
+  // t = title, v = version/arrangement, a = artist, d = seconds, f = file, credit = attribution line (as the licence asks)
+  var BY = 'CC BY 4.0', BYURL = 'https://creativecommons.org/licenses/by/4.0/';
+  var CC0 = 'CC0 1.0 (public domain)', CC0URL = 'https://creativecommons.org/publicdomain/zero/1.0/';
+  var PD = 'Public domain (US Government work)', PDURL = 'https://commons.wikimedia.org/wiki/Template:PD-USGov-Military-Air_Force';
   var TRACKS = [
-    {f:'deck-the-halls-piano.m4a', t:'Deck the Halls', v:'Piano', a:KM, d:247, isrc:'USUAN1100263'},
-    {f:'silent-night.m4a',         t:'Silent Night', v:'Piano', a:KM, d:131, isrc:'USUAN1100075'},
-    {f:'sugar-plum-fairies.m4a',   t:'Dance of the Sugar Plum Fairies', v:'Tchaikovsky · orchestra & celesta', a:KM, d:106, isrc:'USUAN1100270'},
-    {f:'midnight-clear.m4a',       t:'It Came Upon a Midnight Clear', v:'Piano, violin & English horn', a:KM, d:266, isrc:'USUAN1100191'},
-    {f:'frost-waltz.m4a',          t:'Frost Waltz', v:'Celesta & strings', a:KM, d:135, isrc:'USUAN1100516'},
-    {f:'angels-we-have-heard.m4a', t:'Angels We Have Heard on High', v:'Piano', a:KM, d:244, isrc:'USUAN1100891'},
-    {f:'oh-holy-night.m4a',        t:'O Holy Night', v:'Piano', a:KM, d:242, isrc:'USUAN1100127'},
-    {f:'nouvelle-noel.m4a',        t:'Nouvelle Noel', v:'Jazz combo & bells', a:KM, d:191, isrc:'USUAN1700072'},
-    {f:'we-wish-you.m4a',          t:'We Wish You a Merry Christmas', v:'Orchestra', a:KM, d:138, isrc:'USUAN1100369'},
-    {f:'jingle-bells.m4a',         t:'Jingle Bells', v:'Piano & winds', a:KM, d:142, isrc:'USUAN1100889'}
+    {f:'01-carol-of-the-bells-xennial.mp3', t:'Carol of the Bells', v:'Rock instrumental', a:'Xennial', d:349,
+      license:BY, licenseUrl:BYURL, source:'https://freemusicarchive.org/music/xennial/the-bells-of-yule-a-christmas-instrumental-album/11-carol-of-the-bells/',
+      credit:'“Carol of the Bells” by Xennial, from The Bells of Yule (Free Music Archive), licensed CC BY 4.0'},
+    {f:'02-god-rest-ye-starlifter.mp3', t:'God Rest Ye Merry Gentlemen', v:'Rock band · 2020', a:'Starlifter · U.S. Air Force Band', d:252,
+      license:PD, licenseUrl:PDURL, source:'https://commons.wikimedia.org/wiki/File:God_Rest_Ye_Merry_Gentlemen_(2020)_-_Starlifter_and_Roots_in_Blue_-_United_States_Air_Force_Band_of_Mid-America.mp3',
+      credit:'“God Rest Ye Merry Gentlemen” (2020) — Starlifter and Roots in Blue, United States Air Force Band of Mid-America · public domain (U.S. Government work), via Wikimedia Commons'},
+    {f:'03-bells-of-yule-xennial.mp3', t:'The Bells of Yule', v:'25th Anniversary, Part One', a:'Xennial', d:363,
+      license:BY, licenseUrl:BYURL, source:'https://freemusicarchive.org/music/xennial/the-bells-of-yule-a-christmas-instrumental-album/03-the-bells-of-yule-25th-anniversary-part-one/',
+      credit:'“The Bells of Yule 25th Anniversary Part One” by Xennial, from The Bells of Yule (Free Music Archive), licensed CC BY 4.0'},
+    {f:'04-hyper-jingle-bells.mp3', t:'Hyper Jingle Bells', v:'Up-tempo', a:'Loyalty Freak Music', d:104,
+      license:CC0, licenseUrl:CC0URL, source:'https://freemusicarchive.org/music/Loyalty_Freak_Music/single/hyper-jingle-bells/',
+      credit:'“Hyper Jingle Bells” by Loyalty Freak Music (Free Music Archive) · CC0 1.0'},
+    {f:'05-this-is-christmas-xennial.mp3', t:'This Is Christmas', v:'Jazz', a:'Xennial', d:264,
+      license:BY, licenseUrl:BYURL, source:'https://freemusicarchive.org/music/xennial/the-bells-of-yule-a-christmas-instrumental-album/21-this-is-christmas/',
+      credit:'“This Is Christmas” by Xennial, from The Bells of Yule (Free Music Archive), licensed CC BY 4.0'},
+    {f:'06-joy-to-the-world-synthwave.mp3', t:'Joy to the World', v:'Synthwave', a:'HoliznaCC0', d:273,
+      license:CC0, licenseUrl:CC0URL, source:'https://freemusicarchive.org/music/holiznacc0/a-synth-wave-christmas-special/joy-to-the-world-synth-wave/',
+      credit:'“Joy To The World (Synth Wave)” by HoliznaCC0, from A Synth Wave Christmas Special (Free Music Archive) · CC0 1.0'},
+    {f:'07-we-wish-you-starlifter.mp3', t:'We Wish You a Merry Christmas', v:'Rock band · 2020', a:'Starlifter · U.S. Air Force Band', d:118,
+      license:PD, licenseUrl:PDURL, source:'https://commons.wikimedia.org/wiki/File:We_Wish_You_a_Merry_Christmas_(2020)_-_Starlifter_and_Roots_in_Blue_-_United_States_Air_Force_Band_of_Mid-America.mp3',
+      credit:'“We Wish You a Merry Christmas” (2020) — Starlifter and Roots in Blue, United States Air Force Band of Mid-America · public domain (U.S. Government work), via Wikimedia Commons'},
+    {f:'08-deck-the-halls-b-macleod.mp3', t:'Deck the Halls', v:'Up-tempo (“B”)', a:'Kevin MacLeod', d:260,
+      license:BY, licenseUrl:BYURL, source:'https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100368',
+      credit:'“Deck the Halls B” Kevin MacLeod (incompetech.com) · Licensed under Creative Commons: By Attribution 4.0'}
   ];
-  TRACKS.forEach(function(x){ x.license = CC; x.licenseUrl = CCURL; x.source = src(x.isrc); });
   var CREDITS = TRACKS.map(function(x){
-    return { title:x.t, artist:x.a + ' (incompetech.com)', license:x.license, licenseUrl:x.licenseUrl, source:x.source,
-      text:'“' + x.t + '” ' + x.a + ' (incompetech.com) · Licensed under Creative Commons: By Attribution 4.0 · ' + CCURL };
+    return { title:x.t, artist:x.a, license:x.license, licenseUrl:x.licenseUrl, source:x.source,
+      text:x.credit + ' · ' + x.licenseUrl };
   });
 
+  // "Real songs" — official artist/label uploads, played only in YouTube's own visible player.
+  var REAL = [
+    {id:'pWBjl-jPcVM', t:'Wizards in Winter', a:'Trans-Siberian Orchestra'},
+    {id:'2LbmhneqBnE', t:'Christmas Eve / Sarajevo 12/24', a:'Trans-Siberian Orchestra'},
+    {id:'iOBIXhGrFV8', t:'A Mad Russian’s Christmas', a:'Trans-Siberian Orchestra'},
+    {id:'WSUFzC6_fp8', t:'Carol of the Bells', a:'Pentatonix'},
+    {id:'yXQViqx6GMY', t:'All I Want for Christmas Is You', a:'Mariah Carey'},
+    {id:'TFsZy9t-qDc', t:'Rockin’ Around the Christmas Tree', a:'Brenda Lee'},
+    {id:'0bhsXykXxfg', t:'It’s Beginning to Look a Lot Like Christmas', a:'Michael Bublé'},
+    {id:'E8gmARGvPlI', t:'Last Christmas', a:'Wham!'},
+    {id:'EM2Fnp_qnE8', t:'Underneath the Tree', a:'Kelly Clarkson'},
+    {id:'nlR0MkrRklg', t:'Santa Tell Me', a:'Ariana Grande'}
+  ];
+  var EXT = ' target="_blank" rel="noopener noreferrer"';
+
   /* ---------- storage (never throws) ---------- */
-  var KEY = 'aspenMusic';
-  function load(){ try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ return {}; } }
+  var KEY = 'aspenMusic_v2';
+  // new playlist → start at the opener; carry over volume / mute / shuffle from the old key
+  function load(){
+    try { var v = JSON.parse(localStorage.getItem(KEY)); if (v) return v; } catch(e){}
+    try { var o = JSON.parse(localStorage.getItem('aspenMusic')) || {}; return {vol:o.vol, mute:o.mute, shuf:o.shuf}; } catch(e){ return {}; }
+  }
   var st = load();
   var S = { on: !!st.on, vol: (typeof st.vol === 'number' ? Math.min(1, Math.max(0, st.vol)) : 0.55),
             idx: (st.idx >= 0 && st.idx < TRACKS.length ? st.idx|0 : 0), shuf: !!st.shuf, t: +st.t || 0, mute: !!st.mute };
@@ -9882,12 +10796,12 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
   }
   function setSrc(i, t){
     S.idx = i; loadedIdx = i; endFading = false; srcAt = Date.now();
-    audio.src = base + 'audio/' + TRACKS[i].f;
+    audio.src = base + 'music/' + TRACKS[i].f;
     if (t > 0){ var once = function(){ audio.removeEventListener('loadedmetadata', once); try { if (t < audio.duration - 5) audio.currentTime = t; } catch(e){} }; audio.addEventListener('loadedmetadata', once); }
     render(); meta(); save();
   }
   function play(){
-    started = true; videoHold = false; stopWatch();
+    started = true; videoHold = false; stopWatch(); if (pop) setTab('mix');   // site mix wins: stop any real-song video, show its controls
     if (loadedIdx !== S.idx) setSrc(S.idx, S.t);
     if (canVol) audio.volume = 0;
     var p = audio.play();
@@ -10035,9 +10949,21 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     pop.className = 'mu-pop'; pop.id = 'muPop';
     pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Background music player');
     pop.innerHTML =
-      '<div class="mu-head"><div class="mu-meta"><div class="mu-kicker">Fireside music</div>' +
+      '<div class="mu-head"><div class="mu-meta"><div class="mu-kicker">Trip soundtrack</div>' +
         '<div class="mu-title" aria-live="polite"></div><div class="mu-artist"></div></div>' +
         '<button class="mu-x" type="button" aria-label="Close music player">&times;</button></div>' +
+      '<div class="mu-tabs" role="tablist" aria-label="Music source">' +
+        '<button class="mu-tab" type="button" role="tab" id="muTabMix" aria-controls="muPop" aria-selected="true" data-tab="mix">Site mix</button>' +
+        '<button class="mu-tab" type="button" role="tab" id="muTabReal" aria-controls="muReal" aria-selected="false" data-tab="real">Real songs</button>' +
+      '</div>' +
+      '<div class="mu-real" id="muReal" role="tabpanel" aria-labelledby="muTabReal">' +
+        '<div class="mu-rv"><div class="mu-rv-ph">Tap a song to load the official video.<br><span>Plays in YouTube’s player, here in this panel.</span></div></div>' +
+        '<div class="mu-rnow"><span class="mu-rnow-t"></span><a class="mu-rlink" href="https://www.youtube.com/"' + EXT + '>Open on YouTube&nbsp;&#8599;</a></div>' +
+        '<ol class="mu-rlist">' + REAL.map(function(r, i){
+          return '<li><button type="button" class="mu-rbtn" data-r="' + i + '"><b>' + esc(r.t) + '</b><span>' + esc(r.a) + '</span></button></li>';
+        }).join('') + '</ol>' +
+        '<p class="mu-rnote">Official uploads from each artist’s channel. Closing this panel stops the video; the mute button only controls the site mix.</p>' +
+      '</div>' +
       '<div class="mu-seek"><span class="mu-cur">0:00</span><input class="mu-range mu-pos" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek"><span class="mu-dur">–:––</span></div>' +
       '<div class="mu-ctrls">' +
         '<button class="mu-c mu-shuf" type="button" aria-label="Shuffle" aria-pressed="false">' + ICON.shuf + '</button>' +
@@ -10055,8 +10981,9 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     ['title','artist','cur','dur','pos','v','play','prev','next','shuf','x','link','credits','count','err'].forEach(function(k){ q[k] = pop.querySelector('.mu-' + k); });
 
     q.credits.innerHTML = '<ol>' + TRACKS.map(function(x, i){
-      return '<li data-i="' + i + '">“' + esc(x.t) + '” — ' + esc(x.a) + ' · <a href="' + x.licenseUrl + '" target="_blank" rel="noopener">' + x.license + '</a> · <a href="' + x.source + '" target="_blank" rel="noopener">source</a></li>';
-    }).join('') + '</ol><p>Music by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0.</p>';
+      return '<li data-i="' + i + '">' + esc(x.credit) + ' · <a href="' + x.licenseUrl + '"' + EXT + '>' + esc(x.license) + '</a> · <a href="' + x.source + '"' + EXT + '>source</a></li>';
+    }).join('') + '</ol><p>Self-hosted, licensed for this site. “Real songs” stream from the artists’ official YouTube uploads and aren’t hosted here.</p>';
+    setupReal();
 
     btn.addEventListener('click', function(e){
       e.stopPropagation();
@@ -10098,6 +11025,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     var p = d ? c / d * 1000 : 0; q.pos.value = p; paintRange(q.pos, p / 10);
   }
   function setOpen(on){
+    if (!on) realStop();
     pop.classList.toggle('mu-open', on);
     btn.setAttribute('aria-expanded', on ? 'true' : 'false');
     if (on){ var nav = document.querySelector('.topnav'); if (nav) pop.style.top = Math.round(nav.getBoundingClientRect().bottom + 8) + 'px'; }
@@ -10119,10 +11047,47 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     paintSeek();
   }
 
+  /* ---------- "Real songs" tab: visible youtube-nocookie player inside the popup ---------- */
+  var realIdx = -1;
+  function realStop(){
+    if (!pop) return;
+    var v = pop.querySelector('.mu-rv'); if (!v) return;
+    var f = v.querySelector('iframe'); if (f){ f.src = 'about:blank'; v.removeChild(f); }
+    v.classList.remove('mu-rv-on'); pop.classList.remove('mu-rplaying');
+  }
+  function realLoad(i){
+    var r = REAL[i]; if (!r) return;
+    if (playing) pause();                                   // never two soundtracks at once
+    videoHold = false; stopWatch();
+    realStop(); realIdx = i;
+    var rest = REAL.slice(i + 1).concat(REAL.slice(0, i)).map(function(x){ return x.id; }).join(',');
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + r.id + '?autoplay=1&playsinline=1&rel=0&playlist=' + rest;
+    f.title = r.t + ' — ' + r.a + ' (YouTube video player)';
+    f.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
+    f.setAttribute('allowfullscreen', '');
+    f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+    var v = pop.querySelector('.mu-rv'); v.appendChild(f); v.classList.add('mu-rv-on');
+    pop.classList.add('mu-rplaying');
+    pop.querySelector('.mu-rnow-t').textContent = r.t + ' — ' + r.a;
+    pop.querySelector('.mu-rlink').href = 'https://www.youtube.com/watch?v=' + r.id;
+    [].forEach.call(pop.querySelectorAll('.mu-rbtn'), function(bt){ var on = +bt.getAttribute('data-r') === i; bt.classList.toggle('mu-ron', on); bt.setAttribute('aria-current', on ? 'true' : 'false'); });
+  }
+  function setTab(t){
+    var real = t === 'real';
+    pop.classList.toggle('mu-real-on', real);
+    [].forEach.call(pop.querySelectorAll('.mu-tab'), function(bt){ bt.setAttribute('aria-selected', bt.getAttribute('data-tab') === t ? 'true' : 'false'); });
+    if (!real) realStop();
+  }
+  function setupReal(){
+    [].forEach.call(pop.querySelectorAll('.mu-tab'), function(bt){ bt.addEventListener('click', function(){ setTab(bt.getAttribute('data-tab')); }); });
+    pop.querySelector('.mu-rlist').addEventListener('click', function(e){ var bt = e.target.closest && e.target.closest('.mu-rbtn'); if (bt) realLoad(+bt.getAttribute('data-r')); });
+  }
+
   /* ---------- append to the page's credits list (details.mcredits) ---------- */
   function creditsHTML(){
     return TRACKS.map(function(x){
-      return '<li class="mu-credit">Music: “' + esc(x.t) + '” — ' + esc(x.a) + ' (incompetech.com) · <a href="' + x.licenseUrl + '" target="_blank" rel="noopener">' + x.license + '</a> · <a href="' + x.source + '" target="_blank" rel="noopener">source</a></li>';
+      return '<li class="mu-credit">Music: ' + esc(x.credit) + ' · <a href="' + x.licenseUrl + '"' + EXT + '>' + esc(x.license) + '</a> · <a href="' + x.source + '"' + EXT + '>source</a></li>';
     }).join('');
   }
   function addCredits(){
@@ -10149,7 +11114,8 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 
   window.AspenMusic = { tracks: TRACKS, credits: CREDITS, creditsHTML: creditsHTML,
-    play: play, pause: function(){ pause(); }, toggle: toggle, next: next, prev: prev, base: base, audio: audio, mute: setMute, toggleMute: toggleMute };
+    play: play, pause: function(){ pause(); }, toggle: toggle, next: next, prev: prev, base: base, audio: audio, mute: setMute, toggleMute: toggleMute,
+    realSongs: REAL, showTab: function(t){ if (pop){ setTab(t === 'real' ? 'real' : 'mix'); } } };
 })();
 
 </script>
