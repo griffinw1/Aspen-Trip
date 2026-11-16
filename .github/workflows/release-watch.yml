@@ -35,7 +35,7 @@ jobs:
           END_DATE: "2026-11-22"
         run: |
           cd logs && git config user.name "release-watch" && git config user.email "actions@users.noreply.github.com"
-          ( while sleep 1200; do git add log.txt 2>/dev/null && git commit -qm "log $(date -u +%FT%H:%MZ)" && git push -q origin release-watch || true; done ) &
+          ( sleep 150; git add log.txt 2>/dev/null && git commit -qm early && git push -q origin release-watch; while sleep 1200; do git add log.txt 2>/dev/null && git commit -qm "log $(date -u +%FT%H:%MZ)" && git push -q origin release-watch || true; done ) &
           python ../main/.github/release-watch/watch.py
           git add log.txt && git commit -qm "log end $(date -u +%FT%H:%MZ)" || true
           git push -q origin release-watch || true

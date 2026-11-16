@@ -41,10 +41,14 @@ def ot_state(rid, date):
     try:
         if _browser is None:
             from playwright.sync_api import sync_playwright
-            _pw = sync_playwright().start(); _browser = _pw.chromium.launch()
-        ctx = _browser.new_context(user_agent=UA, locale="en-US")
+            _pw = sync_playwright().start()
+            _browser = _pw.chromium.launch(args=["--disable-blink-features=AutomationControlled"])
+        ctx = _browser.new_context(user_agent=UA, locale="en-US", timezone_id="America/Denver", viewport={"width": 1280, "height": 900})
+        ctx.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>undefined})")
         p = ctx.new_page()
-        p.goto("https://www.opentable.com/restref/client/?rid=%d&restref=%d&datetime=%sT19:00&covers=6" % (rid, rid, date), timeout=45000)
+        resp = p.goto("https://www.opentable.com/restref/client/?rid=%d&restref=%d&datetime=%sT19:00&covers=6" % (rid, rid, date), timeout=45000, wait_until="domcontentloaded")
+        if resp is not None and resp.status >= 400:
+            ctx.close(); return "http%d" % resp.status
         p.wait_for_timeout(5000)
         txt = p.inner_text("body")
         ctx.close()
@@ -53,7 +57,7 @@ def ot_state(rid, date):
         if "Access Denied" in txt or "blocked" in txt.lower(): return "blocked"
         return "unknown"
     except Exception as e:
-        return "error:" + type(e).__name__
+        return "error:" + type(e).__name__ + ":" + str(e).splitlines()[0][:90]
 
 def main():
     if now().date().isoformat() > END_DATE:
