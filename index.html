@@ -13731,7 +13731,7 @@ var INFO = {
   powder:{n:'Powder day', how:'Typed what every skier prays for', clue:'Pink peaks at dusk promise a storm. By morning there are fourteen fresh inches. Type what every skier prays for.', hint:'Type “powder”.'},
   pizza:{n:'Pizza, French fries', how:'Typed the beginner’s first lesson', clue:'Deep snow is no place for a first-timer. At Buttermilk the very first lesson is shaped like dinner. Type it.', hint:'Type “pizza”.'},
   marco:{n:'Goofy-footed', how:'Typed the snowboarder’s name', clue:'One of us skipped the French fries entirely and rides sideways. Type his name.', hint:'Type “marco”.'},
-  konami:{n:'Thirty extra lives', how:'Entered the old cheat code', clue:'Some of us grew up with a code for thirty extra lives. Up, up… your arrow keys remember the rest.', hint:'On a keyboard: ↑ ↑ ↓ ↓ ← → ← → B A.'},
+  konami:{n:'Thirty extra lives', how:'Entered the old cheat code', clue:'The most famous cheat code ever: up, up, down, down, left, right, left, right, B, A. On a keyboard, use the arrow keys. On a phone, swipe it — up, up, down, down, left, right, left, right — then tap twice.', hint:'Keyboard: ↑ ↑ ↓ ↓ ← → ← → B A. Phone: swipe ↑ ↑ ↓ ↓ ← → ← → anywhere, then tap twice.'},
   aurora:{n:'Northern lights', how:'Traded the sun for the moon, seven times', clue:'Extra lives won’t bring night to Red Mountain. Trade the sun for the moon, seven times, quickly.', hint:'Tap the moon/sun button in the top bar 7 times within 5 seconds.'},
   steam:{n:'Hot-tub steam', how:'Found the hot tub after dark', clue:'While the sky dances, something on the deck breathes clouds. Go and look after dark.', hint:'Lodging → room walk-through → “Deck & Hot Tub”, at night in Aspen or in dark mode.'},
   globe:{n:'Snow globe', how:'Held down the last snowflake', clue:'Everything settles at the very bottom of the page. Hold the last snowflake, and the world shakes.', hint:'Press and hold the ❄ crest at the very bottom of the page for about a second.'},
@@ -14439,6 +14439,24 @@ if (!ON.eggs) return;
 /* existing eggs count toward the tally */
 var flakeBtn = $('#snowEgg'); if (flakeBtn) flakeBtn.addEventListener('click', function(){ egg('flake'); });
 
+/* phone version of the cheat code: swipe up, up, down, down, left, right, left, right, then tap twice (B, A) */
+(function(){
+  var seq = '', x0 = 0, y0 = 0, t0 = 0, WANT = 'UUDDLRLRTT';
+  D.addEventListener('touchstart', function(e){ if (e.touches.length !== 1) { seq = ''; return; } x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now(); }, {passive:true});
+  D.addEventListener('touchend', function(e){
+    var c = e.changedTouches && e.changedTouches[0]; if (!c) return;
+    var dx = c.clientX - x0, dy = c.clientY - y0, ax = Math.abs(dx), ay = Math.abs(dy), m;
+    if (Date.now() - t0 > 900) { seq = ''; return; }
+    if (ax < 12 && ay < 12) m = 'T';
+    else if (ax > 40 && ax > ay * 1.4) m = dx < 0 ? 'L' : 'R';
+    else if (ay > 40 && ay > ax * 1.4) m = dy < 0 ? 'U' : 'D';
+    else { seq = ''; return; }
+    if (m === 'T' && seq.length < 8) { seq = ''; return; }   /* taps only count at the end */
+    seq = (seq + m).slice(-WANT.length);
+    if (seq === WANT){ seq = ''; egg('konami'); }
+    else if (WANT.indexOf(seq) !== 0){ seq = WANT.indexOf(m) === 0 ? m : ''; }
+  }, {passive:true});
+})();
 /* typed words: aspen · powder · marco · pizza (+ Konami tally) */
 var buf = '', KON = 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba', kb = '';
 D.addEventListener('keydown', function(e){
