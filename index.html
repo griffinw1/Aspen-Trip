@@ -3613,7 +3613,9 @@ body.dark{--wh-glow:rgba(201,160,90,.14);--wh-line:rgba(201,160,90,.36);--wh-car
 .wh-p-all{width:76px;}
 #gateBtn.wh-wait{opacity:.55;cursor:not-allowed;}
 @media (max-width:420px){.wh-p{width:58px;font-size:10.5px;}.wh-p .wh-mono{width:44px;height:44px;font-size:20px;}.wh-gate{margin-bottom:14px;}}
-@media (max-height:760px){#gate{overflow-y:auto;align-items:flex-start;}#gate .gate-inner{margin:auto;}}
+/* v43: the gate scrolls at any height (it is taller than a phone screen); margin:auto keeps it centred when it fits */
+#gate{overflow-y:auto;align-items:flex-start;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;}#gate .gate-inner{margin:auto;}
+@media (max-width:520px){#gate{padding:18px 12px calc(24px + env(safe-area-inset-bottom));}}
 
 /* ---------- nav pill ---------- */
 .wh-navpill{display:inline-flex;align-items:center;gap:7px;cursor:pointer;border:1px solid var(--wh-line);background:var(--wh-card);
@@ -11418,7 +11420,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     jimLine:'Air ride and all — Jim, you’ll feel right at home.'
   };
   var NWU = null, FM = null;   /* Transforms.localFrameToFixedFrameGenerator('north','west'), film state */
-  var SSE_HOLD = COARSE ? 16 : 8, SSE_MOVE = COARSE ? 28 : 18, PF = null;   /* PF = the background tile prefetcher (v43) */
+  var SSE_HOLD = COARSE ? 20 : 12, SSE_MOVE = COARSE ? 32 : 24, PF = null;   /* v43: lighter — decoding, not the network, was the bottleneck */   /* PF = the background tile prefetcher (v43) */
   var MT = -7;                 /* Mountain Standard Time offset for the sun */
 
   /* ---------- geometry ---------- */
@@ -12042,6 +12044,16 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       enterShot(sh);
     }
     FM.force = false;
+    /* v43 buffering: a shot that opens on a cut holds on black at its first frame until its tiles are in
+       (like a video buffering), capped so it never hangs. Mid-shot detail keeps streaming as it plays. */
+    if (T.playing && sh.cut && sh.k !== 'reveal' && sh.k !== 'end' && T.t - sh.t0 < 260 && FM.ts){
+      if (FM.stallShot !== sh){ FM.stallShot = sh; FM.stallT = now; FM.stallSeen = 0; }
+      var nxs = sh.k === 'card' ? tl.shots[i + 1] : sh;
+      var budget = isClose(nxs) ? (COARSE ? 9000 : 8000) : (COARSE ? 6000 : 5000);
+      if (FM.ts.tilesLoaded) FM.stallSeen++; else FM.stallSeen = 0;
+      if (FM.stallSeen < 3 && now - FM.stallT < budget){ T.t = sh.t0; FM.stalling = true; FM.el.classList.add('gating'); }
+      else if (FM.stalling){ FM.stalling = false; FM.el.classList.remove('gating'); }
+    } else if (FM.stalling){ FM.stalling = false; FM.el.classList.remove('gating'); }
     var u = clamp((T.t - sh.t0) / sh.dur, 0, 1), st = shotState(sh, u);
     /* camera: playing, or paused-but-not-dragged (keeps it settled) */
     if (T.playing || !T.dragged){ var cam = sh.cam ? sh.cam(u, st || {ll:[0, 0], hd:0, h:0}) : (sh.k === 'card' ? shotCam(sh, 0) : null); if (cam) applyCam(C, v, cam, true); }
@@ -12282,7 +12294,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     me.raf = requestAnimationFrame(pfLoop);
     var now = performance.now();
     if (now - me.last < (T ? 50 : 33)) return;   /* ~20 fps while the film plays, ~30 otherwise */
-    if (FM && FM.gate && FM.tl === me.tl && me.cur !== FM.gate.rg) return;   /* the film is loading a region on screen: it gets the bandwidth */
+    if (FM && FM.tl === me.tl && (FM.gate || FM.stalling || (FM.ts && FM.ts.statistics && FM.ts.statistics.numberOfTilesProcessing > 12))) return;   /* the film is loading what's on screen: it gets the CPU + bandwidth */
     me.last = now;
     var C = me.C, v = me.v, ts = me.ts;
     if (me.vi >= me.views.length){
@@ -12313,7 +12325,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     /* Cesium canvas under the player */
     var st = stageEl(), host = document.createElement('div'); host.className = 'vt-cs'; st.insertBefore(host, T.el);
     var mine = T;
-    FM = {host:host, el:T.el, si:null, force:true, sseHold: COARSE ? 16 : 8, sseMove: COARSE ? 28 : 18};
+    FM = {host:host, el:T.el, si:null, force:true, sseHold:SSE_HOLD, sseMove:SSE_MOVE};
     T.film = FM;
     loadCesium().then(function(C){
       if (T !== mine) return;
