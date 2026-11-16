@@ -12628,16 +12628,20 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     $$('#contacts .crow').forEach(function(r){var tel=$('a[href^="tel:"]',r);add({g:'Contacts',t:txt($('.cr-name',r)),s:txt($('.cr-meta',r))+(tel?' \u00b7 '+txt(tel):''),ic:'contacts',kw:tel?tel.getAttribute('href'):'',el:r});});
     $$('#bkApp .bk-card').forEach(function(c){add({g:'Booking',t:txt($('.bk-title',c)),s:txt($('.bk-when',c)),ic:'booking',kw:txt($('.bk-what',c)),el:c});});
     panels().forEach(function(p){if(p.id==='itinerary'){return;}$$('.sub-head, .wrap h3',p).forEach(function(h){if(h.closest('.nv-chapter')||h.closest('.nv-home')){return;}var t=txt(h);if(t&&t.length<70){add({g:'In the pages',t:t,s:sec(p.id).label,ic:'heading',el:h});}});});
+    /* eggs2: only matches whole-word secret / easter / egg / gallery (filtered in search) */
+    add({g:'Secrets',t:'The secret gallery',s:'Easter eggs \u00b7 your finds so far',ic:'key',kw:'secret secrets easter egg eggs gallery',secret:1,go:function(){if(window.AspenEggs){window.AspenEggs.openGallery();}}});
     return X;
   }
-  var GORDER=['Sections','Days','Stops','Restaurants','House','Contacts','Booking','In the pages'];
+  var GORDER=['Secrets','Sections','Days','Stops','Restaurants','House','Contacts','Booking','In the pages'];
   function search(q){
     var nq=norm(q).trim(), toks=nq.split(/\s+/).filter(Boolean);
+    var sOK=toks.some(function(x){return /^(secret|secrets|easter|egg|eggs|eastereggs|gallery)$/.test(x);});
     if(!toks.length){
       return palIndex.filter(function(o){return o.g==='Sections'||o.g==='Days';});
     }
     var res=[];
     palIndex.forEach(function(o){
+      if(o.secret&&!sOK){return;}
       for(var i=0;i<toks.length;i++){if(o.h.indexOf(toks[i])<0){return;}}
       var sc=0; if(o.ht.indexOf(nq)===0){sc+=60;}else if(o.ht.indexOf(nq)>=0){sc+=30;}
       toks.forEach(function(t){if(o.ht.indexOf(t)>=0){sc+=8;} if(new RegExp('(^|\\s)'+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).test(o.ht)){sc+=6;}});
@@ -12746,6 +12750,167 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
 })();
 
 </script>
+<style id="eggs2-css">
+/* ===== eggs2 v1 — secrets chip dropdown, found card, golden snowflake, secret gallery, golden hour ===== */
+:root{--eg-card:rgba(253,250,243,.96);--eg-ink:#1b2a22;--eg-soft:#4d5a53;--eg-gold:#956E29;--eg-line:rgba(176,138,62,.34);--eg-sh:rgba(30,45,36,.28);
+  --eg-panel:rgba(250,246,236,.97);--eg-tile:rgba(255,253,247,.78);--eg-lock:rgba(236,230,214,.7);}
+body.dark{--eg-card:rgba(13,27,43,.96);--eg-ink:#efe6d2;--eg-soft:#b9c3cc;--eg-gold:#D6B06A;--eg-line:rgba(201,160,90,.32);--eg-sh:rgba(0,0,0,.55);
+  --eg-panel:rgba(10,22,36,.97);--eg-tile:rgba(20,40,62,.66);--eg-lock:rgba(15,30,48,.7);}
+html.eg-lock,html.eg-lock body{overflow:hidden;}
+
+/* chip (existing .tk-eggs) gets a pressed state */
+.tk-eggs[aria-expanded="true"]{opacity:1;background:rgba(176,138,62,.12);}
+
+/* dropdown */
+.eg-drop{position:fixed;z-index:1150;padding:16px 16px 14px;border-radius:16px;background:var(--eg-card);color:var(--eg-ink);border:1px solid var(--eg-line);
+  box-shadow:0 22px 50px -20px var(--eg-sh);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);font-family:var(--sans);
+  opacity:0;transform:translateY(-6px);transition:opacity var(--dur-2) var(--ease-out),transform var(--dur-2) var(--ease-out);}
+.eg-drop.on{opacity:1;transform:none;}
+.eg-dk{font:600 10px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--eg-gold);margin:0 0 10px;}
+.eg-dnote{font:italic 14px/1.4 var(--serif);color:var(--eg-soft);margin:0 0 10px;}
+.eg-dnote button,.eg-gnote button{border:0;background:none;color:var(--eg-gold);font:600 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;padding:4px 2px;text-decoration:underline;text-underline-offset:3px;}
+.eg-dstats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 10px;}
+.eg-dstats div{display:flex;flex-direction:column;align-items:center;padding:8px 4px 7px;border-radius:10px;background:rgba(176,138,62,.08);border:1px solid var(--eg-line);min-width:0;}
+.eg-dstats b{font:500 24px/1 var(--serif);color:var(--eg-ink);font-variant-numeric:lining-nums;}
+.eg-dstats b i{font-style:normal;font-size:13px;color:var(--eg-soft);}
+.eg-dstats span{font:500 9.5px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--eg-soft);margin-top:5px;text-align:center;}
+.eg-dgold{display:flex;align-items:center;gap:8px;font:400 12px/1.35 var(--sans);color:var(--eg-soft);margin:0 0 10px;}
+.eg-pips{display:inline-flex;gap:3px;flex:none;}
+.eg-pips i{width:7px;height:7px;border-radius:50%;border:1px solid var(--eg-gold);opacity:.6;}
+.eg-pips i.on{background:linear-gradient(135deg,#F6E3A8,#C49A4A);border-color:#C49A4A;opacity:1;box-shadow:0 0 6px rgba(214,176,106,.7);}
+.eg-pips.big i{width:11px;height:11px;}
+.eg-dclue{margin:0 0 12px;padding:10px 12px;border-left:2px solid var(--eg-gold);background:rgba(176,138,62,.06);border-radius:0 10px 10px 0;font:italic 15px/1.4 var(--serif);color:var(--eg-ink);}
+.eg-dclue small{display:block;font:600 9.5px/1 var(--sans);font-style:normal;letter-spacing:.2em;text-transform:uppercase;color:var(--eg-gold);margin-bottom:6px;}
+.eg-dopen{display:flex;width:100%;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:12px;cursor:pointer;
+  border:1px solid rgba(196,154,74,.6);background:var(--alpenglow);color:#143a2a;font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  box-shadow:0 10px 24px -14px rgba(150,110,40,.8);transition:transform var(--dur-2) var(--ease-spring);}
+.eg-dopen:hover{transform:translateY(-1px);}
+.eg-dopen:focus-visible,.eg-drop button:focus-visible,.eg-gal button:focus-visible,.eg-card button:focus-visible{outline:2px solid var(--eg-gold);outline-offset:2px;}
+.eg-dopen svg,.eg-close svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;}
+
+/* found / golden card (bottom) */
+.eg-card{position:fixed;left:50%;z-index:10000;display:flex;align-items:flex-start;gap:12px;width:min(430px,calc(100vw - 32px));padding:14px 40px 14px 14px;border-radius:16px;
+  background:var(--eg-card);color:var(--eg-ink);border:1px solid var(--eg-line);box-shadow:0 24px 50px -22px var(--eg-sh);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  opacity:0;transform:translate(-50%,14px);transition:opacity var(--dur-3) var(--ease-out),transform var(--dur-3) var(--ease-out);}
+.eg-card.on{opacity:1;transform:translate(-50%,0);}
+.eg-card.gold{border-color:rgba(214,176,106,.7);box-shadow:0 24px 50px -22px var(--eg-sh),0 0 0 1px rgba(232,217,176,.35) inset;}
+.eg-num{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font:600 15px/1 var(--serif);color:#143a2a;background:var(--alpenglow);box-shadow:0 6px 16px -8px rgba(150,110,40,.8);}
+.eg-num.g{background:radial-gradient(circle,rgba(246,227,168,.35),rgba(176,138,62,.12));}
+.eg-num svg{width:28px;height:28px;}
+.eg-cb{min-width:0;flex:1;}
+.eg-cb small{display:block;font:600 9.5px/1.2 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--eg-gold);}
+.eg-cb b{display:block;font:600 19px/1.2 var(--serif);color:var(--eg-ink);margin:4px 0 0;}
+.eg-cb p{font:italic 15px/1.4 var(--serif);color:var(--eg-soft);margin:7px 0 0;}
+.eg-cb p em{font:600 9.5px/1 var(--sans);font-style:normal;letter-spacing:.16em;text-transform:uppercase;color:var(--eg-gold);}
+.eg-acts{display:flex;gap:10px;margin-top:9px;}
+.eg-acts button{border:1px solid var(--eg-line);background:transparent;color:var(--eg-gold);border-radius:99px;padding:7px 12px;font:600 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;}
+.eg-x{position:absolute;top:8px;right:8px;width:30px;height:30px;border:0;border-radius:50%;background:transparent;color:var(--eg-soft);font:300 22px/1 var(--sans);cursor:pointer;}
+.eg-x:hover{background:rgba(176,138,62,.12);}
+
+/* golden snowflake */
+.eg-gf{position:fixed;left:0;top:0;z-index:9997;width:54px;height:54px;margin:-27px 0 0 -27px;padding:8px;border:0;border-radius:50%;cursor:pointer;
+  background:radial-gradient(circle,rgba(232,190,100,.38),rgba(232,190,100,0) 70%);opacity:0;transition:opacity .9s ease;will-change:transform;-webkit-tap-highlight-color:transparent;}
+.eg-gf.on{opacity:1;}
+.eg-gf.gone{opacity:0;transition:opacity .35s ease;}
+.eg-gf svg{display:block;width:100%;height:100%;filter:drop-shadow(0 0 6px rgba(240,190,90,.9)) drop-shadow(0 1px 2px rgba(80,55,10,.5));animation:egTw 2.4s ease-in-out infinite;}
+.eg-gf:focus-visible{outline:2px solid #C49A4A;outline-offset:2px;}
+.eg-gf.still{margin:0;}
+@keyframes egTw{0%,100%{opacity:1}50%{opacity:.72}}
+.eg-ring{position:fixed;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;border:2px solid #E8C877;z-index:9998;pointer-events:none;}
+.eg-spark{position:fixed;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;z-index:9998;pointer-events:none;background:#F6E3A8;box-shadow:0 0 8px 2px rgba(214,176,106,.85);}
+
+/* gallery */
+.eg-gal{position:fixed;inset:0;z-index:10004;overflow-y:auto;overscroll-behavior:contain;padding:max(18px,env(safe-area-inset-top)) 16px 28px;
+  background:radial-gradient(120% 90% at 50% 0%,rgba(16,34,54,.72),rgba(6,12,20,.82));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  opacity:0;transition:opacity var(--dur-3) var(--ease-out);}
+.eg-gal.on{opacity:1;}
+.eg-gin{position:relative;max-width:980px;margin:0 auto;padding:26px 24px 22px;border-radius:22px;background:var(--eg-panel);color:var(--eg-ink);border:1px solid var(--eg-line);
+  box-shadow:0 40px 90px -40px rgba(0,0,0,.7);transform:translateY(10px);transition:transform var(--dur-3) var(--ease-out);}
+.eg-gal.on .eg-gin{transform:none;}
+.eg-ghd{padding-right:44px;margin-bottom:18px;}
+.eg-eye{font:600 10px/1.2 var(--sans);letter-spacing:.26em;text-transform:uppercase;color:var(--eg-gold);margin:0 0 6px;}
+.eg-ghd h2{font:500 clamp(30px,5vw,42px)/1.05 var(--serif);color:var(--eg-ink);margin:0;}
+.eg-gsum{font:400 13px/1.5 var(--sans);color:var(--eg-soft);margin:8px 0 0;}
+.eg-gsum b{font-weight:600;color:var(--eg-ink);}
+.eg-drop,.eg-gal,.eg-card{font-variant-numeric:lining-nums;}
+.eg-gnote{font:italic 15px/1.4 var(--serif);color:var(--eg-soft);margin:8px 0 0;}
+.eg-close{position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;border:1px solid var(--eg-line);background:transparent;color:var(--eg-ink);display:grid;place-items:center;cursor:pointer;}
+.eg-close:hover{background:rgba(176,138,62,.12);}
+.eg-gold{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 20px;padding:16px;border-radius:16px;border:1px solid var(--eg-line);
+  background:linear-gradient(135deg,rgba(232,217,176,.22),rgba(176,138,62,.06));}
+.eg-gl{display:flex;gap:12px;align-items:flex-start;min-width:0;}
+.eg-gfl{flex:none;width:44px;height:44px;}
+.eg-gfl svg{width:100%;height:100%;filter:drop-shadow(0 0 6px rgba(214,176,106,.7));}
+.eg-gl b{display:block;font:600 20px/1.2 var(--serif);color:var(--eg-ink);}
+.eg-gl span{display:block;font:400 13px/1.5 var(--sans);color:var(--eg-soft);margin-top:4px;}
+.eg-gl .eg-pips{display:inline-flex;margin-top:9px;}
+.eg-reward{display:flex;gap:12px;align-items:center;min-width:0;}
+.eg-post{flex:none;width:150px;margin:0;padding:7px 7px 0;background:#fbf8f1;border-radius:3px;box-shadow:0 12px 26px -14px rgba(0,0,0,.6);transform:rotate(-2.5deg);}
+.eg-post img{display:block;width:100%;height:92px;object-fit:cover;background:#e7e0cf;}
+.eg-post figcaption{font:italic 12.5px/1.25 var(--serif);color:#2b3a32;padding:6px 2px 8px;text-align:center;}
+.eg-rt{min-width:0;}
+.eg-rt b{display:block;font:600 19px/1.2 var(--serif);color:var(--eg-ink);}
+.eg-rt span{display:block;font:400 13px/1.45 var(--sans);color:var(--eg-soft);margin:3px 0 0;}
+.eg-rt.locked{padding:14px;border-radius:12px;border:1px dashed var(--eg-line);width:100%;}
+.eg-tog{margin-top:10px;border:1px solid rgba(196,154,74,.6);border-radius:99px;padding:9px 14px;cursor:pointer;background:transparent;color:var(--eg-gold);font:600 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;}
+.eg-tog[aria-pressed="true"]{background:var(--alpenglow);color:#143a2a;}
+.eg-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.eg-c{position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:168px;padding:14px 14px 13px;border-radius:14px;border:1px solid var(--eg-line);background:var(--eg-tile);}
+.eg-rn{font:500 26px/1 var(--serif);color:var(--eg-gold);margin-bottom:8px;}
+.eg-c.found{background:linear-gradient(160deg,rgba(232,217,176,.32),var(--eg-tile) 60%);border-color:rgba(196,154,74,.55);}
+.eg-c.found b{font:600 19px/1.15 var(--serif);color:var(--eg-ink);}
+.eg-how{font:400 13px/1.4 var(--sans);color:var(--eg-soft);margin-top:4px;}
+.eg-when{font:500 9.5px/1.3 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--eg-gold);margin-top:6px;}
+.eg-play{align-self:flex-start;margin-top:auto;display:inline-flex;align-items:center;gap:6px;padding:8px 12px 8px 10px;border-radius:99px;cursor:pointer;
+  border:1px solid rgba(196,154,74,.55);background:transparent;color:var(--eg-gold);font:600 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;}
+.eg-c.found .eg-play{margin-top:12px;}
+.eg-play svg{width:11px;height:11px;fill:currentColor;}
+.eg-play:hover{background:rgba(176,138,62,.12);}
+.eg-c.locked{background:var(--eg-lock);}
+.eg-c.locked .eg-rn{color:var(--eg-soft);opacity:.6;}
+.eg-frost{position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background:radial-gradient(circle at 18% 22%,rgba(255,255,255,.55) 0 1.5px,transparent 2.5px) 0 0/26px 26px,
+    radial-gradient(circle at 70% 64%,rgba(255,255,255,.4) 0 1px,transparent 2px) 0 0/19px 19px,
+    linear-gradient(160deg,rgba(255,255,255,.25),rgba(255,255,255,0) 60%);}
+body.dark .eg-frost{opacity:.18;}
+.eg-c.locked>*:not(.eg-frost){position:relative;}
+.eg-lk{font:600 9.5px/1.2 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--eg-gold);}
+.eg-clue,.eg-hint{font:italic 15px/1.4 var(--serif);color:var(--eg-ink);margin:5px 0 0;}
+.eg-hint{font:400 13px/1.45 var(--sans);font-style:normal;}
+.eg-mute{font:italic 14px/1.4 var(--serif);color:var(--eg-soft);margin:5px 0 0;}
+.eg-mute:empty{display:none;}
+.eg-use{align-self:flex-start;margin-top:auto;padding:8px 12px;border-radius:99px;cursor:pointer;border:1px dashed rgba(196,154,74,.7);background:transparent;color:var(--eg-gold);font:600 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;}
+.eg-clue+.eg-use,.eg-mute+.eg-use{margin-top:12px;}
+.eg-c.eg-flash{animation:egFlash 1.2s var(--ease-out);}
+@keyframes egFlash{0%{box-shadow:0 0 0 0 rgba(214,176,106,.8)}100%{box-shadow:0 0 0 14px rgba(214,176,106,0)}}
+.eg-gfoot{font:italic 14px/1.5 var(--serif);color:var(--eg-soft);text-align:center;margin:18px 0 0;}
+@media (max-width:640px){
+  .eg-gin{padding:20px 14px 18px;border-radius:18px;}
+  .eg-close{top:14px;right:12px;}
+  .eg-gold{grid-template-columns:1fr;}
+  .eg-grid{grid-template-columns:1fr 1fr;gap:9px;}
+  .eg-c{min-height:150px;padding:12px 11px 11px;}
+  .eg-rn{font-size:22px;}
+  .eg-c.found b{font-size:17px;}
+  .eg-clue{font-size:14px;}
+  .eg-post{width:128px;}
+  .eg-post img{height:80px;}
+}
+@media (max-width:360px){ .eg-grid{grid-template-columns:1fr;} }
+
+/* golden hour (the 5-flake reward): a warm late-light wash */
+#egGH{position:fixed;inset:0;z-index:9988;pointer-events:none;display:none;
+  background:linear-gradient(180deg,rgba(255,196,112,.30) 0%,rgba(240,156,108,.15) 55%,rgba(214,170,96,.26) 100%);mix-blend-mode:multiply;}
+html.eg-gh #egGH{display:block;}
+body.dark #egGH{background:linear-gradient(180deg,rgba(255,176,86,.14),rgba(240,136,90,.06) 55%,rgba(214,170,96,.13));mix-blend-mode:screen;}
+
+@media (prefers-reduced-motion:reduce){
+  .eg-drop,.eg-card,.eg-gal,.eg-gin{transition:none;}
+  .eg-gf svg{animation:none;}
+  .eg-gf{transition:opacity .4s linear;}
+  .eg-c.eg-flash{animation:none;outline:2px solid rgba(214,176,106,.8);}
+}
+</style>
 <script>
 /* ===== Tactile kit + easter eggs — vanilla, no deps. Load after the page's own scripts. ===== */
 (function(){
@@ -12775,13 +12940,341 @@ function toast(msg){
   requestAnimationFrame(function(){ t.classList.add('show'); });
   setTimeout(function(){ t.classList.remove('show'); setTimeout(function(){ t.remove(); }, 420); }, 2800);
 }
-var EGGS = 14, KEY = 'aspenEggs', found = {};
-try { found = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){}
-function egg(id){
-  if (!found[id]){ found[id] = 1; try { localStorage.setItem(KEY, JSON.stringify(found)); } catch(e){} }
-  var nn = Object.keys(found).length; [].forEach.call(D.querySelectorAll('.tk-psst b, .tk-eggs b'), function(n){ n.textContent = nn; });
-  var ch = D.querySelector('.tk-eggs'); if (ch){ ch.classList.remove('glow'); void ch.offsetWidth; ch.classList.add('glow'); }
+/* ---------- eggs2 v1: per-person secrets · scavenger chain · golden snowflakes · secret gallery ----------
+   Storage: localStorage 'aspenEggs_v2' = {person: {eggId: foundAt(ms|1), 'g_<device>': goldCaught, 'h_<eggId>': 1 (hint spent)}}
+   Synced by AspenSync as a PERSONAL key (field 'eggs'). Hint tokens = floor(gold / 3) - hints spent. 5 gold = Golden hour. */
+var EGGS = 14, KEY2 = 'aspenEggs_v2', OLDKEY = 'aspenEggs', found = {}, replaying = false, guestGold = 0;
+var CHAIN = ['flake','aspen','powder','pizza','marco','konami','aurora','steam','globe','shake','bowl','allbooked','firstchair','newyear'];
+var RN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV'];
+var PPL = {griffin:'Griffin', marco:'Marco', stella:'Stella', ben:'Ben', marcy:'Marcy', jim:'Jim'};
+/* n = name · how = how it was found · clue = the chain riddle (shown once the one before it is found) · hint = the plain answer (costs a token) */
+var INFO = {
+  flake:{n:'Let it snow', how:'Tapped the snowflake beside the title', clue:'Every trail starts somewhere. Begin with the biggest snowflake on the page, and give it a poke.', hint:'Tap the gold ❄ in the hero, right by the trip title.'},
+  aspen:{n:'Alpenglow', how:'Typed the town’s name', clue:'You woke the snow. Now spell the town by name, keys only, and watch the peaks blush.', hint:'Type “aspen” anywhere on the page (not inside a text box).'},
+  powder:{n:'Powder day', how:'Typed what every skier prays for', clue:'Pink peaks at dusk promise a storm. By morning there are fourteen fresh inches. Type what every skier prays for.', hint:'Type “powder”.'},
+  pizza:{n:'Pizza, French fries', how:'Typed the beginner’s first lesson', clue:'Deep snow is no place for a first-timer. At Buttermilk the very first lesson is shaped like dinner. Type it.', hint:'Type “pizza”.'},
+  marco:{n:'Goofy-footed', how:'Typed the snowboarder’s name', clue:'One of us skipped the French fries entirely and rides sideways. Type his name.', hint:'Type “marco”.'},
+  konami:{n:'Thirty extra lives', how:'Entered the old cheat code', clue:'Some of us grew up with a code for thirty extra lives. Up, up… your arrow keys remember the rest.', hint:'On a keyboard: ↑ ↑ ↓ ↓ ← → ← → B A.'},
+  aurora:{n:'Northern lights', how:'Traded the sun for the moon, seven times', clue:'Extra lives won’t bring night to Red Mountain. Trade the sun for the moon, seven times, quickly.', hint:'Tap the moon/sun button in the top bar 7 times within 5 seconds.'},
+  steam:{n:'Hot-tub steam', how:'Found the hot tub after dark', clue:'While the sky dances, something on the deck breathes clouds. Go and look after dark.', hint:'Lodging → room walk-through → “Deck & Hot Tub”, at night in Aspen or in dark mode.'},
+  globe:{n:'Snow globe', how:'Held down the last snowflake', clue:'Everything settles at the very bottom of the page. Hold the last snowflake, and the world shakes.', hint:'Press and hold the ❄ crest at the very bottom of the page for about a second.'},
+  shake:{n:'Blizzard', how:'Shook the phone', clue:'A glass globe isn’t the only thing you can shake. Try the phone in your hand.', hint:'On a phone, shake it hard three times. On an iPhone, tap “Tilt to look ✦” in the footer first.'},
+  bowl:{n:'The secret run', how:'Zoomed deep into Highland Bowl', clue:'Two of us will hike an hour for one perfect run. On the map, go deep into the bowl south of Highlands.', hint:'Map tab: zoom all the way in on Highland Bowl, the south end of Aspen Highlands.'},
+  allbooked:{n:'All booked', how:'Ticked the very last booking', clue:'The sweetest run is one already paid for. Some secrets wait for the very last tick.', hint:'Booking tab: tick the final open booking.'},
+  firstchair:{n:'First chair', how:'Was here as the lifts started', clue:'Everything’s booked, so rise early. The lifts start spinning at half past eight, Aspen time.', hint:'Open the page between 8:30 and 8:59 AM, Aspen (Mountain) time.'},
+  newyear:{n:'Midnight in Aspen', how:'Was here as 2027 arrived', clue:'The last secret keeps its own clock. Be here as Aspen counts down to 2027.', hint:'Have the page open from 12:00 to 12:09 AM on Jan 1, 2027, Aspen time.'}
+};
+function esc2(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function me(){ var w = null; try { w = (W.AspenWho && W.AspenWho.get) ? W.AspenWho.get() : localStorage.getItem('aspenWho'); } catch(e){} return PPL[w] ? w : null; }
+function allRecs(){ try { var o = JSON.parse(localStorage.getItem(KEY2) || '{}'); return (o && typeof o === 'object' && !Array.isArray(o)) ? o : {}; } catch(e){ return {}; } }
+function rec(p){ var o = p && allRecs()[p]; return (o && typeof o === 'object') ? o : {}; }
+function saveRec(p, r){ var o = allRecs(); o[p] = r; try { localStorage.setItem(KEY2, JSON.stringify(o)); } catch(e){} }
+var DEV = (function(){ var d = null; try { d = localStorage.getItem('aspenDev'); if (!d){ d = Math.random().toString(36).slice(2, 8); localStorage.setItem('aspenDev', d); } } catch(e){ d = 'x'; } return d; })();
+function goldOf(r){ var n = 0; for (var k in r) if (k.indexOf('g_') === 0) n += (+r[k] || 0); return n; }
+function spentOf(r){ var n = 0; for (var k in r) if (k.indexOf('h_') === 0 && r[k]) n++; return n; }
+function tokensOf(r){ return Math.max(0, Math.floor(goldOf(r) / 3) - spentOf(r)); }
+function foundIds(r){ return CHAIN.filter(function(id){ return !!r[id]; }); }
+function clueOpen(r, id){ var i = CHAIN.indexOf(id); return i === 0 || !!r[CHAIN[i - 1]]; }
+function nextAfter(r, id){ var i = CHAIN.indexOf(id); for (var k = 1; k <= CHAIN.length; k++){ var c = CHAIN[(i + k) % CHAIN.length]; if (!r[c]) return c; } return null; }
+function firstOpen(r){ for (var i = 0; i < CHAIN.length; i++) if (!r[CHAIN[i]]) return CHAIN[i]; return null; }
+function syncFound(){ found = {}; foundIds(rec(me())).forEach(function(id){ found[id] = 1; }); }
+/* one-time: the old device-wide tally becomes the current person's */
+function migrate(){
+  var p = me(); if (!p) return;
+  try { if (localStorage.getItem('aspenEggsMigrated')) return; var old = JSON.parse(localStorage.getItem(OLDKEY) || 'null'); localStorage.setItem('aspenEggsMigrated', p);
+    if (!old || typeof old !== 'object') return; var r = rec(p), ch = false;
+    Object.keys(old).forEach(function(id){ if (INFO[id] && !r[id]){ r[id] = 1; ch = true; } }); if (ch) saveRec(p, r); } catch(e){}
 }
+function egg(id){
+  if (replaying || !INFO[id]) return;
+  var p = me();
+  if (!p){ guestNote(); return; }
+  var r = rec(p); if (r[id]) return;
+  r[id] = Date.now(); saveRec(p, r); syncFound(); paintEggs(true);
+  var n = foundIds(r).length, nx = nextAfter(r, id);
+  setTimeout(function(){ card({k:'Secret ' + n + ' of ' + EGGS + ' found', num:RN[CHAIN.indexOf(id)], t:INFO[id].n,
+    clue: nx ? INFO[nx].clue : 'All fourteen. You are officially a legend of Red Mountain.', clueK: nx ? 'The next clue' : 'The end of the trail'}); }, 900);
+}
+function guestNote(){
+  try { if (sessionStorage.getItem('aspenEggGuest')) return; sessionStorage.setItem('aspenEggGuest', 1); } catch(e){}
+  setTimeout(function(){ card({k:'A secret!', t:'Pick who you are to keep your finds', clue:'Secrets are collected per person, and follow you to every device.', pick:1}); }, 900);
+}
+
+/* ---------- bottom card (found / golden / guest) — one at a time, never stacks ---------- */
+var cardEl = null, cardT = 0;
+function card(o){
+  if (cardEl){ cardEl.remove(); cardEl = null; } clearTimeout(cardT);
+  var c = D.createElement('div'); c.className = 'eg-card' + (o.gold ? ' gold' : ''); c.setAttribute('role', 'status'); c.setAttribute('aria-live', 'polite');
+  c.innerHTML = (o.num ? '<span class="eg-num" aria-hidden="true">' + o.num + '</span>' : o.gold ? '<span class="eg-num g" aria-hidden="true">' + flakeSVG() + '</span>' : '<span class="eg-num" aria-hidden="true">&#10052;&#65038;</span>') +
+    '<div class="eg-cb"><small>' + esc2(o.k) + '</small><b>' + esc2(o.t) + '</b>' +
+    (o.clue ? '<p><em>' + esc2(o.clueK || '') + (o.clueK ? ' · ' : '') + '</em>' + esc2(o.clue) + '</p>' : '') +
+    '<span class="eg-acts">' + (o.pick ? '<button type="button" data-eg="pick">Pick who you are</button>' : '<button type="button" data-eg="gal">Secret gallery</button>') + '</span></div>' +
+    '<button type="button" class="eg-x" data-eg="x" aria-label="Dismiss">&times;</button>';
+  var tb = D.querySelector('#nvTabbar,.nv-tabbar,[data-aspen-tabbar]'), th = tb && tb.getClientRects().length ? tb.offsetHeight : 0;
+  var sy = D.querySelector('.sy-toast.on'), sh = sy ? sy.offsetHeight + 10 : 0;
+  c.style.bottom = 'calc(' + (th + 16 + sh) + 'px + env(safe-area-inset-bottom,0px))';
+  B.appendChild(c); cardEl = c;
+  c.addEventListener('click', function(e){ var b = e.target.closest('[data-eg]'); if (!b) return; var a = b.getAttribute('data-eg');
+    if (a === 'gal') openGallery(); else if (a === 'pick'){ try { W.AspenWho.openPicker(); } catch(x){} }
+    hideCard(); });
+  var hold = false; c.addEventListener('pointerenter', function(){ hold = true; }); c.addEventListener('pointerleave', function(){ hold = false; });
+  requestAnimationFrame(function(){ c.classList.add('on'); });
+  var life = o.clue ? 11000 : 6000;
+  (function wait(){ cardT = setTimeout(function(){ if (hold) wait(); else hideCard(); }, life); life = 2500; })();
+}
+function hideCard(){ var c = cardEl; if (!c) return; cardEl = null; clearTimeout(cardT); c.classList.remove('on'); setTimeout(function(){ c.remove(); }, 380); }
+var ARMS = '<path d="M20 3v34M5.3 11.5l29.4 17M5.3 28.5l29.4-17"/><path d="M20 9l-4-4M20 9l4-4M20 31l-4 4M20 31l4 4M10.5 14.5l-5.4 1.4M10.5 14.5l-1.5-5.3M29.5 25.5l5.4-1.4M29.5 25.5l1.5 5.3M10.5 25.5l-5.4-1.4M10.5 25.5l-1.5 5.3M29.5 14.5l5.4 1.4M29.5 14.5l1.5-5.3"/>';
+function flakeSVG(){
+  return '<svg viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="egGg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset=".5" stop-color="#D9AE52"/><stop offset="1" stop-color="#A97C2C"/></linearGradient></defs>' +
+    '<g stroke-linecap="round" fill="none"><g stroke="#6E4C12" stroke-opacity=".55" stroke-width="4.4">' + ARMS + '</g><g stroke="url(#egGg)" stroke-width="2.6">' + ARMS + '</g></g>' +
+    '<circle cx="20" cy="20" r="3.2" fill="#F6E3A8"/></svg>';
+}
+
+/* ---------- chip + dropdown ---------- */
+var drop = null, dropFor = null;
+function chipHTML(){ return '<span aria-hidden="true">&#10052;</span><b>' + Object.keys(found).length + '</b><i>/' + EGGS + '</i>'; }
+function psstHTML(){
+  var p = me(), n = Object.keys(found).length;
+  if (!p) return 'psst&hellip; there are ' + EGGS + ' secrets on this page &middot; pick who you are to keep the ones you find';
+  return 'psst&hellip; there are ' + EGGS + ' secrets on this page &middot; <b>' + n + '</b> found' + (n ? '' : ' &middot; start with the biggest snowflake');
+}
+function pips(g){ var h = '', k = Math.min(g, 5); for (var i = 0; i < 5; i++) h += '<i class="' + (i < k ? 'on' : '') + '"></i>'; return h; }
+function goldLine(r, p){
+  var g = p ? goldOf(r) : guestGold;
+  if (g >= 5) return g + ' caught · Golden hour unlocked · a hint every 3';
+  if (g >= 3) return g + ' caught · ' + (5 - g) + ' more for something golden';
+  return (g ? g + ' caught · ' : 'Watch the snow for a golden one · ') + (3 - g) + ' more for a hint';
+}
+function dropHTML(){
+  var p = me(), r = rec(p), n = Object.keys(found).length, g = p ? goldOf(r) : guestGold, tk = p ? tokensOf(r) : 0, nx = p ? firstOpen(r) : 'flake';
+  return '<p class="eg-dk">' + (p ? esc2(PPL[p]) + '&rsquo;s secrets' : 'Secrets') + '</p>' +
+    (p ? '' : '<p class="eg-dnote">Pick who you are to keep your finds. <button type="button" data-eg="pick">Pick</button></p>') +
+    '<div class="eg-dstats"><div><b>' + n + '<i>/' + EGGS + '</i></b><span>found</span></div><div><b>' + g + '</b><span>golden &#10052;&#65038;</span></div><div><b>' + tk + '</b><span>hint' + (tk === 1 ? '' : 's') + '</span></div></div>' +
+    '<p class="eg-dgold"><span class="eg-pips" aria-hidden="true">' + pips(g) + '</span>' + esc2(goldLine(r, p)) + '</p>' +
+    (nx ? '<p class="eg-dclue"><small>' + (n ? 'The next clue' : 'Where it begins') + '</small>' + esc2(INFO[nx].clue) + '</p>' : '<p class="eg-dclue"><small>Complete</small>All fourteen found. Legend.</p>') +
+    '<button type="button" class="eg-dopen" data-eg="gal"><span>Open the secret gallery</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>';
+}
+function toggleDrop(chip){ if (drop && !drop.hidden) closeDrop(); else openDrop(chip); }
+function openDrop(chip){
+  dropFor = chip;
+  if (!drop){
+    drop = D.createElement('div'); drop.id = 'egDrop'; drop.className = 'eg-drop'; drop.setAttribute('role', 'dialog'); drop.setAttribute('aria-label', 'Secrets found'); drop.hidden = true; B.appendChild(drop);
+    drop.addEventListener('click', function(e){ e.stopPropagation(); var b = e.target.closest('[data-eg]'); if (!b) return; var a = b.getAttribute('data-eg');
+      closeDrop(a !== 'gal'); if (a === 'gal') openGallery(); else if (a === 'pick'){ try { W.AspenWho.openPicker(); } catch(x){} } });
+    D.addEventListener('pointerdown', function(e){ if (drop && !drop.hidden && !drop.contains(e.target) && !(dropFor && dropFor.contains(e.target))) closeDrop(false); }, true);
+    D.addEventListener('keydown', function(e){ if (e.key === 'Escape' && drop && !drop.hidden) closeDrop(true); });
+    W.addEventListener('resize', function(){ if (drop && !drop.hidden) placeDrop(); }, {passive:true});
+  }
+  drop.innerHTML = dropHTML(); drop.hidden = false; placeDrop(); chip.setAttribute('aria-expanded', 'true');
+  requestAnimationFrame(function(){ drop.classList.add('on'); });
+  var f = drop.querySelector('.eg-dopen'); if (f) try { f.focus({preventScroll:true}); } catch(e){}
+}
+function placeDrop(){
+  var r = dropFor.getBoundingClientRect(), w = Math.min(310, innerWidth - 32);
+  drop.style.width = w + 'px'; drop.style.top = Math.round(r.bottom + 10) + 'px';
+  drop.style.left = Math.round(clamp(r.left + r.width / 2 - w / 2, 16, innerWidth - w - 16)) + 'px';
+}
+function closeDrop(refocus){ if (!drop || drop.hidden) return; drop.classList.remove('on'); drop.hidden = true; if (dropFor){ dropFor.setAttribute('aria-expanded', 'false'); if (refocus) try { dropFor.focus({preventScroll:true}); } catch(e){} } }
+
+/* ---------- the secret gallery (full-screen; not a nav tab) ---------- */
+var gal = null, galFrom = null;
+function fmtDate(v){ if (!(v > 1)) return 'found earlier'; try { return 'found ' + new Date(v).toLocaleDateString('en-US', {month:'short', day:'numeric'}); } catch(e){ return ''; } }
+function galHTML(){
+  var p = me(), r = rec(p), n = foundIds(r).length, g = p ? goldOf(r) : guestGold, tk = p ? tokensOf(r) : 0, gh = p && g >= 5, ghOn = H.classList.contains('eg-gh');
+  var h = '<div class="eg-gin"><header class="eg-ghd"><p class="eg-eye">&#10052;&#65038; The secret gallery</p>' +
+    '<h2 id="egGalT">' + (p ? esc2(PPL[p]) + '&rsquo;s secrets' : 'Your secrets') + '</h2>' +
+    '<p class="eg-gsum"><b>' + n + '</b> of ' + EGGS + ' found &middot; <b>' + g + '</b> golden snowflake' + (g === 1 ? '' : 's') + ' &middot; <b>' + tk + '</b> hint token' + (tk === 1 ? '' : 's') + '</p>' +
+    (p ? '' : '<p class="eg-gnote">You haven&rsquo;t picked who you are, so finds aren&rsquo;t being kept. <button type="button" data-eg="pick">Pick who you are</button></p>') +
+    '<button type="button" class="eg-close" data-eg="close" aria-label="Close the secret gallery"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>';
+  /* golden snowflakes strip */
+  h += '<section class="eg-gold" aria-label="Golden snowflakes"><div class="eg-gl"><span class="eg-gfl">' + flakeSVG() + '</span><div><b>Golden snowflakes</b><span>Now and then a golden one drifts down with the snow. Catch it. Every 3 earn a hint token; 5 unlock something golden.</span>' +
+    '<span class="eg-pips big" aria-label="' + Math.min(g, 5) + ' of 5">' + pips(g) + '</span></div></div>' +
+    '<div class="eg-reward' + (gh ? ' open' : '') + '">' + (gh
+      ? '<figure class="eg-post"><img src="' + (W.ASPEN_MEDIA_BASE || 'media/') + 'deck_glow.webp" alt="The view from the deck at 42 Nighthawk at alpenglow" loading="lazy" decoding="async"><figcaption>Golden hour on the deck, 42 Nighthawk. Save us a seat.</figcaption></figure>' +
+        '<div class="eg-rt"><b>Golden hour</b><span>A warm late-light wash over the whole page, just for you.</span><button type="button" class="eg-tog" data-eg="gh" aria-pressed="' + ghOn + '">' + (ghOn ? 'Golden hour on' : 'Turn on golden hour') + '</button></div>'
+      : '<div class="eg-rt locked"><b>Something golden</b><span>Locked until you&rsquo;ve caught 5.</span></div>') + '</div></section>';
+  /* the 14 */
+  h += '<ol class="eg-grid">';
+  CHAIN.forEach(function(id, i){
+    var I = INFO[id], f = !!r[id];
+    if (f){
+      h += '<li class="eg-c found"><span class="eg-rn">' + RN[i] + '</span><b>' + esc2(I.n) + '</b><span class="eg-how">' + esc2(I.how) + '</span><span class="eg-when">' + fmtDate(r[id]) + '</span>' +
+        '<button type="button" class="eg-play" data-eg="replay" data-id="' + id + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Replay</button></li>';
+    } else {
+      var body;
+      if (r['h_' + id]) body = '<span class="eg-lk">Hint</span><p class="eg-hint">' + esc2(I.hint) + '</p>';
+      else if (p && clueOpen(r, id)) body = '<span class="eg-lk">Clue</span><p class="eg-clue">' + esc2(I.clue) + '</p>' + (tk ? '<button type="button" class="eg-use" data-eg="hint" data-id="' + id + '">Still stuck? Use a hint</button>' : '');
+      else if (!p && i === 0) body = '<span class="eg-lk">Clue</span><p class="eg-clue">' + esc2(I.clue) + '</p>';
+      else body = '<span class="eg-lk">Locked</span><p class="eg-mute">' + (tk ? '' : 'Find the one before it for a clue.') + '</p>' + (tk ? '<button type="button" class="eg-use" data-eg="hint" data-id="' + id + '">Use a hint token</button>' : '');
+      h += '<li class="eg-c locked"><span class="eg-rn">' + RN[i] + '</span><span class="eg-frost" aria-hidden="true"></span>' + body + '</li>';
+    }
+  });
+  h += '</ol><p class="eg-gfoot">Each secret you find whispers a clue to the next. Your gallery is yours alone and follows you to every device.</p></div>';
+  return h;
+}
+function openGallery(){
+  closeDrop(false); hideCard();
+  if (!gal){
+    gal = D.createElement('div'); gal.id = 'egGal'; gal.className = 'eg-gal'; gal.setAttribute('role', 'dialog'); gal.setAttribute('aria-modal', 'true'); gal.setAttribute('aria-labelledby', 'egGalT'); gal.hidden = true; B.appendChild(gal);
+    gal.addEventListener('click', function(e){
+      if (e.target === gal){ closeGallery(); return; }
+      var b = e.target.closest('[data-eg]'); if (!b) return; var a = b.getAttribute('data-eg'), id = b.getAttribute('data-id');
+      if (a === 'close') closeGallery();
+      else if (a === 'pick'){ closeGallery(); try { W.AspenWho.openPicker(); } catch(x){} }
+      else if (a === 'replay'){ closeGallery(); setTimeout(function(){ replay(id); }, RM ? 0 : 280); }
+      else if (a === 'hint') spendHint(id);
+      else if (a === 'gh'){ setGH(!H.classList.contains('eg-gh')); renderGal(); var t = gal.querySelector('[data-eg="gh"]'); if (t) t.focus({preventScroll:true}); }
+    });
+    gal.addEventListener('keydown', function(e){
+      if (e.key === 'Escape'){ e.preventDefault(); closeGallery(); return; }
+      if (e.key !== 'Tab') return;
+      var fs = [].slice.call(gal.querySelectorAll('button')).filter(function(x){ return x.offsetParent; }); if (!fs.length) return;
+      var a = fs[0], z = fs[fs.length - 1];
+      if (e.shiftKey && D.activeElement === a){ e.preventDefault(); z.focus(); } else if (!e.shiftKey && D.activeElement === z){ e.preventDefault(); a.focus(); }
+    });
+  }
+  galFrom = D.activeElement; renderGal(); gal.hidden = false; H.classList.add('eg-lock');
+  requestAnimationFrame(function(){ gal.classList.add('on'); });
+  setTimeout(function(){ var c = gal.querySelector('.eg-close'); if (c) try { c.focus({preventScroll:true}); } catch(e){} }, 30);
+}
+function renderGal(){ if (!gal) return; var y = gal.scrollTop; gal.innerHTML = galHTML(); gal.scrollTop = y; }
+function closeGallery(){
+  if (!gal || gal.hidden) return; gal.classList.remove('on'); H.classList.remove('eg-lock');
+  setTimeout(function(){ gal.hidden = true; }, RM ? 0 : 220);
+  if (galFrom && galFrom.focus && galFrom !== B) try { galFrom.focus({preventScroll:true}); } catch(e){}
+}
+function spendHint(id){
+  var p = me(); if (!p) return; var r = rec(p); if (r[id] || r['h_' + id] || tokensOf(r) < 1) return;
+  r['h_' + id] = 1; saveRec(p, r); paintEggs(false); renderGal();
+  var li = gal && gal.querySelectorAll('.eg-c')[CHAIN.indexOf(id)]; if (li && !RM){ li.classList.add('eg-flash'); }
+}
+function setGH(on){
+  H.classList.toggle('eg-gh', !!on); try { localStorage.setItem('aspenGoldenHour', on ? '1' : '0'); } catch(e){}
+  var o = D.getElementById('egGH'); if (on && !o){ o = D.createElement('div'); o.id = 'egGH'; o.setAttribute('aria-hidden', 'true'); B.appendChild(o); }
+}
+function applyGH(){ var p = me(), want = false; try { want = localStorage.getItem('aspenGoldenHour') === '1'; } catch(e){} setGH(want && p && goldOf(rec(p)) >= 5); }
+
+/* ---------- replays (never count) ---------- */
+function replay(id){
+  replaying = true;
+  try {
+    var R = {
+      flake:function(){ snow(110); }, konami:function(){ snow(260); toast('&#10052;&#65038;&nbsp; Let it snow &nbsp;&#10052;&#65038;'); },
+      aspen:function(){ fx('tk-glow', 3700); toast('Alpenglow &middot; 4:45 PM &middot; the peaks turn pink'); },
+      powder:function(){ buf = 'powde'; D.dispatchEvent(new KeyboardEvent('keydown', {key:'r'})); },
+      pizza:function(){ toast('Pizza&hellip; pizza&hellip; <b>French fries!</b> &nbsp;&middot;&nbsp; Marcy, Buttermilk, Day I'); },
+      marco:function(){ board(); }, aurora:function(){ fx('tk-aur', 8100); toast('Northern lights over Red Mountain &mdash; it happens'); },
+      steam:function(){
+        var t = $$('figure[data-cap]').filter(function(f){ return /hot tub/i.test(f.getAttribute('data-cap')); })[0];
+        try { if (W.AspenNav) W.AspenNav.go('lodging'); } catch(e){}
+        if (!t){ toast('Steam rising off the hot tub'); return; }
+        setTimeout(function(){ try { t.scrollIntoView({block:'center', inline:'center', behavior:RM ? 'auto' : 'smooth'}); } catch(e){}
+          t.classList.add('tk-steamy', 'tk-play'); setTimeout(function(){ if (typeof night === 'function') t.classList.toggle('tk-steamy', !!night()); }, 9000); }, 450);
+      },
+      globe:function(){ snow(180); if (!RM && foot){ foot.classList.remove('tk-wob'); void foot.offsetWidth; foot.classList.add('tk-wob'); } toast('Snow globe, shaken &#10052;&#65038;'); },
+      shake:function(){ snow(380); toast('Blizzard! Somebody shook the mountain'); },
+      bowl:function(){
+        try { if (W.AspenNav) W.AspenNav.go('valley'); } catch(e){}
+        setTimeout(function(){ var m = W.AspenMap && W.AspenMap.map;
+          try { if (m && m.setView){ m.setView([39.137, -106.872], 14); if (bowlLn) setTimeout(function(){ bowlLn.openPopup(); }, 500); } else toast('&#10052;&#65038; The secret run &middot; Highland Bowl'); } catch(e){ toast('&#10052;&#65038; The secret run &middot; Highland Bowl'); } }, 900);
+      },
+      allbooked:function(){ confetti(70); toast('&#10052;&#65038;&nbsp; Every booking is in. Nice work. &nbsp;&#10052;&#65038;'); },
+      firstchair:function(){ fx('tk-sun', 6100); toast('First chair &middot; 8:30 AM in Aspen. The lifts are spinning.'); },
+      newyear:function(){ confetti(110); snow(200); toast('Happy New Year from Aspen &#10022; 2027'); }
+    };
+    if (R[id]) R[id]();
+    if (RM && /^(flake|marco)$/.test(id)) toast(esc2(INFO[id].n) + ' &middot; this one needs motion turned on');
+  } catch(e){}
+  setTimeout(function(){ replaying = false; }, 80);
+}
+
+/* ---------- golden snowflake ---------- */
+var GF = {el:null, act:0, next:0, seen:0, raf:0, last:Date.now()};
+function rnd(a, b){ return a + Math.random() * (b - a); }
+function busy(){
+  if (D.hidden || B.classList.contains('gated') || B.classList.contains('vt-on') || B.classList.contains('vx-locked')) return true;
+  if (gal && !gal.hidden) return true;
+  var pal = D.getElementById('nvPal'); if (pal && !pal.hidden) return true;
+  return !!D.querySelector('.story.on,.lb.on,dialog[open],.dk-on,.nv-sheet:not([hidden]).nv-in');
+}
+function goldInit(){
+  try { GF.seen = +sessionStorage.getItem('aspenGoldSeen') || 0; } catch(e){}
+  GF.next = rnd(120, 360) * 1000;
+  ['pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll'].forEach(function(t){ W.addEventListener(t, function(){ GF.last = Date.now(); }, {passive:true, capture:true}); });
+  setInterval(function(){
+    if (GF.el){ if (busy()) dropGold(); return; }
+    if (busy() || Date.now() - GF.last > 90000 || GF.seen >= 4) return;
+    GF.act += 1000; if (GF.act >= GF.next) spawnGold();
+  }, 1000);
+}
+function spawnGold(){
+  if (GF.el) return; GF.act = 0; GF.next = rnd(120, 360) * 1000; GF.seen++;
+  try { sessionStorage.setItem('aspenGoldSeen', GF.seen); } catch(e){}
+  var b = D.createElement('button'); b.type = 'button'; b.className = 'eg-gf' + (RM ? ' still' : ''); b.setAttribute('aria-label', 'A golden snowflake. Catch it!');
+  b.innerHTML = flakeSVG(); B.appendChild(b); GF.el = b;
+  b.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); catchGold(b); });
+  var vw = innerWidth, vh = innerHeight;
+  if (RM){
+    b.style.left = Math.round(rnd(.12, .82) * vw) + 'px'; b.style.top = Math.round(rnd(.3, .7) * vh) + 'px';
+    requestAnimationFrame(function(){ b.classList.add('on'); });
+    GF.raf = setTimeout(function(){ if (GF.el === b) dropGold(); }, 15000); return;
+  }
+  var x0 = rnd(.08, .86) * vw, dur = rnd(15000, 19000), t0 = performance.now(), amp = rnd(22, 40), ph = rnd(0, 6.28), spin = rnd(-40, 40);
+  b.classList.add('on');
+  (function step(now){
+    if (GF.el !== b) return;
+    var p = (now - t0) / dur; if (p >= 1){ dropGold(); return; }
+    var x = x0 + Math.sin(p * 9 + ph) * amp, y = -50 + p * (vh + 100);
+    b.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) rotate(' + (p * 360 + spin).toFixed(1) + 'deg)';
+    GF.raf = requestAnimationFrame(step);
+  })(t0);
+}
+function dropGold(){ var b = GF.el; if (!b) return; GF.el = null; cancelAnimationFrame(GF.raf); clearTimeout(GF.raf); b.classList.remove('on'); b.classList.add('gone'); setTimeout(function(){ b.remove(); }, 400); }
+function catchGold(b){
+  var r = b.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  GF.el = null; cancelAnimationFrame(GF.raf); clearTimeout(GF.raf); b.remove(); buzz([8, 30, 8]);
+  burst(cx, cy);
+  var p = me(), g;
+  if (p){ var rr = rec(p); rr['g_' + DEV] = (+rr['g_' + DEV] || 0) + 1; saveRec(p, rr); g = goldOf(rr); paintEggs(true); if (g >= 5) applyGH(); }
+  else { guestGold++; g = guestGold; }
+  var o = {gold:1, k:'Golden snowflake · ' + g + ' caught', t:'', clue:''};
+  if (!p){ o.t = 'Pick who you are to keep it'; o.clue = 'Golden snowflakes and secrets are saved per person.'; o.pick = 1; }
+  else if (g === 5){ o.t = 'Something golden is unlocked'; o.clue = 'Golden hour is waiting in the secret gallery.'; }
+  else if (g % 3 === 0){ o.t = 'You earned a hint token'; o.clue = 'Spend it on any locked secret in the gallery.'; }
+  else { var to = 3 - g % 3; o.t = to + ' more for a hint' + (g < 5 ? ' · ' + (5 - g) + ' to something golden' : ''); }
+  card(o);
+}
+function burst(x, y){
+  if (RM || !B.animate) return;
+  var ring = D.createElement('span'); ring.className = 'eg-ring'; ring.style.left = x + 'px'; ring.style.top = y + 'px'; B.appendChild(ring);
+  var a = anim(ring, [{transform:'scale(.3)', opacity:.95}, {transform:'scale(2.6)', opacity:0}], {duration:620, easing:'cubic-bezier(.2,.8,.2,1)'}); if (a) a.onfinish = function(){ ring.remove(); }; else ring.remove();
+  for (var i = 0; i < 14; i++) (function(i){
+    var s = D.createElement('span'); s.className = 'eg-spark'; s.style.left = x + 'px'; s.style.top = y + 'px'; B.appendChild(s);
+    var ang = i / 14 * 6.283 + Math.random() * .3, d = 34 + Math.random() * 38;
+    var k = anim(s, [{transform:'translate(0,0) scale(1)', opacity:1}, {transform:'translate(' + (Math.cos(ang) * d).toFixed(1) + 'px,' + (Math.sin(ang) * d + 14).toFixed(1) + 'px) scale(.2)', opacity:0}], {duration:560 + Math.random() * 300, easing:'cubic-bezier(.15,.7,.3,1)'});
+    if (k) k.onfinish = function(){ s.remove(); }; else s.remove();
+  })(i);
+}
+
+/* ---------- repaint everything that shows the tally ---------- */
+function paintEggs(glow){
+  syncFound();
+  var n = Object.keys(found).length;
+  [].forEach.call(D.querySelectorAll('.tk-eggs b'), function(x){ x.textContent = n; });
+  [].forEach.call(D.querySelectorAll('.eg-psst-t'), function(x){ x.innerHTML = psstHTML(); });
+  var ch = D.querySelector('.tk-eggs');
+  if (ch){ ch.setAttribute('aria-label', (me() ? PPL[me()] + '’s secrets: ' : 'Secrets: ') + n + ' of ' + EGGS + ' found. Open the secrets menu');
+    if (glow){ ch.classList.remove('glow'); void ch.offsetWidth; ch.classList.add('glow'); } }
+  if (drop && !drop.hidden) drop.innerHTML = dropHTML();
+  if (gal && !gal.hidden) renderGal();
+}
+function eggs2Init(){
+  migrate(); paintEggs(false); applyGH(); goldInit();
+  W.addEventListener('aspen:who', function(){ setTimeout(function(){ migrate(); paintEggs(false); applyGH(); }, 0); });
+  W.addEventListener('aspen:sync', function(e){ if (e.detail && e.detail.key === KEY2){ paintEggs(false); applyGH(); } });
+  W.AspenEggs = {openGallery:openGallery, closeGallery:closeGallery, spawnGold:function(){ if (GF.el) dropGold(); spawnGold(); }, state:function(){ var p = me(), r = rec(p); return {who:p, found:foundIds(r), gold:goldOf(r), tokens:tokensOf(r)}; }, chain:CHAIN.slice()};
+}
+syncFound();
 function fx(cls, ms, html){
   if (RM) return null;
   var o = D.createElement('div'); o.className = 'tk-fx ' + cls; o.setAttribute('aria-hidden', 'true');
@@ -13095,25 +13588,15 @@ if (ON.polaroid && foot){
 /* ---------- footer: secrets hint + tilt-to-look chip ---------- */
 if (foot){
   var ps = D.createElement('p'); ps.className = 'tk-psst';
-  ps.innerHTML = 'psst&hellip; there are ' + EGGS + ' secrets on this page &middot; <b>' + Object.keys(found).length + '</b> found';
+  ps.innerHTML = '<span class="eg-psst-t">' + psstHTML() + '</span>';
   var fine = $('.f-fine', foot); foot.insertBefore(ps, fine ? fine.nextSibling : null);
   var brand = D.querySelector('.topnav .brand');
   if (brand && !D.querySelector('.tk-eggs')){
     var ec = D.createElement('button'); ec.type = 'button'; ec.className = 'tk-eggs';
-    ec.setAttribute('aria-label', 'Secrets found on this page');
-    ec.innerHTML = '<span aria-hidden="true">&#10052;</span><b>' + Object.keys(found).length + '</b><i>/' + EGGS + '</i>';
-    ec.addEventListener('click', function(e){ e.stopPropagation(); var k = Object.keys(found).length;
-      if (k >= EGGS) { toast('All ' + EGGS + ' secrets found. Legend.'); return; }
-      var HINTS = {flake:'The biggest word on the page has a snowflake. Poke it.', konami:'Old-school gamers know the code: up, up, down, down…',
-        aspen:'Type the name of the town. Watch the sky at 4:45.', powder:'Type what every skier prays for overnight.',
-        marco:'Type the name of the one who rides sideways.', pizza:'Type the first lesson every beginner learns. Pizza… what comes next?',
-        aurora:'The moon and the sun, back and forth, seven times fast.', bowl:'On the map, zoom all the way into the bowl at the south end of Highlands.',
-        firstchair:'Visit when the first chair loads: half past eight, Aspen time.', steam:'Find the hot tub on the Lodging tab after dark.',
-        allbooked:'Finish every booking. Something happens on the last tick.', newyear:'Be here at the stroke of midnight, Aspen time, Jan 1.',
-        shake:'On your phone: shake it like a snow globe.', globe:'Hold your finger on the snowflake at the very bottom.'};
-      var left = Object.keys(HINTS).filter(function(id){ return !found[id]; });
-      var pick = left[Math.floor(Math.random() * left.length)];
-      toast('&#10052; ' + k + '/' + EGGS + ' found &middot; Hint: ' + HINTS[pick]); });
+    ec.setAttribute('aria-haspopup', 'dialog'); ec.setAttribute('aria-expanded', 'false'); ec.setAttribute('aria-label', 'Secrets found on this page');
+    ec.innerHTML = chipHTML();
+    /* eggs2: the chip opens the secrets dropdown (count, golden snowflakes, hints, the secret gallery) */
+    ec.addEventListener('click', function(e){ e.stopPropagation(); e.preventDefault(); toggleDrop(ec); });
     brand.appendChild(ec);
   }
   var DOE = W.DeviceOrientationEvent, DME = W.DeviceMotionEvent;
@@ -13262,7 +13745,7 @@ if (tub && !RM){
 }
 
 /* Highland Bowl: zoom the map into it → gold boot-pack + secret-run popup */
-var bowlDone = false;
+var bowlDone = false, bowlLn = null;
 function hookMap(){
   var m = W.AspenMap && W.AspenMap.map; if (!m || m._tkHooked || typeof L === 'undefined') return; m._tkHooked = 1;
   m.on('moveend', function(){
@@ -13273,7 +13756,7 @@ function hookMap(){
       var pts = [[39.1428, -106.8721], [39.1380, -106.8741], [39.1333, -106.8758], [39.1300, -106.8772]];
       var ln = L.polyline(pts, {color:'#C49A4A', weight:4, dashArray:'2 9', lineCap:'round'}).addTo(m);
       L.polyline([[39.1300, -106.8772], [39.1313, -106.8728], [39.1340, -106.8676], [39.1366, -106.8642]], {color:'#E8D9B0', weight:3, opacity:.9}).addTo(m);
-      ln.bindPopup('<b>Secret run &middot; Highland Bowl</b><br>Boot-pack the ridge to 12,392 ft, then drop G-Zones. About an hour of hiking for one perfect run. Marco &amp; Ben only.').openPopup();
+      bowlLn = ln; ln.bindPopup('<b>Secret run &middot; Highland Bowl</b><br>Boot-pack the ridge to 12,392 ft, then drop G-Zones. About an hour of hiking for one perfect run. Marco &amp; Ben only.').openPopup();
       toast('&#10052;&#65038; You found the secret run');
     }
   });
@@ -13300,8 +13783,11 @@ setInterval(function(){
   nyDone = true; egg('newyear'); confetti(110); snow(200); toast('Happy New Year from Aspen &#10022; ' + t.y);
 }, 15000);
 
-/* debug hook for the owner: TK.test('marco'|'powder'|'aspen'|'aurora'|'confetti'|'sun') */
-W.TK = {ON:ON, toast:toast, test:function(n){ ({marco:board, confetti:function(){ confetti(70); },
+/* eggs2 v1: per-person secrets, golden snowflakes, secret gallery */
+eggs2Init();
+
+/* debug hook for the owner: TK.test('marco'|'powder'|'aspen'|'aurora'|'confetti'|'sun'|'golden'|'gallery') */
+W.TK = {ON:ON, toast:toast, test:function(n){ ({golden:function(){ W.AspenEggs.spawnGold(); }, gallery:openGallery, marco:board, confetti:function(){ confetti(70); },
   aspen:function(){ fx('tk-glow', 3700); }, aurora:function(){ fx('tk-aur', 8100); }, sun:function(){ fx('tk-sun', 6100); },
   powder:function(){ buf = 'powde'; D.dispatchEvent(new KeyboardEvent('keydown', {key:'r'})); }})[n](); }};
 })();
@@ -13923,6 +14409,7 @@ var SPECS=[
  spec('filters','aspenOutfitFilters_v1','people',{per:true,
   read:function(p){var o=jget('aspenOutfitFilters_v1')||{};return o[p]?{_:o[p]}:{};},
   put:function(items,p){var o=jget('aspenOutfitFilters_v1')||{};if(items._){o[p]=items._;}else{delete o[p];}jset('aspenOutfitFilters_v1',o);}}),
+ spec('eggs','aspenEggs_v2','people',perPerson('aspenEggs_v2')), /* eggs2 v1: secrets found, golden snowflakes, hints */
  spec('bought','aspenInvBought_v1','people',{per:true,
   read:function(p){var o=jget('aspenInvBought_v1')||{},a=o[p],r={};if(Array.isArray(a)){a.forEach(function(x){r[x]=1;});}return r;},
   put:function(items,p){var o=jget('aspenInvBought_v1')||{},a=Array.isArray(o[p])?o[p]:[];
@@ -14210,7 +14697,7 @@ function fillInfo(){
  info.innerHTML='<div class="sy-in"><div class="sy-badge" aria-hidden="true">'+svg(ICON.cloud+(state==='synced'?ICON.check:ICON.sync))+'</div>'+
   '<p class="sy-k">Sync</p><h3 class="sy-t" id="syInfoT">Linked as '+(NAMES[claim]||'—')+'</h3>'+
   '<p class="sy-sub">'+s+' &middot; last sync '+ago(lastSync)+'</p>'+
-  '<ul class="sy-list"><li>Booking ticks, groceries + checkout list &mdash; shared with the family</li><li>Your saved outfits + suitcase &mdash; yours; everyone can see them</li></ul>'+
+  '<ul class="sy-list"><li>Booking ticks, groceries + checkout list &mdash; shared with the family</li><li>Your saved outfits + suitcase &mdash; yours; everyone can see them</li><li>Your secrets &mdash; found eggs + golden snowflakes</li></ul>'+
   '<button type="button" class="sy-go" data-sy="close">Done</button>'+
   '<button type="button" class="sy-skip" data-sy="unlink">Unlink this device</button></div>';
 }
