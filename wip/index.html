@@ -1108,6 +1108,113 @@ body.dark .fan-play{box-shadow:0 0 0 3px #0d1f2e,0 6px 14px rgba(0,0,0,.4);}
 .lg-vf-card span{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);}
 .lg-vf-card p{font-size:13.5px;margin-top:4px;}
 
+/* =========== v41 DECK VIEW (real render + time of day + point your phone) =========== */
+.dk [hidden]{display:none !important;}
+/* .hero is also the page-hero class: keep the Ajax pin a pin (min-height/overflow/flex leaked in) */
+.lg-vf .lg-pin.hero{min-height:0;overflow:visible;display:block;}
+.lg-vf.dk-on > .lg-vf-sky, .lg-vf.dk-on > .lg-vf-axis{display:none;}
+.lg-vf .dk-note{display:none;} .lg-vf.dk-on .dk-note{display:inline;} .lg-vf.dk-on .il-note{display:none;}
+.dk-days{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 10px;margin:0 -2px;}
+.dk-days::-webkit-scrollbar{display:none;}
+.dk-day{flex:0 0 auto;min-width:46px;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 8px 7px;border-radius:12px;
+  border:1px solid var(--glass-line);background:var(--glass-2);color:var(--evergreen);font-family:var(--serif);font-size:19px;font-weight:600;line-height:1;
+  transition:background var(--dur-1) var(--ease-out),transform var(--dur-2) var(--ease-spring);}
+.dk-day span{font-family:var(--sans,inherit);font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);}
+.dk-day i{font-style:normal;font-family:var(--sans,inherit);font-size:8px;font-weight:700;letter-spacing:.14em;color:var(--rose);}
+.dk-day.on{background:var(--alpenglow);color:#1d2a20;border-color:var(--gold);}
+.dk-day.on span,.dk-day.on i{color:#3a2a10;}
+.dk-day:active{transform:scale(.96);}
+.dk-view{--dk-z:#6096d6;--dk-m:#a0c4e8;--dk-h:#deecf6;--dk-night:0;position:relative;height:clamp(250px,40vw,380px);border-radius:12px;overflow:hidden;
+  touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;outline:none;isolation:isolate;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);}
+.dk-view.grab{cursor:grabbing;}
+.dk-view:focus-visible{box-shadow:0 0 0 2px var(--gold);}
+.dk-sky{position:absolute;inset:0;background:linear-gradient(180deg,var(--dk-z) 0%,var(--dk-m) 52%,var(--dk-h) 78%);transition:background var(--dur-2);}
+.dk-stars{position:absolute;inset:0 0 35% 0;opacity:calc(var(--dk-night) * .9);
+  background-image:radial-gradient(1px 1px at 12% 18%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 27% 42%,#fff 50%,transparent 51%),
+  radial-gradient(1.4px 1.4px at 41% 12%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 58% 30%,#fff 50%,transparent 51%),
+  radial-gradient(1px 1px at 69% 9%,#fff 50%,transparent 51%),radial-gradient(1.3px 1.3px at 83% 36%,#fff 50%,transparent 51%),
+  radial-gradient(1px 1px at 92% 16%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 6% 52%,#fff 50%,transparent 51%),
+  radial-gradient(1px 1px at 35% 64%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 76% 58%,#fff 50%,transparent 51%);
+  background-size:340px 220px;}
+.dk-track{position:absolute;left:0;top:0;will-change:transform;}
+.dk-track.glide{transition:transform .55s var(--ease-out);}
+.dk-imgs{position:absolute;left:0;pointer-events:none;}
+.dk-img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .12s linear;-webkit-user-drag:none;}
+.dk-img[data-k="day"]{opacity:1;}
+.dk-sun{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,#fffbe8 0 38%,#ffe39a 52%,rgba(255,214,120,.0) 72%);box-shadow:0 0 30px 12px rgba(255,226,150,.55);}
+.dk-sun.above::after{content:"\2191";position:absolute;left:50%;top:-15px;transform:translateX(-50%);font-size:12px;font-weight:700;color:#fff8e0;text-shadow:0 1px 3px rgba(0,0,0,.4);}
+.dk-moon{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#f4f1e6;overflow:hidden;pointer-events:none;
+  box-shadow:0 0 18px 4px rgba(230,236,255,.35);}
+.dk-moon i{position:absolute;inset:0;border-radius:50%;background:#0d1730;opacity:.92;
+  transform:translateX(calc((var(--ph,.5) - .5) * -200%));}
+.dk-rise{position:absolute;width:2px;height:16px;margin:-16px 0 0 -1px;background:linear-gradient(#e6ecff,transparent);opacity:.8;pointer-events:none;}
+.dk-rise::before{content:"";position:absolute;left:-4px;top:-10px;width:10px;height:10px;border-radius:50%;border:1.5px solid #e6ecff;border-right-color:transparent;transform:rotate(-30deg);}
+.dk-fw{position:absolute;pointer-events:none;mix-blend-mode:screen;}
+.dk-glow{position:absolute;width:220px;height:150px;margin:-75px 0 0 -110px;border-radius:50%;pointer-events:none;opacity:0;
+  background:radial-gradient(closest-side,rgba(255,214,140,.55),rgba(242,160,180,.22) 55%,transparent);transition:opacity var(--dur-3);}
+.dk.nye .dk-glow{opacity:.35;}
+@media (prefers-reduced-motion:reduce){ .dk.nye .dk-glow{opacity:.95;} .dk-track.glide{transition:none;} }
+.dk-pins{position:absolute;inset:0;pointer-events:none;}
+.dk-pins .lg-pin{pointer-events:auto;width:16px;height:16px;border-width:2px;}
+.dk-pins .lg-pin::before{inset:3px;}
+.dk-pins .lg-pin span{display:block;position:absolute;bottom:calc(100% + 10px + var(--lift,0px));left:50%;
+  transform:translateX(calc(-50% + var(--shift,0px)));white-space:nowrap;font-size:10.5px;font-weight:600;letter-spacing:.05em;padding:3px 9px;
+  border-radius:100px;background:rgba(255,252,244,.94);color:var(--lg-ink);border:1px solid rgba(176,138,62,.5);box-shadow:0 6px 14px -8px rgba(0,0,0,.4);}
+.dk-pins .lg-pin:last-of-type span{left:50%;right:auto;}
+.dk-pins .lg-pin::after{content:"";position:absolute;left:50%;bottom:100%;width:1px;height:calc(10px + var(--lift,0px));
+  background:rgba(255,255,255,.85);box-shadow:0 0 2px rgba(0,0,0,.35);transform:translateX(-.5px);}
+.dk-pins .lg-pin.on span{background:var(--alpenglow);color:#1d2a20;}
+.dk-pins .lg-pin.ghost{background:transparent;border-style:dashed;}
+.dk-pins .lg-pin.ghost::before{opacity:.5;}
+.dk-pins .lg-pin:hover{transform:translate(-50%,-50%) scale(1.12);}
+.dk-axis{position:absolute;left:0;right:0;bottom:0;height:22px;pointer-events:none;
+  background:linear-gradient(transparent,rgba(10,20,16,.35));}
+.dk-tick{position:absolute;bottom:4px;transform:translateX(-50%);font-size:9px;font-weight:700;letter-spacing:.18em;color:#fff;
+  text-shadow:0 1px 3px rgba(0,0,0,.6);min-width:1px;}
+.dk-tick:empty{width:1px;height:6px;background:rgba(255,255,255,.7);}
+.dk-nav{position:absolute;bottom:30px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.6);
+  background:rgba(20,30,26,.35);color:#fff;font-size:22px;line-height:30px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  transition:opacity var(--dur-1);z-index:2;}
+.dk-nav.prev{left:8px;} .dk-nav.next{right:8px;}
+.dk-nav:disabled{opacity:0;pointer-events:none;}
+.dk-head{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:.16em;color:var(--evergreen);padding:3px 10px;border-radius:100px;
+  border:1px solid var(--glass-line);background:var(--glass-2);white-space:nowrap;}
+body.dark .dk-head{color:#e8eef2;background:rgba(255,255,255,.06);}
+.dk-cred{display:block;margin-top:4px;font-size:10.5px;letter-spacing:.04em;opacity:.7;}
+.dk.phone .dk-nav{display:none;}
+.dk.phone .dk-head{background:var(--rose);color:#fff;border-color:var(--rose);}
+.dk-time{margin-top:10px;}
+.dk-read{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+.dk-read b{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--evergreen);line-height:1;}
+.dk-read span{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);}
+.dk-range{width:100%;margin:10px 0 4px;accent-color:var(--gold);height:28px;}
+.dk-stops{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.dk-stop{padding:6px 4px;border-radius:10px;border:1px solid var(--glass-line);background:var(--glass-2);color:var(--evergreen);text-align:center;
+  transition:background var(--dur-1) var(--ease-out);}
+.dk-stop b{display:block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.dk-stop span{font-size:11px;color:var(--lg-ink);opacity:.8;}
+.dk-stop.on{background:var(--alpenglow);color:#1d2a20;border-color:var(--gold);}
+.dk-stop.on span{color:#1d2a20;}
+.dk-phone-row{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.dk-phone,.dk-align{padding:9px 14px;border-radius:100px;border:1px solid var(--gold);background:var(--glass-2);color:var(--evergreen);font-size:12px;font-weight:600;letter-spacing:.04em;}
+.dk.phone .dk-phone{background:var(--rose);color:#fff;border-color:var(--rose);}
+.dk-cal{flex:1 1 100%;font-size:12px;font-style:italic;color:var(--lg-ink);opacity:.8;margin:0;}
+.dk-facts{margin-top:10px;font-size:12.5px;line-height:1.5;color:var(--lg-ink);}
+@media(max-width:520px){
+  .dk-view{height:270px;}
+  .dk-read b{font-size:21px;}
+  .dk-stop b{font-size:9px;letter-spacing:.06em;}
+}
+body.dark .dk-pins .lg-pin span{background:rgba(12,24,37,.92);border-color:rgba(201,160,90,.5);color:#e8eef2;}
+body.dark .dk-pins .lg-pin.on span{background:var(--alpenglow);color:#1d2a20;}
+body.dark .dk-day,body.dark .dk-stop,body.dark .dk-phone,body.dark .dk-align{background:rgba(255,255,255,.06);color:#e8eef2;}
+body.dark .dk-day.on,body.dark .dk-stop.on{background:var(--alpenglow);color:#1d2a20;}
+body.dark .dk-stop span,body.dark .dk-facts,body.dark .dk-cal{color:#c9d3dc;}
+body.dark .dk-stop.on span{color:#1d2a20;}
+body.dark .dk-read b{color:#f0ead8;}
+
 /* =========== F. HOUSE NOTES =========== */
 .lg-notes{display:grid;gap:10px;}
 @media(min-width:760px){.lg-notes{grid-template-columns:1fr 1fr;align-items:start;}}
@@ -3911,24 +4018,56 @@ body.gated .wh-fab{display:none;}
   <!-- ============ E. VIEW FINDER ============ -->
   <div class="sub-head reveal">From the deck &middot; where to look</div>
   <div class="lg-vf reveal" id="lgVf">
+
+    <!-- v41 deck view: pre-rendered panorama (Google 3D Tiles via Cesium, rendered once), time of day, point your phone -->
+    <div class="dk" id="dk" hidden>
+      <div class="dk-days" id="dkDays" role="group" aria-label="Trip night"></div>
+      <div class="dk-view" id="dkView" tabindex="0" aria-roledescription="panorama" aria-label="View from the deck, east to west. Drag or use the arrow keys to look around.">
+        <div class="dk-sky" aria-hidden="true"><span class="dk-stars"></span></div>
+        <div class="dk-track" id="dkTrack">
+          <span class="dk-sun" id="dkSun" aria-hidden="true"></span>
+          <span class="dk-moon" id="dkMoon" aria-hidden="true"><i></i></span>
+          <span class="dk-rise" id="dkRise" aria-hidden="true"></span>
+          <div class="dk-imgs" id="dkImgs" aria-hidden="true"></div>
+          <canvas class="dk-fw" id="dkFw" aria-hidden="true"></canvas>
+          <span class="dk-glow" id="dkGlow" aria-hidden="true"></span>
+          <div class="dk-pins" id="dkPins"></div>
+          <div class="dk-axis" id="dkAxis" aria-hidden="true"></div>
+        </div>
+        <button class="dk-nav prev" type="button" aria-label="Look east">&#8249;</button>
+        <button class="dk-nav next" type="button" aria-label="Look west">&#8250;</button>
+      </div>
+      <div class="dk-time">
+        <div class="dk-read"><b id="dkClock">12:10 PM</b><span id="dkWhat" aria-live="polite">Midday</span><span class="dk-head" id="dkHead">S &middot; 180&deg;</span></div>
+        <input class="dk-range" id="dkRange" type="range" min="0" max="3" step="0.01" value="1" aria-label="Time of day: sunrise to night">
+        <div class="dk-stops" id="dkStops"></div>
+      </div>
+      <div class="dk-phone-row" id="dkPhoneRow" hidden>
+        <button class="dk-phone" id="dkPhone" type="button"><span aria-hidden="true">&#10148;</span> Point your phone</button>
+        <button class="dk-align" id="dkAlign" type="button" hidden>Align on Ajax</button>
+        <p class="dk-cal" id="dkCal">Hold the phone up on the deck, screen facing you. Compasses drift near metal railings and the hot tub: point at the Sundeck and tap <i>Align on Ajax</i> if the labels are off.</p>
+      </div>
+      <p class="dk-facts"><span id="dkFacts"></span><span class="dk-cred">3D render: Google Photorealistic 3D Tiles via Cesium ion (imagery &copy; Google and its data providers), pre-rendered once.</span></p>
+    </div>
     <div class="lg-vf-sky">
       <svg class="lg-vf-svg" viewBox="0 0 1000 260" preserveAspectRatio="none" aria-hidden="true">
         <path class="r1" d="M0 120 L60 96 L111 70 L160 98 L240 112 L300 104 L360 118 L420 92 L489 50 L560 88 L600 78 L639 60 L700 98 L760 104 L833 86 L880 100 L930 84 L983 74 L1000 82 L1000 260 L0 260Z"/>
         <path class="r2" d="M0 170 L80 150 L170 160 L260 140 L340 156 L420 130 L489 112 L560 140 L639 128 L720 150 L833 132 L900 150 L1000 140 L1000 260 L0 260Z"/>
         <path class="r3" d="M0 210 L120 196 L240 206 L380 188 L520 200 L660 186 L800 204 L920 192 L1000 200 L1000 260 L0 260Z"/>
       </svg>
-      <button class="lg-pin" style="left:11.1%;top:27%" data-n="Independence Pass" data-b="East-southeast &middot; distant" data-d="The Continental Divide road, closed in winter. Look that way at sunrise."><span>Indep. Pass</span></button>
-      <button class="lg-pin hero" style="left:48.9%;top:19%" data-n="Aspen Mountain (Ajax)" data-b="Due south &middot; 5&ndash;7 min to the gondola" data-d="Ski Day II (Tue Dec 29). The NYE torchlight descent and fireworks come down this face at 8 PM."><span>Aspen Mtn</span></button>
-      <button class="lg-pin" style="left:63.9%;top:23%" data-n="Aspen Highlands" data-b="South-southwest &middot; 12 min" data-d="Ski Day IV (Thu Dec 31), with lunch at Merry-Go-Round."><span>Highlands</span></button>
-      <button class="lg-pin" style="left:83.3%;top:33%" data-n="Buttermilk" data-b="Southwest &middot; 10 min" data-d="Lesson days for Marcy + Stella (Mon Dec 28 &amp; Tue Dec 29)."><span>Buttermilk</span></button>
-      <button class="lg-pin" style="left:96%;top:29%" data-n="Snowmass" data-b="West &middot; distant &middot; 25&ndash;30 min" data-d="Ski Days I &amp; VI (Mon Dec 28, Sat Jan 2). The farthest one, so nearer ridges may hide it."><span>Snowmass</span></button>
+      <button data-k="indep" class="lg-pin" style="left:14.4%;top:27%" data-n="Independence Pass" data-b="East-southeast &middot; 116&deg; &middot; 25 km &middot; hidden behind Smuggler Mountain" data-d="The Continental Divide road, closed in winter. You can&rsquo;t see the pass itself from the deck; the sun comes up just to its right, over Smuggler."><span>Indep. Pass</span></button>
+      <button data-k="ajax" class="lg-pin hero" style="left:49.0%;top:19%" data-n="Aspen Mountain (Ajax)" data-b="South &middot; 178&deg; &middot; 6 km to the Sundeck (11,212 ft) &middot; 5&ndash;7 min to the gondola" data-d="Ski Day II (Tue Dec 29). The NYE torchlight descent and fireworks come down this face at 8 PM."><span>Aspen Mtn</span></button>
+      <button data-k="hpeak" class="lg-pin" style="left:66.5%;top:23%" data-n="Aspen Highlands" data-b="South-southwest &middot; 210&deg; &middot; Highland Peak 11 km (12,392 ft) &middot; 12 min to the base" data-d="Ski Day IV (Thu Dec 31), with lunch at Merry-Go-Round."><span>Highlands</span></button>
+      <button data-k="bells" class="lg-pin" style="left:74.3%;top:58%" data-n="Maroon Bells" data-b="Southwest &middot; 224&deg; &middot; 21 km (14,156 ft) &middot; just the tips" data-d="The most photographed peaks in Colorado. From the deck only their tops peek over the Highlands shoulder; the road up is closed to cars in winter (snowmobile / snowcat tours only)."><span>Maroon Bells</span></button>
+      <button data-k="butter" class="lg-pin" style="left:83.1%;top:38%" data-n="Buttermilk" data-b="Southwest &middot; 240&deg; &middot; 6.5 km &middot; 10 min &middot; the sun sets right behind it" data-d="Lesson days for Marcy + Stella (Mon Dec 28 &amp; Tue Dec 29)."><span>Buttermilk</span></button>
+      <button data-k="snowmass" class="lg-pin" style="left:87.6%;top:24%" data-n="Snowmass" data-b="West-southwest &middot; 248&deg; &middot; 13.5 km &middot; 25&ndash;30 min" data-d="Ski Days I &amp; VI (Mon Dec 28, Sat Jan 2). The summit sits just behind Buttermilk&rsquo;s shoulder, so from the deck you see the ridge, not the runs."><span>Snowmass</span></button>
     </div>
     <div class="lg-vf-axis" aria-hidden="true"><span>E</span><span>SE</span><span>S</span><span>SW</span><span>W</span></div>
     <div class="lg-vf-chips" id="lgVfChips" role="group" aria-label="Mountains"></div>
     <div class="lg-vf-card" id="lgVfCard" aria-live="polite">
       <b>Aspen Mountain (Ajax)</b><span>Due south &middot; 5&ndash;7 min to the gondola</span><p>Ski Day II (Tue Dec 29). NYE torchlight + fireworks come down this face at 8 PM.</p>
     </div>
-    <p class="lg-stack-note">Facing south from the deck. Bearings are approximate, worked out from a map, and not checked from the house; what you can actually see depends on trees and ridges.</p>
+    <p class="lg-stack-note"><span class="il-note">Facing south from the deck. Illustrated; bearings are worked out from summit coordinates, not checked from the house.</span><span class="dk-note">A 3D render from just above the deck roofline (Google Photorealistic 3D Tiles, rendered once and graded toward winter: the imagery is a mix of seasons and the snow is whatever was there when it was captured, nothing painted on). Bearings and heights come from the summit coordinates; sun and moon are computed for Aspen in MST. Trees on the deck itself may block bits of it.</span></p>
   </div>
 
   <!-- ============ F. HOUSE NOTES ============ -->
@@ -13234,6 +13373,363 @@ if(D.readyState==='loading'){D.addEventListener('DOMContentLoaded',init);}else{i
 W.AspenSync={v:1,status:function(){return state;},person:function(){return claim;},link:link,unlink:unlink,skip:skip,openPin:openPin,
  flush:function(){scan();push();},scan:scan,specs:SPECS.map(function(s){return {field:s.f,key:s.key,shared:s.shared};}),
  _fb:function(){return fb;},_uid:function(){return uid;},_meta:function(){return meta;},_pending:function(){return pending;},_start:start};
+})();
+</script>
+<script>
+/* ===== v41 deck view: real panorama + time of day + point your phone =====
+   The land is a pre-rendered panorama (Google Photorealistic 3D Tiles through Cesium, rendered
+   once from the deck, see deck/STATUS.md) so the page never loads Cesium. Sky, sun, moon and
+   stars are drawn live from a solar/lunar algorithm. Falls back to the illustrated ridges. */
+(function(){
+  var D = document, W = window;
+  var vf = D.getElementById('lgVf'), dk = D.getElementById('dk');
+  if (!vf || !dk) return;
+  /* compact solar + lunar position (after Meeus / V. Agafonkin's suncalc formulas) */
+var ASTRO=(function(){
+  var PI=Math.PI, rad=PI/180, e=rad*23.4397, J1970=2440588, J2000=2451545;
+  function toDays(ms){ return ms/864e5 - 0.5 + J1970 - J2000; }
+  function ra(l,b){ return Math.atan2(Math.sin(l)*Math.cos(e)-Math.tan(b)*Math.sin(e), Math.cos(l)); }
+  function dec(l,b){ return Math.asin(Math.sin(b)*Math.cos(e)+Math.cos(b)*Math.sin(e)*Math.sin(l)); }
+  function sid(d,lw){ return rad*(280.16+360.9856235*d)-lw; }
+  function sunCoords(d){ var M=rad*(357.5291+0.98560028*d), C=rad*(1.9148*Math.sin(M)+0.02*Math.sin(2*M)+0.0003*Math.sin(3*M)),
+    L=M+C+rad*102.9372+PI; return {dec:dec(L,0), ra:ra(L,0), M:M, L:L}; }
+  function altaz(H,phi,dc){ return {az:(Math.atan2(Math.sin(H), Math.cos(H)*Math.sin(phi)-Math.tan(dc)*Math.cos(phi))/rad+180+360)%360,
+    alt:Math.asin(Math.sin(phi)*Math.sin(dc)+Math.cos(phi)*Math.cos(dc)*Math.cos(H))/rad}; }
+  function sun(ms,lat,lon){ var lw=-lon*rad, phi=lat*rad, d=toDays(ms), c=sunCoords(d); return altaz(sid(d,lw)-c.ra, phi, c.dec); }
+  function moonCoords(d){ var L=rad*(218.316+13.176396*d), M=rad*(134.963+13.064993*d), F=rad*(93.272+13.229350*d),
+    l=L+rad*6.289*Math.sin(M), b=rad*5.128*Math.sin(F), dt=385001-20905*Math.cos(M); return {ra:ra(l,b), dec:dec(l,b), dist:dt}; }
+  function moon(ms,lat,lon){ var lw=-lon*rad, phi=lat*rad, d=toDays(ms), c=moonCoords(d), H=sid(d,lw)-c.ra, p=altaz(H,phi,c.dec);
+    var pa=Math.atan2(Math.sin(H), Math.tan(phi)*Math.cos(c.dec)-Math.sin(c.dec)*Math.cos(H)); p.alt+=0.017/Math.tan((p.alt+10.26/(p.alt+5.10))*rad)/rad*0; return p; }
+  function moonIllum(ms){ var d=toDays(ms), s=sunCoords(d), m=moonCoords(d), sd=149598000,
+    phi=Math.acos(Math.sin(s.dec)*Math.sin(m.dec)+Math.cos(s.dec)*Math.cos(m.dec)*Math.cos(s.ra-m.ra)),
+    inc=Math.atan2(sd*Math.sin(phi), m.dist-sd*Math.cos(phi)),
+    ang=Math.atan2(Math.cos(s.dec)*Math.sin(s.ra-m.ra), Math.sin(s.dec)*Math.cos(m.dec)-Math.cos(s.dec)*Math.sin(m.dec)*Math.cos(s.ra-m.ra));
+    return {frac:(1+Math.cos(inc))/2, phase:0.5+0.5*inc*(ang<0?-1:1)/PI}; }
+  /* sunrise/sunset (h0 = -0.833°, standard refraction + semi-diameter) and solar noon */
+  function times(dayMs,lat,lon){ var lw=-lon*rad, phi=lat*rad, d=toDays(dayMs), n=Math.round(d-0.0009-lw/(2*PI)),
+    ds=0.0009+lw/(2*PI)+n, M=rad*(357.5291+0.98560028*ds), C=rad*(1.9148*Math.sin(M)+0.02*Math.sin(2*M)+0.0003*Math.sin(3*M)),
+    L=M+C+rad*102.9372+PI, dc=dec(L,0), Jn=J2000+ds+0.0053*Math.sin(M)-0.0069*Math.sin(2*L);
+    function fromJ(j){ return (j+0.5-J1970)*864e5; }
+    function at(h0){ var w=Math.acos((Math.sin(h0*rad)-Math.sin(phi)*Math.sin(dc))/(Math.cos(phi)*Math.cos(dc))),
+      a=0.0009+(w+lw)/(2*PI)+n, Jset=J2000+a+0.0053*Math.sin(M)-0.0069*Math.sin(2*L); return [fromJ(Jn-(Jset-Jn)), fromJ(Jset)]; }
+    var sr=at(-0.833), cv=at(-6); return {noon:fromJ(Jn), rise:sr[0], set:sr[1], dawn:cv[0], dusk:cv[1]}; }
+  function phaseName(p){ return p<0.03||p>0.97?'New moon':p<0.22?'Waxing crescent':p<0.28?'First quarter':p<0.47?'Waxing gibbous':p<0.53?'Full moon':p<0.72?'Waning gibbous':p<0.78?'Last quarter':'Waning crescent'; }
+  return {sun:sun, moon:moon, moonIllum:moonIllum, times:times, phaseName:phaseName};
+})();
+
+  var P = {"px":20,"az0":90,"az1":270,"top":14,"bot":8,"w":3600,"h":447,"sky":[97,95,94,94,94,89,86,86,79,86,84,85,86,84,85,87,89,90,92,92,92,93,95,97,98,100,101,102,103,103,104,105,106,107,108,109,111,112,112,112,111,109,108,109,109,109,109,109,109,109,108,108,108,107,107,107,107,106,105,105,104,103,103,103,102,101,99,98,97,93,92,91,88,85,82,81,81,80,79,77,75,74,71,69,68,66,65,64,63,61,60,59,59,58,58,57,56,55,55,54,51,49,48,47,45,46,46,45,43,43,44,47,49,49,48,47,46,44,44,45,45,44,44,42,43,43,41,41,45,45,44,49,49,40,39,44,44,49,49,47,46,42,43,43,45,47,48,51,53,55,57,59,64,68,70,71,73,73,73,76,78,80,80,80,80,79,81,84,85,86,87,88,90,91,91,90,90,91,91,90,88,86,85,85,86,87,90,92,93,93,92,91,90,89,87,85,83,82,80,83,84,84,84,82,79,77,74,74,73,72,71,68,66,66,64,60,59,55,51,49,46,45,48,50,53,55,56,58,60,61,62,64,67,69,70,72,74,75,76,75,75,74,72,72,73,72,69,68,66,65,64,62,60,59,58,57,55,53,52,51,48,43,40,41,42,45,46,48,48,48,49,52,54,57,60,61,61,62,62,62,62,62,62,59,58,55,55,53,55,55,55,54,56,56,56,57,57,58,59,59,59,62,61,61,62,62,61,61,61,60,59,59,59,59,58,58,58,58,57,56,55,54,52,51,50,49,48,48,48,48,48,46,45,43,41,40,40,40,41,40,38,37,36,34,33,33,32,31,30,30,30,30,32,32,31,30,30,29,28,28,27],"img":{"dawn":"deck_dawn.webp","day":"deck_day.webp","glow":"deck_glow.webp","night":"deck_night.webp"}};            /* {px,az0,az1,top,bot,w,h,sky:[skyline el ×10 per 0.5°], img:{dawn,day,glow,night}} */
+  var PEAK = {"indep":{"az":115.9,"el":10.8,"ridge":true},"ajax":{"az":178.2,"el":9.1,"ridge":false},"hpeak":{"az":209.7,"el":7.56,"ridge":false},"bells":{"az":223.7,"el":4.95,"ridge":false},"butter":{"az":239.6,"el":5.96,"ridge":false},"snowmass":{"az":247.7,"el":5.8,"ridge":false}};        /* {key:{az,el,ridge}} keyed by data-k on .lg-pin */
+  if (!P || !PEAK) return;
+  var LAT = 39.20608, LON = -106.82246;
+  var RM = W.matchMedia && W.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var MEDIA = W.ASPEN_MEDIA_BASE || '../media/';
+  var view = D.getElementById('dkView'), track = D.getElementById('dkTrack'), imgsBox = D.getElementById('dkImgs'),
+      pinsBox = D.getElementById('dkPins'), axis = D.getElementById('dkAxis'), sunEl = D.getElementById('dkSun'),
+      moonEl = D.getElementById('dkMoon'), riseEl = D.getElementById('dkRise'), fw = D.getElementById('dkFw'),
+      glow = D.getElementById('dkGlow'), range = D.getElementById('dkRange'), stopsBox = D.getElementById('dkStops'),
+      daysBox = D.getElementById('dkDays'), clock = D.getElementById('dkClock'), what = D.getElementById('dkWhat'),
+      facts = D.getElementById('dkFacts'), head = D.getElementById('dkHead');
+  var rad = Math.PI / 180, fc = P.px / rad, ELTOP = 19;   /* the view shows sky up to ~19° */
+  var KEYS = ['dawn', 'day', 'glow', 'night'];
+  var DAYS = ['2026-12-27','2026-12-28','2026-12-29','2026-12-30','2026-12-31','2027-01-01','2027-01-02','2027-01-03'];
+  var DN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+  /* ---------- geometry ---------- */
+  var s = 1, offX = 0, vw = 0, vh = 0, trackW = 0;
+  function X(az){ return (az - P.az0) * P.px * s; }
+  function Y(el){ return (fc * Math.tan(ELTOP * rad) - fc * Math.tan(el * rad)) * s; }
+  function skyAt(az){ var i = (az - P.az0) * 2; if (i < 0 || i > P.sky.length - 1) return 0;
+    var a = Math.floor(i), b = Math.min(a + 1, P.sky.length - 1), f = i - a; return (P.sky[a] * (1 - f) + P.sky[b] * f) / 10; }
+
+  /* ---------- build images ---------- */
+  var imgs = {}, failed = false;
+  KEYS.forEach(function(k, i){
+    var im = new Image(); im.className = 'dk-img'; im.alt = ''; im.decoding = 'async'; im.draggable = false;
+    im.setAttribute('data-k', k);
+    /* the midday render is the base layer: the real view only replaces the illustration once it has loaded */
+    if (k === 'day'){ im.onload = start; im.onerror = function(){ failed = true; }; }
+    imgs[k] = im; imgsBox.appendChild(im);
+  });
+  function loadImgs(){ KEYS.forEach(function(k){ if (!imgs[k].src) imgs[k].src = MEDIA + P.img[k]; }); }
+  /* lazy: only fetch when the view finder comes near the screen */
+  if ('IntersectionObserver' in W){
+    var io = new IntersectionObserver(function(es){ if (es.some(function(e){ return e.isIntersecting; })){ io.disconnect(); loadImgs(); } }, {rootMargin:'600px 0px'});
+    io.observe(vf);
+  } else loadImgs();
+
+  /* ---------- pins: reuse the existing .lg-pin buttons (pick() + chips keep working) ---------- */
+  var pins = [].slice.call(vf.querySelectorAll('.lg-pin'));
+  var started = false;
+  function start(){
+    if (started || failed) return; started = true;
+    dk.hidden = false; vf.classList.add('dk-on');
+    pins.forEach(function(p){ pinsBox.appendChild(p); });
+    for (var a = P.az0; a <= P.az1; a += 5){
+      var t = D.createElement('span'); t.className = 'dk-tick' + (a % 45 === 0 ? ' maj' : '') ; t.style.left = 0;
+      t.setAttribute('data-az', a);
+      if (a % 45 === 0 || a % 22.5 === 0) t.textContent = {90:'E',112.5:'ESE',135:'SE',157.5:'SSE',180:'S',202.5:'SSW',225:'SW',247.5:'WSW',270:'W'}[a] || '';
+      axis.appendChild(t);
+    }
+    /* 22.5° ticks */
+    [112.5, 157.5, 202.5, 247.5].forEach(function(a){ var t = D.createElement('span'); t.className = 'dk-tick';
+      t.setAttribute('data-az', a); t.textContent = {112.5:'ESE',157.5:'SSE',202.5:'SSW',247.5:'WSW'}[a]; axis.appendChild(t); });
+    buildDays(); layout(); setDay(defaultDay(), true); center(180, false);
+    W.addEventListener('resize', function(){ if (!view.clientWidth) return; var c = vw ? curAz() : 180; layout(); center(c, false); });
+    if (W.ResizeObserver) new ResizeObserver(function(){ if (!view.clientWidth) return; var c = vw ? curAz() : 180; if (Math.abs(view.clientWidth - vw) > 1 || Math.abs(view.clientHeight - vh) > 1){ layout(); center(c, false); } }).observe(view);
+    /* pins → pan to them; chips (phones) → pan too */
+    pins.forEach(function(p){ p.addEventListener('click', function(){ if (!phoneOn) center(+p.getAttribute('data-az'), true); }); });
+    var chipsBox = D.getElementById('lgVfChips');
+    if (chipsBox) chipsBox.addEventListener('click', function(e){
+      var c = e.target.closest('.lg-vf-chip'); if (!c) return;
+      var i = [].indexOf.call(chipsBox.children, c); if (pins[i] && !phoneOn) center(+pins[i].getAttribute('data-az'), true);
+    });
+  }
+
+  function layout(){
+    if (!view.clientWidth || !view.clientHeight) return;
+    vw = view.clientWidth; vh = view.clientHeight;
+    /* the view spans sky (ELTOP) down to P.bot below the horizon */
+    s = vh / (fc * (Math.tan(ELTOP * rad) + Math.tan(P.bot * rad)));
+    trackW = P.w * s;
+    track.style.width = trackW + 'px'; track.style.height = vh + 'px';
+    imgsBox.style.top = Y(P.top) + 'px'; imgsBox.style.width = trackW + 'px'; imgsBox.style.height = P.h * s + 'px';
+    [].forEach.call(axis.children, function(t){ t.style.left = X(+t.getAttribute('data-az')) + 'px'; });
+    pins.forEach(function(p){
+      var k = p.getAttribute('data-k'), g = PEAK[k]; if (!g) return;
+      p.setAttribute('data-az', g.az);
+      p.classList.toggle('ghost', !!g.ridge);
+      p.style.left = X(g.az) + 'px'; p.style.top = Y(g.el) + 'px';
+    });
+    declutter();
+    var a = PEAK.ajax; fw.style.left = (X(a.az) - 130) + 'px'; fw.style.top = Y(a.el + 6.5) + 'px';
+    fw.width = Math.round(260 * (W.devicePixelRatio || 1)); fw.height = Math.round(Math.max(120, Y(2) - Y(a.el + 6.5)) * (W.devicePixelRatio || 1));
+    fw.style.width = '260px'; fw.style.height = fw.height / (W.devicePixelRatio || 1) + 'px';
+    glow.style.left = X(a.az) + 'px'; glow.style.top = Y(a.el + 2) + 'px';
+    render();
+  }
+  /* labels: greedy rows so no two labels ever overlap; leader line grows with the row */
+  function declutter(){
+    var boxes = pins.map(function(p){ var sp = p.querySelector('span'); return {p:p, x:parseFloat(p.style.left), w:(sp ? sp.offsetWidth : 60) + 8}; })
+      .sort(function(a, b){ return a.x - b.x; });
+    var rows = [];
+    boxes.forEach(function(b){
+      var l = b.x - b.w / 2, r = b.x + b.w / 2, shift = 0;
+      if (l < 4){ shift = 4 - l; } if (r > trackW - 4){ shift = trackW - 4 - r; }
+      l += shift; r += shift;
+      var lvl = 0; while (rows[lvl] && rows[lvl].some(function(q){ return !(r < q[0] || l > q[1]); })) lvl++;
+      (rows[lvl] = rows[lvl] || []).push([l, r]);
+      b.p.style.setProperty('--lift', (lvl * 26) + 'px'); b.p.style.setProperty('--shift', shift + 'px');
+    });
+  }
+
+  /* ---------- panning (drag, keys, arrows, phone) ---------- */
+  function clampOff(o){ return Math.min(0, Math.max(vw - trackW, o)); }
+  function setOff(o, smooth){ offX = clampOff(o); track.classList.toggle('glide', !!smooth && !RM); track.style.transform = 'translate3d(' + offX + 'px,0,0)'; heading(); }
+  function curAz(){ return P.az0 + ((vw / 2 - offX) / s) / P.px; }
+  function center(az, smooth){ setOff(vw / 2 - X(az), smooth); }
+  function heading(){ var a = curAz(), n = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'][Math.round(a / 22.5) % 16];
+    head.textContent = n + ' · ' + Math.round(a) + '°';
+    view.querySelector('.prev').disabled = offX >= -1; view.querySelector('.next').disabled = offX <= vw - trackW + 1; }
+  var drag = null;
+  view.addEventListener('pointerdown', function(e){
+    if (phoneOn || e.button > 0 || e.target.closest('button')) return;
+    drag = {x:e.clientX, o:offX, id:e.pointerId, moved:false};
+  });
+  W.addEventListener('pointermove', function(e){
+    if (!drag || e.pointerId !== drag.id) return;
+    var dx = e.clientX - drag.x; if (Math.abs(dx) > 4 && !drag.moved){ drag.moved = true; try { view.setPointerCapture(drag.id); } catch(_){} view.classList.add('grab'); }
+    if (drag.moved) setOff(drag.o + dx, false);
+  });
+  function endDrag(){ if (drag){ view.classList.remove('grab'); drag = null; } }
+  W.addEventListener('pointerup', endDrag); W.addEventListener('pointercancel', endDrag);
+  view.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowLeft'){ center(curAz() - 15, true); e.preventDefault(); }
+    else if (e.key === 'ArrowRight'){ center(curAz() + 15, true); e.preventDefault(); }
+  });
+  view.querySelector('.prev').addEventListener('click', function(){ center(curAz() - Math.max(20, vw / s / P.px * 0.6), true); });
+  view.querySelector('.next').addEventListener('click', function(){ center(curAz() + Math.max(20, vw / s / P.px * 0.6), true); });
+
+  /* ---------- days + time of day ---------- */
+  var day = 0, T = null;   /* T = sun/moon times for the chosen day */
+  function defaultDay(){ var now = Date.now();
+    for (var i = 0; i < DAYS.length; i++){ var t0 = Date.parse(DAYS[i] + 'T00:00:00-07:00'); if (now >= t0 && now < t0 + 864e5) return i; }
+    return 0; }
+  function buildDays(){
+    DAYS.forEach(function(d, i){
+      var b = D.createElement('button'); b.type = 'button'; b.className = 'dk-day' + (i === 4 ? ' nye' : '');
+      b.innerHTML = '<span>' + DN[i] + '</span>' + (+d.slice(8)) + (i === 4 ? '<i>NYE</i>' : '');
+      b.setAttribute('aria-label', DN[i] + ' ' + (i < 5 ? 'Dec ' : 'Jan ') + (+d.slice(8)) + (i === 4 ? ', New Year’s Eve' : ''));
+      b.addEventListener('click', function(){ setDay(i); });
+      daysBox.appendChild(b);
+    });
+    ['Sunrise','Midday','Alpenglow','Night'].forEach(function(n, i){
+      var b = D.createElement('button'); b.type = 'button'; b.className = 'dk-stop'; b.setAttribute('data-i', i);
+      b.innerHTML = '<b>' + n + '</b><span></span>';
+      b.addEventListener('click', function(){ animateTo(i); });
+      stopsBox.appendChild(b);
+    });
+    range.addEventListener('input', function(){ cancelAnim(); render(); });
+  }
+  function fmt(ms){ ms = Math.round(ms / 6e4) * 6e4; var d = new Date(ms - 7 * 36e5), h = d.getUTCHours(), m = d.getUTCMinutes();
+    return ((h + 11) % 12 + 1) + ':' + (m < 10 ? '0' : '') + m + (h < 12 ? ' AM' : ' PM'); }
+  /* first minute the sun's disc clears the real skyline (rising) / drops behind it (setting) */
+  function ridgeCross(from, to, rising){
+    for (var t = from; rising ? t <= to : t >= to; t += rising ? 6e4 : -6e4){
+      var p = ASTRO.sun(t, LAT, LON); if (p.az >= P.az0 && p.az <= P.az1 && p.alt > skyAt(p.az) + 0.25) return t; }
+    return null; }
+  function moonRise(from){ /* next moonrise over the real skyline within 24h */
+    var prev = null;
+    for (var t = from; t < from + 864e5; t += 3e5){
+      var m = ASTRO.moon(t, LAT, LON), up = m.alt > (m.az >= P.az0 && m.az <= P.az1 ? skyAt(m.az) : 0);
+      if (prev === false && up) return {t:t, az:m.az}; prev = up; }
+    return null; }
+  function setDay(i, quiet){
+    day = i;
+    [].forEach.call(daysBox.children, function(b, j){ b.classList.toggle('on', j === i); b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+    var noon = Date.parse(DAYS[i] + 'T12:00:00-07:00'), t = ASTRO.times(noon, LAT, LON);
+    T = {rise:t.rise, noon:t.noon, set:t.set, glow:t.set + 9 * 6e4, night:Date.parse(DAYS[i] + 'T20:00:00-07:00')};
+    T.over = ridgeCross(t.rise, t.noon, true); T.under = ridgeCross(t.set, t.noon, false);
+    var il = ASTRO.moonIllum(T.night), mr = moonRise(Date.parse(DAYS[i] + 'T12:00:00-07:00'));
+    T.moon = {frac:il.frac, phase:il.phase, name:ASTRO.phaseName(il.phase), rise:mr};
+    var st = [T.rise, T.noon, T.glow, T.night];
+    [].forEach.call(stopsBox.children, function(b, j){ b.querySelector('span').textContent = fmt(Math.round(st[j] / 6e4) * 6e4); });
+    var f = 'Sunrise ' + fmt(T.rise) + (T.over ? ' · sun clears the ridge ~' + fmt(T.over) : '') +
+      ' · sunset ' + fmt(T.set) + (T.under ? ' (drops behind the ridge ~' + fmt(T.under) + ')' : '') +
+      ' · ' + T.moon.name + ', ' + Math.round(T.moon.frac * 100) + '% lit' +
+      (mr ? ', rises ~' + fmt(mr.t) + ' in the ' + compass(mr.az) : '');
+    facts.textContent = f;
+    if (!quiet || started) render();
+  }
+  function compass(a){ return ['north','NNE','northeast','ENE','east','ESE','southeast','SSE','south','SSW','southwest','WSW','west','WNW','northwest','NNW'][Math.round(a / 22.5) % 16]; }
+  function timeAt(v){ /* slider 0..3 → ms, piecewise between the four stops */
+    var st = [T.rise, T.noon, T.glow, T.night], i = Math.min(2, Math.floor(v)), f = v - i; return st[i] + (st[i + 1] - st[i]) * f; }
+  var anim = null;
+  function cancelAnim(){ if (anim){ cancelAnimationFrame(anim); anim = null; } }
+  function animateTo(i){
+    cancelAnim(); var from = +range.value, t0 = performance.now(), dur = RM ? 0 : 650;
+    (function step(now){ var k = dur ? Math.min(1, (now - t0) / dur) : 1, e = 1 - Math.pow(1 - k, 3);
+      range.value = from + (i - from) * e; render(); if (k < 1) anim = requestAnimationFrame(step); else anim = null; })(t0);
+  }
+
+  /* sky palettes per stop: [zenith, mid, horizon] */
+  var SKY = {
+    light:[[ [118,150,196],[226,178,168],[250,214,170] ], [ [96,150,214],[160,196,232],[222,236,246] ], [ [78,92,150],[196,140,170],[246,186,150] ], [ [12,22,46],[22,38,74],[46,64,104] ]],
+    dark: [[ [40,56,98],[150,110,128],[214,160,132] ], [ [44,92,160],[110,150,200],[176,202,226] ], [ [36,40,88],[138,92,126],[210,140,120] ], [ [5,10,24],[12,22,46],[30,44,78] ]]
+  };
+  function mix(a, b, f){ return a.map(function(x, i){ return Math.round(x + (b[i] - x) * f); }); }
+  function rgb(c){ return 'rgb(' + c.join(',') + ')'; }
+  var lastNye = null;
+  function render(){
+    if (!T || !vw) return;
+    var v = +range.value, i = Math.min(2, Math.floor(v)), f = v - i, t = timeAt(v);
+    var pal = SKY[D.body.classList.contains('dark') ? 'dark' : 'light'];
+    var sky = [0, 1, 2].map(function(j){ return mix(pal[i][j], pal[i + 1][j], f); });
+    view.style.setProperty('--dk-z', rgb(sky[0])); view.style.setProperty('--dk-m', rgb(sky[1])); view.style.setProperty('--dk-h', rgb(sky[2]));
+    var night = Math.max(0, v - 2.15) / 0.85;   /* 0 → 1 over alpenglow → night */
+    view.style.setProperty('--dk-night', night.toFixed(3));
+    /* crossfade the four graded renders */
+    KEYS.forEach(function(k, j){ var o = j === i ? 1 - f : j === i + 1 ? f : 0; imgs[k].style.opacity = o.toFixed(3); });
+    /* sun */
+    var sp = ASTRO.sun(t, LAT, LON), behind = sp.alt < skyAt(sp.az) - 0.3;
+    var onPano = sp.az >= P.az0 - 2 && sp.az <= P.az1 + 2 && sp.alt > -2;
+    sunEl.hidden = !onPano || behind;
+    if (onPano){ var top = Math.min(sp.alt, ELTOP - 1.6); sunEl.classList.toggle('above', sp.alt > ELTOP - 1.6);
+      sunEl.style.left = X(sp.az) + 'px'; sunEl.style.top = Y(top) + 'px'; }
+    /* moon */
+    var mp = ASTRO.moon(t, LAT, LON), il = ASTRO.moonIllum(t);
+    var mOn = mp.az >= P.az0 && mp.az <= P.az1 && mp.alt > skyAt(mp.az) && mp.alt < ELTOP - 1;
+    moonEl.hidden = !mOn;
+    if (mOn){ moonEl.style.left = X(mp.az) + 'px'; moonEl.style.top = Y(mp.alt) + 'px';
+      moonEl.style.setProperty('--ph', il.phase.toFixed(3)); }
+    var mr = T.moon.rise; riseEl.hidden = !(mr && !mOn && night > 0.5 && mr.az >= P.az0 && mr.az <= P.az1);
+    if (!riseEl.hidden){ riseEl.style.left = X(mr.az) + 'px'; riseEl.style.top = Y(skyAt(mr.az)) + 'px'; }
+    /* readout */
+    var label = v < 0.35 ? 'Sunrise' : v < 0.7 ? 'Morning' : v < 1.35 ? 'Midday' : v < 1.8 ? 'Afternoon' : v < 2.35 ? 'Alpenglow' : v < 2.7 ? 'Dusk' : 'Night';
+    var extra;
+    if (sp.alt > 0 && !behind) extra = 'sun ' + Math.round(sp.alt) + '° up in the ' + compass(sp.az);
+    else if (sp.alt > -0.833) extra = 'sun behind the ridge';
+    else if (sp.alt > -6) extra = 'pink light on the peaks';
+    else extra = mOn ? T.moon.name.toLowerCase() + ' in the ' + compass(mp.az) : (mr ? 'moonrise ~' + fmt(mr.t) : 'no moon yet');
+    var nye = day === 4 && v > 2.6;
+    if (nye) extra = 'NYE fireworks over Aspen Mountain';
+    clock.textContent = fmt(Math.round(t / 6e4) * 6e4);
+    what.textContent = label + ' · ' + extra;
+    [].forEach.call(stopsBox.children, function(b, j){ var on = Math.abs(v - j) < 0.5; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    if (nye !== lastNye){ lastNye = nye; fireworks(nye); }
+  }
+  W.addEventListener('aspen:theme', render);
+  if (W.MutationObserver) new MutationObserver(function(){ render(); }).observe(D.body, {attributes:true, attributeFilter:['class']});
+
+  /* ---------- NYE fireworks over Ajax (8 PM). Reduced motion: a static glow ---------- */
+  var fwRaf = null, fwVis = true;
+  if ('IntersectionObserver' in W) new IntersectionObserver(function(es){ fwVis = es[0].isIntersecting; }).observe(view);
+  function fireworks(on){
+    dk.classList.toggle('nye', on);
+    if (fwRaf){ cancelAnimationFrame(fwRaf); fwRaf = null; }
+    var g = fw.getContext('2d'); g.clearRect(0, 0, fw.width, fw.height);
+    if (!on || RM) return;
+    var parts = [], next = 0, dpr = W.devicePixelRatio || 1;
+    var COL = ['#ffe6a8', '#f6c36a', '#ffffff', '#f2a0b4', '#bfe3ff'];
+    (function loop(now){
+      fwRaf = requestAnimationFrame(loop);
+      if (!fwVis || D.hidden) return;
+      var w = fw.width, h = fw.height;
+      if (now > next){ next = now + 650 + Math.random() * 900;
+        var cx = w * (0.25 + Math.random() * 0.5), cy = h * (0.18 + Math.random() * 0.32), c = COL[Math.random() * COL.length | 0], n = 34;
+        for (var k = 0; k < n; k++){ var a = k / n * Math.PI * 2, sp = (0.9 + Math.random() * 0.5) * dpr * 1.25;
+          parts.push({x:cx, y:cy, vx:Math.cos(a) * sp, vy:Math.sin(a) * sp, life:1, c:c}); } }
+      g.globalCompositeOperation = 'destination-out'; g.fillStyle = 'rgba(0,0,0,.22)'; g.fillRect(0, 0, w, h);
+      g.globalCompositeOperation = 'lighter';
+      parts = parts.filter(function(p){ p.x += p.vx; p.y += p.vy; p.vy += 0.018 * dpr; p.vx *= 0.985; p.vy *= 0.985; p.life -= 0.012;
+        if (p.life <= 0) return false; g.globalAlpha = p.life; g.fillStyle = p.c; g.beginPath(); g.arc(p.x, p.y, 1.3 * dpr, 0, 7); g.fill(); return true; });
+      g.globalAlpha = 1;
+    })(performance.now());
+  }
+
+  /* ---------- point your phone ---------- */
+  var phoneOn = false, phRow = D.getElementById('dkPhoneRow'), phBtn = D.getElementById('dkPhone'), alBtn = D.getElementById('dkAlign');
+  var DOE = W.DeviceOrientationEvent, coarse = W.matchMedia && W.matchMedia('(pointer:coarse)').matches && W.matchMedia('(hover:none)').matches;
+  var hdg = null, sm = null, calib = 0, iosOff = null, evName = null;
+  if (DOE && coarse && phRow){ phRow.hidden = false; }
+  function backHeading(a, b, g){ /* compass heading of the camera (-z) axis, W3C Euler angles */
+    a *= rad; b *= rad; g *= rad;
+    var ca = Math.cos(a), sa = Math.sin(a), cb = Math.cos(b), sb = Math.sin(b), cg = Math.cos(g), sg = Math.sin(g);
+    var ex = -ca * sg - sa * sb * cg, ny = -sa * sg + ca * sb * cg;
+    return (Math.atan2(ex, ny) / rad + 360) % 360; }
+  function onOri(e){
+    if (e.alpha == null) return;
+    var a = e.alpha;
+    if (typeof e.webkitCompassHeading === 'number' && !e.absolute){
+      /* iOS: alpha is relative; anchor it to the compass while the phone is not held flat-up */
+      var off = ((360 - e.webkitCompassHeading) - a + 720) % 360;
+      if (iosOff == null || Math.abs(e.beta) < 65) iosOff = iosOff == null ? off : circ(iosOff, off, 0.05);
+      a = (a + iosOff) % 360;
+    } else if (!e.absolute && evName !== 'deviceorientationabsolute') return;
+    var h = backHeading(a, e.beta || 0, e.gamma || 0);
+    sm = sm == null ? h : circ(sm, h, 0.18);
+    hdg = (sm + calib + 360) % 360;
+    if (hdg >= P.az0 - 40 && hdg <= P.az1 + 40) center(Math.max(P.az0, Math.min(P.az1, hdg)), false);
+    head.textContent = 'Phone ' + Math.round(hdg) + '°';
+  }
+  function circ(a, b, k){ var d = ((b - a + 540) % 360) - 180; return (a + d * k + 360) % 360; }
+  function stopPhone(){
+    phoneOn = false; dk.classList.remove('phone'); alBtn.hidden = true;
+    if (evName) W.removeEventListener(evName, onOri); evName = null;
+    phBtn.innerHTML = '<span aria-hidden="true">&#10148;</span> Point your phone'; heading();
+  }
+  if (phBtn) phBtn.addEventListener('click', function(){
+    if (phoneOn){ stopPhone(); return; }
+    var ask = DOE && typeof DOE.requestPermission === 'function' ? DOE.requestPermission() : Promise.resolve('granted');
+    ask.then(function(r){
+      if (r !== 'granted'){ phBtn.textContent = 'Motion access is off (Settings › Safari)'; return; }
+      phoneOn = true; dk.classList.add('phone'); alBtn.hidden = false; sm = null; iosOff = null;
+      evName = 'ondeviceorientationabsolute' in W ? 'deviceorientationabsolute' : 'deviceorientation';
+      W.addEventListener(evName, onOri);
+      phBtn.textContent = 'Stop pointing';
+      setTimeout(function(){ if (phoneOn && hdg == null){ stopPhone(); phBtn.textContent = 'No compass on this device'; } }, 2500);
+    }).catch(function(){ phBtn.textContent = 'Compass not available'; });
+  });
+  if (alBtn) alBtn.addEventListener('click', function(){ if (sm != null){ calib = ((PEAK.ajax.az - sm) + 540) % 360 - 180; } });
 })();
 </script>
 <style>
