@@ -13,7 +13,7 @@ LOG = os.environ.get("WATCH_LOG", "log.txt")
 RUN_MIN = float(os.environ.get("RUN_MINUTES", "348"))
 END_DATE = os.environ.get("END_DATE", "2026-11-22")
 SR = {"Wild Fig": "thewildfig", "Casa Tua": "casatuaaspen", "Steakhouse 316": "steakhouse316"}
-OT = {"French Alpine Bistro": 228100, "Matsuhisa": 6946}
+OT = {}   # OpenTable answers 403 to GitHub's servers (bot protection) — checked from the Mac instead
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
 
 def now(): return dt.datetime.now(MT)
