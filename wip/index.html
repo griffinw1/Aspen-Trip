@@ -9429,7 +9429,8 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       + '<button class="vx-tool keep vx-flybtn" data-t="fly" hidden title="Play this day as a 3D film">' + ICON.play + '<span>Play this day</span></button>'
       ;
     var right = $('vxToolsR');
-    if (right) right.innerHTML = '<button class="vx-tool sq" data-t="locate" title="How far am I from the house?" aria-label="Show my location">' + ICON.locate + '</button>'
+    if (right) right.innerHTML = '<button class="vx-tool sq vx-orbit" data-t="orbit" hidden aria-pressed="false" title="Orbit: slowly circle around the middle of the map. Tip: hold Control (⌃) and drag to swivel and tilt yourself." aria-label="Orbit around the middle of the map">' + '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/><circle cx="12" cy="12" r="2.2"/></svg>' + '</button>'
+      + '<button class="vx-tool sq" data-t="locate" title="How far am I from the house?" aria-label="Show my location">' + ICON.locate + '</button>'
       + '<button class="vx-tool sq" data-t="fit" title="Fit the map to this day" aria-label="Fit the map to this day">' + ICON.fit + '</button>';
     [].forEach.call(t.querySelectorAll('[data-base]'), function(b){ b.addEventListener('click', function(){ setBase(b.getAttribute('data-base')); }); });
     [].forEach.call(t.querySelectorAll('[data-m3]'), function(b){ b.addEventListener('click', function(){
@@ -9442,6 +9443,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
         if (k === 'pistes'){ prefs.pistes = !pistesOn(); savePrefs(); applyOverlays(); if (pistesOn() && map && map.getZoom() < 9) toast('Zoom in to see the ski runs.'); }
         else if (k === 'rings'){ prefs.rings = !prefs.rings; savePrefs(); applyOverlays(); }
         else if (k === 'locate'){ locate(); }
+        else if (k === 'orbit'){ if (ORB) stopOrbit(); else startOrbit(); }
         else if (k === 'fit'){ if (is3d) frame3d(true); else fitCurrent(); }
         else if (k === 'town'){ if (townOn) show(townPrev || 'trip', true); else enterTown(true); }
         else if (k === '3d'){   /* one 3D button: Photoreal by default, Simple if chosen or if Photoreal can't load */
@@ -9454,6 +9456,60 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     var ex = $('vxExpand');
     if (ex){ ex.innerHTML = ICON.expand; ex.addEventListener('click', function(){ toggleFull(); }); }
   }
+  /* v44: Orbit — the camera circles the point in the middle of the screen (~7°/s). Any touch, drag or scroll stops it. */
+  var ORB = null;
+  function startOrbit(){
+    if (ORB || !(is3d || prOn)) return;
+    var o = ORB = {last:0, raf:0, off:[]};
+    if (prOn && PRV && PRV.v){
+      var C = PRV.C, v = PRV.v, sc = v.scene, cv = sc.canvas;
+      var mid = new C.Cartesian2(cv.clientWidth / 2, cv.clientHeight / 2), tgt = null;
+      try { tgt = sc.pickPosition(mid); } catch(e){}
+      if (!tgt){ var ray = v.camera.getPickRay(mid); tgt = ray && sc.globe ? sc.globe.pick(ray, sc) : null; }
+      if (!tgt){ var dir = v.camera.directionWC, pos = v.camera.positionWC; tgt = C.Cartesian3.add(pos, C.Cartesian3.multiplyByScalar(dir, 3000, new C.Cartesian3()), new C.Cartesian3()); }
+      o.pr = {C:C, v:v, tgt:tgt, h:v.camera.heading, p:v.camera.pitch, r:C.Cartesian3.distance(v.camera.positionWC, tgt)};
+      var hd = new C.ScreenSpaceEventHandler(cv);
+      [C.ScreenSpaceEventType.LEFT_DOWN, C.ScreenSpaceEventType.RIGHT_DOWN, C.ScreenSpaceEventType.MIDDLE_DOWN, C.ScreenSpaceEventType.WHEEL, C.ScreenSpaceEventType.PINCH_START]
+        .forEach(function(ev){ hd.setInputAction(function(){ stopOrbit(); }, ev); });
+      o.off.push(function(){ hd.destroy(); });
+    } else if (is3d && m3){
+      var stop = function(){ stopOrbit(); };
+      ['mousedown', 'touchstart', 'wheel', 'dragstart'].forEach(function(ev){ m3.on(ev, stop); o.off.push(function(){ m3.off(ev, stop); }); });
+    }
+    function step(now){
+      if (ORB !== o) return;
+      var dt = o.last ? Math.min(now - o.last, 60) : 16; o.last = now;
+      var deg = 7 * dt / 1000;
+      try {
+        if (o.pr){ var P = o.pr; P.h += P.C.Math.toRadians(deg);
+          P.v.camera.lookAt(P.tgt, new P.C.HeadingPitchRange(P.h, P.p, P.r)); P.v.camera.lookAtTransform(P.C.Matrix4.IDENTITY); }
+        else if (m3) m3.setBearing(m3.getBearing() + deg);
+      } catch(e){ stopOrbit(); return; }
+      o.raf = requestAnimationFrame(step);
+    }
+    o.raf = requestAnimationFrame(step);
+    syncTools();
+  }
+  function stopOrbit(){
+    var o = ORB; if (!o) return; ORB = null;
+    cancelAnimationFrame(o.raf); o.off.forEach(function(f){ try { f(); } catch(e){} });
+    var ob = document.querySelector('#vxToolsR [data-t="orbit"]'); if (ob) ob.setAttribute('aria-pressed', 'false');
+  }
+  /* Safari passes the trackpad's two-finger twist to pages: turn it into a swivel (Chrome doesn't send it). */
+  (function(){
+    var st = null;
+    document.addEventListener('gesturestart', function(e){
+      if (!(is3d || prOn) || !e.target.closest || !e.target.closest('.vx-3d, #vxpr')) return;
+      e.preventDefault(); stopOrbit();
+      st = prOn && PRV ? {pr:true, h:PRV.v.camera.heading} : (m3 ? {b:m3.getBearing()} : null);
+    }, {passive:false});
+    document.addEventListener('gesturechange', function(e){
+      if (!st) return; e.preventDefault();
+      if (st.pr && PRV){ var C = PRV.C, cam = PRV.v.camera; cam.setView({orientation:{heading:st.h - C.Math.toRadians(e.rotation), pitch:cam.pitch, roll:0}}); }
+      else if (m3) m3.setBearing(st.b - e.rotation);
+    }, {passive:false});
+    document.addEventListener('gestureend', function(){ st = null; });
+  })();
   function syncTools(){
     var t = $('vxTools'); if (!t) return;
     [].forEach.call(t.querySelectorAll('[data-base]'), function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-base') === prefs.base); });
@@ -9466,6 +9522,10 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     if (md){ md.hidden = !(is3d || prOn) || !CESIUM_TOKEN || prFailed;
       [].forEach.call(md.querySelectorAll('[data-m3]'), function(b){ b.setAttribute('aria-pressed', (b.getAttribute('data-m3') === 'pr') === !!prOn); }); }
     if (d3){ d3.setAttribute('aria-pressed', !!(is3d || prOn)); d3.setAttribute('aria-label', is3d ? 'Back to the flat map' : 'Open the 3D view'); }
+    var ob = document.querySelector('#vxToolsR [data-t="orbit"]');
+    if (ob){ ob.hidden = !(is3d || prOn); ob.setAttribute('aria-pressed', !!ORB); }
+    if (!(is3d || prOn) && ORB) stopOrbit();
+    if ((is3d || prOn) && !syncTools.tipped){ syncTools.tipped = true; setTimeout(function(){ if (is3d || prOn) toast('Tip: hold Control (⌃) and drag to swivel and tilt · or tap ↻ to orbit.'); }, 1400); }
     if (fl){
       fl.hidden = !dayById(cur) && cur !== 'town';
       var fs = fl.querySelector('span'); if (fs) fs.textContent = cur === 'town' ? 'Play the walks' : 'Play this day';
