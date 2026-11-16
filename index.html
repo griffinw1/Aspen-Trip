@@ -13440,6 +13440,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     $$('#bkApp .bk-card').forEach(function(c){add({g:'Booking',t:txt($('.bk-title',c)),s:txt($('.bk-when',c)),ic:'booking',kw:txt($('.bk-what',c)),el:c});});
     panels().forEach(function(p){if(p.id==='itinerary'){return;}$$('.sub-head, .wrap h3',p).forEach(function(h){if(h.closest('.nv-chapter')||h.closest('.nv-home')){return;}var t=txt(h);if(t&&t.length<70){add({g:'In the pages',t:t,s:sec(p.id).label,ic:'heading',el:h});}});});
     /* eggs2: only matches whole-word secret / easter / egg / gallery (filtered in search) */
+    add({g:'Help',t:'Show me around',s:'A one-minute tour of everything on this site',ic:'key',kw:'tour help walkthrough guide demo how show around start',go:function(){if(window.AspenWalkthrough){window.AspenWalkthrough.start();}}});
     add({g:'Secrets',t:'The secret gallery',s:'Easter eggs \u00b7 your finds so far',ic:'key',kw:'secret secrets easter egg eggs gallery',secret:1,go:function(){if(window.AspenEggs){window.AspenEggs.openGallery();}}});
     return X;
   }
@@ -15947,6 +15948,127 @@ var ASTRO=(function(){
  W.addEventListener('aspen:who',upd); W.addEventListener('aspen:who-ready',upd); W.addEventListener('aspen:enter',upd); setTimeout(upd,1500);
 })();
 </script>
+<style>/* v44 walkthrough — "Show me around" */
+.gate-tour{display:block;margin:12px auto 0;padding:9px 18px;border-radius:99px;border:1px solid rgba(196,154,74,.55);background:transparent;color:var(--gold,#B0863A);
+  font:600 11px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .2s,border-color .2s}
+.gate-tour:hover,.gate-tour:focus-visible{background:rgba(196,154,74,.12);border-color:var(--gold,#B0863A)}
+.wt{position:fixed;inset:0;z-index:10006;pointer-events:none}
+.wt-hole{position:fixed;border-radius:14px;box-shadow:0 0 0 9999px rgba(6,12,22,.62),0 0 0 2px rgba(212,175,106,.95),0 0 26px 4px rgba(212,175,106,.45);
+  transition:left .38s cubic-bezier(.2,.8,.2,1),top .38s cubic-bezier(.2,.8,.2,1),width .38s cubic-bezier(.2,.8,.2,1),height .38s cubic-bezier(.2,.8,.2,1),opacity .25s;pointer-events:none}
+.wt-hole.none{left:50%!important;top:50%!important;width:0!important;height:0!important;box-shadow:0 0 0 9999px rgba(6,12,22,.62)}
+.wt-block{position:fixed;inset:0;pointer-events:auto;background:transparent}
+.wt-card{position:fixed;pointer-events:auto;width:min(360px,calc(100vw - 24px));padding:18px 18px 14px;border-radius:16px;
+  background:linear-gradient(160deg,#16283a,#0e1b2a);color:#f3ead7;border:1px solid rgba(212,175,106,.45);box-shadow:0 24px 60px -18px rgba(0,0,0,.7);
+  font-family:'Jost',sans-serif;transition:left .38s cubic-bezier(.2,.8,.2,1),top .38s cubic-bezier(.2,.8,.2,1),opacity .2s}
+.wt-k{font:600 10px/1 'Jost',sans-serif;letter-spacing:.26em;text-transform:uppercase;color:#d4af6a;margin-bottom:8px;display:flex;justify-content:space-between;gap:10px}
+.wt-k i{font-style:normal;color:rgba(243,234,215,.55);letter-spacing:.12em}
+.wt-h{font:500 24px/1.1 'Cormorant Garamond',serif;margin:0 0 8px;color:#fff}
+.wt-p{font-size:14px;line-height:1.55;color:rgba(243,234,215,.86);margin:0}
+.wt-p b{color:#f3d9a0;font-weight:600}
+.wt-bar{height:2px;border-radius:2px;background:rgba(212,175,106,.18);margin:14px 0 12px;overflow:hidden}
+.wt-bar span{display:block;height:100%;background:linear-gradient(90deg,#C49A4A,#E8D9B0);transition:width .35s}
+.wt-row{display:flex;align-items:center;gap:8px}
+.wt-row .sp{flex:1}
+.wt-btn{font:600 11px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;border-radius:99px;padding:10px 15px;cursor:pointer;border:1px solid rgba(212,175,106,.5);background:transparent;color:#f3ead7}
+.wt-btn.go{background:linear-gradient(135deg,#E8D9B0,#C49A4A);color:#14202e;border-color:transparent}
+.wt-btn.skip{border:0;padding:10px 4px;color:rgba(243,234,215,.6)}
+.wt-btn:focus-visible{outline:2px solid #d4af6a;outline-offset:2px}
+html.gc-on .wt, html.gc-on .wt *{cursor:auto!important}
+html.gc-on .wt-btn{cursor:pointer!important}
+html.gc-on:has(.wt) .gc-dot, html.gc-on:has(.wt) .gc-trail{opacity:0!important}
+@media (max-width:640px){.wt-card{left:12px!important;right:12px;width:auto;top:auto!important;bottom:calc(12px + env(safe-area-inset-bottom))!important}}
+@media (prefers-reduced-motion:reduce){.wt-hole,.wt-card{transition:none}}
+</style>
+<script>
+/* ===== v44 walkthrough: "Show me around" — spotlights each feature, switching tabs as it goes ===== */
+(function(){
+'use strict';
+var D=document, W=window;
+function $(s,r){return (r||D).querySelector(s);}
+function vis(el){if(!el)return false;var r=el.getBoundingClientRect();if(r.width<2||r.height<2)return false;for(var e=el;e&&e!==D.body;e=e.parentElement){var cs=getComputedStyle(e);if(cs.display==='none'||cs.visibility==='hidden')return false;}return true;}
+function pick(list){for(var i=0;i<list.length;i++){var all=D.querySelectorAll(list[i]);for(var j=0;j<all.length;j++){if(vis(all[j]))return all[j];}}return null;}
+function who(){try{return (W.AspenWho&&W.AspenWho.get&&W.AspenWho.get())||'everyone';}catch(e){return 'everyone';}}
+function name(){var w=who();return w&&w!=='everyone'?w.charAt(0).toUpperCase()+w.slice(1):'';}
+function go(tab){if(!tab)return;var a=pick(['#navlinks a[href="#'+tab+'"]','.nv-tab[href="#'+tab+'"]','a[href="#'+tab+'"]']);if(a){a.click();}else{location.hash=tab;}}
+function steps(){
+  var w=who(),n=name(),marcy=w==='marcy',jim=w==='jim';
+  return [
+   {h:'Welcome'+(n?', '+n:''),p:'A one-minute tour of everything this site can do. Tap <b>Next</b> (or press →). You can leave any time.'},
+   {tab:'home',sel:['.wh-navpill','#whNav'],h:'This is you',p:'The site is personalised to whoever is picked here: your flights, your ski days, your bookings, your suitcase. <b>Always pick yourself.</b> If you peek at someone else, just browse.'},
+   {sel:['.sy-btn'],h:'Saved everywhere',p:'Anything you tick or save syncs on its own to your phone and laptop. A ✓ on this cloud means you’re up to date.'},
+   {tab:'itinerary',sel:['#daynav','.daytabs'],h:'The week, day by day',p:'One tab per day, from <b>0 · Arrival</b> to <b>VII · Departure</b>. Each day is a timeline of what’s happening and when.'},
+   {tab:'itinerary',sel:['.panel.active .story-row:not(.story-3d)','.story-row:not(.story-3d)'],h:'Watch the day',p:'A full-screen photo story of the day: every stop, in order. Hold to pause, swipe down to close.'},
+   {tab:'itinerary',sel:['.panel.active .story-3d','.story-3d'],h:'Play your day in 3D',p:'Flies your day over the real mountains and town on the Map, with your own stops and times.'},
+   {tab:'itinerary',sel:['.panel.active .rl-stop','.rl-stop'],h:'Every restaurant',p:'Under each dinner: the <b>menu</b>, how to <b>book</b>, a number to <b>call</b>, <b>what to wear</b> and <b>what to order</b>.'},
+   {tab:'valley',sel:['.vt-go','#vxMap'],h:'The map + the 3D tour',p:'Every stop of the trip on a map, day by day. Hit <b>Play the tour</b> for the whole week as a 3D film over the real valley.'+(jim?' (Jim: watch for your car.)':'')},
+   {tab:'booking',sel:['.bk-next','#bkApp'],h:marcy?'Your booking list, Marcy':'Booking',p:(marcy?'You make every reservation. This is your list, in order, with the exact minute each one opens, ':'Every reservation in order, with the exact minute each one opens, ')+'what to say, and a reminder you can add to your calendar. <b>Tick it when it’s done</b> and everyone sees it.'},
+   {tab:'outfits',sel:['.iv-case','#outfits .iv-grid'],h:'Your suitcase',p:'Add what you’re bringing with <b>+ Add to suitcase</b>, then drag pieces onto the mannequin to plan each day. The bar shows if the outfit is warm enough for that day.'},
+   {tab:'outfits',sel:['.iv-must'],h:'Must-haves',p:'What the trip actually requires: snowmobile gear, ski layers, a swimsuit for the hot springs. Each one ticks itself off as your suitcase covers it, with good options if you’re missing something.'},
+   {tab:'lodging',sel:['.lg-stack','.lg-beds','#lodging .lg-house'],h:'The house',p:'42 Nighthawk Drive: a room-by-room walkthrough, who sleeps where, and the view from the deck.'},
+   {sel:['.nv-search-btn','[data-nv-search]'],h:'Search anything',p:'Looking for a phone number, a dinner time or a lift? Search finds it across the whole site.'},
+   {sel:['.tk-eggs'],h:'One more thing…',p:'There are secrets hidden all over this site. This counter keeps score, and tapping it gives you a clue. Keep an eye out for a <b>golden snowflake</b>.'},
+   {tab:'home',h:'That’s it',p:'See you on the mountain'+(n?', '+n:'')+'. You can replay this tour any time: search for <b>“tour”</b> or <b>“help”</b>.'}
+  ];
+}
+var S=null;
+function build(){
+  var root=D.createElement('div');root.className='wt';root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','Site walkthrough');
+  root.innerHTML='<div class="wt-block"></div><div class="wt-hole none"></div><div class="wt-card"><div class="wt-k"><span>Show me around</span><i></i></div><h3 class="wt-h"></h3><p class="wt-p" aria-live="polite"></p><div class="wt-bar"><span></span></div><div class="wt-row"><button type="button" class="wt-btn skip" data-wt="x">Skip</button><span class="sp"></span><button type="button" class="wt-btn" data-wt="b">Back</button><button type="button" class="wt-btn go" data-wt="n">Next</button></div></div>';
+  D.body.appendChild(root);
+  root.addEventListener('click',function(e){var b=e.target.closest('[data-wt]');if(!b)return;var a=b.getAttribute('data-wt');if(a==='n')show(S.i+1);else if(a==='b')show(S.i-1);else end();});
+  return root;
+}
+function place(){
+  if(!S)return;var st=S.list[S.i],hole=$('.wt-hole',S.el),card=$('.wt-card',S.el),t=S.target&&vis(S.target)?S.target:null;
+  var vw=innerWidth,vh=innerHeight,phone=vw<=640;
+  if(!t){hole.classList.add('none');if(!phone){card.style.left=Math.round((vw-card.offsetWidth)/2)+'px';card.style.top=Math.round((vh-card.offsetHeight)/2)+'px';}return;}
+  var r=t.getBoundingClientRect(),pad=8,x=Math.max(6,r.left-pad),y=Math.max(6,r.top-pad),w=Math.min(vw-12,r.width+pad*2),h=Math.min(vh-12,r.height+pad*2);
+  hole.classList.remove('none');hole.style.left=x+'px';hole.style.top=y+'px';hole.style.width=w+'px';hole.style.height=h+'px';
+  if(phone)return;
+  var cw=card.offsetWidth,ch=card.offsetHeight,cx=Math.min(vw-cw-12,Math.max(12,r.left+r.width/2-cw/2)),cy;
+  if(r.bottom+14+ch<vh-8)cy=r.bottom+14;else if(r.top-14-ch>8)cy=r.top-14-ch;else{cy=Math.max(12,vh-ch-12);cx=r.right+14+cw<vw?r.right+14:Math.max(12,r.left-14-cw);}
+  card.style.left=Math.round(cx)+'px';card.style.top=Math.round(cy)+'px';
+}
+function show(i){
+  if(!S)return;if(i<0)i=0;if(i>=S.list.length){end();return;}
+  S.i=i;var st=S.list[i],card=$('.wt-card',S.el);
+  $('.wt-h',card).innerHTML=st.h;$('.wt-p',card).innerHTML=st.p;$('.wt-k i',card).textContent=(i+1)+' / '+S.list.length;
+  $('.wt-bar span',card).style.width=((i+1)/S.list.length*100)+'%';
+  $('[data-wt="b"]',card).style.visibility=i?'visible':'hidden';$('[data-wt="n"]',card).textContent=i===S.list.length-1?'Done':'Next';
+  var switched=false;if(st.tab){var cur=D.querySelector('.panel.active');if(!cur||cur.id!==st.tab){go(st.tab);switched=true;}}
+  var tries=0,gen=++S.gen;S.target=null;place();
+  setTimeout(function look(){
+    if(!S||S.gen!==gen)return;
+    var t=st.sel?pick(st.sel):null;
+    if(!t&&st.sel&&tries++<14){setTimeout(look,120);return;}
+    S.target=t;
+    function bring(){if(!S||S.gen!==gen||!t)return;var r=t.getBoundingClientRect(),ph=innerWidth<=640;if(r.top<70||r.bottom>innerHeight-(ph?280:40)){t.scrollIntoView({block:ph?'start':'center',behavior:'instant'});if(ph){scrollBy({top:-110,behavior:'instant'});}}place();}
+    if(t){bring();[120,350,700,1100].forEach(function(ms){setTimeout(bring,ms);});}   /* the tab's own scroll-to-top can land after ours: re-check */
+    place();
+  },switched?450:0);
+  $('[data-wt="n"]',card).focus({preventScroll:true});
+}
+function onKey(e){if(!S)return;if(e.key==='Escape'){end();}else if(e.key==='ArrowRight'||e.key==='Enter'){e.preventDefault();show(S.i+1);}else if(e.key==='ArrowLeft'){e.preventDefault();show(S.i-1);}}
+function onMove(){if(S){cancelAnimationFrame(S.raf);S.raf=requestAnimationFrame(place);}}
+function start(){
+  if(S)return;
+  var gate=D.getElementById('gate');if(gate&&gate.style.display!=='none'&&!gate.classList.contains('dismiss')){var gb=D.getElementById('gateBtn');if(gb){gb.click();setTimeout(start,950);return;}}
+  S={el:build(),list:steps(),i:0,gen:0,from:D.activeElement};
+  addEventListener('keydown',onKey,true);addEventListener('resize',onMove);addEventListener('scroll',onMove,{passive:true});
+  show(0);
+}
+function end(){
+  if(!S)return;var s=S;S=null;
+  removeEventListener('keydown',onKey,true);removeEventListener('resize',onMove);removeEventListener('scroll',onMove);
+  s.el.remove();try{localStorage.setItem('aspenWalkthrough','1');}catch(e){}
+}
+W.AspenWalkthrough={start:start,end:end};
+/* entry points: a button on the opening screen + a link at the bottom of Home */
+var gb=D.getElementById('gateBtn');
+if(gb&&!D.getElementById('gateTour')){var b=D.createElement('button');b.type='button';b.id='gateTour';b.className='gate-tour';b.innerHTML='Show me around first &#10022;';gb.parentNode.insertBefore(b,gb.nextSibling);b.addEventListener('click',start);}
+})();
+</script>
+
 <style>
 .wip-switch{position:fixed;left:14px;top:58px;z-index:60;padding:3px 4px;color:var(--gold,#b0863a);opacity:.32;
   font:500 9px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;transition:opacity .2s}
