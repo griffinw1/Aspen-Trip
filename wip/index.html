@@ -2329,6 +2329,64 @@ body:not(.dark) .wh-bp::before,body:not(.dark) .wh-bp::after{background:#f4efe4}
  .wh-bp-a b{font-size:26px}
 }
 @media (prefers-reduced-motion:reduce){.wh-wk button{transition:none}}
+
+/* v39 boarding passes */
+.bpasses{display:grid;grid-template-columns:1fr;gap:18px;margin:6px 0 10px}
+.bpass{--bpbg:linear-gradient(135deg,#132235 0%,#0e1a29 60%,#122033 100%);--bpline:rgba(212,175,106,.38);--bpink:#f3ead7;--bpsoft:rgba(243,234,215,.62);--bpgold:#d4af6a;
+  position:relative;display:grid;grid-template-columns:minmax(0,1fr) 190px;border-radius:18px;background:var(--bpbg);color:var(--bpink);
+  border:1px solid var(--bpline);box-shadow:0 18px 40px -22px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.04);overflow:hidden;isolation:isolate}
+body:not(.dark) .bpass{--bpbg:linear-gradient(135deg,#1b2e44 0%,#14243a 60%,#1a2c42 100%)}
+.bpass::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 0% 0%,rgba(212,175,106,.10),transparent 55%);pointer-events:none;z-index:-1}
+.bp-main{padding:18px 22px 16px;min-width:0}
+.bp-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px dashed rgba(212,175,106,.25)}
+.bp-air{font:600 11px/1 'Jost',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--bpgold)}
+.bp-kind{font:500 10px/1 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--bpsoft)}
+.bp-fno{margin-left:auto;font:500 20px/1 'Cormorant Garamond',serif;letter-spacing:.06em;color:var(--bpink)}
+.bp-route{display:grid;grid-template-columns:auto minmax(60px,1fr) auto;align-items:center;gap:14px;padding:16px 0 12px}
+.bp-pt{display:flex;flex-direction:column;min-width:0}.bp-pt.r{text-align:right;align-items:flex-end}
+.bp-pt b{font:500 52px/0.95 'Cormorant Garamond',Georgia,serif;letter-spacing:.04em;color:#fff}
+.bp-pt span{font-size:11.5px;color:var(--bpsoft);margin-top:4px}
+.bp-pt em{font-style:normal;font:600 15px/1.2 'Jost',sans-serif;color:var(--bpgold);margin-top:6px}
+.bp-mid{position:relative;display:flex;align-items:center;gap:6px;color:var(--bpgold)}
+.bp-mid .bp-dash{flex:1;height:1px;background:repeating-linear-gradient(90deg,rgba(212,175,106,.7) 0 5px,transparent 5px 10px)}
+.bp-mid svg{width:22px;height:22px;fill:currentColor;flex:none}
+.bp-mid small{position:absolute;left:50%;top:calc(100% + 6px);transform:translateX(-50%);font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.12em;color:var(--bpsoft);white-space:nowrap}
+.bp-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0 0;padding:12px 0;border-top:1px dashed rgba(212,175,106,.25)}
+.bp-meta dt{font:600 9px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--bpsoft);margin-bottom:5px}
+.bp-meta dd{margin:0;font:500 13.5px/1.25 'Jost',sans-serif;color:var(--bpink)}
+.bp-pax{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.bp-pax li{display:inline-flex;align-items:center;gap:8px;padding:5px 6px 5px 11px;border-radius:99px;border:1px solid rgba(212,175,106,.3);background:rgba(212,175,106,.07);font-size:12.5px}
+.bp-pax li span{color:var(--bpsoft)}
+.bp-pax li b{font:600 12px/1 'Jost',sans-serif;color:#14202e;background:var(--bpgold);border-radius:99px;padding:4px 8px;min-width:30px;text-align:center}
+.bp-note{margin:12px 0 0;font:italic 13px/1.5 'Cormorant Garamond',serif;color:var(--bpsoft)}
+.bp-stub{position:relative;display:flex;flex-direction:column;gap:3px;padding:18px 18px 16px 22px;border-left:2px dashed rgba(212,175,106,.35);background:rgba(212,175,106,.05);min-width:0}
+.bp-stub::before,.bp-stub::after{content:"";position:absolute;left:-12px;width:22px;height:22px;border-radius:50%;background:var(--bg-page,#0b1520)}
+body:not(.dark) .bp-stub::before,body:not(.dark) .bp-stub::after{background:#f4efe4}
+.bp-stub::before{top:-12px}.bp-stub::after{bottom:-12px}
+.bp-sfno{font:500 22px/1.1 'Cormorant Garamond',serif;color:#fff;margin-bottom:2px}
+.bp-sroute{font:600 12px/1.2 'Jost',sans-serif;letter-spacing:.14em;color:var(--bpsoft);margin-bottom:8px}
+.bp-slbl{font:600 9px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--bpsoft);margin-top:6px}
+.bp-stub b{font:600 13px/1.3 'Jost',sans-serif;color:var(--bpink)}
+.bp-seat{color:var(--bpgold)!important;font-size:14px!important;word-break:break-word}
+.bp-bar{display:block;margin-top:auto;height:40px;border-radius:3px;opacity:.85;
+  background:repeating-linear-gradient(90deg,#f3ead7 0 2px,transparent 2px 4px,#f3ead7 4px 5px,transparent 5px 8px,#f3ead7 8px 11px,transparent 11px 12px,#f3ead7 12px 13px,transparent 13px 16px)}
+@media (min-width:1000px){.bpasses{grid-template-columns:1fr 1fr}.bpass{grid-template-columns:minmax(0,1fr) 150px}.bp-pt b{font-size:44px}}
+@media (max-width:640px){
+ .bpass{grid-template-columns:1fr}
+ .bp-stub{border-left:0;border-top:2px dashed rgba(212,175,106,.35);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto auto;grid-auto-flow:column;align-items:start;gap:4px 16px;padding:14px 18px}
+ .bp-stub::before{left:-12px;top:-12px}.bp-stub::after{left:auto;right:-12px;top:-12px;bottom:auto}
+ .bp-stub .bp-air,.bp-stub .bp-sfno,.bp-stub .bp-sroute{display:none}
+ .bp-slbl{margin:0}
+ .bp-bar{grid-column:1/-1;grid-row:3;height:30px;margin-top:8px}
+ .bp-route{gap:8px}
+ .bp-head{gap:6px 10px}
+ .bp-main{padding:16px 16px 14px}
+ .bp-pt b{font-size:clamp(30px,10vw,40px)}
+ .bp-pt span{font-size:10.5px}
+ .bp-meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.wh-bp-seat{display:inline-block;font-style:normal;font:600 11px/1 'Jost',sans-serif;color:#1b2a22;background:var(--wh-gold-b,#e0b65e);border-radius:99px;padding:4px 8px;margin-right:4px}
+.wh-bp-seat.o{background:transparent;color:var(--wh-soft);border:1px solid rgba(176,138,62,.35)}
 /* v39 groceries */
 .groc .gr-steps{margin:.6em 0 .8em 1.2em;padding:0;display:grid;gap:.45em;font-size:.95em;line-height:1.5}
 .groc .gr-steps li::marker{color:var(--gold);font-weight:600}
@@ -3033,49 +3091,85 @@ body.gated .wh-fab{display:none;}
     <p class="lead">DFW to Denver nonstop, then the drive west into the Roaring Fork Valley. Five booked seats from Dallas; Marco flies in from Minneapolis and meets everyone at DEN.</p>
   </div>
 
-  <div class="grid2 reveal">
-    <div class="card">
-      <div class="info-title">AA 2357 &middot; DFW &rarr; DEN</div>
-      <div class="info-sub">Outbound &middot; Sunday, December 27 &middot; Nonstop</div>
-      <dl class="kv">
-        <dt>Departs</dt><dd>8:36 AM CST &middot; Dallas&ndash;Fort Worth (DFW)</dd>
-        <dt>Arrives</dt><dd>9:51 AM MST &middot; Denver Intl &middot; 2h 15m</dd>
-        <dt>Seats</dt><dd>Griffin &middot; Stella &middot; Marcy &middot; Jim &middot; Ben &mdash; Main Cabin</dd>
-        <dt>Marco</dt><dd><span class="note-sans">United UA 1891 from Minneapolis, lands 9:58 AM &mdash; 7 minutes after you. Rides out in the Suburban.</span></dd>
-      </dl>
+  <div class="bpasses"><article class="bpass reveal" aria-label="American Airlines AA 2357, DFW to DEN, Sun Dec 27">
+  <div class="bp-main">
+    <header class="bp-head"><span class="bp-air">American Airlines</span><span class="bp-kind">Outbound &middot; Boarding pass</span><span class="bp-fno">AA 2357</span></header>
+    <div class="bp-route">
+      <div class="bp-pt"><b>DFW</b><span>Dallas&ndash;Fort Worth</span><em>8:36 AM</em></div>
+      <div class="bp-mid" aria-hidden="true"><i class="bp-dash"></i><svg viewBox="0 0 24 24"><path d="M2.5 13.5 9 12l4.5-8h2.2l-2.4 8 5.2-.9 1.9-2.6h1.6l-1 3.9 1 3.9h-1.6l-1.9-2.6-5.2-.9 2.4 8h-2.2L9 13.9l-6.5-.4z"/></svg><i class="bp-dash"></i><small>2h 15m</small></div>
+      <div class="bp-pt r"><b>DEN</b><span>Denver</span><em>9:51 AM</em></div>
     </div>
-    <div class="card">
-      <div class="info-title">AA 1832 &middot; DEN &rarr; DFW</div>
-      <div class="info-sub">Return &middot; Sunday, January 3 &middot; Nonstop</div>
-      <dl class="kv">
-        <dt>Departs</dt><dd>4:22 PM MST &middot; Denver Intl &middot; 2h 8m</dd>
-        <dt>Arrives</dt><dd>7:30 PM CST &middot; Dallas&ndash;Fort Worth (DFW)</dd>
-        <dt>Note</dt><dd><span class="note-sans">10 AM checkout. Allow 4+ hrs to DEN &mdash; holiday Sunday I-70 eastbound can add 30&ndash;60 min.</span></dd>
-      </dl>
-    </div>
+    <dl class="bp-meta"><div><dt>Date</dt><dd>Sun Dec 27</dd></div><div><dt>Cabin</dt><dd>See AA app</dd></div><div><dt>Gate</dt><dd>TBA</dd></div><div><dt>Boards</dt><dd>~40 min before</dd></div></dl>
+    <ul class="bp-pax"><li><span>Marcy</span><b>1C</b></li><li><span>Stella</span><b>2A</b></li><li><span>Griffin</span><b>3C</b></li><li><span>Jim</span><b>&mdash;</b></li><li><span>Ben</span><b>&mdash;</b></li></ul>
+    <p class="bp-note">Jim and Ben are on a separate booking, so their seats aren&rsquo;t in this email &mdash; check the AA app. Marco lands 7 minutes later on United (below).</p>
   </div>
-
+  <div class="bp-stub" aria-hidden="true">
+    <span class="bp-air">AA</span><b class="bp-sfno">AA 2357</b>
+    <span class="bp-sroute">DFW &rarr; DEN</span>
+    <span class="bp-slbl">Seat</span><b class="bp-seat">1C &middot; 2A &middot; 3C</b>
+    <span class="bp-slbl">Date</span><b>Sun Dec 27</b>
+    <i class="bp-bar"></i>
+  </div>
+</article><article class="bpass reveal" aria-label="American Airlines AA 1832, DEN to DFW, Sun Jan 3">
+  <div class="bp-main">
+    <header class="bp-head"><span class="bp-air">American Airlines</span><span class="bp-kind">Return &middot; Boarding pass</span><span class="bp-fno">AA 1832</span></header>
+    <div class="bp-route">
+      <div class="bp-pt"><b>DEN</b><span>Denver</span><em>4:22 PM</em></div>
+      <div class="bp-mid" aria-hidden="true"><i class="bp-dash"></i><svg viewBox="0 0 24 24"><path d="M2.5 13.5 9 12l4.5-8h2.2l-2.4 8 5.2-.9 1.9-2.6h1.6l-1 3.9 1 3.9h-1.6l-1.9-2.6-5.2-.9 2.4 8h-2.2L9 13.9l-6.5-.4z"/></svg><i class="bp-dash"></i><small>2h 8m</small></div>
+      <div class="bp-pt r"><b>DFW</b><span>Dallas&ndash;Fort Worth</span><em>7:30 PM</em></div>
+    </div>
+    <dl class="bp-meta"><div><dt>Date</dt><dd>Sun Jan 3</dd></div><div><dt>Cabin</dt><dd>See AA app</dd></div><div><dt>Gate</dt><dd>TBA</dd></div><div><dt>Boards</dt><dd>~40 min before</dd></div></dl>
+    <ul class="bp-pax"><li><span>Marcy</span><b>8C</b></li><li><span>Stella</span><b>11D</b></li><li><span>Griffin</span><b>11C</b></li><li><span>Jim</span><b>&mdash;</b></li><li><span>Ben</span><b>&mdash;</b></li></ul>
+    <p class="bp-note">10 AM checkout. Allow 4+ hrs to DEN &mdash; holiday Sunday I-70 eastbound can add 30&ndash;60 min.</p>
+  </div>
+  <div class="bp-stub" aria-hidden="true">
+    <span class="bp-air">AA</span><b class="bp-sfno">AA 1832</b>
+    <span class="bp-sroute">DEN &rarr; DFW</span>
+    <span class="bp-slbl">Seat</span><b class="bp-seat">8C &middot; 11D &middot; 11C</b>
+    <span class="bp-slbl">Date</span><b>Sun Jan 3</b>
+    <i class="bp-bar"></i>
+  </div>
+</article></div>
   <div class="sub-head reveal">Marco &middot; Minneapolis &harr; Denver &middot; booked</div>
-  <div class="grid2 reveal">
-    <div class="card">
-      <div class="info-title">UA 1891 &middot; MSP &rarr; DEN</div>
-      <div class="info-sub">Sunday, December 27 &middot; Nonstop &middot; United Economy</div>
-      <dl class="kv">
-        <dt>Departs</dt><dd>8:30 AM CST &middot; Minneapolis&ndash;St. Paul (MSP)</dd>
-        <dt>Arrives</dt><dd>9:58 AM MST &middot; Denver Intl &mdash; 7 minutes after AA 2357</dd>
-        <dt>Meet</dt><dd><span class="note-sans">Everyone meets at baggage claim, then walks to the Suburban together.</span></dd>
-      </dl>
+  <div class="bpasses"><article class="bpass reveal" aria-label="United Airlines UA 1891, MSP to DEN, Sun Dec 27">
+  <div class="bp-main">
+    <header class="bp-head"><span class="bp-air">United Airlines</span><span class="bp-kind">Outbound &middot; Boarding pass</span><span class="bp-fno">UA 1891</span></header>
+    <div class="bp-route">
+      <div class="bp-pt"><b>MSP</b><span>Minneapolis&ndash;St. Paul</span><em>8:30 AM</em></div>
+      <div class="bp-mid" aria-hidden="true"><i class="bp-dash"></i><svg viewBox="0 0 24 24"><path d="M2.5 13.5 9 12l4.5-8h2.2l-2.4 8 5.2-.9 1.9-2.6h1.6l-1 3.9 1 3.9h-1.6l-1.9-2.6-5.2-.9 2.4 8h-2.2L9 13.9l-6.5-.4z"/></svg><i class="bp-dash"></i><small>2h 28m</small></div>
+      <div class="bp-pt r"><b>DEN</b><span>Denver</span><em>9:58 AM</em></div>
     </div>
-    <div class="card">
-      <div class="info-title">UA 2076 &middot; DEN &rarr; MSP</div>
-      <div class="info-sub">Sunday, January 3 &middot; Nonstop &middot; United Economy</div>
-      <dl class="kv">
-        <dt>Departs</dt><dd>6:00 PM MST &middot; Denver Intl</dd>
-        <dt>Arrives</dt><dd>9:07 PM CST &middot; Minneapolis&ndash;St. Paul (MSP)</dd>
-        <dt>Note</dt><dd><span class="note-sans">The Suburban reaches DEN ~2:30 PM, so Marco has a relaxed ~3 hours before his flight. Refundable fare; confirmation is in his United email.</span></dd>
-      </dl>
-    </div>
+    <dl class="bp-meta"><div><dt>Date</dt><dd>Sun Dec 27</dd></div><div><dt>Cabin</dt><dd>First</dd></div><div><dt>Gate</dt><dd>TBA</dd></div><div><dt>Boards</dt><dd>~40 min before</dd></div></dl>
+    <ul class="bp-pax"><li><span>Marco</span><b>1F</b></li></ul>
+    <p class="bp-note">Meet everyone at baggage claim, then walk to the Suburban together.</p>
   </div>
+  <div class="bp-stub" aria-hidden="true">
+    <span class="bp-air">UA</span><b class="bp-sfno">UA 1891</b>
+    <span class="bp-sroute">MSP &rarr; DEN</span>
+    <span class="bp-slbl">Seat</span><b class="bp-seat">1F</b>
+    <span class="bp-slbl">Date</span><b>Sun Dec 27</b>
+    <i class="bp-bar"></i>
+  </div>
+</article><article class="bpass reveal" aria-label="United Airlines UA 2076, DEN to MSP, Sun Jan 3">
+  <div class="bp-main">
+    <header class="bp-head"><span class="bp-air">United Airlines</span><span class="bp-kind">Return &middot; Boarding pass</span><span class="bp-fno">UA 2076</span></header>
+    <div class="bp-route">
+      <div class="bp-pt"><b>DEN</b><span>Denver</span><em>6:00 PM</em></div>
+      <div class="bp-mid" aria-hidden="true"><i class="bp-dash"></i><svg viewBox="0 0 24 24"><path d="M2.5 13.5 9 12l4.5-8h2.2l-2.4 8 5.2-.9 1.9-2.6h1.6l-1 3.9 1 3.9h-1.6l-1.9-2.6-5.2-.9 2.4 8h-2.2L9 13.9l-6.5-.4z"/></svg><i class="bp-dash"></i><small>2h 7m</small></div>
+      <div class="bp-pt r"><b>MSP</b><span>Minneapolis&ndash;St. Paul</span><em>9:07 PM</em></div>
+    </div>
+    <dl class="bp-meta"><div><dt>Date</dt><dd>Sun Jan 3</dd></div><div><dt>Cabin</dt><dd>Economy</dd></div><div><dt>Gate</dt><dd>TBA</dd></div><div><dt>Boards</dt><dd>~40 min before</dd></div></dl>
+    <ul class="bp-pax"><li><span>Marco</span><b>34F</b></li></ul>
+    <p class="bp-note">The Suburban reaches DEN ~2:30 PM, so Marco has a relaxed ~3 hours. Refundable fare.</p>
+  </div>
+  <div class="bp-stub" aria-hidden="true">
+    <span class="bp-air">UA</span><b class="bp-sfno">UA 2076</b>
+    <span class="bp-sroute">DEN &rarr; MSP</span>
+    <span class="bp-slbl">Seat</span><b class="bp-seat">34F</b>
+    <span class="bp-slbl">Date</span><b>Sun Jan 3</b>
+    <i class="bp-bar"></i>
+  </div>
+</article></div>
 
   <div class="sub-head reveal">The Vehicle &amp; The Drive</div>
   <div class="grid2 reveal">
@@ -10276,6 +10370,7 @@ function summary(id){
   snowmobile:P.sled,extra:P.extra||[],leadBooks:!!P.leadBooks,booksOwn:own,booksForYou:forYou,days:days};
 }
 function bl(list){return list.map(function(b){return '<li>'+esc(b.label)+' <i>'+esc(b.done?'✓ done':b.when)+'</i></li>';}).join('');}
+var SEATS={marcy:{'AA 2357':'1C','AA 1832':'8C'},stella:{'AA 2357':'2A','AA 1832':'11D'},griffin:{'AA 2357':'3C','AA 1832':'11C'},marco:{'UA 1891':'1F · First','UA 2076':'34F'}};
 function renderSummary(box,id){
  var s=summary(id); if(!box){return;} if(!s){box.innerHTML='';return;}
  var IC={room:'<path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M3 18v2M21 18v2M7 10V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"/>',
@@ -10291,7 +10386,7 @@ function renderSummary(box,id){
   if(!m){return '<div class="wh-bp raw">'+esc(f)+'</div>';}
   return '<div class="wh-bp"><span class="wh-bp-k">'+(m[1]==='Out'?'Outbound':'Return')+'<em>'+esc(m[2])+' · '+esc(m[3])+'</em></span>'+
    '<span class="wh-bp-a"><b>'+m[5]+'</b><small>'+m[4]+'</small></span><span class="wh-bp-line" aria-hidden="true"><i></i></span>'+
-   '<span class="wh-bp-a r"><b>'+m[7]+'</b><small>'+m[6]+'</small></span>'+(m[8]?'<span class="wh-bp-n">'+esc(m[8])+'</span>':'')+'</div>';
+   '<span class="wh-bp-a r"><b>'+m[7]+'</b><small>'+m[6]+'</small></span>'+(function(){var fn=(/([A-Z]{2}) ?(\d+)/.exec(m[2])||[]).slice(1).join(' '),st=(SEATS[s.id]||{})[fn];return '<span class="wh-bp-n">'+(st?'<b class="wh-bp-seat">Seat '+esc(st)+'</b>':'<b class="wh-bp-seat o">Seat: check the app</b>')+(m[8]?' &middot; '+esc(m[8]):'')+'</span>';})()+'</div>';
  }
  function chips(str){return esc(str).split(' · ').map(function(p,i){return i? '<span class="wh-c">'+p+'</span>':'<strong>'+p+'</strong>';}).join('');}
  function todo(list,label){
