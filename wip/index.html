@@ -2994,6 +2994,14 @@ dialog.of-help::backdrop{background:rgba(8,14,22,.62);backdrop-filter:blur(3px)}
 .rl-stop .rl-order-k{display:block;font:600 9.5px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
 .rl-stop .rl-order-v{font:italic 16px/1.45 var(--serif);color:var(--snow)}
 .rl-stop .rl-order-v .rl-unv{display:block;font:normal 11px/1.4 var(--sans);opacity:.6;margin-top:3px}
+
+/* v41 who: "log in as you" note + browsing-as reminder */
+.wh-note{max-width:420px;margin:12px auto 0;text-align:center;font:400 12.5px/1.5 var(--sans);color:var(--wh-soft,#9aa5a0)}
+.wh-note b{color:var(--wh-gold,#c49a4a);font-weight:600}
+.wh-asother{position:fixed;left:50%;transform:translateX(-50%);top:58px;z-index:61;padding:6px 12px;border-radius:99px;font:500 11.5px/1.2 var(--sans);
+  background:rgba(155,45,42,.9);color:#fff;box-shadow:0 6px 18px -8px rgba(0,0,0,.5);white-space:nowrap;cursor:pointer}
+.wh-asother b{font-weight:700}
+@media (max-width:640px){.wh-asother{top:56px;font-size:11px;white-space:normal;text-align:center;width:max-content;max-width:calc(100% - 24px);line-height:1.35}}
 /* v39 groceries */
 .groc .gr-steps{margin:.6em 0 .8em 1.2em;padding:0;display:grid;gap:.45em;font-size:.95em;line-height:1.5}
 .groc .gr-steps li::marker{color:var(--gold);font-weight:600}
@@ -12819,7 +12827,7 @@ var rz=0,gateBtn=D.getElementById('gateBtn'),gateLbl=gateBtn?gateBtn.innerHTML:'
 function build(){
  if(gateBtn&&!D.getElementById('whGate')){
   var g=D.createElement('div');g.className='wh-gate wh-ui';g.id='whGate';
-  g.innerHTML='<p class="wh-q" id="whQ">Who are you?</p><div class="wh-pick" role="group" aria-labelledby="whQ">'+pickerHTML()+'</div>';
+  g.innerHTML='<p class="wh-q" id="whQ">Who are you?</p><div class="wh-pick" role="group" aria-labelledby="whQ">'+pickerHTML()+'</div>'+'<p class="wh-note">Pick <b>yourself</b>. Your outfits, suitcase, bookings and secrets save to you. Peeking at someone else? Just browse; don&rsquo;t change their stuff.</p>';
   gateBtn.parentNode.insertBefore(g,gateBtn);
  }
  var nr=D.querySelector('.nav-right');pill=D.getElementById('whNav');
@@ -12837,7 +12845,7 @@ function build(){
 }
 function openPicker(){
  if(!sheet){sheet=D.createElement('dialog');sheet.className='wh-sheet wh-ui';sheet.setAttribute('aria-labelledby','whSheetT');
-  sheet.innerHTML='<div class="wh-sheet-in"><p class="wh-q" id="whSheetT">Who’s viewing?</p><div class="wh-pick" role="group" aria-labelledby="whSheetT">'+pickerHTML()+'</div><button type="button" class="wh-close">Close</button></div>';
+  sheet.innerHTML='<div class="wh-sheet-in"><p class="wh-q" id="whSheetT">Who’s viewing?</p><div class="wh-pick" role="group" aria-labelledby="whSheetT">'+pickerHTML()+'</div><p class="wh-note">Pick <b>yourself</b>. Your outfits, suitcase, bookings and secrets save to you. Peeking at someone else? Just browse; don&rsquo;t change their stuff.</p><button type="button" class="wh-close">Close</button></div>';
   D.body.appendChild(sheet);
   sheet.addEventListener('click',function(e){if(e.target===sheet||e.target.closest('.wh-close')){closeSheet();}});
  }
@@ -13749,6 +13757,20 @@ var ASTRO=(function(){
     }).catch(function(){ phBtn.textContent = 'Compass not available'; });
   });
   if (alBtn) alBtn.addEventListener('click', function(){ if (sm != null){ calib = ((PEAK.ajax.az - sm) + 540) % 360 - 180; } });
+})();
+</script>
+<script>/* v41: remind when browsing as someone other than this device's owner */
+(function(){var KEY='aspenWhoHome',D=document,W=window,el=null;
+ function get(k){try{return localStorage.getItem(k)}catch(e){return null}} function set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+ function name(id){var p=W.AspenWho&&W.AspenWho.people&&W.AspenWho.people[id];return p&&p.n?p.n:(id?id.charAt(0).toUpperCase()+id.slice(1):'');}
+ function upd(){var w=W.AspenWho&&W.AspenWho.get&&W.AspenWho.get(); if(!w||w==='everyone'){hide();return;}
+  var home=get(KEY); if(!home){set(KEY,w);home=w;}
+  if(w!==home){ if(!el){el=D.createElement('button');el.type='button';el.className='wh-asother';
+     el.addEventListener('click',function(){var h=get(KEY);if(h&&W.AspenWho&&W.AspenWho.set)W.AspenWho.set(h);});D.body.appendChild(el);}
+   el.innerHTML='Browsing as <b>'+name(w)+'</b>, changes save to '+name(w)+' &middot; tap to switch back to '+name(home); el.hidden=false; }
+  else hide(); }
+ function hide(){if(el)el.hidden=true;}
+ W.addEventListener('aspen:who',upd); W.addEventListener('aspen:who-ready',upd); W.addEventListener('aspen:enter',upd); setTimeout(upd,1500);
 })();
 </script>
 <style>
