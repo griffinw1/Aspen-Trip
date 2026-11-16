@@ -3017,6 +3017,9 @@ html.gc-on:has(dialog[open]) .gc-dot, html.gc-on:has(dialog[open]) .gc-trail{opa
 html.gc-on .eg-gal, html.gc-on .eg-gal *{cursor:auto!important}
 html.gc-on .eg-gal button, html.gc-on .eg-gal a, html.gc-on .eg-gal [role=button], html.gc-on .eg-gal label{cursor:pointer!important}
 html.gc-on:has(.eg-gal.on) .gc-dot, html.gc-on:has(.eg-gal.on) .gc-trail{opacity:0!important}
+/* v43b: the tour covers the page — stop painting what's behind it */
+body.vt-on #snow, body.vt-on #alpenglow, body.vt-on #grain, body.vt-on .frostvig{display:none!important}
+body.vt-on .panel:not(#valley), body.vt-on footer{visibility:hidden}
 
 /* v39 in-page PDF menu viewer */
 dialog.pdfv{margin:auto;inset:0;padding:0;border:1px solid rgba(176,134,58,.45);border-radius:16px;width:min(920px,94vw);height:min(88vh,1100px);background:var(--paper,#f7f2e7);color:inherit;box-shadow:0 30px 80px -20px rgba(0,0,0,.55);overflow:hidden}
@@ -7804,21 +7807,34 @@ body.gated .wh-fab{display:none;}
   flakes.sort(function(a,b){return a.z-b.z;}); // far first, near last (drawn on top)
   var burstT;
   window.snowBurst=function(n){n=n||90;for(var i=0;i<n;i++){var z=Math.random();flakes.push({burst:true,z:z,x:Math.random()*w,y:-10-Math.random()*h*0.4,r:z*3+0.9,s:z*1.3+0.55,d:Math.random()*6.283,sw:z*0.9+0.2,t:Math.random()<0.5,rot:Math.random()*6.283,rs:(Math.random()-0.5)*0.03});}clearTimeout(burstT);burstT=setTimeout(function(){flakes=flakes.filter(function(f){return !f.burst;});},9000);};
+  /* v43b: each flake look is pre-drawn once (with its soft shadow) into a small sprite and stamped with drawImage.
+     Live shadowBlur + fillText for every flake on every frame was the page's biggest per-frame cost. */
+  var SPR={};
+  function sprite(f){
+    var key=(f.t?'t':'d')+Math.round(f.r*2);
+    if(SPR[key]) return SPR[key];
+    var r=Math.round(f.r*2)/2, blur=1.5+f.z*4.5, size=Math.ceil((f.t?r*6:r*2)+blur*4+4);
+    var cv=document.createElement('canvas'); cv.width=cv.height=size; var g=cv.getContext('2d');
+    g.shadowColor='rgba(86,108,128,0.55)'; g.shadowBlur=blur; g.fillStyle='#ffffff';
+    if(f.t){ g.font=((r*6)|0)+'px serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('\u2744\uFE0E',size/2,size/2); }
+    else { g.beginPath(); g.arc(size/2,size/2,r,0,6.283); g.fill(); }
+    return (SPR[key]={c:cv,h:size/2});
+  }
   function frame(){
+    requestAnimationFrame(frame);
+    var b=document.body;
+    if(document.hidden||(b&&b.classList.contains('vt-on'))){ if(!frame.idle){ x.clearRect(0,0,w,h); frame.idle=1; } return; }   /* nothing to see behind the full-screen tour */
+    frame.idle=0;
     x.clearRect(0,0,w,h);
-    x.shadowColor='rgba(86,108,128,0.55)'; x.fillStyle='#ffffff';
-    for(var i=0;i<flakes.length;i++){var f=flakes[i];
-      x.shadowBlur=1.5+f.z*4.5;
+    for(var i=0;i<flakes.length;i++){var f=flakes[i], sp=f.sp||(f.sp=sprite(f));
       x.globalAlpha=(0.30+0.55*f.z)*(0.6+0.4*Math.abs(Math.sin(f.d)));
-      if(f.t){ x.save(); x.translate(f.x,f.y); x.rotate(f.rot);
-        x.font=((f.r*6)|0)+'px serif'; x.textAlign='center'; x.textBaseline='middle';
-        x.fillText('\u2744\uFE0E',0,0); x.restore(); f.rot+=f.rs; }
-      else { x.beginPath(); x.arc(f.x,f.y,f.r,0,6.283); x.fill(); }
+      if(f.t){ x.setTransform(Math.cos(f.rot),Math.sin(f.rot),-Math.sin(f.rot),Math.cos(f.rot),f.x,f.y); x.drawImage(sp.c,-sp.h,-sp.h); f.rot+=f.rs; }
+      else { x.setTransform(1,0,0,1,0,0); x.drawImage(sp.c,f.x-sp.h,f.y-sp.h); }
       f.y+=f.s; f.x+=Math.sin(f.d)*f.sw; f.d+=0.008;
       if(f.y>h+12){f.y=-12;f.x=Math.random()*w;}
       if(f.x>w+12){f.x=-12;}else if(f.x<-12){f.x=w+12;}
     }
-    requestAnimationFrame(frame);
+    x.setTransform(1,0,0,1,0,0); x.globalAlpha=1;
   }
   frame();
 })();
@@ -11768,6 +11784,8 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     v.camera.lookAtTransform(C.Matrix4.IDENTITY);
     if (!guard) return;
     /* terrain/building guard: if the eye would sit inside or within 25 m of the mesh, tilt down and pull back for the rest of the shot */
+    /* v43b: sampleHeight renders a hidden pick pass — doing it every frame halved the frame rate. 3×/s is plenty. */
+    var nowG = performance.now(); if (FM && nowG - (FM.guardT || 0) < 330) return; if (FM) FM.guardT = nowG;
     try {
       var c = v.camera.positionCartographic, g = v.scene.sampleHeight(C.Cartographic.clone(c));
       if (g != null && isFinite(g) && c.height < g + 25){ FM.pcap = Math.max(-75, pt - 4); FM.rcap = r * 1.06; }
@@ -11912,8 +11930,8 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
   }
   function finishGate(){
     var grg = FM.gate && FM.gate.rg;
-    FM.gate = null; FM.el.classList.remove('gating');
-    if (grg != null) pfAhead(FM.tl, grg);   /* while this region plays, load the next one(s) in the background */
+    FM.gate = null; FM.el.classList.remove('gating'); FM.gateEndT = performance.now();
+    /* (v43b: no lookahead during playback — it made the film lag; the warm start before Play does the heavy lifting) */
     FM.ts.maximumScreenSpaceError = FM.sseMove;
     FM.revealAt = (FM.tl.shots[FM.si] || {}).k === 'reveal' ? 0 : performance.now(); FM.force = true;   /* don't dip over a reveal already playing */
     return true;
@@ -12096,12 +12114,13 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     FM.force = false;
     /* v43 buffering: a shot that opens on a cut holds on black at its first frame until its tiles are in
        (like a video buffering), capped so it never hangs. Mid-shot detail keeps streaming as it plays. */
-    if (T.playing && sh.cut && sh.k !== 'reveal' && sh.k !== 'end' && T.t - sh.t0 < 260 && FM.ts){
+    if (T.playing && sh.cut && sh.k !== 'reveal' && sh.k !== 'end' && T.t - sh.t0 < 260 && FM.ts && now - (FM.gateEndT || 0) > 600){   /* a hold just ended: don't wait twice */
       if (FM.stallShot !== sh){ FM.stallShot = sh; FM.stallT = now; FM.stallSeen = 0; }
       var nxs = sh.k === 'card' ? tl.shots[i + 1] : sh;
-      var budget = isClose(nxs) ? (COARSE ? 9000 : 8000) : (COARSE ? 6000 : 5000);
-      if (FM.ts.tilesLoaded) FM.stallSeen++; else FM.stallSeen = 0;
-      if (FM.stallSeen < 3 && now - FM.stallT < budget){ T.t = sh.t0; FM.stalling = true; FM.el.classList.add('gating'); }
+      var budget = isClose(nxs) ? (COARSE ? 7000 : 6000) : (COARSE ? 5000 : 4000);
+      var stx = FM.ts.statistics || {}, left = (stx.numberOfPendingRequests || 0) + (stx.numberOfTilesProcessing || 0);
+      if (FM.ts.tilesLoaded || left <= 3) FM.stallSeen++; else FM.stallSeen = 0;
+      if (FM.stallSeen < 2 && now - FM.stallT < budget){ T.t = sh.t0; FM.stalling = true; FM.el.classList.add('gating'); }
       else if (FM.stalling){ FM.stalling = false; FM.el.classList.remove('gating'); }
     } else if (FM.stalling){ FM.stalling = false; FM.el.classList.remove('gating'); }
     var u = clamp((T.t - sh.t0) / sh.dur, 0, 1), st = shotState(sh, u);
@@ -12344,7 +12363,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     me.raf = requestAnimationFrame(pfLoop);
     var now = performance.now();
     if (now - me.last < (T ? 50 : 33)) return;   /* ~20 fps while the film plays, ~30 otherwise */
-    if (FM && FM.tl === me.tl && (FM.gate || FM.stalling || (FM.ts && FM.ts.statistics && FM.ts.statistics.numberOfTilesProcessing > 12))) return;   /* the film is loading what's on screen: it gets the CPU + bandwidth */
+    if (FM && FM.v) return;   /* once the film is running the preloader sleeps: unpacking tiles in two views at once was the lag */
     me.last = now;
     var C = me.C, v = me.v, ts = me.ts;
     if (me.vi >= me.views.length){
