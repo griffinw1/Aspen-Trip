@@ -23,3 +23,28 @@ Mon Nov 16 13:42:59 MT | French Alpine Bistro | 2026-12-17 | party 6 | start -> 
 Mon Nov 16 13:42:59 MT | Matsuhisa            | 2026-12-15 | party 6 | start -> error:Error
 Mon Nov 16 13:42:59 MT | Matsuhisa            | 2026-12-16 | party 6 | start -> error:Error
 Mon Nov 16 13:42:59 MT | Matsuhisa            | 2026-12-17 | party 6 | start -> error:Error
+== run start Mon Nov 16 14:04:33 MT
+Mon Nov 16 14:04:34 MT | Wild Fig             | 2026-12-15 | party 2 | start -> book19
+Mon Nov 16 14:04:34 MT | Wild Fig             | 2026-12-15 | party 6 | start -> book15
+Mon Nov 16 14:04:34 MT | Wild Fig             | 2026-12-16 | party 2 | start -> request
+Mon Nov 16 14:04:35 MT | Wild Fig             | 2026-12-16 | party 6 | start -> request
+Mon Nov 16 14:04:36 MT | Wild Fig             | 2026-12-17 | party 2 | start -> request
+Mon Nov 16 14:04:36 MT | Wild Fig             | 2026-12-17 | party 6 | start -> request
+Mon Nov 16 14:04:37 MT | Casa Tua             | 2026-12-15 | party 2 | start -> book18
+Mon Nov 16 14:04:37 MT | Casa Tua             | 2026-12-15 | party 6 | start -> book18
+Mon Nov 16 14:04:38 MT | Casa Tua             | 2026-12-16 | party 2 | start -> book18
+Mon Nov 16 14:04:39 MT | Casa Tua             | 2026-12-16 | party 6 | start -> book18
+Mon Nov 16 14:04:39 MT | Casa Tua             | 2026-12-17 | party 2 | start -> request
+Mon Nov 16 14:04:40 MT | Casa Tua             | 2026-12-17 | party 6 | start -> request
+Mon Nov 16 14:04:40 MT | Steakhouse 316       | 2026-12-15 | party 2 | start -> book17
+Mon Nov 16 14:04:41 MT | Steakhouse 316       | 2026-12-15 | party 6 | start -> book17
+Mon Nov 16 14:04:41 MT | Steakhouse 316       | 2026-12-16 | party 2 | start -> book17
+Mon Nov 16 14:04:41 MT | Steakhouse 316       | 2026-12-16 | party 6 | start -> book17
+Mon Nov 16 14:04:42 MT | Steakhouse 316       | 2026-12-17 | party 2 | start -> request
+Mon Nov 16 14:04:42 MT | Steakhouse 316       | 2026-12-17 | party 6 | start -> request
+Mon Nov 16 14:04:43 MT | French Alpine Bistro | 2026-12-15 | party 6 | start -> error:Error:Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.opentable.com/restref/client/?rid=
+Mon Nov 16 14:04:43 MT | French Alpine Bistro | 2026-12-16 | party 6 | start -> error:Error:Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.opentable.com/restref/client/?rid=
+Mon Nov 16 14:04:43 MT | French Alpine Bistro | 2026-12-17 | party 6 | start -> error:Error:Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.opentable.com/restref/client/?rid=
+Mon Nov 16 14:04:44 MT | Matsuhisa            | 2026-12-15 | party 6 | start -> error:Error:Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.opentable.com/restref/client/?rid=
+Mon Nov 16 14:04:44 MT | Matsuhisa            | 2026-12-16 | party 6 | start -> error:Error:Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.opentable.com/restref/client/?rid=
+Mon Nov 16 14:04:44 MT | Matsuhisa            | 2026-12-17 | party 6 | start -> error:Error:Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.opentable.com/restref/client/?rid=
