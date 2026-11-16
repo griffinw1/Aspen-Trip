@@ -16002,6 +16002,16 @@ var ASTRO=(function(){
 .gate-tour{display:block;margin:12px auto 0;padding:9px 18px;border-radius:99px;border:1px solid rgba(196,154,74,.55);background:transparent;color:var(--gold,#B0863A);
   font:600 11px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .2s,border-color .2s}
 .gate-tour:hover,.gate-tour:focus-visible{background:rgba(196,154,74,.12);border-color:var(--gold,#B0863A)}
+.gate-tour-wrap{margin:16px auto 0;max-width:40ch;display:flex;flex-direction:column;align-items:center;gap:7px}
+.gate-tour-wrap .gate-tour{margin:0;padding:12px 22px;font-size:12px}
+.gate-tour-wrap.rec .gate-tour{border-color:var(--gold,#B0863A);background:rgba(196,154,74,.12);animation:gtPulse 2.4s ease-in-out infinite}
+@keyframes gtPulse{0%,100%{box-shadow:0 0 0 0 rgba(212,175,106,0)}50%{box-shadow:0 0 0 7px rgba(212,175,106,.18)}}
+.gate-rec{font:700 9px/1 'Jost',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#14202e;background:linear-gradient(135deg,#E8D9B0,#C49A4A);border-radius:99px;padding:5px 10px}
+.gate-tour-note{font:400 12.5px/1.45 'Jost',sans-serif;color:var(--muted,#6E7C73);text-align:center}
+.gate-tour-note b{font-weight:600;color:var(--gold,#956E29)}
+body.dark .gate-tour-note{color:rgba(243,234,215,.7)}body.dark .gate-tour-note b{color:#d4af6a}
+@media (prefers-reduced-motion:reduce){.gate-tour-wrap.rec .gate-tour{animation:none}}
+.wt-flash{animation:wtFlash 1.1s ease-in-out 2}@keyframes wtFlash{50%{box-shadow:0 0 0 3px rgba(212,175,106,.9),0 0 30px rgba(212,175,106,.5);border-radius:16px}}
 .wt{position:fixed;inset:0;z-index:10006;pointer-events:none}
 .wt-hole{position:fixed;border-radius:14px;box-shadow:0 0 0 9999px rgba(6,12,22,.62),0 0 0 2px rgba(212,175,106,.95),0 0 26px 4px rgba(212,175,106,.45);
   transition:left .38s cubic-bezier(.2,.8,.2,1),top .38s cubic-bezier(.2,.8,.2,1),width .38s cubic-bezier(.2,.8,.2,1),height .38s cubic-bezier(.2,.8,.2,1),opacity .25s;pointer-events:none}
@@ -16102,7 +16112,18 @@ function onKey(e){if(!S)return;if(e.key==='Escape'){end();}else if(e.key==='Arro
 function onMove(){if(S){cancelAnimationFrame(S.raf);S.raf=requestAnimationFrame(place);}}
 function start(){
   if(S)return;
-  var gate=D.getElementById('gate');if(gate&&gate.style.display!=='none'&&!gate.classList.contains('dismiss')){var gb=D.getElementById('gateBtn');if(gb){gb.click();setTimeout(start,950);return;}}
+  var gate=D.getElementById('gate');
+  if(gate&&gate.style.display!=='none'&&!gate.classList.contains('dismiss')){
+    if(start.waiting)return;
+    start.waiting=true;addEventListener('aspen:enter',function(){start.waiting=false;setTimeout(start,950);},{once:true});
+    var gb=D.getElementById('gateBtn');if(gb)gb.click();
+    setTimeout(function(){   /* nobody picked yet: point at the name picker; the tour starts once they enter */
+      if(!gate.classList.contains('dismiss')){var wg=D.getElementById('whGate')||gate.querySelector('.wh-gate,[class*="who"]');
+        if(wg){wg.scrollIntoView({block:'center',behavior:'smooth'});wg.classList.add('wt-flash');setTimeout(function(){wg.classList.remove('wt-flash');},2200);}
+        var note=gate.querySelector('.gate-tour-note');if(note){note.innerHTML='<b>Pick who you are above</b>, then the tour starts.';}}
+    },250);
+    return;
+  }
   S={el:build(),list:steps(),i:0,gen:0,from:D.activeElement};
   addEventListener('keydown',onKey,true);addEventListener('resize',onMove);addEventListener('scroll',onMove,{passive:true});
   show(0);
@@ -16113,9 +16134,17 @@ function end(){
   s.el.remove();try{localStorage.setItem('aspenWalkthrough','1');}catch(e){}
 }
 W.AspenWalkthrough={start:start,end:end};
-/* entry points: a button on the opening screen + a link at the bottom of Home */
+/* entry point on the opening screen. Recommended (glowing) for first visits and for anyone away 7+ days. */
+var last=0,done=false;try{last=+localStorage.getItem('aspenLastVisit')||0;done=localStorage.getItem('aspenWalkthrough')==='1';localStorage.setItem('aspenLastVisit',String(Date.now()));}catch(e){}
+var away=last&&Date.now()-last>7*864e5, rec=!done||away;
 var gb=D.getElementById('gateBtn');
-if(gb&&!D.getElementById('gateTour')){var b=D.createElement('button');b.type='button';b.id='gateTour';b.className='gate-tour';b.innerHTML='Show me around first &#10022;';gb.parentNode.insertBefore(b,gb.nextSibling);b.addEventListener('click',start);}
+if(gb&&!D.getElementById('gateTour')){
+  var wrap=D.createElement('div');wrap.className='gate-tour-wrap'+(rec?' rec':'');
+  wrap.innerHTML=(rec?'<span class="gate-rec">'+(away&&done?'Welcome back &middot; recommended':'Recommended')+'</span>':'')+
+    '<button type="button" id="gateTour" class="gate-tour">Show me around &#10022;</button>'+
+    '<small class="gate-tour-note">A one-minute tour of everything here. <b>Recommended for your first visit, or if it&rsquo;s been a while.</b></small>';
+  gb.parentNode.insertBefore(wrap,gb.nextSibling);D.getElementById('gateTour').addEventListener('click',start);
+}
 })();
 </script>
 
