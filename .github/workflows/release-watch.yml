@@ -1,0 +1,41 @@
+# Watches when each dinner's booking window opens (SevenRooms + OpenTable). Runs in GitHub's cloud;
+# results go to the `release-watch` branch (log.txt). Delete this file to stop it. Stops by itself after END_DATE.
+name: release-watch
+on:
+  schedule:
+    - cron: "40 5 * * *"    # 10:40 PM MT
+    - cron: "40 11 * * *"   # 4:40 AM MT
+    - cron: "40 17 * * *"   # 10:40 AM MT
+    - cron: "40 23 * * *"   # 4:40 PM MT
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: release-watch
+  cancel-in-progress: false
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 359
+    steps:
+      - uses: actions/checkout@v4
+        with: { path: main }
+      - name: Log branch
+        run: |
+          git clone --branch release-watch --single-branch "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" logs \
+            || (mkdir logs && cd logs && git init -b release-watch && git remote add origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git")
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Install headless Chrome
+        run: pip install playwright==1.48.0 && python -m playwright install --with-deps chromium
+      - name: Watch (≈5h45m), saving the log every 20 min
+        env:
+          WATCH_LOG: ${{ github.workspace }}/logs/log.txt
+          RUN_MINUTES: "345"
+          END_DATE: "2026-11-22"
+        run: |
+          cd logs && git config user.name "release-watch" && git config user.email "actions@users.noreply.github.com"
+          ( while sleep 1200; do git add log.txt 2>/dev/null && git commit -qm "log $(date -u +%FT%H:%MZ)" && git push -q origin release-watch || true; done ) &
+          python ../main/.github/release-watch/watch.py
+          git add log.txt && git commit -qm "log end $(date -u +%FT%H:%MZ)" || true
+          git push -q origin release-watch || true
