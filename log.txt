@@ -1,0 +1,25 @@
+== run start Mon Nov 16 13:42:47 MT
+Mon Nov 16 13:42:51 MT | Wild Fig             | 2026-12-15 | party 2 | start -> book19
+Mon Nov 16 13:42:51 MT | Wild Fig             | 2026-12-15 | party 6 | start -> book15
+Mon Nov 16 13:42:52 MT | Wild Fig             | 2026-12-16 | party 2 | start -> request
+Mon Nov 16 13:42:52 MT | Wild Fig             | 2026-12-16 | party 6 | start -> request
+Mon Nov 16 13:42:52 MT | Wild Fig             | 2026-12-17 | party 2 | start -> request
+Mon Nov 16 13:42:53 MT | Wild Fig             | 2026-12-17 | party 6 | start -> request
+Mon Nov 16 13:42:53 MT | Casa Tua             | 2026-12-15 | party 2 | start -> book18
+Mon Nov 16 13:42:54 MT | Casa Tua             | 2026-12-15 | party 6 | start -> book18
+Mon Nov 16 13:42:54 MT | Casa Tua             | 2026-12-16 | party 2 | start -> book18
+Mon Nov 16 13:42:55 MT | Casa Tua             | 2026-12-16 | party 6 | start -> book18
+Mon Nov 16 13:42:55 MT | Casa Tua             | 2026-12-17 | party 2 | start -> request
+Mon Nov 16 13:42:55 MT | Casa Tua             | 2026-12-17 | party 6 | start -> request
+Mon Nov 16 13:42:56 MT | Steakhouse 316       | 2026-12-15 | party 2 | start -> book17
+Mon Nov 16 13:42:56 MT | Steakhouse 316       | 2026-12-15 | party 6 | start -> book17
+Mon Nov 16 13:42:56 MT | Steakhouse 316       | 2026-12-16 | party 2 | start -> book17
+Mon Nov 16 13:42:57 MT | Steakhouse 316       | 2026-12-16 | party 6 | start -> book17
+Mon Nov 16 13:42:57 MT | Steakhouse 316       | 2026-12-17 | party 2 | start -> request
+Mon Nov 16 13:42:57 MT | Steakhouse 316       | 2026-12-17 | party 6 | start -> request
+Mon Nov 16 13:42:59 MT | French Alpine Bistro | 2026-12-15 | party 6 | start -> error:Error
+Mon Nov 16 13:42:59 MT | French Alpine Bistro | 2026-12-16 | party 6 | start -> error:Error
+Mon Nov 16 13:42:59 MT | French Alpine Bistro | 2026-12-17 | party 6 | start -> error:Error
+Mon Nov 16 13:42:59 MT | Matsuhisa            | 2026-12-15 | party 6 | start -> error:Error
+Mon Nov 16 13:42:59 MT | Matsuhisa            | 2026-12-16 | party 6 | start -> error:Error
+Mon Nov 16 13:42:59 MT | Matsuhisa            | 2026-12-17 | party 6 | start -> error:Error
