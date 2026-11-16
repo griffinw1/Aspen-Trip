@@ -2642,6 +2642,10 @@ dialog.of-help::backdrop{background:rgba(8,14,22,.62);backdrop-filter:blur(3px)}
 .of-help-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 12px 20px;border-bottom:1px solid rgba(176,134,58,.3)}
 .of-help-bar b{font:500 22px/1.2 'Cormorant Garamond',serif}
 .of-help-body{overflow:auto;max-height:calc(88vh - 60px);padding:16px}
+#outfits .of-old{display:none!important}
+.of-soon{margin:26px auto 10px;max-width:560px;text-align:center;padding:26px 22px;border:1px dashed rgba(176,134,58,.45);border-radius:16px}
+.of-soon b{display:block;font:500 26px/1.2 'Cormorant Garamond',serif;color:var(--snow);margin-bottom:8px}
+.of-soon span{font-size:14px;color:var(--soft,#9aa5a0)}
 /* v39 groceries */
 .groc .gr-steps{margin:.6em 0 .8em 1.2em;padding:0;display:grid;gap:.45em;font-size:.95em;line-height:1.5}
 .groc .gr-steps li::marker{color:var(--gold);font-weight:600}
@@ -4791,6 +4795,8 @@ body.gated .wh-fab{display:none;}
 
   <dialog class="of-help" id="ofHelp" aria-label="How to layer for Aspen"><div class="of-help-bar"><b>How to layer for Aspen</b><button type="button" class="pdfv-x" id="ofHelpX" aria-label="Close">&times;</button></div><div class="of-help-body"><div id="ofSystem"></div></div></dialog>
 
+  <div class="of-soon"><b>Your closet is being rebuilt</b><span>A mannequin you dress from your suitcase, outfits for every part of each day, and a warmth check against the forecast. Back shortly.</span></div>
+  <div class="of-old" hidden>
   <div class="sub-head">Day by Day</div>
   <div class="of-strip" id="ofDays" tabindex="0" aria-label="Day-by-day outfits"></div>
 
@@ -4806,6 +4812,7 @@ body.gated .wh-fab{display:none;}
   <div class="of-needs" id="ofNeeds"></div>
 
   <p class="note-sans of-foot">Gold <span class="of-fill">Fill in</span> pills are personal details we haven&rsquo;t gathered yet. Ski-clothing rental options (Kit Lender, Suit Yourself, Aspen Collection, Miller Sports) are on the Ski tab.</p>
+  </div>
 </div>
 </section>
 
