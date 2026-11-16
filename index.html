@@ -2229,6 +2229,24 @@ body.dark .of-card-own .of-img{background:repeating-linear-gradient(45deg,rgba(2
 @media (max-width:520px){ .dtable.casual{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%} .dtable.casual td,.dtable.casual th{min-width:84px} }
 @media (max-width:1520px){ #whNav.wh-navpill{padding:3px} #whNav .wh-nt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)} #nvSearchBtn .nv-search-tx,#nvSearchBtn .nv-kbd{display:none} }
 .wh-you::before{content:attr(data-t)}
+.wh-me.wh-top:not(tr):not(dt):not(dd):not(.tl):not(.tl-note):not(.bk-card):not(.vx-stop):not(.lg-bed):not(.lg-rm):not(.card):not(.packcol):not(.alertbox):not(.lg-room):not(.crow){padding-left:14px;padding-right:8px;}
+dt.wh-me{padding-left:10px;}
+.wh-you{white-space:nowrap;}
+.wh-you.wh-you-lead{margin:0 0 6px 0;}
+.nye-year{display:none!important}
+dl dt.wh-me.wh-me{padding-left:10px}
+/* v39 menus on day stops */
+.rl.rl-stop{margin:12px 0 4px;padding:10px 12px;border:1px solid rgba(176,134,58,.28);border-radius:12px;background:rgba(176,134,58,.06)}
+.rl.rl-stop+.rl.rl-stop{margin-top:8px}
+.rl-stop .rl-name{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--gold);margin-bottom:8px}
+.rl-stop .rl-pills{display:flex;flex-wrap:wrap;gap:6px}
+.rl-stop .rl-more{margin-top:8px}
+.rl-stop .rl-more summary{cursor:pointer;font-size:12px;color:var(--soft,#46544d);list-style:none}
+.rl-stop .rl-more summary::-webkit-details-marker{display:none}
+.rl-stop .rl-more summary::before{content:"+ ";color:var(--gold)}
+.rl-stop .rl-more[open] summary::before{content:"2  "}
+.rl-stop .rl-info{margin-top:8px}
+
 /* v39 groceries */
 .groc .gr-steps{margin:.6em 0 .8em 1.2em;padding:0;display:grid;gap:.45em;font-size:.95em;line-height:1.5}
 .groc .gr-steps li::marker{color:var(--gold);font-weight:600}
@@ -3419,11 +3437,12 @@ body.gated .wh-fab{display:none;}
   <div class="card reveal">
     <p>Four Mountain Sports rents equipment, not outerwear. For jackets, pants and layers, use a clothing rental. <strong>Everyone, including Jim and the non-skiers, needs warm outerwear, snow boots and gloves for the Day 3 snowmobile</strong> (T-Lazy-7 provides only helmets).</p>
     <table class="dtable" style="margin-top:14px">
-      <tr><td>Kit Lender</td><td><strong>Shipped to the house</strong> &mdash; full kits (jacket, pants, layers, gloves, goggles) &middot; free shipping + returns &middot; arrives <strong>by 8 PM the night before your first rental day</strong> and may come 1&ndash;2 days early &middot; set first day = <strong>Mon Dec 28</strong>, order by ~Dec 13, and ask the host where packages go before our 4 PM Dec 27 check-in &middot; kitlender.com</td></tr>
-      <tr><td>Suit Yourself</td><td><span class="note-sans">Unverified &mdash; couldn&rsquo;t find a current official listing. Call (970) 920-0295 before counting on it.</span></td></tr>
-      <tr><td>Miller Sports</td><td>Across from the gondola &middot; ski rentals and <em>sells</em> jackets and pants (not a clothing rental) &middot; millersportsaspen.com</td></tr>
-    </table>
-    <p class="note" style="margin-top:12px">Easiest for the group: order Kit Lender kits to the house for a Dec 28 start. Buy any last-minute gloves or goggles downtown on Day 0.</p>
+    <tr><td>Kit Lender<br><span class="note-sans">recommended</span></td><td><strong>Ships full kits</strong>: jacket, pants, gloves, goggles (&ldquo;with Boots&rdquo; adds snow boots). No helmets or base layers. <strong>for the first 3 days (3-day minimum), then</strong>, free shipping and returns. Plan: <strong>ship to the Dallas house</strong> (it can arrive up to 5 days early with no signature), rental dates <strong>Sun Dec 27 &rarr; Sun Jan 3</strong>, bring the kits on the plane, return at a staffed FedEx in Dallas by noon Mon Jan 4. About <strong>a person</strong> for the week. Order by <strong>Sun Dec 13</strong>. &middot; <a href="https://www.kitlender.com/" target="_blank" rel="noopener">kitlender.com</a></td></tr>
+    <tr><td>Slope Threads</td><td>Colorado company: full outfit about <strong>2-day minimum</strong>, free delivery and returns, or <strong>pick up at its Golden store, just off I-70 on the drive from Denver</strong>. Good fit for <strong>Jim</strong>, who only needs gear for the Dec 30 snowmobile. Confirm the pickup address and hours before you go (listings conflict). &middot; <a href="https://slopethreads.com/" target="_blank" rel="noopener">slopethreads.com</a></td></tr>
+    <tr><td>Suit Yourself</td><td>Aspen&rsquo;s local clothing rental (Obermeyer, Helly Hansen, Scott). <strong>Delivers to the house</strong>; listed open 8 AM&ndash;6 PM daily (Feb 2026). Its website is down, so <strong>call (970) 920-0295</strong> for prices and to reserve. Best if you&rsquo;d rather try things on in town.</td></tr>
+    <tr><td>Miller Sports</td><td>Across from the gondola &middot; <em>sells</em> jackets and pants (not a rental). Good for a forgotten pair of gloves or goggles.</td></tr>
+  </table>
+  <p class="note" style="margin-top:12px">Easiest for the group: one Kit Lender order for everyone who needs clothes, shipped to Dallas and flown out with you. Four Mountain Sports rents skis and boards only, not clothing; resort rental delivery is off this season.</p>
   </div>
 </div>
 
@@ -3460,7 +3479,7 @@ body.gated .wh-fab{display:none;}
       <div class="wx-chip" title="Typical late-December conditions for the area — not a live forecast"><span class="wx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2.5 7l19 10M21.5 7l-19 10"/><path d="M12 5.6 9.6 4.1M12 5.6 14.4 4.1M12 18.4 9.6 19.9M12 18.4 14.4 19.9M4.8 8.9 4.4 6.3M4.8 8.9 2.2 9.3M19.2 15.1l.4 2.6M19.2 15.1l2.6-.4M19.2 8.9l2.6.4M19.2 8.9l.4-2.6M4.8 15.1l-2.6.4M4.8 15.1l-.4 2.6"/></svg></span><span class="wx-t"><b>28&deg;</b><i>Snow showers</i></span></div><div class="label"><div class="ribbon">Day 0 &middot; Sunday, December 27</div><h3>Arrival</h3><div class="theme">Converge in Denver &middot; drive into the valley</div></div></div>
     <p class="dayintro">Travel day. The group meets in Denver, picks up the Suburban, and drives west. Stop in Glenwood Springs for the week&rsquo;s groceries. By late afternoon you&rsquo;re on Red Mountain with the week ahead &mdash; and after dinner, four of you are at Belly Up for Cloonee.</p>
     <div class="timeline">
-      <div class="tl"><div class="tl-time">8:36 AM</div><div class="tl-title">Depart DFW &middot; AA 2357</div><p class="tl-body">Nonstop to Denver, land 9:51 AM MST. Pick up the Chevrolet Suburban (or similar) at DEN Turo on arrival.</p><p class="tl-note">Marco lands at 9:58 AM on United UA 1891 from Minneapolis &mdash; 7 minutes after you. Meet at baggage claim, then everyone heads to the Suburban together.</p></div>
+      <div class="tl"><div class="tl-time">8:36 AM</div><div class="tl-title">Depart DFW &middot; AA 2357</div><p class="tl-body">Nonstop to Denver, land 9:51 AM MST. Pick up the Chevrolet Suburban (or similar) at DEN Turo on arrival.</p><p class="tl-note">Marco lands at 9:58 AM on United UA 1891 from Minneapolis &mdash; 7 minutes after you. Meet at baggage claim, then everyone heads to the Suburban together.</p><div class="media" data-m="d0_den"></div></div>
       <div class="tl"><div class="tl-time">~10:30 AM</div><div class="tl-title">Drive to Aspen</div><p class="tl-body">I-70 W through Glenwood Canyon then CO-82 S. Stop at City Market in Glenwood Springs (~2 hrs in) for groceries and alcohol &mdash; far cheaper than Aspen.</p>
       <div class="media" data-m="d0_drive"></div><details class="groc"><summary><span class="gr-k">First 48 hours</span><b>Groceries to grab on the way in</b><small>Order ahead for pickup at City Market, Glenwood Springs &rarr;</small></summary>
 <div class="gr-how">
@@ -3545,8 +3564,20 @@ body.gated .wh-fab{display:none;}
       </div>
       <div class="tl star"><div class="tl-time">4:00 PM</div><div class="tl-title">Check In &middot; 42 Nighthawk Drive</div><p class="tl-body">Host walk-through, pick rooms. All four mountains visible from the living room. First order of business: the hot tub.</p><div class="media" data-m="d0_checkin"></div></div>
       <div class="tl"><div class="tl-time">~4:15 PM</div><div class="tl-title">Griffin + Marco &rarr; FMS Downtown &middot; Rentals</div><p class="tl-body">Drop the bags and drive straight down (about 10 min) to Four Mountain Sports Downtown, 520 E Durant Ave. <strong>It closes at 5 PM</strong>, not 7. Griffin gets skis, boots and poles; Marco gets his snowboard and boots. Pickup after 2 PM the day before is free. Boot fitting takes a while, so don&rsquo;t dawdle. Bring the gear back to the house.</p><p class="tl-note">Running late from I-70? Call (970) 920-2337. The fallback is FMS Snowmass Base Village at 8 AM Mon. Marcy + Stella&rsquo;s lesson gear comes with their lesson package at Buttermilk. Ben brings his own skis.</p></div>
-      <div class="tl"><div class="tl-time">5:30 PM</div><div class="tl-title">Head Downtown</div><p class="tl-body">Everyone rides down together around 5:15. The rentals are already at the house, so you leave fully loaded tomorrow. Park for the evening in the Rio Grande garage (427 Rio Grande Pl) or on the street, then wander the downtown malls until dinner.</p></div>
-      <div class="tl star"><div class="tl-time">6:30 PM</div><div class="tl-title">Welcome Dinner &middot; Wild Fig</div><p class="tl-body">Mediterranean at 305 S Mill St, downtown (it moved from Hyman Ave) &mdash; mezze, grilled fish, lamb. Easy enough after a travel day, but still feels like the trip has started. The early seating means you&rsquo;re done by ~8:15 for Belly Up.</p><p class="tl-note">Tables release <strong>about 30 days out</strong> on SevenRooms (checked Nov 15: the latest bookable date was Dec 15) &mdash; reserve the morning of <strong>Fri Nov 27, 2026</strong> for Sun Dec 27, 6:30 PM &times; 6, or call (970) 925-5160.</p><p class="tl-note">Backup: <strong>Meat &amp; Cheese</strong> (319 E Hopkins) is just as good and takes no reservations &mdash; walk in. Or cook in and save the energy.</p><div class="media" data-m="d0_wildfig"></div></div>
+      <div class="tl"><div class="tl-time">5:30 PM</div><div class="tl-title">Head Downtown</div><p class="tl-body">Everyone rides down together around 5:15. The rentals are already at the house, so you leave fully loaded tomorrow. Park for the evening in the Rio Grande garage (427 Rio Grande Pl) or on the street, then wander the downtown malls until dinner.</p><div class="media" data-m="d0_downtown"></div></div>
+      <div class="tl star"><div class="tl-time">6:30 PM</div><div class="tl-title">Welcome Dinner &middot; Wild Fig</div><p class="tl-body">Mediterranean at 305 S Mill St, downtown (it moved from Hyman Ave) &mdash; mezze, grilled fish, lamb. Easy enough after a travel day, but still feels like the trip has started. The early seating means you&rsquo;re done by ~8:15 for Belly Up.</p><p class="tl-note">Tables release <strong>about 30 days out</strong> on SevenRooms (checked Nov 15: the latest bookable date was Dec 15) &mdash; reserve the morning of <strong>Fri Nov 27, 2026</strong> for Sun Dec 27, 6:30 PM &times; 6, or call (970) 925-5160.</p><p class="tl-note">Backup: <strong>Meat &amp; Cheese</strong> (319 E Hopkins) is just as good and takes no reservations &mdash; walk in. Or cook in and save the energy.</p><div class="media" data-m="d0_wildfig"></div><div class="rl rl-stop" data-rest="wildfig"><span class="rl-name">Wild Fig</span><div class="rl-pills">
+      <a class="rl-pill" href="https://thewildfig.com/wp-content/uploads/2026/10/Fig-Menu-Summer-09.23.26.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
+      <a class="rl-pill" href="https://thewildfig.com/aspen/" target="_blank" rel="noopener">Website</a>
+      <a class="rl-pill rl-book" href="https://www.sevenrooms.com/explore/thewildfig/reservations/create/search/" target="_blank" rel="noopener">Book · SevenRooms</a>
+      <a class="rl-pill" href="tel:+19709255160">Call (970) 925-5160</a>
+      <a class="rl-pill rl-wear" href="#outfits" data-outfit="wildfig">What to wear →</a>
+  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>Dinner nightly. The site lists no times; it also now serves lunch. <em class="rl-unv">(unverified: exact dinner hours)</em></dd>
+      <dt>Dress</dt><dd>Lively Mediterranean bistro. Smart casual, après-to-dinner is fine. <em class="rl-unv">(unverified: no dress code posted)</em></dd>
+      <dt>Order</dt><dd>Burrata &amp; prosciutto with fresh figs (to share) · Cacio e pepe with house linguine (you can add a lobster tail) · Lobster paccheri, or the whole grilled fish of the day</dd>
+      <dt>Book</dt><dd>SevenRooms, released about 30 days out (book Fri Nov 27). Call if 6:30 isn't showing.</dd>
+      <dt>Tips</dt><dd>Moved to 305 S Mill. Older listings still say 315 E Hyman. · 6:30 is early on purpose: Belly Up doors are at 8:30, a 5-minute walk away.</dd>
+  </dl></details></div></div>
       <div class="tl"><div class="tl-time">~8:15 PM</div><div class="tl-title">Walk to Belly Up &middot; 5 min</div><p class="tl-body">From Wild Fig, walk south on Mill St, turn left on Cooper Ave, then right on Galena St &mdash; Belly Up is on Galena just before Durant (~300 m). You&rsquo;re there right as doors open at 8:30, early enough for a good spot on the floor. <a href="https://www.google.com/maps/dir/?api=1&amp;origin=39.18892,-106.82075&amp;destination=39.18743,-106.81896&amp;travelmode=walking" target="_blank" rel="noopener">Walking directions &rarr;</a></p><p class="tl-note">The other two take the Suburban (and Griffin&rsquo;s rentals) home from the garage &mdash; 5 min up Red Mountain. The driver skips the wine at dinner.</p></div>
       <div class="tl star"><div class="tl-time">9:30 PM</div><div class="tl-title">Cloonee &middot; Belly Up Aspen</div><p class="tl-body">The house DJ at Aspen&rsquo;s famous music club, 450 S Galena St, around the corner from FMS Downtown. Doors 8:30 PM, Cloonee on at 9:30. <strong>4 GA tickets bought</strong> &mdash; general admission is the standing dance floor.</p><p class="tl-note"><strong>21+ &mdash; bring photo ID.</strong> Tickets live in the Belly Up app / phone wallet (no screenshots or paper), and anyone walking in with Griffin doesn&rsquo;t need a transfer. If someone arrives separately, Griffin transfers their ticket after 4 PM on Sat Dec 26 (tickets can&rsquo;t be sent earlier).</p><p class="tl-note">Getting home: it&rsquo;s a Sunday, so no free late-night taxi, and the Downtowner stops at 11 PM. Uber/Lyft or High Mountain Taxi (970) 925-8294 up Red Mountain (~5 min). Lessons start 8:45 AM tomorrow, and it&rsquo;s the first night at 8,000 ft &mdash; pace the drinks.</p><div class="media" data-m="d0_bellyup"></div></div>
     </div>
@@ -3564,7 +3595,23 @@ body.gated .wh-fab{display:none;}
       </div>
       <div class="tl star"><div class="tl-time">3:00 PM</div><div class="tl-title">Drop Skis &middot; Request Ajax Transfer</div><p class="tl-body">Drop at FMS Snowmass Base Village (61 Wood Rd, open till 5 PM) and ask for a transfer to <strong>FMS Downtown</strong> for the Aspen Mountain day. Include Marco&rsquo;s rental board. Ben hands in his own skis too (personal-equipment fee). Boots and helmets come home.</p><div class="tl-chips"><span class="chip">Next: <b>FMS Downtown &middot; 520 E Durant</b></span></div></div>
       <div class="tl"><div class="tl-time">5:00 PM</div><div class="tl-title">Hot Tub</div></div>
-      <div class="tl"><div class="tl-time">7:00 PM</div><div class="tl-title">Dinner &middot; Casual</div><p class="tl-body">White House Tavern, Meat &amp; Cheese, or Slope Side Tavern &mdash; easy, no reservation needed.</p><div class="media" data-m="d1_dinner"></div></div>
+      <div class="tl"><div class="tl-time">7:00 PM</div><div class="tl-title">Dinner &middot; Casual</div><p class="tl-body">White House Tavern, Meat &amp; Cheese, or Slope Side Tavern &mdash; easy, no reservation needed.</p><div class="media" data-m="d1_dinner"></div><div class="rl rl-stop" data-rest="whitehouse"><span class="rl-name">White House Tavern</span><div class="rl-pills">
+      <a class="rl-pill" href="https://www.theinfatuation.com/aspen/reviews/white-house-tavern" target="_blank" rel="noopener">Menu highlights</a>
+      <a class="rl-pill" href="tel:+19709251007">Call (970) 925-1007</a>
+  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>About 11 AM – 9 PM daily <em class="rl-unv">(unverified; listings conflict)</em></dd>
+      <dt>Order</dt><dd>The crispy chicken sandwich · Macho salad · French dip</dd>
+      <dt>Book</dt><dd>Walk-in in practice; call to check <em class="rl-unv">(unverified)</em></dd>
+      <dt>Tips</dt><dd>Small house with a long wait at peak times. Go early or late.</dd>
+  </dl></details></div><div class="rl rl-stop" data-rest="meatcheese"><span class="rl-name">Meat &amp; Cheese</span><div class="rl-pills">
+      <a class="rl-pill" href="https://www.meatandcheeseaspen.com/menu-1" target="_blank" rel="noopener">Menu</a>
+      <a class="rl-pill" href="https://www.meatandcheeseaspen.com/" target="_blank" rel="noopener">Website</a>
+  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>Winter hours aren't posted yet (the site shows Oct hours and 'November: closed').</dd>
+      <dt>Order</dt><dd>A charcuterie &amp; cheese board to share · Rotisserie chicken <em class="rl-unv">(unverified, seen in gallery)</em> · The burger</dd>
+      <dt>Book</dt><dd>No reservations: first come, first served</dd>
+      <dt>Tips</dt><dd>Also a retail cheese and wine shop. Grab picnic supplies for the house.</dd>
+  </dl></details></div></div>
     </div>
   </div>
 
@@ -3574,15 +3621,42 @@ body.gated .wh-fab{display:none;}
       <div class="wx-chip" title="Typical late-December conditions for the area — not a live forecast"><span class="wx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3 19 19M19 5l-1.7 1.7M6.7 17.3 5 19"/></svg></span><span class="wx-t"><b>29&deg;</b><i>Bluebird</i></span></div><div class="label"><div class="ribbon">Day 2 &middot; Tuesday, December 29</div><h3>Aspen Mountain &middot; Ajax</h3><div class="theme">3,000 feet of vertical from downtown</div></div></div>
     <p class="dayintro">Marcy and Stella&rsquo;s final lesson day. Griffin, Ben, and Marco (on his board) ride Ajax, which rises straight out of downtown.</p>
     <div class="timeline">
-      <div class="tl"><div class="tl-time">8:30 AM</div><div class="tl-title">Marcy &rarr; Buttermilk &middot; Lesson #2</div><p class="tl-body">Marcy&rsquo;s second and final lesson, same instructor. By end of day she should be linking turns on greens &mdash; ready for the Day 6 family ski.</p><p class="tl-note">Stella finished her lesson yesterday &mdash; free to practice green runs at Buttermilk at her own pace or take an easy morning.</p></div>
+      <div class="tl"><div class="tl-time">8:30 AM</div><div class="tl-title">Marcy &rarr; Buttermilk &middot; Lesson #2</div><p class="tl-body">Marcy&rsquo;s second and final lesson, same instructor. By end of day she should be linking turns on greens &mdash; ready for the Day 6 family ski.</p><p class="tl-note">Stella finished her lesson yesterday &mdash; free to practice green runs at Buttermilk at her own pace or take an easy morning.</p><div class="media" data-m="d2_lesson"></div></div>
       <div class="tl"><div class="tl-time">9:00 AM</div><div class="tl-title">Pick Up Skis &middot; FMS Downtown</div><p class="tl-body">Griffin&rsquo;s and Ben&rsquo;s skis and Marco&rsquo;s board were transferred overnight to FMS Downtown (520 E Durant Ave, opens 9 AM), two blocks from the gondola. There&rsquo;s no FMS rental shop at the gondola this season.</p></div>
       <div class="tl"><div class="tl-time">9:00 AM</div><div class="tl-title">Griffin &middot; Marco &middot; Ben &rarr; Ajax</div><p class="tl-body">14-min Silver Queen Gondola to the 11,212 ft summit. Spar Gulch to warm up, Bell Mountain for steeps, Walsh&rsquo;s for fewer crowds.</p>
       <div class="media" data-m="d2_ajax"></div>
       </div>
-      <div class="tl star"><div class="tl-time">12:30 PM</div><div class="tl-title">Lunch &middot; Bonnie&rsquo;s</div><p class="tl-body">Mid-mountain. The apple strudel is the reason &mdash; order it. Arrive 12:30 to beat the crowd.</p><div class="media" data-m="d2_bonnies"></div></div>
+      <div class="tl star"><div class="tl-time">12:30 PM</div><div class="tl-title">Lunch &middot; Bonnie&rsquo;s</div><p class="tl-body">Mid-mountain. The apple strudel is the reason &mdash; order it. Arrive 12:30 to beat the crowd.</p><div class="media" data-m="d2_bonnies"></div><div class="rl rl-stop" data-rest="bonnies"><span class="rl-name">Bonnie’s</span><div class="rl-pills">
+      <a class="rl-pill" href="https://www.aspensnowmass.com/visit/dining/aspen-mountain/bonnies" target="_blank" rel="noopener">Menu &amp; hours</a>
+  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>9 AM – 3:30 PM (breakfast 9–10:30, lunch 10:30–3:30). Open Dec 2026 – Apr 2027.</dd>
+      <dt>Order</dt><dd>Apple strudel · White-bean chili · Pancakes, if you're up early</dd>
+      <dt>Book</dt><dd>Walk-in (cafeteria line). 'Grab a table before the lifts get busy.'</dd>
+      <dt>Tips</dt><dd>Stake out a deck table before about 11:30.</dd>
+  </dl></details></div></div>
       <div class="tl"><div class="tl-time">2:45 PM</div><div class="tl-title">Drop Skis &middot; Request Highlands Transfer</div><p class="tl-body">Drop at FMS Downtown (520 E Durant, before 5 PM) and ask for Aspen Highlands for Thu Dec 31.</p><p class="tl-note">The gear waits at FMS Highlands through the snowmobile day. Rental days still count while it&rsquo;s in storage.</p></div>
-      <div class="tl"><div class="tl-time">3:00 PM</div><div class="tl-title">Optional &middot; Ajax Tavern Apr&egrave;s</div><p class="tl-body">Base of the gondola at The Little Nell. Truffle fries, ros&eacute;, heated deck. Bring Marcy after her 3 PM lesson wrap at Buttermilk.</p><div class="media" data-m="d2_tavern"></div></div>
-      <div class="tl star"><div class="tl-time">7:00 PM</div><div class="tl-title">Dinner &middot; Casa Tua</div><p class="tl-body"><strong>Locked in.</strong> Northern Italian in the low-lit, art-filled rooms at 403 S Galena &mdash; steps from Rubey Park, five minutes from the house. Veal Milanese, ricotta cavatelli, burrata.</p><p class="tl-note">Books on <a href="https://www.sevenrooms.com/explore/casatuaaspen/reservations/create/search" target="_blank" rel="noopener">SevenRooms</a>, released daily <strong>30 days out</strong> &mdash; book the morning of <strong>Sun Nov 29, 2026</strong>. If 6 at 7 PM isn&rsquo;t showing, join their SevenRooms waitlist and call (970) 920-7277. Two-hour seating; dress code applies (no hoodies, ripped jeans or caps).</p><div class="media" data-m="d2_casatua"></div></div>
+      <div class="tl"><div class="tl-time">3:00 PM</div><div class="tl-title">Optional &middot; Ajax Tavern Apr&egrave;s</div><p class="tl-body">Base of the gondola at The Little Nell. Truffle fries, ros&eacute;, heated deck. Bring Marcy after her 3 PM lesson wrap at Buttermilk.</p><div class="media" data-m="d2_tavern"></div><div class="rl rl-stop" data-rest="ajaxtavern"><span class="rl-name">Ajax Tavern</span><div class="rl-pills">
+      <a class="rl-pill" href="https://www.thelittlenell.com/-/media/thelittlenell/menus/ajax-tavern/2026/ajaxalldaymenu092126.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
+      <a class="rl-pill" href="https://www.thelittlenell.com/dine/ajax-tavern" target="_blank" rel="noopener">Website</a>
+      <a class="rl-pill" href="tel:+19709206334">Call (970) 920-6334</a>
+  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>Daily 11:30 AM – 4 PM; happy hour 2–4 PM</dd>
+      <dt>Order</dt><dd>Ajax truffle fries · Ajax Wagyu double cheeseburger · Wagyu steak sandwich</dd>
+      <dt>Book</dt><dd>Resy via the Little Nell site, or call</dd>
+      <dt>Tips</dt><dd>48-hour cancellation policy on reservations, with a per-person no-show charge.</dd>
+  </dl></details></div></div>
+      <div class="tl star"><div class="tl-time">7:00 PM</div><div class="tl-title">Dinner &middot; Casa Tua</div><p class="tl-body"><strong>Locked in.</strong> Northern Italian in the low-lit, art-filled rooms at 403 S Galena &mdash; steps from Rubey Park, five minutes from the house. Veal Milanese, ricotta cavatelli, burrata.</p><p class="tl-note">Books on <a href="https://www.sevenrooms.com/explore/casatuaaspen/reservations/create/search" target="_blank" rel="noopener">SevenRooms</a>, released daily <strong>30 days out</strong> &mdash; book the morning of <strong>Sun Nov 29, 2026</strong>. If 6 at 7 PM isn&rsquo;t showing, join their SevenRooms waitlist and call (970) 920-7277. Two-hour seating; dress code applies (no hoodies, ripped jeans or caps).</p><div class="media" data-m="d2_casatua"></div><div class="rl rl-stop" data-rest="casatua"><span class="rl-name">Casa Tua</span><div class="rl-pills">
+      <a class="rl-pill" href="https://www.casatualife.com/aspen" target="_blank" rel="noopener">Menu</a>
+      <a class="rl-pill rl-book" href="https://www.sevenrooms.com/explore/casatuaaspen/reservations/create/search" target="_blank" rel="noopener">Book · SevenRooms</a>
+      <a class="rl-pill" href="tel:+19709207277">Call (970) 920-7277</a>
+      <a class="rl-pill rl-wear" href="#outfits" data-outfit="casatua">What to wear →</a>
+  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>Open now (no Oct–Dec closure). Dinner nightly. <em class="rl-unv">(unverified: exact hours; third-party listings show about 5–9 PM or later)</em></dd>
+      <dt>Dress</dt><dd>Dressy Aspen Italian. No ripped jeans, hoodies, sleeveless tops (men) or sandals (men). After 4 PM, no sportswear, shorts (men) or caps. Jackets encouraged for men.</dd>
+      <dt>Order</dt><dd>Burrata · Bucatini cacio e pepe or the lobster spaghetti · Casa Tua chicken or the branzino <em class="rl-unv">(unverified: from third-party listings, not an official menu)</em></dd>
+      <dt>Book</dt><dd>SevenRooms, released daily 30 days ahead (Dec 29 opens Sun Nov 29). Waitlist on SevenRooms. 2-hour seating, 15-minute grace period.</dd>
+      <dt>Tips</dt><dd>2-hour table: order mains reasonably promptly. · Arrive within 15 minutes or the table may be released.</dd>
+  </dl></details></div></div>
     </div>
   </div>
 
@@ -3598,10 +3672,22 @@ body.gated .wh-fab{display:none;}
       <div class="media" data-m="d3_tlazy7"></div>
       <div class="tl-chips"><span class="chip">Booked &middot; 3 doubles</span><span class="chip">Tip the guides</span></div>
       <p class="tl-note"><strong>Booked</strong> &mdash; 3 doubles (3 drivers + 3 riders) on the 9:30 AM departure, exactly as planned. Questions or changes: (970) 925-4614.</p></div>
-      <div class="tl"><div class="tl-time">1:30 PM</div><div class="tl-title">Return to Aspen + Warm Up</div><p class="tl-body">Lunch is included on the tour, so you roll back into town already fed. Drop gear, thaw out.</p></div>
+      <div class="tl"><div class="tl-time">1:30 PM</div><div class="tl-title">Return to Aspen + Warm Up</div><p class="tl-body">Lunch is included on the tour, so you roll back into town already fed. Drop gear, thaw out.</p><div class="media" data-m="d3_warmup"></div></div>
       <div class="tl star"><div class="tl-time">2:30 PM</div><div class="tl-title">Afternoon in Downtown Aspen</div><p class="tl-body">Stroll Galena and Mill Streets, duck into the galleries and the (free) Aspen Art Museum, and grab coffee or an apr&egrave;s drink. Low-key and warm after a cold morning &mdash; and it walks right into dinner.</p><p class="tl-note">Bluebird-day alternative: ride the Silver Queen sightseeing gondola to the 11,212 ft Sundeck for the views &mdash; ~15 min each way, last ride up ~3:30 PM. Great for Jim and the non-skiers.</p><div class="media" data-m="d3_downtown"></div></div>
       <div class="tl"><div class="tl-time">7:30 PM</div><div class="tl-title">Dinner &middot; French Alpine Bistro</div><p class="tl-body">French-Alpine comfort &mdash; fondue, raclette, and a deep wine list, exactly right for a snowy night. 400 E Hopkins Ave (downstairs, at the corner of Mill), a few minutes from the house.</p><p class="tl-note">Books <strong>exactly 30 days out</strong> &mdash; reserve on OpenTable the morning of <strong>Mon Nov 30, 2026</strong>.</p><p class="tl-note">Or cook in &mdash; a fondue or raclette night at the house is just as cozy, and no driving.</p>
-      <div class="media" data-m="d3_fa"></div></div>
+      <div class="media" data-m="d3_fa"></div><div class="rl rl-stop" data-rest="frenchalpine"><span class="rl-name">French Alpine Bistro</span><div class="rl-pills">
+      <a class="rl-pill" href="https://www.frenchalpinebistro.com/s/DINNER-FAB-Summer-2026-digital.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
+      <a class="rl-pill" href="https://www.frenchalpinebistro.com/" target="_blank" rel="noopener">Website</a>
+      <a class="rl-pill rl-book" href="https://www.opentable.com/restref/client/?rid=228100" target="_blank" rel="noopener">Book · OpenTable</a>
+      <a class="rl-pill" href="tel:+19709251566">Call (970) 925-1566</a>
+      <a class="rl-pill rl-wear" href="#outfits" data-outfit="frenchalpine">What to wear →</a>
+  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>Closed for fall and reopens Nov 25, 2026. Dinner hours aren't posted. <em class="rl-unv">(unverified)</em></dd>
+      <dt>Dress</dt><dd>Cozy, candlelit Alpine chalet: smart casual, sweaters welcome. <em class="rl-unv">(unverified: no dress code posted)</em></dd>
+      <dt>Order</dt><dd>Cheese fondue ('liquid Swiss gold'), 2-person minimum per pot, so order 3 pots for 6 · Soupe à l'oignon gratinée · Escargots en brioche, or the steak tartare</dd>
+      <dt>Book</dt><dd>OpenTable, exactly 30 days out (Dec 30 opens Mon Nov 30). Online showed no slots for 6, so call or email.</dd>
+      <dt>Tips</dt><dd>Entrance is downstairs at Hopkins &amp; Mill. · Parties up to 6 have a 24-hour cancellation policy, and a per-person fee applies inside 24 hours or for a no-show. A 7th guest moves you to the 48-hour policy.</dd>
+  </dl></details></div></div>
     </div>
   </div>
 
@@ -3611,16 +3697,37 @@ body.gated .wh-fab{display:none;}
       <div class="wx-chip" title="Typical late-December conditions — clear NYE, ~12&deg; at midnight. Not a live forecast"><span class="wx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3 19 19M19 5l-1.7 1.7M6.7 17.3 5 19"/></svg></span><span class="wx-t"><b>27&deg;</b><i>Clear &middot; 12&deg; PM</i></span></div><div class="label"><div class="ribbon">Day 4 &middot; Thursday, December 31</div><h3>Highlands &amp; New Year&rsquo;s Eve</h3><div class="theme">The locals&rsquo; mountain &middot; torchlight &amp; fireworks</div></div></div>
     <p class="dayintro">NYE in Aspen. The day starts on Aspen Highlands &mdash; steeper and quieter than Snowmass during holiday week &mdash; and ends with the torchlight descent and fireworks.</p>
     <div class="timeline">
-      <div class="tl"><div class="tl-time">9:00 AM</div><div class="tl-title">Depart for Aspen Highlands</div><p class="tl-body">~12 min via Maroon Creek Road. Fewest crowds, most dramatic terrain. Highland Bowl is a 30&ndash;60 min boot-pack to the 12,392 ft summit, so plan 2&ndash;3 hrs for the lap. Marco carries his board on a pack, or on a strap from Highlands Ski Patrol HQ.</p></div>
-      <div class="tl"><div class="tl-time">9:10 AM</div><div class="tl-title">Pick Up Skis &middot; FMS Highlands Base</div><p class="tl-body">Griffin&rsquo;s and Ben&rsquo;s skis and Marco&rsquo;s board all transferred overnight from Ajax.</p></div>
+      <div class="tl"><div class="tl-time">9:00 AM</div><div class="tl-title">Depart for Aspen Highlands</div><p class="tl-body">~12 min via Maroon Creek Road. Fewest crowds, most dramatic terrain. Highland Bowl is a 30&ndash;60 min boot-pack to the 12,392 ft summit, so plan 2&ndash;3 hrs for the lap. Marco carries his board on a pack, or on a strap from Highlands Ski Patrol HQ.</p><div class="media" data-m="d4_depart"></div></div>
+      <div class="tl"><div class="tl-time">9:10 AM</div><div class="tl-title">Pick Up Skis &middot; FMS Highlands Base</div><p class="tl-body">Griffin&rsquo;s and Ben&rsquo;s skis and Marco&rsquo;s board all transferred overnight from Ajax.</p><div class="media" data-m="d4_fms"></div></div>
       <div class="tl"><div class="tl-time">9:30 AM</div><div class="tl-title">Ski Aspen Highlands</div><p class="tl-body">Thunderbowl to start; Riverside and Olympic for cruisers; Steeplechase for sustained steeps; Highland Bowl for the summit experience.</p>
       <div class="media" data-m="d4_highlands"></div>
       </div>
-      <div class="tl"><div class="tl-time">12:30 PM</div><div class="tl-title">Lunch &middot; Merry-Go-Round</div><p class="tl-body">Casual mid-mountain Highlands lunch atop the Exhibition lift &mdash; market-style American (soups, fish tacos, burgers), full bar, sunny deck with Adirondack chairs. Keep it easy to save energy and appetite for the NYE evening.</p><p class="tl-note"><strong>No reservation needed</strong> &mdash; walk-in, lunch 11 AM&ndash;3 PM &middot; (970) 429-3054.</p><div class="media" data-m="d4_mgr"></div></div>
+      <div class="tl"><div class="tl-time">12:30 PM</div><div class="tl-title">Lunch &middot; Merry-Go-Round</div><p class="tl-body">Casual mid-mountain Highlands lunch atop the Exhibition lift &mdash; market-style American (soups, fish tacos, burgers), full bar, sunny deck with Adirondack chairs. Keep it easy to save energy and appetite for the NYE evening.</p><p class="tl-note"><strong>No reservation needed</strong> &mdash; walk-in, lunch 11 AM&ndash;3 PM &middot; (970) 429-3054.</p><div class="media" data-m="d4_mgr"></div><div class="rl rl-stop" data-rest="merrygoround"><span class="rl-name">Merry-Go-Round</span><div class="rl-pills">
+      <a class="rl-pill" href="https://www.aspensnowmass.com/-/media/aspen-snowmass/documents/pdfs/25-26/menus/merry-go-round-menu.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
+      <a class="rl-pill" href="https://www.aspensnowmass.com/visit/dining/aspen-highlands/merry-go-round" target="_blank" rel="noopener">Website</a>
+      <a class="rl-pill" href="tel:+19704293054">Call (970) 429-3054</a>
+  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>9 AM – 3:30 PM (grab-and-go all day, lunch 11–2:30). Open Dec 12, 2026 – Apr 11, 2027.</dd>
+      <dt>Order</dt><dd>Fresh-baked cinnamon roll (morning) · 'The Jerry' bacon double burger, or a burrito bowl · A Bloody Mary on the deck</dd>
+      <dt>Book</dt><dd>Walk-in</dd>
+      <dt>Tips</dt><dd>Full bar and Adirondack chairs on the deck.</dd>
+  </dl></details></div></div>
       <div class="tl"><div class="tl-time">3:00 PM</div><div class="tl-title">Drop Skis &middot; Request Snowmass Transfer</div><p class="tl-body">Drop at FMS Highlands (76 Boomerang Rd, before 5 PM) and ask for Snowmass Base Village for Sat Jan 2. Boots and helmets come home.</p></div>
       <div class="tl star"><div class="tl-time">~7:30 PM</div><div class="tl-title">Torchlight &amp; Fireworks &middot; Gondola Plaza</div><p class="tl-body">At dusk, instructors and patrol carry lit torches down the face of Aspen Mountain, and the fireworks go up over town at <strong>8:00 PM</strong>. Watch from the base by the gondola, then it&rsquo;s a 5-minute walk to Matsuhisa.</p><p class="tl-note">8 PM is the 2025 schedule &mdash; confirm the 2026 times when Aspen Snowmass posts them in December.</p><p class="tl-note">Both are visible directly from the deck at 42 Nighthawk &mdash; an excellent alternative if the group prefers champagne at home.</p><div class="media" data-m="d4_nye"></div></div>
       <div class="tl star"><div class="tl-time">8:45 PM</div><div class="tl-title">NYE Dinner &middot; Matsuhisa</div><p class="tl-body">Omakase at Nobu Matsuhisa &mdash; 8&ndash;10 courses (black cod miso is the signature), ~3 hrs. 303 E Main St, downtown. The 8:45 seating starts right after the fireworks and runs to about midnight &mdash; ring in 2027 at the table.</p><p class="tl-note"><strong>Books exactly 30 days out</strong> &mdash; reserve on OpenTable the moment it opens (~Dec 1). Cook-in is the easy fallback.</p>
-      <div class="media" data-m="d4_mat_photos"></div><div class="media" data-m="d4_matsuhisa"></div></div>
+      <div class="media" data-m="d4_mat_photos"></div><div class="media" data-m="d4_matsuhisa"></div><div class="rl rl-stop" data-rest="matsuhisa"><span class="rl-name">Matsuhisa</span><div class="rl-pills">
+      <a class="rl-pill" href="https://www.matsuhisarestaurants.com/wp-content/uploads/2025/10/Aspen-DOWNSTAIRS-2025-CURRENT-MENU.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
+      <a class="rl-pill" href="https://www.matsuhisarestaurants.com/aspen/" target="_blank" rel="noopener">Website</a>
+      <a class="rl-pill rl-book" href="https://www.opentable.com/restref/client/?rid=6946" target="_blank" rel="noopener">Book · OpenTable</a>
+      <a class="rl-pill" href="tel:+19705446628">Call (970) 544-6628</a>
+      <a class="rl-pill rl-wear" href="#outfits" data-outfit="matsuhisa">What to wear →</a>
+  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>Downstairs bar and dining room: daily 5:30 PM to close. Upstairs resumes nightly service Dec 11.</dd>
+      <dt>Dress</dt><dd>Polished Aspen-chic. NYE crowd dresses up. <em class="rl-unv">(unverified: no dress code posted)</em></dd>
+      <dt>Order</dt><dd>Omakase: the 8-course tasting, ordered from your server on the night (not available upstairs) · Broiled black cod with miso · Yellowtail sashimi with jalapeño, and rock shrimp tempura</dd>
+      <dt>Book</dt><dd>OpenTable, exactly 30 days out (Dec 31 opens Tue Dec 1). Online showed no slots for 6, so call. Ask for the downstairs dining room.</dd>
+      <dt>Tips</dt><dd>Downstairs books 30 days out; upstairs only 2 days out. · Omakase is served family-style for 7 or more, so at 6 you get individual courses.</dd>
+  </dl></details></div></div>
       <div class="tl"><div class="tl-time">12:00 AM</div><div class="tl-title">Happy New Year &middot; January 1, 2027</div><p class="tl-note">Shuttles stop before midnight Thursday &mdash; Suburban (DD) or Uber XL (expect surge pricing).</p><div class="media" data-m="d4_midnight"></div></div>
     </div>
   </div>
@@ -3649,12 +3756,49 @@ body.gated .wh-fab{display:none;}
     <div class="timeline">
       <div class="tl"><div class="tl-time">8:50 AM</div><div class="tl-title">Pick Up Skis &middot; FMS Snowmass Base</div><p class="tl-body">Griffin&rsquo;s and Ben&rsquo;s skis and Marco&rsquo;s board all transferred here from Highlands. Stella&rsquo;s and Marcy&rsquo;s rentals are here too if they&rsquo;ve been transferring them. If they booked 1-day rentals, they pick up here (opens 8 AM).</p></div>
       <div class="tl star"><div class="tl-time">9:00 AM</div><div class="tl-title">All &rarr; Snowmass &middot; Family Ski (optional)</div><p class="tl-body">Lower-mountain blues (Funnel, Adams Avenue) are manageable for Marcy + Stella while still fun for stronger skiers. Split as needed, reconvene for lunch.</p><div class="media" data-m="d6_family"></div></div>
-      <div class="tl"><div class="tl-time">12:00 PM</div><div class="tl-title">Lunch &middot; On-Mountain</div><p class="tl-body">The Cabin (table service, bison chili, Tock 14 days out) or Base Camp Bar &amp; Grill (walk-in).</p></div>
+      <div class="tl"><div class="tl-time">12:00 PM</div><div class="tl-title">Lunch &middot; On-Mountain</div><p class="tl-body">The Cabin (table service, bison chili, Tock 14 days out) or Base Camp Bar &amp; Grill (walk-in).</p><div class="media" data-m="rest_cabin"></div><div class="rl rl-stop" data-rest="cabin"><span class="rl-name">The Cabin</span><div class="rl-pills">
+      <a class="rl-pill" href="https://www.aspensnowmass.com/-/media/aspen-snowmass/documents/pdfs/25-26/menus/2526the-cabin-menureprint.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
+      <a class="rl-pill" href="https://www.aspensnowmass.com/visit/dining/snowmass/the-cabin" target="_blank" rel="noopener">Website</a>
+      <a class="rl-pill rl-book" href="https://www.exploretock.com/the-cabin-aspen" target="_blank" rel="noopener">Book · Tock</a>
+  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>Lunch 11:30 AM – 2 PM; après 2:30–4 PM. Open Dec 5, 2026 – Apr 4, 2027.</dd>
+      <dt>Order</dt><dd>Elk stroganoff · Coconut crème brûlée · Tacos from the outdoor taco bar at après</dd>
+      <dt>Book</dt><dd>Tock is recommended for the sit-down lunch. No reservations for the après bar &amp; grill.</dd>
+      <dt>Tips</dt><dd>DJ sets and live music at après.</dd>
+  </dl></details></div><div class="rl rl-stop" data-rest="basecamp"><span class="rl-name">Base Camp</span><div class="rl-pills">
+      <a class="rl-pill" href="https://www.basecampsnowmass.com/menu" target="_blank" rel="noopener">Menu</a>
+  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>Not found officially (listings conflict)</dd>
+      <dt>Order</dt><dd>Burgers, sandwiches, soups <em class="rl-unv">(unverified)</em></dd>
+      <dt>Book</dt><dd>Walk-in <em class="rl-unv">(unverified)</em></dd>
+      <dt>Tips</dt><dd>No official source found. Treat everything here as unverified.</dd>
+  </dl></details></div></div>
       <div class="tl"><div class="tl-time">3:00 PM</div><div class="tl-title">Return All Rentals &middot; FMS Snowmass</div><p class="tl-body">Drop Griffin&rsquo;s skis, boots, poles and Marco&rsquo;s board and boots (plus Stella&rsquo;s and Marcy&rsquo;s gear). Ben collects his own skis. Returning today avoids another rental day (the cutoff is 10 AM Jan 3). Unused days don&rsquo;t refund automatically, so ask at the counter.</p><div class="media" data-m="d6_return"></div></div>
-      <div class="tl star"><div class="tl-time">7:30 PM</div><div class="tl-title">Closing Dinner &middot; Steakhouse 316</div><p class="tl-body"><strong>Locked in.</strong> Prime dry-aged steakhouse at 316 E Hopkins, white tablecloth, five minutes from the house. Ribeye or filet, creamed spinach, potato gratin &mdash; order the chocolate souffl&eacute; at the start, it takes 45 minutes.</p><p class="tl-note">Books <strong>exactly 30 days out</strong> &mdash; reserve on <strong>Thu Dec 3, 2026</strong> &middot; SevenRooms (steakhouse316.com) or (970) 920-1893.</p><p class="tl-note">High Mountain Taxi is free from Rubey Park on Saturday nights &mdash; nobody has to drive.</p><div class="media" data-m="d6_s316"></div></div>
+      <div class="tl star"><div class="tl-time">7:30 PM</div><div class="tl-title">Closing Dinner &middot; Steakhouse 316</div><p class="tl-body"><strong>Locked in.</strong> Prime dry-aged steakhouse at 316 E Hopkins, white tablecloth, five minutes from the house. Ribeye or filet, creamed spinach, potato gratin &mdash; order the chocolate souffl&eacute; at the start, it takes 45 minutes.</p><p class="tl-note">Books <strong>exactly 30 days out</strong> &mdash; reserve on <strong>Thu Dec 3, 2026</strong> &middot; SevenRooms (steakhouse316.com) or (970) 920-1893.</p><p class="tl-note">High Mountain Taxi is free from Rubey Park on Saturday nights &mdash; nobody has to drive.</p><div class="media" data-m="d6_s316"></div><div class="rl rl-stop" data-rest="s316"><span class="rl-name">Steakhouse 316</span><div class="rl-pills">
+      <a class="rl-pill" href="https://www.steakhouse316.com/s/Steakhouse_Dinner_05_04_26.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
+      <a class="rl-pill" href="https://www.steakhouse316.com/aspen" target="_blank" rel="noopener">Website</a>
+      <a class="rl-pill rl-book" href="https://www.sevenrooms.com/reservations/steakhouse316" target="_blank" rel="noopener">Book · SevenRooms</a>
+      <a class="rl-pill" href="tel:+19709201893">Call (970) 920-1893</a>
+      <a class="rl-pill rl-wear" href="#outfits" data-outfit="s316">What to wear →</a>
+  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>Dinner seven nights a week from 5:30 PM.</dd>
+      <dt>Dress</dt><dd>Dark, clubby, red-velvet steakhouse. Dress up a notch. <em class="rl-unv">(unverified: no dress code posted)</em></dd>
+      <dt>Order</dt><dd>Prime cowboy rib eye or bone-in filet (or the porterhouse for two) · Branding Iron onion rings · Lobster mac 'n' cheese or potato pavé with béarnaise; bread pudding for dessert</dd>
+      <dt>Book</dt><dd>SevenRooms, and they only take reservations 30 days in advance (Jan 2 opens Thu Dec 3). Call for other times.</dd>
+      <dt>Tips</dt><dd>Getting home: High Mountain Taxi runs free from Rubey Park on Saturday nights. · Same owners as Wild Fig (CP Restaurant Group).</dd>
+  </dl></details></div></div>
       <div class="tl"><div class="tl-time">Late</div><div class="tl-title">High Mountain Taxi</div><p class="tl-body">Free from Rubey Park 12:30&ndash;2:00 AM Saturdays &mdash; drinks at J-Bar or Bad Harriet without a DD.</p>
       <div class="media" data-m="d6_jbar"></div>
-      </div>
+      <div class="rl rl-stop" data-rest="jbar"><span class="rl-name">J-Bar</span><div class="rl-pills">
+      <a class="rl-pill" href="https://auberge.com/hotel-jerome/j-bar/lunch-dinner/" target="_blank" rel="noopener">Menu</a>
+      <a class="rl-pill" href="https://auberge.com/hotel-jerome/dine/j-bar/" target="_blank" rel="noopener">Website</a>
+      <a class="rl-pill" href="tel:+19709201000">Call (970) 920-1000</a>
+  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>About 11:45 AM – 11 PM Sun–Wed, to midnight Thu–Sat <em class="rl-unv">(unverified; sources conflict)</em></dd>
+      <dt>Order</dt><dd>J-Bar Burger · The Aspen Crud, a bourbon milkshake from the Prohibition era · Short rib poutine or the fried chicken sandwich</dd>
+      <dt>Book</dt><dd>Mostly walk-in; call the hotel to check for a group of 6 <em class="rl-unv">(unverified)</em></dd>
+      <dt>Tips</dt><dd>A service charge is added to the bill automatically.</dd>
+  </dl></details></div></div>
     </div>
   </div>
 
@@ -3669,7 +3813,7 @@ body.gated .wh-fab{display:none;}
       <div class="tl"><div class="tl-time">10:30 AM</div><div class="tl-title">Depart for Denver</div><p class="tl-body">CO-82 N &rarr; I-70 E. Budget 4&ndash;4.5 hrs &mdash; holiday Sunday backs up between Vail and the Eisenhower Tunnel.</p></div>
       <div class="tl"><div class="tl-time">12:30 PM</div><div class="tl-title">Lunch &middot; Vail or Frisco</div><p class="tl-body">Butterhorn Bakery in Frisco or Vail Village. Refuel the car here.</p><div class="media" data-m="d7_drive"></div></div>
       <div class="tl"><div class="tl-time">2:30 PM</div><div class="tl-title">Arrive Denver &middot; Return Suburban</div><p class="tl-body">Return to the Turo host with a walk-around. At the AA terminal by 2:45 PM &mdash; the flight now leaves at 4:22.</p></div>
-      <div class="tl star"><div class="tl-time">4:22 PM</div><div class="tl-title">AA 1832 &middot; DEN &rarr; DFW</div><p class="tl-body">Nonstop, 2h 8m. AA moved this flight 33 min earlier (Aug 10 schedule change). Arrives DFW 7:30 PM CST.</p><p class="tl-note">Marco flies United UA 2076 at 6:00 PM DEN &rarr; MSP (lands 9:07 PM), so he has a relaxed wait after drop-off.</p></div>
+      <div class="tl star"><div class="tl-time">4:22 PM</div><div class="tl-title">AA 1832 &middot; DEN &rarr; DFW</div><p class="tl-body">Nonstop, 2h 8m. AA moved this flight 33 min earlier (Aug 10 schedule change). Arrives DFW 7:30 PM CST.</p><p class="tl-note">Marco flies United UA 2076 at 6:00 PM DEN &rarr; MSP (lands 9:07 PM), so he has a relaxed wait after drop-off.</p><div class="media" data-m="d7_flight"></div></div>
     </div>
   </div>
 </div>
@@ -5731,15 +5875,17 @@ body.gated .wh-fab{display:none;}
   // photo: [file or URL, caption, credit, licence, source page]   video: [YouTube id, start s, title, channel]
   var M = {
     d0_drive:{p:[
-      ['d0_drive_open','High country on the way in \u2014 an empty road and snow-capped peaks','alexandra avelar','UNS','https://unsplash.com/photos/Xoj0SQRKFpo']]},
+      ['d0_drive_open','High country on the way in — an empty road and snow-capped peaks','alexandra avelar','UNS','https://unsplash.com/photos/Xoj0SQRKFpo'],
+      ['d0_canyon_3','I-70 through Glenwood Canyon — the river runs right beside the road','kahunapulej','BYNCSA2',FL+'94937042@N00/348432554']]},
     d0_wildfig:{p:[
       ['d0_wildfig_1','Wild Fig’s dining room — red banquettes and an arched window','The Wild Fig','C','https://thewildfig.com/aspen/'],
       ['rest_wildfig','The curved bar under the big station clock','The Wild Fig','C','https://thewildfig.com/aspen/'],
       ['rest_wildfig_2','A Wild Fig dinner plate','The Wild Fig','C','https://thewildfig.com/aspen/']]},
     d0_bellyup:{p:[
       ['d0_bellyup_1','A packed floor at Belly Up','Belly Up Aspen','C','https://bellyupaspen.com/galleries/gallery-2025/'],
-      ['d0_bellyup_2','The stage from the floor','Belly Up Aspen','C','https://bellyupaspen.com/galleries/gallery-2025/']],
-      v:[['gpbgC98kx-g',201,'Cloonee \u00b7 apr\u00e8s-ski in Aspen','Cloonee']]},
+      ['d0_bellyup_2','The stage from the floor','Belly Up Aspen','C','https://bellyupaspen.com/galleries/gallery-2025/'],
+      ['d0_bellyup_3','Hands up under the haze — a sold-out night','Belly Up Aspen','C','https://bellyupaspen.com/']],
+      v:[['gpbgC98kx-g',201,'Cloonee · après-ski in Aspen','Cloonee']]},
     d1_lesson:{p:[
       ['d1_school','Look for the red jacket \u2014 that\u2019s your instructor','Aspen Snowmass','C','https://www.aspensnowmass.com/lessons']],
       v:[['sF4Lre4Ig_I',0,'Learning to ski at Buttermilk','About The Chen\u2019s'],['jYu9bky7FJg',452,'A first day at Buttermilk ski school','Bianca Bonus']]},
@@ -5752,6 +5898,7 @@ body.gated .wh-fab{display:none;}
       ['d1_wh_3','Inside the tavern','White House Tavern','C','https://aspenwhitehouse.com/']]},
     d2_ajax:{p:[
       ['d2_ajax_3','Galena Street runs straight into the mountain',SHL,'BYNCSA2',FL+'40646519@N00/52778435131'],
+      ['dp_gp_base','Morning line at the base of the Silver Queen Gondola',SHL,'BYNCSA2',FL+'40646519@N00/54425576344'],
       ['d2_ajax_4','Above the Silver Queen cabins, town below','Aspen Snowmass','C','https://www.aspensnowmass.com/our-mountains/aspen-mountain']],
       v:[['y7DEGAd1mws',0,'Aspen Mountain top to bottom, 4K','Aspen Snowmass'],['H8cJvZ3z3AY',0,'Long live the Silver Queen','Aspen Snowmass']]},
     d2_bonnies:{p:[
@@ -5769,8 +5916,9 @@ body.gated .wh-fab{display:none;}
       ['d2_casatua_2','The bar, by the fire','Casa Tua','C','https://www.casatualife.com/aspen'],
       ['d2_casatua_3','The chalet on Galena at dusk','Casa Tua','C','https://www.casatualife.com/aspen']]},
     d3_tlazy7:{p:[
-      ['d3_tlazy7_3','Helmets on \u2014 the only gear the ranch provides','T-Lazy-7 Ranch','C','https://www.tlazy7.com/snowmobile-tours/'],
-      ['d3_tlazy7_1','T-Lazy-7 doubles lined up below the Maroon Bells','T-Lazy-7 Ranch','C','https://www.tlazy7.com/snowmobile-tours/']],
+      ['d3_tlazy7_3','Helmets on — the only gear the ranch provides','T-Lazy-7 Ranch','C','https://www.tlazy7.com/snowmobile-tours/'],
+      ['d3_tlazy7_1','T-Lazy-7 doubles lined up below the Maroon Bells','T-Lazy-7 Ranch','C','https://www.tlazy7.com/snowmobile-tours/'],
+      ['d3_tlazy7_4','Inside the ranch’s log cabin, where the tour warms up for lunch','T-Lazy-7 Ranch','C','https://www.tlazy7.com/snowmobile-tours/']],
       v:[['a_i75GBr1GY',0,'T-Lazy-7 snowmobile highlights','T-Lazy-7 Ranch'],['SpPDoQrAp2I',0,'The Maroon Bells snowmobile tour','T-Lazy-7 Ranch']]},
     d3_downtown:{p:[
       ['d3_downtown_1','The pedestrian malls \u2014 galleries, coffee, holiday garlands',SHL,'BYNCSA2',FL+'40646519@N00/54385045753'],
@@ -5778,13 +5926,16 @@ body.gated .wh-fab{display:none;}
       ['d3_sundeck','Bluebird alternative: the Sundeck at the top of the Silver Queen','Aspen Snowmass','C','https://www.aspensnowmass.com/visit/dining/aspen-mountain/sundeck']]},
     d4_highlands:{p:[
       ['d4_hw_powder','Deep snow at Highlands','Aspen Snowmass','C','https://www.aspensnowmass.com/our-mountains/aspen-highlands'],
+      ['dp_hl_fromajax','The Highlands ridge seen from the top of Aspen Mountain',SHL,'BYNCSA2',FL+'40646519@N00/54370258476'],
       ['d4_highlands_2c','Prayer flags at the 12,392 ft summit, the Bells beyond','Jonathan Strauss','BYNCSA2',FL+'66334721@N00/3180341693'],
+      ['dp_hl_town','Groomers down toward the valley, Aspen below',SHL,'BYNCSA2',FL+'40646519@N00/54401608238'],
       ['d4_hw_ridge','The Highlands ridge in midwinter','Aspen Snowmass','C','https://www.aspensnowmass.com/our-mountains/aspen-highlands']],
       v:[['6ORoMn9FFbM',0,'How to hike the Highland Bowl','Aspen Snowmass'],['9NJuBpSSfUE',0,'POV: a Highland Bowl lap','Aspen Snowmass']]},
     d4_mgr:{p:[
       ['d4_mgr_1','Merry-Go-Round’s deck, mid-mountain at Highlands','Aspen Snowmass','C','https://www.aspensnowmass.com/visit/dining/aspen-highlands/merry-go-round']]},
     d4_nye:{p:[
-      ['d4_nye_1','New Year\u2019s Eve: fireworks over the torch-lit face of Ajax','Adam Rinehart','UNS','https://unsplash.com/photos/fireworks-display-above-buildings-viewing-mountain-0lgpk8zfR4M']],
+      ['d4_nye_1','New Year’s Eve: fireworks over the torch-lit face of Ajax','Adam Rinehart','UNS','https://unsplash.com/photos/fireworks-display-above-buildings-viewing-mountain-0lgpk8zfR4M'],
+      ['d4_nye_3','Fireworks over the base of Aspen Mountain, the crowd on the snow','Isaac Kohane','BYNC2',FL+'52786697@N00/8333889137']],
       v:[['LVIye76bfrA',0,'Torchlight descent + fireworks','Adrian Constance']]},
     d3_fa:{p:[
       ['d3_fa_1','French Alpine Bistro — copper and candlelight','Wright family','',''],
@@ -5793,8 +5944,7 @@ body.gated .wh-fab{display:none;}
     d4_mat_photos:{p:[
       ['d4_mat_3','Nobu-style plates — new-style sashimi, yellowtail jalapeño','Matsuhisa Aspen','C','https://www.matsuhisarestaurants.com/aspen/'],
       ['d4_mat_2','The sushi counter downstairs','Matsuhisa Aspen','C','https://www.matsuhisarestaurants.com/aspen/'],
-      ['d4_mat_5','Tonight’s fish','Matsuhisa Aspen','C','https://www.matsuhisarestaurants.com/aspen/'],
-      ['rest_mat_1','The Main Street house, lit up on a winter night','Pablo Monteagudo','BYNCSA2',FL+'26528022@N07/5533958619']]},
+      ['d4_mat_5','Tonight’s fish','Matsuhisa Aspen','C','https://www.matsuhisarestaurants.com/aspen/']]},
     d4_matsuhisa:{chips:1,v:[['ruZBpNSZn4s',331,'Dinner at Matsuhisa Aspen','SERGELATO'],['yCEBQPqZ0ec',0,'What an omakase looks like','Nobu Restaurants']]},
     d5_iron:{p:[
       ['d5_iron_1','Iron Mountain\u2019s riverside pools in winter','Visit Glenwood Springs','C','https://visitglenwood.com/'],
@@ -5802,19 +5952,22 @@ body.gated .wh-fab{display:none;}
       v:[['j6CP6WPAAQM',0,'Winter at Iron Mountain Hot Springs','Iron Mountain Hot Springs']]},
     d4_midnight:{p:[]},
     d6_family:{p:[
-      ['d6_family_2','Snowmass Mall \u2014 the meet-up spot for lunch',SHL,'BYNCSA2',FL+'40646519@N00/52739209259']]},
+      ['d6_family_2','Snowmass Mall — the meet-up spot for lunch',SHL,'BYNCSA2',FL+'40646519@N00/52739209259'],
+      ['d6_family_1','Gondola cabins over the Snowmass base',HS,'PD','https://www.loc.gov/item/2017687174/'],
+      ['dp_sm_smores','Free après s’mores on the Snowmass Mall (last season — may change)',SHL,'BYNCSA2',FL+'40646519@N00/54355364226']]},
     d6_return:{p:[
       ['d6_mall','Last chair \u2014 the end of the ski week','Josh Hild','UNS','https://unsplash.com/photos/PZUumD6n2rY']]},
     d6_s316:{p:[
-      ['rest_s316_1','Prime filet in the skillet','cpaspen / CP Restaurant Group','BYNC2',FL+'146778570@N07/35921342420'],
+      ['rest_s316_2','Steakhouse 316 on Hopkins in the snow','Steakhouse 316','C','https://www.steakhouse316.com/aspen'],
       ['rest_s316','The room in red','Steakhouse 316','C','https://www.steakhouse316.com/aspen'],
-      ['rest_s316_2','Steakhouse 316 on Hopkins in the snow','Steakhouse 316','C','https://www.steakhouse316.com/aspen']]},
+      ['rest_s316_1','Prime filet in the skillet','cpaspen / CP Restaurant Group','BYNC2',FL+'146778570@N07/35921342420']]},
     d6_jbar:{p:[
       ['d6_jbar_1','The historic J-Bar at Hotel Jerome','Hotel Jerome','C','https://auberge.com/hotel-jerome/dine/j-bar/'],
       ['rest_jbar_3','The J-Bar sign on a snowy night','matthead','BYNCSA2',FL+'62955223@N00/253348610'],
       ['rest_jbar_1','Burger, oysters and a cocktail at the bar','Hotel Jerome','C','https://auberge.com/hotel-jerome/dine/j-bar/']]},
     d7_drive:{p:[
-      ['d7_drive_2','Over Vail Pass \u2014 the slow part of the drive','CAJC: in the PNW','BYNCSA2',FL+'88913562@N00/31031647374']]},
+      ['d7_drive_2','Over Vail Pass — the slow part of the drive','CAJC: in the PNW','BYNCSA2',FL+'88913562@N00/31031647374'],
+      ['d7_drive_1','Frisco sits on frozen Dillon Reservoir, right off I-70','Jim Lawrence','BYNCSA2',FL+'166895452@N02/40203281683']]},
     d7_checkout:{p:[
       ['emb_484fde1690','Last coffee at the island','Wright family','','']]},
     d0_checkin:{p:[
@@ -5842,15 +5995,15 @@ body.gated .wh-fab{display:none;}
       ['rest_bosq','Set for a candlelit dinner','Bosq','C','https://www.bosqaspen.com/private-dining']]},
     // NEW keys for the casual / on-mountain spots (no .ph in the casual table today; use in timeline stops or new mini-cards),
     rest_s316:{p:[
-      ['rest_s316_1','Prime filet in the skillet','cpaspen / CP Restaurant Group','BYNC2',FL+'146778570@N07/35921342420'],
-      ['rest_s316','The room in red','Steakhouse 316','C','https://www.steakhouse316.com/aspen'],
       ['rest_s316_2','On Hopkins in the snow','Steakhouse 316','C','https://www.steakhouse316.com/aspen'],
+      ['rest_s316','The room in red','Steakhouse 316','C','https://www.steakhouse316.com/aspen'],
+      ['rest_s316_1','Prime filet in the skillet','cpaspen / CP Restaurant Group','BYNC2',FL+'146778570@N07/35921342420'],
       ['rest_s316_3','A cocktail poured at the bar','cpaspen / CP Restaurant Group','BYNC2',FL+'146778570@N07/35508077613']]},
     rest_mat:{p:[
       ['d4_mat_3','Nobu-style plates — new-style sashimi, yellowtail jalapeño','Matsuhisa Aspen','C','https://www.matsuhisarestaurants.com/aspen/'],
       ['d4_mat_2','The sushi counter downstairs','Matsuhisa Aspen','C','https://www.matsuhisarestaurants.com/aspen/'],
       ['d4_mat_4','The lounge bar','Matsuhisa Aspen','C','https://www.matsuhisarestaurants.com/aspen/'],
-      ['rest_mat_1','The Main Street house on a winter night','Pablo Monteagudo','BYNCSA2',FL+'26528022@N07/5533958619']]},
+      ['d4_mat_5','Tonight’s fish','Matsuhisa Aspen','C','https://www.matsuhisarestaurants.com/aspen/']]},
     rest_fa:{p:[
       ['d3_fa_1','Copper and candlelight downstairs at Mill','Wright family','',''],
       ['rest_fa_1','Soupe à l’oignon, bubbling under Gruyère','French Alpine Bistro','C','https://www.frenchalpinebistro.com/'],
@@ -5879,6 +6032,23 @@ body.gated .wh-fab{display:none;}
       ['rest_mc_1','The Meat & Cheese board','Meat & Cheese','C','https://www.meatandcheeseaspen.com/about'],
       ['rest_mc_2','Roast chicken and potatoes to share','Meat & Cheese','C','https://www.meatandcheeseaspen.com/gallery'],
       ['rest_mc_3','The burger and a beer','Meat & Cheese','C','https://www.meatandcheeseaspen.com/gallery']]},
+    d0_den:{p:[
+      ['dp_den_tent','Landing at DEN — the snow-covered tent roof of the Jeppesen Terminal',SHL,'BYNCSA2',FL+'40646519@N00/54416681903']]},
+    d0_downtown:{p:[
+      ['d3_downtown_2','Cooper Avenue mall — snowbanks, aspens and brick storefronts',SHL,'BYNCSA2',FL+'40646519@N00/52780870824'],
+      ['d3_downtown_3','Galena Street runs south toward Aspen Mountain (Belly Up is on this street)',SHL,'BYNCSA2',FL+'40646519@N00/54385044773'],
+      ['dp_gp_plaza','Gondola Plaza at the foot of Ajax, two blocks from FMS Downtown',SHL,'BYNCSA2',FL+'40646519@N00/54425628598']]},
+    d2_lesson:{p:[
+      ['dp_bm_view','Buttermilk from the highway — wide, gentle beginner terrain',SHL,'BYNCSA2',FL+'40646519@N00/54380787698']]},
+    d3_warmup:{p:[
+      ['emb_b10debd6a7','Thaw out by the fire in the living room','Wright family','','']]},
+    d4_depart:{p:[
+      ['dp_hl_base','Aspen Highlands base village — where you’ll park and click in',SHL,'BYNCSA2',FL+'40646519@N00/54363345502']]},
+    d4_fms:{p:[
+      ['dp_hl_village','The Highlands Village plaza — FMS Highlands is here (76 Boomerang Rd)',SHL,'BYNCSA2',FL+'40646519@N00/54400462692']]},
+    d7_flight:{p:[
+      ['dp_den_trees','Holiday trees in the DEN concourse windows',SHL,'BYNCSA2',FL+'40646519@N00/54416430521'],
+      ['dp_den_tarmac','A snowy ramp at DEN — de-icing can add time on a winter departure',SHL,'BYNCSA2',FL+'40646519@N00/54416817665']]},
 
   };
   // replaced day banners (credited in the list below)
@@ -6613,11 +6783,13 @@ more:['Multi-day rentals run on consecutive days. You pay for days in between, s
      when:'Order by Sun Dec 13 · needed from Mon Dec 28',
      why:'Jim needs warm gear too: the snowmobile ranch gives out helmets only.',
      how:[{t:'web',label:'Kit Lender (ships kits)',v:'https://www.kitlender.com/'},
+          {t:'web',label:'Slope Threads (Golden pickup)',v:'https://slopethreads.com/'},
           {t:'tel',label:'Suit Yourself (970) 920-0295',v:'+19709200295'}],
-     say:'Kit Lender: pick a kit for each person (jacket, pants, gloves, goggles; "with Boots" adds snow boots) → choose each size → rental dates → ship to our Dallas house → bring them on the trip.\nText Griffin the total.',
+     say:'Kit Lender: pick a kit for each person (jacket, pants, gloves, goggles; "with Boots" adds snow boots) → choose each size → rental dates Sun Dec 27 to Sun Jan 3 → ship to our Dallas house → bring them on the trip.\nText Griffin the total.',
 more:[' for the first 3 days (3-day minimum), then. Free shipping and returns. No helmets and no base layers.',
       'It can arrive up to 5 days early with no signature, so don\'t send it to the empty rental house unless the host agrees to hold it.',
-      'Return by noon the day after your last rental day at a staffed FedEx (no drop box). Set the last day to Mon Jan 4 and drop it off in Dallas.',
+      'Return by noon the day after your last rental day at a staffed FedEx (no drop box): with Jan 3 as the last day, drop it off in Dallas by noon Mon Jan 4. About a person for the 8 days.',
+      'Jim only needs gear for the Dec 30 snowmobile: Slope Threads rents a full outfit for about (2-day minimum) with pickup at its Golden store on the drive in.',
       'In town instead: Suit Yourself (970) 920-0295. Call ahead; their website no longer works.']},
 
     {id:'springs', kind:'by', date:'2026-12-15', who:'Marcy', forWho:'Everyone (6)',
@@ -9921,7 +10093,7 @@ function apply(anim){
    el.classList.add('wh-top');
    var at=chipAt(el),c=D.createElement('span');
    c.className='wh-you'; c.setAttribute('aria-hidden','true'); c.setAttribute('data-t',isFor(el,p)||has(el.getAttribute('data-wh-hl'),p)?'You':'You book');
-   at.appendChild(c); pulse(el);
+   if(at===el&&el.tagName!=='TD'&&el.children.length){el.insertBefore(c,el.firstChild);c.classList.add('wh-you-lead');}else{at.appendChild(c);} pulse(el);
   });
   mark(p);
  }
@@ -9929,7 +10101,12 @@ function apply(anim){
 }
 function chipAt(el){
  if(el.tagName==='TR'){return el.cells[0]||el;}
- for(var k in CHIPAT){if(el.classList.contains(k)){return el.querySelector(CHIPAT[k])||el;}}
+ for(var k in CHIPAT){if(el.classList.contains(k)){var q=el.querySelector(CHIPAT[k]);if(q){return q;}}}
+ var h=el.querySelector('h1,h2,h3,h4,h5,h6,.info-title,.sub-head,.tl-title,.rname,.title,[class$="-title"],[class*="-title "],[class$="-t"]');
+ if(h){return h;}
+ var kids=el.children;
+ if(!kids.length){return el;}
+ var f=kids[0]; if(/^(P|DIV|SPAN|STRONG|B|LI|DT)$/.test(f.tagName)&&f.textContent.trim()){return f;}
  return el;
 }
 function pulse(el){
