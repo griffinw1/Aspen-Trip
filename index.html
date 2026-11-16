@@ -12183,7 +12183,17 @@ if (foot){
     ec.setAttribute('aria-label', 'Secrets found on this page');
     ec.innerHTML = '<span aria-hidden="true">&#10052;</span><b>' + Object.keys(found).length + '</b><i>/' + EGGS + '</i>';
     ec.addEventListener('click', function(e){ e.stopPropagation(); var k = Object.keys(found).length;
-      toast(k >= EGGS ? 'All ' + EGGS + ' secrets found. Legend.' : 'There are ' + EGGS + ' secrets hidden on this page &middot; you&rsquo;ve found ' + k + '. Keep poking around.'); });
+      if (k >= EGGS) { toast('All ' + EGGS + ' secrets found. Legend.'); return; }
+      var HINTS = {flake:'The biggest word on the page has a snowflake. Poke it.', konami:'Old-school gamers know the code: up, up, down, down…',
+        aspen:'Type the name of the town. Watch the sky at 4:45.', powder:'Type what every skier prays for overnight.',
+        marco:'Type the name of the one who rides sideways.', pizza:'Type the first lesson every beginner learns. Pizza… what comes next?',
+        aurora:'The moon and the sun, back and forth, seven times fast.', bowl:'On the map, zoom all the way into the bowl at the south end of Highlands.',
+        firstchair:'Visit when the first chair loads: half past eight, Aspen time.', steam:'Find the hot tub on the Lodging tab after dark.',
+        allbooked:'Finish every booking. Something happens on the last tick.', newyear:'Be here at the stroke of midnight, Aspen time, Jan 1.',
+        shake:'On your phone: shake it like a snow globe.', globe:'Hold your finger on the snowflake at the very bottom.'};
+      var left = Object.keys(HINTS).filter(function(id){ return !found[id]; });
+      var pick = left[Math.floor(Math.random() * left.length)];
+      toast('&#10052; ' + k + '/' + EGGS + ' found &middot; Hint: ' + HINTS[pick]); });
     brand.appendChild(ec);
   }
   var DOE = W.DeviceOrientationEvent, DME = W.DeviceMotionEvent;
