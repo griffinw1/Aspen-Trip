@@ -2247,6 +2247,21 @@ dl dt.wh-me.wh-me{padding-left:10px}
 .rl-stop .rl-more[open] summary::before{content:"2  "}
 .rl-stop .rl-info{margin-top:8px}
 
+
+/* v39 secrets chip (top, subtle) */
+.topnav .brand{position:relative}
+.tk-eggs{display:inline-flex;align-items:baseline;gap:2px;margin-left:8px;padding:2px 6px;border:0;background:transparent;color:var(--gold);opacity:.42;font:600 10px/1 var(--sans);letter-spacing:.06em;cursor:pointer;vertical-align:middle;border-radius:99px;transition:opacity .2s ease}
+.tk-eggs:hover,.tk-eggs:focus-visible{opacity:1}
+.tk-eggs i{font-style:normal;opacity:.7}
+.tk-eggs span{font-size:10px;margin-right:2px}
+.tk-eggs.glow{animation:tkEggGlow 2.2s ease}
+@keyframes tkEggGlow{0%{opacity:.42}15%{opacity:1;box-shadow:0 0 0 4px rgba(196,154,74,.25)}100%{opacity:.42;box-shadow:none}}
+@media (prefers-reduced-motion:reduce){.tk-eggs.glow{animation:none}}
+.tk-psst{font-size:14px;color:var(--soft,#46544d)}
+/* custom cursor can't sit above <dialog> (top layer): use the system cursor inside dialogs */
+html.gc-on dialog, html.gc-on dialog *{cursor:auto!important}
+html.gc-on dialog button, html.gc-on dialog a, html.gc-on dialog [role=button], html.gc-on dialog label{cursor:pointer!important}
+html.gc-on:has(dialog[open]) .gc-dot, html.gc-on:has(dialog[open]) .gc-trail{opacity:0!important}
 /* v39 groceries */
 .groc .gr-steps{margin:.6em 0 .8em 1.2em;padding:0;display:grid;gap:.45em;font-size:.95em;line-height:1.5}
 .groc .gr-steps li::marker{color:var(--gold);font-weight:600}
@@ -3387,10 +3402,10 @@ body.gated .wh-fab{display:none;}
       <div class="card">
         <p><strong>Griffin, Marco, Stella and Marcy rent from Four Mountain Sports (FMS).</strong> Marcy&rsquo;s and Stella&rsquo;s gear on lesson days comes <em>with the lesson package</em>, so they only rent for the days after. Ben brings his own skis. <strong>Rental days are billed back-to-back</strong>: you pay for every day the gear is out, including the Dec 30 snowmobile day and the Jan 1 hot-springs day while it sits in storage.</p>
         <table class="dtable" style="margin-top:12px">
-          <tr><td>Griffin</td><td>Ski package &middot; pick up Sun Dec 27 (free) &rarr; billed Dec 28&ndash;Jan 2 = <strong>6 days</strong> &middot; Premium ~$564 or Standard ~$444</td></tr>
+          <tr><td>Griffin</td><td>Ski package &middot; pick up Sun Dec 27 (free) &rarr; billed Dec 28&ndash;Jan 2 = <strong>6 days</strong> &middot; <strong>Standard with helmet</strong> ~$522</td></tr>
           <tr><td>Marco</td><td>Snowboard package (board + boots) &middot; same dates as Griffin &middot; see <em>Marco &middot; snowboard rental</em> below</td></tr>
-          <tr><td>Stella</td><td>Standard ski package, Dec 29&ndash;Jan 2 = <strong>5 billed days ~$370</strong> &mdash; or three 1-day rentals (Dec 29, 31, Jan 2) ~$222, returned each afternoon and refit each morning</td></tr>
-          <tr><td>Marcy</td><td>Standard ski package, Dec 31&ndash;Jan 2 = <strong>3 billed days ~$222</strong> &mdash; or two 1-day rentals ~$148</td></tr>
+          <tr><td>Stella</td><td>Standard ski package <strong>with helmet</strong>, three 1-day rentals (Dec 29, Dec 31 at FMS Highlands, Jan 2) <strong>~$261</strong> &middot; returned each afternoon, refit each morning</td></tr>
+          <tr><td>Marcy</td><td>Standard ski package <strong>with helmet</strong>, two 1-day rentals (Dec 31 at FMS Highlands, Jan 2) <strong>~$174</strong></td></tr>
           <tr><td>Ben</td><td>Own skis &middot; FMS transfers personal equipment for a fee (amount not published; ask when booking)</td></tr>
           <tr><td>Prices</td><td>Standard package <strong>$93/day, or $74 booked 30+ days ahead</strong> &middot; Premium $118, or $94 &middot; helmet adds ~$16/day (only the &ldquo;with Helmet&rdquo; packages include one) &middot; optional damage insurance +$8</td></tr>
           <tr><td>How to</td><td>Book at <strong>shop.aspensnowmass.com</strong> &middot; 20% off booked 30+ days ahead (<strong>by Fri Nov 27</strong>), 10% at 7+ days &middot; pick up from 2 PM the day before at no charge &middot; return by 10 AM the day after your last day &middot; unused rentals refundable on request &middot; no home delivery this season</td></tr>
@@ -3421,12 +3436,12 @@ body.gated .wh-fab{display:none;}
 
   <div class="sub-head reveal">Marco &middot; Snowboard Rental</div>
   <div class="card reveal">
-    <p><strong>Pick: Four Mountain Sports Standard Snowboard Package (board + boots)</strong>, rented with Griffin&rsquo;s skis so the board rides the same free overnight transfer: Snowmass &rarr; Downtown/Ajax &rarr; Highlands &rarr; Snowmass. Standard suits riders &ldquo;comfortable on green, groomed blue and black terrain&rdquo;. If he&rsquo;s a strong rider who wants Highland Bowl and the Ajax steeps, upgrade to <strong>Premium</strong>.</p>
+    <p><strong>Pick: Four Mountain Sports Standard Snowboard Package (board + boots)</strong>, rented with Griffin&rsquo;s skis so the board rides the same free overnight transfer: Snowmass &rarr; Downtown/Ajax &rarr; Highlands &rarr; Snowmass. Standard suits riders &ldquo;comfortable on green, groomed blue and black terrain&rdquo;. <strong>Decided: Standard, with a rental helmet.</strong></p>
     <table class="dtable" style="margin-top:12px">
-      <tr><td>Package</td><td><strong>Standard Snowboard</strong> &middot; $93/day, <strong>$74 booked by Fri Nov 27</strong> &middot; billed Dec 28&ndash;Jan 2 = 6 days = <strong>~$444</strong> &middot; Premium: $94/day booked ahead, ~$564</td></tr>
-      <tr><td>Helmet</td><td>Not in the package. <strong>Bring his own</strong>, or book &ldquo;Standard Snowboard Package W/Helmet&rdquo; (~$87/day booked ahead, ~$522 for 6 days)</td></tr>
+      <tr><td>Package</td><td><strong>Standard Snowboard</strong> &middot; $93/day, <strong>$74 booked by Fri Nov 27</strong> &middot; billed Dec 28&ndash;Jan 2 = 6 days = <strong>~$444</strong></td></tr>
+      <tr><td>Helmet</td><td><strong>Renting one:</strong> book &ldquo;Standard Snowboard Package W/Helmet&rdquo; (~$87/day booked ahead, ~$522 for 6 days)</td></tr>
       <tr><td>Own boots?</td><td>If he has snowboard boots he likes, book &ldquo;Snowboard Only&rdquo; (board, no boots) instead</td></tr>
-      <tr><td>Pick up</td><td><strong>Sun Dec 27 with Griffin at FMS Downtown, 520 E Durant, right after the 4 PM check-in. The shop closes at 5 PM</strong> (pickup after 2 PM is free). Allow time for boot fitting. Bring the socks he&rsquo;ll ride in, and know his stance (regular or goofy) and binding angles.</td></tr>
+      <tr><td>Pick up</td><td><strong>Sun Dec 27 with Griffin at FMS Downtown, 520 E Durant, right after the 4 PM check-in. The shop closes at 5 PM</strong> (pickup after 2 PM is free). Allow time for boot fitting. Bring the socks he&rsquo;ll ride in, and tell them his stance (he isn&rsquo;t sure yet; they&rsquo;ll check it at the fitting).</td></tr>
       <tr><td>Transfer</td><td>Board transfers free each night; <strong>his boots + helmet come home</strong></td></tr>
       <tr><td>Return</td><td>Jan 2 at FMS Snowmass with Griffin&rsquo;s skis (anytime before 10 AM Jan 3 avoids another day)</td></tr>
       <tr><td>Book</td><td>shop.aspensnowmass.com &rarr; Rentals &rarr; Ski and Snowboard Rental &rarr; start Mon Dec 28 &middot; Adult &middot; Snowboard &middot; Package &middot; Standard &middot; 6-Day &middot; (877) 308-7859</td></tr>
@@ -3700,7 +3715,7 @@ body.gated .wh-fab{display:none;}
     <p class="dayintro">NYE in Aspen. The day starts on Aspen Highlands &mdash; steeper and quieter than Snowmass during holiday week &mdash; and ends with the torchlight descent and fireworks.</p>
     <div class="timeline">
       <div class="tl"><div class="tl-time">9:00 AM</div><div class="tl-title">Depart for Aspen Highlands</div><p class="tl-body">~12 min via Maroon Creek Road. Fewest crowds, most dramatic terrain. Highland Bowl is a 30&ndash;60 min boot-pack to the 12,392 ft summit, so plan 2&ndash;3 hrs for the lap. Marco carries his board on a pack, or on a strap from Highlands Ski Patrol HQ.</p><div class="media" data-m="d4_depart"></div></div>
-      <div class="tl"><div class="tl-time">9:10 AM</div><div class="tl-title">Pick Up Skis &middot; FMS Highlands Base</div><p class="tl-body">Griffin&rsquo;s and Ben&rsquo;s skis and Marco&rsquo;s board all transferred overnight from Ajax.</p><div class="media" data-m="d4_fms"></div></div>
+      <div class="tl"><div class="tl-time">9:10 AM</div><div class="tl-title">Pick Up Skis &middot; FMS Highlands Base</div><p class="tl-body">Griffin&rsquo;s and Ben&rsquo;s skis and Marco&rsquo;s board all transferred overnight from Ajax. <strong>Marcy and Stella</strong> pick up their 1-day rentals (with helmets) here too, at FMS Highlands in Highlands Village.</p><div class="media" data-m="d4_fms"></div></div>
       <div class="tl"><div class="tl-time">9:30 AM</div><div class="tl-title">Ski Aspen Highlands</div><p class="tl-body">Thunderbowl to start; Riverside and Olympic for cruisers; Steeplechase for sustained steeps; Highland Bowl for the summit experience.</p>
       <div class="media" data-m="d4_highlands"></div>
       </div>
@@ -4111,18 +4126,18 @@ body.gated .wh-fab{display:none;}
     <span class="eyebrow">What It Costs</span>
     <h2>Budget</h2>
     <div class="sec-rule"><span class="ln"></span><span class="dia"></span><span class="ln r"></span></div>
-    <p class="lead">Planning estimates for the week. Lodging and flights are your own known costs (noted at the bottom); every night out is chosen and the snowmobile is booked, so the ranges are mostly rental tier (Standard vs Premium) and how much sake flows on NYE.</p>
+    <p class="lead">Planning estimates for the week. Lodging and flights are your own known costs (noted at the bottom); every night out is chosen and the snowmobile is booked, so the range is mostly ski clothes (rent vs buy) and how much sake flows on NYE.</p>
   </div>
 
   <div class="sub-head reveal">Activities &amp; Logistics</div>
   <table class="dtable reveal">
     <tr><td>Vehicle</td><td>Chevrolet Suburban (or similar) &middot; Turo, all-in</td><td><strong>~$1,200</strong></td></tr>
-    <tr><td>Lift tickets</td><td>Griffin / Ben / Marco 4-day ($928 ea) + Stella 3-day ($789) + Marcy 2-day ($526, or $368 if 65+) + Jim gondola &middot; online prices Nov 15, buy by Fri Nov 27</td><td><strong>~$4,150</strong></td></tr>
-    <tr><td>Ski &amp; board rentals</td><td>Billed back-to-back: Griffin 6d &middot; Marco snowboard 6d &middot; Stella 5d &middot; Marcy 3d ($74&ndash;94/day booked by Nov 27)</td><td><strong>~$1,480&ndash;1,720</strong></td></tr>
+    <tr><td>Lift tickets</td><td>Griffin / Ben / Marco 4-day ($928 ea) + Stella 3-day ($789) + Marcy 2-day ($526) + Jim gondola &middot; online prices Nov 15, buy by Fri Nov 27</td><td><strong>~$4,150</strong></td></tr>
+    <tr><td>Ski &amp; board rentals</td><td>Standard + helmet ($87/day booked by Nov 27): Griffin 6d &middot; Marco snowboard 6d &middot; Stella 3 &times; 1d &middot; Marcy 2 &times; 1d = 17 days</td><td><strong>~$1,480</strong></td></tr>
     <tr><td>Lessons</td><td>Buttermilk First Time package ($484/day incl. lift + gear + helmet) &middot; Marcy 2 days + Stella 1</td><td><strong>~$1,452</strong></td></tr>
     <tr><td>Snowmobile</td><td>T-Lazy-7 Klondike Lunch &middot; 3 doubles, booked ($1,575) + tips</td><td><strong>~$1,650</strong></td></tr>
     <tr><td>Ski clothing</td><td>Kit Lender for Stella / Marcy / Jim (+ Griffin unless he buys his own), Dec 27&ndash;Jan 3 (~$380 each; Jim cheaper via Slope Threads)</td><td><strong>~$1,050&ndash;1,550</strong></td></tr>
-    <tr><td>Hot springs</td><td>Iron Mountain Quick Dip &middot; 6 &times; $65 + fee (All Access 21+ is $95)</td><td><strong>~$395</strong></td></tr>
+    <tr><td>Hot springs</td><td>Iron Mountain All Access (21+) Quick Dip &middot; 6 &times; $95 + fee + $10 insurance</td><td><strong>~$585</strong></td></tr>
   </table>
 
   <div class="sub-head reveal">Food &amp; Drink (estimated)</div>
@@ -4142,11 +4157,11 @@ body.gated .wh-fab{display:none;}
 
   <div class="card reveal" style="margin-top:8px">
     <div class="grid2">
-      <div><div class="info-sub">Estimated subtotal</div><div class="info-title" style="color:var(--evergreen)">~$18,850&ndash;20,000</div><p class="note-sans">Activities + food &mdash; excludes lodging &amp; flights</p></div>
-      <div><div class="info-sub">Per person (&divide; 6)</div><div class="info-title" style="color:var(--evergreen)">~$3,150&ndash;3,325</div><p class="note-sans">Excludes lodging &amp; flights</p></div>
+      <div><div class="info-sub">Estimated subtotal</div><div class="info-title" style="color:var(--evergreen)">~$19,050&ndash;19,950</div><p class="note-sans">Activities + food &mdash; excludes lodging &amp; flights</p></div>
+      <div><div class="info-sub">Per person (&divide; 6)</div><div class="info-title" style="color:var(--evergreen)">~$3,175&ndash;3,325</div><p class="note-sans">Excludes lodging &amp; flights</p></div>
     </div>
     <p class="note" style="margin-top:14px">Then add your two known costs: <strong>Lodging</strong> (42 Nighthawk &mdash; confirmed, your rate) and <strong>Flights</strong> (5 booked &mdash; your fare; Marco&rsquo;s United flights are his own).</p>
-    <p class="note-sans" style="margin-top:8px">Estimates only &mdash; the swing factors are rental tier ($74 vs $94/day), Marcy&rsquo;s senior lift rate, NYE drinks, and how many meals you eat out vs cook in. Marco books MSP &harr; DEN himself (booked).</p>
+    <p class="note-sans" style="margin-top:8px">Estimates only &mdash; the swing factors are whether Griffin buys his own ski clothes, NYE drinks, and how many meals you eat out vs cook in. Marco books MSP &harr; DEN himself (booked).</p>
   </div>
 </div>
 </section>
@@ -6770,9 +6785,9 @@ more:['Includes lift ticket, skis, boots and helmet. 10 AM – 3 PM. Be at the b
      why:'The Flex Pass is sold out for this season. Regular multi-day lift tickets are the plan now. Buying 30+ days ahead saves the most.',
      how:[{t:'web',label:'Lift tickets',v:'https://www.aspensnowmass.com/visit/tickets-and-passes/lift-tickets'},
           {t:'tel',label:'Call (877) 308-7859',v:'+18773087859'}],
-     say:'Buy Lift Tickets → Age → Number of Days → tap > to December → tap the start date → skip "Need Rentals?" and "Resort Charge" → Add To Cart. One per person.\nGriffin, Ben, Marco: ADULT · 4-Day · Mon Dec 28 ($928 each).\nStella: ADULT · 3-Day · Tue Dec 29 ($789).\nMarcy: 2-Day · Thu Dec 31 (SENIOR $368 if 65+, else $526).\nText Griffin the total. Keep confirmation numbers private.',
+     say:'Buy Lift Tickets → Age → Number of Days → tap > to December → tap the start date → skip "Need Rentals?" and "Resort Charge" → Add To Cart. One per person.\nGriffin, Ben, Marco: ADULT · 4-Day · Mon Dec 28 ($928 each).\nStella: ADULT · 3-Day · Tue Dec 29 ($789).\nMarcy: ADULT · 2-Day · Thu Dec 31 ($526).\nText Griffin the total. Keep confirmation numbers private.',
 more:['The Flex Pass is gone. These regular tickets fit our days: 4 days in a 6-day window, 3 in 5, 2 in 3.',
-      'Ask Ben and Marco first whether they have an Ikon pass. Aspen is on it, no reservation needed.',
+      'Ben and Marco don’t have Ikon passes, so all five need tickets.',
       'Unused tickets get a full refund. Unused days on a used ticket become resort credit (call 800-525-6200 within 14 days).',
       'Each ticket comes with a free Aspen Card. Pick it up at a Pickup Box with the QR code from the email.']},
 
@@ -6781,10 +6796,10 @@ more:['The Flex Pass is gone. These regular tickets fit our days: 4 days in a 6-
      when:'Book by Fri Nov 27 for the biggest discount',
      why:'Booking 30+ days ahead saves the most; 7+ days ahead still saves some.',
      how:[{t:'web',label:'Reserve rentals',v:'https://shop.aspensnowmass.com/s/winter-rentals/four-mountain-sports'}],
-     say:'Ski and Snowboard Rental → date → ADULT 13 & UP → SKI (Marco: SNOWBOARD) → PACKAGE (includes boots) → STANDARD ($74/day) or PREMIUM ($94/day) → helmet yes/no (+$13/day) → number of days → Add To Cart.\nGriffin and Marco: start Dec 28, 6-Day (keeps gear stored over the days off).\nStella: 1-Day on Dec 29, Dec 31 and Jan 2 (three separate items).\nMarcy: 1-Day on Dec 31 and Jan 2 (skip if she takes the 3-Day lesson).\nText Griffin the total.',
+     say:'Ski and Snowboard Rental → date → ADULT 13 & UP → SKI (Marco: SNOWBOARD) → PACKAGE (includes boots) → STANDARD ($74/day) → helmet: YES (+$13/day) for everyone → number of days → Add To Cart.\nGriffin and Marco: start Dec 28, 6-Day (keeps gear stored over the days off).\nStella: 1-Day on Dec 29, Dec 31 and Jan 2 (three separate items).\nMarcy: 1-Day on Dec 31 and Jan 2.\nDec 31 pickups (Stella, Marcy): FMS Highlands, Highlands Village.\nText Griffin the total.',
 more:['Multi-day rentals run on consecutive days. You pay for days in between, so split days are booked as separate 1-Day rentals.',
       'Pick up at any Four Mountain Sports after 2 PM the day before (FMS Downtown, 520 E Durant, for Dec 27). Return by 10 AM the day after.',
-      'Have each person\'s height, weight, shoe size and ability ready. Marco: regular or goofy stance.',
+      'Have each person\'s height, weight, shoe size and ability ready. Marco: not sure of his stance yet; he can tell the shop at pickup.',
       'Insurance is optional, $8/day (covers damage, not loss or theft). Free to cancel 48+ hours ahead.']},
 
     {id:'casatua', kind:'on', date:'2026-11-29', who:'Marcy', forWho:'Everyone (6)',
@@ -6848,18 +6863,18 @@ more:['$69/day for the first 3 days (3-day minimum), then $35/day. Free shipping
      why:'You need a reservation (a 3-hour visit). New Year’s Day is busy, so book early.',
      how:[{t:'web',label:'Buy tickets',v:'https://www.ironmountainhotsprings.com/'},
           {t:'tel',label:'Call (970) 945-4766',v:'+19709454766'}],
-     say:'ironmountainhotsprings.com → Pricing → under General Access tap Purchase → tap > to January 2027 → tap 1 → Quick Dip → Buy Now → tap + until Adult/Teen says 6 → Next → tap 12:00 PM → Next → add the $10 insurance (cancel any time) or tap No Thanks, Continue → tick the Terms box, leave the marketing boxes unticked → Checkout.\nAbout $393 for 6 ($65 each + $2.99 fee).\nText Griffin: "Hot springs booked, Jan 1 noon, total $___." Keep the order number private.',
+     say:'ironmountainhotsprings.com → Pricing → under All Access (21+) tap Purchase → tap > to January 2027 → tap 1 → Quick Dip → Buy Now → tap + until Adult/Teen says 6 → Next → tap 12:00 PM → Next → add the $10 insurance (we want it: cancel any time) → tick the Terms box, leave the marketing boxes unticked → Checkout.\nAbout $583 for 6 ($95 each + $2.99 fee + $10 insurance). Everyone must be 21+ and bring ID.\nText Griffin: "Hot springs booked, Jan 1 noon, total $___." Keep the order number private.',
 more:['Jan 1 was wide open on Nov 16, every time from 9 AM to 7 PM.',
-      'Want saunas and the adults-only pools? Choose All Access (21+) instead: $95 each, everyone needs ID.',
+      'All Access adds the saunas and adults-only pools. Everyone needs a photo ID at the door.',
       'Includes a locker and 2 towels each. Bring swimsuits and flip-flops. Everyone signs a waiver at the door. No outside food.',
       'Free to cancel or change once, up to 48 hours before. After that, no refunds. Seniors 10% off through ID.me at checkout.']},
 
-    {id:'bellyup', kind:'by', date:'2026-12-26', who:'Griffin', forWho:'The 3 other concert-goers',
-     title:'Belly Up tickets: transfer only if someone arrives separately',
+    {id:'bellyup', kind:'by', date:'2026-12-26', who:'Griffin', forWho:'Whoever arrives separately (Marco, Stella, Ben have tickets)',
+     title:'Transfer a Belly Up ticket to whoever arrives separately',
      when:'Sat Dec 26 after 4 PM MT · concert Sun Dec 27',
      why:'Guests who walk in with Griffin don’t need a transfer. Tickets can’t be sent before 4 PM the day before.',
      how:[{t:'web',label:'How transfers work',v:'https://bellyupaspen.com/faq/'}],
-     say:'If all 4 walk in together: nothing to do. Griffin keeps all 4 tickets in his phone wallet.\nIf someone arrives separately: they make a Belly Up account with their email first. After 4 PM MT Sat Dec 26, Griffin logs in → Transfer → picks the ticket → types their email → Transfer Tickets. They open the email from guestrelations@bellyupaspen.com and add it to their phone wallet.',
+     say:'The 4: Griffin, Marco, Stella, Ben. Anyone walking in with Griffin needs nothing.\nWhoever arrives separately: they make a Belly Up account with their email first. After 4 PM MT Sat Dec 26, Griffin logs in → Transfer → picks the ticket → types their email → Transfer Tickets. They open the email from guestrelations@bellyupaspen.com and add it to their phone wallet.',
 more:['Tickets only appear about 4 PM MT the day before the show, so they cannot be sent any earlier.',
       'Add tickets to the wallet on the phone you are bringing. A computer or tablet will not work. No barcode or PDF; a ticket with a barcode is fake.',
       '21+. Bring a driver\'s license or passport. Bags smaller than 14×14 inches. Coat check available.',
@@ -9354,7 +9369,8 @@ var EGGS = 14, KEY = 'aspenEggs', found = {};
 try { found = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){}
 function egg(id){
   if (!found[id]){ found[id] = 1; try { localStorage.setItem(KEY, JSON.stringify(found)); } catch(e){} }
-  var n = $('.tk-psst b'); if (n) n.textContent = Object.keys(found).length;
+  var nn = Object.keys(found).length; [].forEach.call(D.querySelectorAll('.tk-psst b, .tk-eggs b'), function(n){ n.textContent = nn; });
+  var ch = D.querySelector('.tk-eggs'); if (ch){ ch.classList.remove('glow'); void ch.offsetWidth; ch.classList.add('glow'); }
 }
 function fx(cls, ms, html){
   if (RM) return null;
@@ -9671,6 +9687,15 @@ if (foot){
   var ps = D.createElement('p'); ps.className = 'tk-psst';
   ps.innerHTML = 'psst&hellip; there are ' + EGGS + ' secrets on this page &middot; <b>' + Object.keys(found).length + '</b> found';
   var fine = $('.f-fine', foot); foot.insertBefore(ps, fine ? fine.nextSibling : null);
+  var brand = D.querySelector('.topnav .brand');
+  if (brand && !D.querySelector('.tk-eggs')){
+    var ec = D.createElement('button'); ec.type = 'button'; ec.className = 'tk-eggs';
+    ec.setAttribute('aria-label', 'Secrets found on this page');
+    ec.innerHTML = '<span aria-hidden="true">&#10052;</span><b>' + Object.keys(found).length + '</b><i>/' + EGGS + '</i>';
+    ec.addEventListener('click', function(e){ e.stopPropagation(); var k = Object.keys(found).length;
+      toast(k >= EGGS ? 'All ' + EGGS + ' secrets found. Legend.' : 'There are ' + EGGS + ' secrets hidden on this page &middot; you&rsquo;ve found ' + k + '. Keep poking around.'); });
+    brand.appendChild(ec);
+  }
   var DOE = W.DeviceOrientationEvent, DME = W.DeviceMotionEvent;
   if (ON.gyro && !RM && COARSE && DOE){
     var tb = D.createElement('button'); tb.type = 'button'; tb.className = 'tk-tb'; tb.textContent = 'Tilt to look ✦';
@@ -9881,13 +9906,13 @@ var PEOPLE={
  griffin:{n:'Griffin',role:'Planner & host · Belly Up tickets + house/car check',partner:'marco',fly:AA,
   room:'Downstairs King · lower level, en suite · with Marco',
   snow:'Skis 4 days · Dec 28 Snowmass (optional) · Dec 29 Ajax · Dec 31 Highlands · Jan 2 Snowmass · 4-day lift ticket',
-  rent:'FMS skis, boots + poles · pick up Sun Dec 27 ~5:30 PM at FMS Downtown (520 E Durant) · return at FMS Snowmass Sat Jan 2, 3 PM',
+  rent:'FMS skis, boots + poles · pick up Sun Dec 27 ~4:15 PM at FMS Downtown (520 E Durant) · return at FMS Snowmass Sat Jan 2, 3 PM',
   sled:SLED,extra:['Holds the 4 Belly Up tickets for Cloonee (Sun Dec 27) · send the other three by Dec 20']},
  marco:{n:'Marco',role:'Flying in from Minneapolis',partner:'griffin',
   fly:['Out · United UA 1891 · Sun Dec 27 · 8:30 AM MSP → 9:58 AM DEN · meet everyone at baggage claim','Back · United UA 2076 · Sun Jan 3 · 6:00 PM DEN → 9:07 PM MSP'],
   room:'Downstairs King · lower level, en suite · with Griffin',
   snow:'Snowboards 4 days · Dec 28 Snowmass · Dec 29 Ajax · Dec 31 Highlands · Jan 2 Snowmass · 4-day lift ticket',
-  rent:'Snowboard + boots package · pick up with Griffin at FMS Downtown Sun Dec 27 ~5:30 PM · free transfers · return at FMS Snowmass Jan 2, 3 PM',
+  rent:'Snowboard + boots package · pick up with Griffin at FMS Downtown Sun Dec 27 ~4:15 PM · free transfers · return at FMS Snowmass Jan 2, 3 PM',
   sled:SLED},
  stella:{n:'Stella',role:'Beginner · lesson, then skiing',partner:'ben',fly:AA,
   room:'Downstairs Queen · lower level, shared bath, patio · with Ben',
@@ -9912,8 +9937,8 @@ var PEOPLE={
 };
 /* Group words. concert: who holds the 4 Belly Up tickets — NOT named in the doc, so null = treat as shared.
    Set e.g. 'griffin marco ben stella' and the concert items + "the other two" note follow. */
-var GROUPS={skiers:'griffin marco stella ben marcy',five:'griffin stella ben marcy jim',concert:null};
-var OPT={showPartner:false, /* true = items only about your partner stay visible */
+var GROUPS={skiers:'griffin marco stella ben marcy',five:'griffin stella ben marcy jim',concert:'griffin marco stella ben'};
+var OPT={showPartner:true, /* true = items only about your partner stay visible */
          hideRooms:false};  /* true = lodging room cards for others collapse (default: highlight only) */
 /* Booking tab cards (rendered from TASKS by id): [visibleFor, bookedBy, label, when, sortDate].
    Split (Nov 2026): Marcy books every reservation; Griffin = Belly Up transfer + house/car check; Marco = his flights (done). */
@@ -9929,7 +9954,7 @@ var BOOK={
  steak316:['all','marcy','Steakhouse 316 · Sat Jan 2','Thu Dec 3','2026-12-03'],
  clothes:['marcy jim stella griffin','marcy','Ski-clothing rentals','by Dec 13','2026-12-13'],
  springs:['all','marcy','Iron Mountain Hot Springs · Jan 1','by Dec 15','2026-12-15'],
- bellyup:['@concert','griffin','Send the Belly Up tickets','by Dec 20','2026-12-20'],
+ bellyup:['@concert','griffin','Transfer a Belly Up ticket','Sat Dec 26','2026-12-26'],
  handoff:['all','griffin','Confirm house + car pickup details','by Dec 20','2026-12-20']
 };
 /* Manual overrides: [selector, text snippet (in element textContent; '^' = must START with it), visibleFor, extraHighlight, ownsKids].
