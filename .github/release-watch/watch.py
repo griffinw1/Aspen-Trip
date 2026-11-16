@@ -42,7 +42,7 @@ def ot_state(rid, date):
         if _browser is None:
             from playwright.sync_api import sync_playwright
             _pw = sync_playwright().start()
-            _browser = _pw.chromium.launch(args=["--disable-blink-features=AutomationControlled"])
+            _browser = _pw.chromium.launch(channel="chromium", args=["--disable-blink-features=AutomationControlled", "--disable-http2"])
         ctx = _browser.new_context(user_agent=UA, locale="en-US", timezone_id="America/Denver", viewport={"width": 1280, "height": 900})
         ctx.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>undefined})")
         p = ctx.new_page()
