@@ -10427,14 +10427,12 @@ if(D.readyState==='loading'){D.addEventListener('DOMContentLoaded',init);}else{i
 })();
 </script>
 <style>
-.wip-switch{position:fixed;left:12px;top:64px;z-index:60;display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:99px;
-  background:rgba(155,45,42,.92);color:#fff;font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
-  box-shadow:0 6px 18px -8px rgba(0,0,0,.5);opacity:.85;transition:opacity .2s}
-.wip-switch:hover{opacity:1}
-.wip-switch b{background:rgba(255,255,255,.18);border-radius:99px;padding:3px 7px;font-weight:700}
-@media (max-width:760px){.wip-switch{top:auto;bottom:142px;left:10px}}
+.wip-switch{position:fixed;left:14px;top:58px;z-index:60;padding:3px 4px;color:var(--gold,#b0863a);opacity:.32;
+  font:500 9px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;transition:opacity .2s}
+.wip-switch:hover,.wip-switch:focus-visible{opacity:1}
+@media (max-width:760px){.wip-switch{top:56px;left:10px}}
 @media print{.wip-switch{display:none}}
 </style>
-<a class="wip-switch" href="../" title="Open the public version (no prices)"><b>WIP</b>View public version &#8599;</a>
+<a class="wip-switch" href="../" title="Open the public version (no prices)">wip &middot; public &#8599;</a>
 </body>
 </html>
