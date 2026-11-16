@@ -824,6 +824,14 @@ body.dark .fan-play{box-shadow:0 0 0 3px #0d1f2e,0 6px 14px rgba(0,0,0,.4);}
 .story-row:not(.seen) .fan-play{animation:pulseGold 2.6s var(--ease-out) infinite;}
 @keyframes pulseGold{0%,100%{box-shadow:0 0 0 3px #FBF6E6,0 0 0 3px rgba(196,154,74,.0)}50%{box-shadow:0 0 0 3px #FBF6E6,0 0 0 9px rgba(196,154,74,.28)}}
 .story-row.seen .story-lbl small:first-child::after{content:" · watched";color:var(--muted);}
+/* v43 "Play your day" (3D tour) — sits right under "Watch the day" */
+.story-row + .story-3d{margin-top:-18px;}
+.s3-tile{position:relative;flex:0 0 auto;width:118px;height:76px;border-radius:10px;overflow:hidden;box-shadow:0 6px 16px -6px rgba(0,0,0,.45);}
+.s3-tile img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) brightness(.82);transform:scale(1.04);transition:transform var(--dur-3) var(--ease-out);}
+.s3-tile i{position:absolute;left:8px;top:7px;font:600 10px/1 var(--sans);font-style:normal;letter-spacing:.22em;color:#FFF7E0;padding:4px 6px 3px;border:1px solid rgba(255,247,224,.7);border-radius:4px;background:rgba(6,10,24,.35);}
+.s3-tile .fan-play{right:6px;bottom:6px;}
+.story-3d:hover .s3-tile img{transform:scale(1.12);}
+.story-3d .fan-play{animation:none!important;}
 /* story overlay cards */
 .st-card{position:absolute;inset:0;z-index:3;display:grid;place-items:center;pointer-events:none;padding:24px;text-align:center;}
 .story.card .st-shade{background:radial-gradient(100% 70% at 50% 50%,rgba(6,10,24,.35),rgba(6,10,24,.82));}
@@ -3005,6 +3013,10 @@ dl dt.wh-me.wh-me{padding-left:10px}
 html.gc-on dialog, html.gc-on dialog *{cursor:auto!important}
 html.gc-on dialog button, html.gc-on dialog a, html.gc-on dialog [role=button], html.gc-on dialog label{cursor:pointer!important}
 html.gc-on:has(dialog[open]) .gc-dot, html.gc-on:has(dialog[open]) .gc-trail{opacity:0!important}
+/* v43: the secret gallery sits above the gold cursor (z 10004 > 10003) — give it the normal cursor and hide the gold one */
+html.gc-on .eg-gal, html.gc-on .eg-gal *{cursor:auto!important}
+html.gc-on .eg-gal button, html.gc-on .eg-gal a, html.gc-on .eg-gal [role=button], html.gc-on .eg-gal label{cursor:pointer!important}
+html.gc-on:has(.eg-gal.on) .gc-dot, html.gc-on:has(.eg-gal.on) .gc-trail{opacity:0!important}
 
 /* v39 in-page PDF menu viewer */
 dialog.pdfv{margin:auto;inset:0;padding:0;border:1px solid rgba(176,134,58,.45);border-radius:16px;width:min(920px,94vw);height:min(88vh,1100px);background:var(--paper,#f7f2e7);color:inherit;box-shadow:0 30px 80px -20px rgba(0,0,0,.55);overflow:hidden}
@@ -8466,6 +8478,27 @@ body.gated .wh-fab{display:none;}
       '<small class="m">' + (fr.length - 2) + ' moments · about ' + Math.max(1, Math.round(secs / 60)) + ' min</small></span>';
     b.onclick = function(){ openStory(framesForDay(panel), b); };
     intro.parentNode.insertBefore(b, intro.nextSibling);
+    /* v43: the same day as the 3D film on the Map tab */
+    var did = panel.id;
+    if (/^d\d$/.test(did)){
+      var b3 = document.createElement('button'); b3.className = 'story-row story-3d'; b3.type = 'button';
+      b3.setAttribute('aria-label', 'Play Day ' + d.rn + ' as a 3D tour');
+      b3.innerHTML = '<span class="s3-tile" aria-hidden="true"><img src="' + pick[1].img + '" alt="" loading="lazy"><i>3D</i>' +
+        '<span class="fan-play"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#1F4D38"/></svg></span></span>' +
+        '<span class="story-lbl"><small>Day ' + esc(d.rn) + ' · the 3D tour</small><b>Play your day</b>' +
+        '<small class="m">Flies your day over the real mountains · on the Map tab</small></span>';
+      b3.onclick = function(){
+        var nav = document.querySelector('#navlinks a[href="#valley"]') || document.querySelector('a[href="#valley"]');
+        if (nav) nav.click(); else location.hash = '#valley';
+        var tries = 0;
+        (function go(){
+          if (window.AspenMap && window.AspenMap.tour){ try { window.AspenMap.ensure && window.AspenMap.ensure(); } catch(e){}
+            setTimeout(function(){ window.AspenMap.tour.day(did); }, 450); return; }
+          if (++tries < 40) setTimeout(go, 100);
+        })();
+      };
+      b.parentNode.insertBefore(b3, b.nextSibling);
+    }
   });
   // "Play the trip": every day back to back, chaptered by its title card, two shots per stop
   var reel = document.querySelector('[data-reel]');
@@ -11385,6 +11418,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     jimLine:'Air ride and all — Jim, you’ll feel right at home.'
   };
   var NWU = null, FM = null;   /* Transforms.localFrameToFixedFrameGenerator('north','west'), film state */
+  var SSE_HOLD = COARSE ? 16 : 8, SSE_MOVE = COARSE ? 28 : 18, PF = null;   /* PF = the background tile prefetcher (v43) */
   var MT = -7;                 /* Mountain Standard Time offset for the sun */
 
   /* ---------- geometry ---------- */
@@ -11691,9 +11725,10 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     if (sh.k === 'gondola') return gondolaState(u);
     return null;
   }
-  function shotCam(sh, u){
+  function shotCam(sh, u, tl){
+    tl = tl || FM.tl;
     var st = shotState(sh, u);
-    if (sh.k === 'card'){ var nx = FM.tl.shots[FM.tl.shots.indexOf(sh) + 1]; return nx ? shotCam(nx, 0) : null; }
+    if (sh.k === 'card'){ var nx = tl.shots[tl.shots.indexOf(sh) + 1]; return nx ? shotCam(nx, 0, tl) : null; }
     if (!sh.cam) return null;
     return sh.cam(u, st || {ll:[0, 0], hd:0, h:0});
   }
@@ -11721,20 +11756,23 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     return C.sampleTerrainMostDetailed(terr, cs).then(function(r){ return r.map(function(c){ return c.height || 0; }); }).catch(function(){ return lls.map(function(){ return 2400; }); });
   }
   function prepShot(sh){
-    var C = FM.C;
-    if (sh.prepped) return Promise.resolve();
-    sh.prepped = true;
+    if (sh.prepP) return sh.prepP;
+    var C = (FM && FM.C) || (PF && PF.C), terr = (FM && FM.terr) || (PF && PF.terr);
+    sh.prepP = prepShotNow(sh, C, terr);
+    return sh.prepP;
+  }
+  function prepShotNow(sh, C, terr){
     if (sh.k === 'car' || sh.k === 'walk' || sh.k === 'sled'){
       sh.vp = vehPath(sh.pts, sh.k === 'sled' ? 4 : 1.5);
       var n = clamp(Math.round(sh.vp.len / 25), 8, 90), lls = [];
       for (var i = 0; i <= n; i++) lls.push(vAt(sh.vp, sh.vp.len * i / n).ll);
-      return sampleGround(C, FM.terr, lls).then(function(hs){
+      return sampleGround(C, terr, lls).then(function(hs){
         for (var k = 0; k < 2; k++) hs = hs.map(function(h, i){ return (hs[Math.max(0, i - 1)] + h + hs[Math.min(hs.length - 1, i + 1)]) / 3; });
         sh.vp.h = hs;
       });
     }
     if (sh.k === 'plane' && sh.rw){
-      return sampleGround(C, FM.terr, [sh.rw[0], sh.rw[1]]).then(function(hs){ sh.g0 = (hs[0] + hs[1]) / 2; });
+      return sampleGround(C, terr, [sh.rw[0], sh.rw[1]]).then(function(hs){ sh.g0 = (hs[0] + hs[1]) / 2; });
     }
     return Promise.resolve();
   }
@@ -11747,34 +11785,43 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       if (s.k === 'reveal') continue;   /* photo reveal: no tiles */
       list.push(s);
     }
-    FM.gate = {list:list, i:0, views:[], vi:0, t0:performance.now(), stage:'prep', from:fromShot};
+    FM.gates = (FM.gates || 0) + 1;
+    var warm = PF && PF.tl === FM.tl && PF.done[sh0.rg + ':1'];
+    /* the very first hold may take a moment (cold start); after that: short, shorter if the prefetcher got there first */
+    var close = isClose(list.filter(function(s){ return s.k !== 'card'; })[0]);
+    var cap = FM.gates === 1 ? (COARSE ? 10000 : 7000) : close ? (warm ? 6000 : 10000) : warm ? 3000 : (COARSE ? 7000 : 6000);
+    FM.gate = {list:list, i:0, views:[], vi:0, t0:performance.now(), stage:'prep', from:fromShot, rg:sh0.rg, cap:cap};
+    pfMark(FM.tl, sh0.rg);
     /* if this chapter opens with the photo reveal, playback may run through it while tiles load */
     for (var r = fromShot; r < tl.shots.length && tl.shots[r].ch === ci; r++){ if (tl.shots[r].k === 'reveal'){ FM.gate.freeUntil = tl.shots[r].t0 + tl.shots[r].dur - 1; break; } if (tl.shots[r].k !== 'card') break; }
     FM.el.classList.add('gating');
     Promise.all(list.map(prepShot)).then(function(){
       if (!FM || !FM.gate) return;
-      var vs = [];
-      list.forEach(function(s){ (s.k === 'title' || s.k === 'card' || s.k === 'end' ? [0, 1] : [0, 0.5, 1])   /* start, middle and end of every camera path (3 samples keeps Google's tile quota sane) */.forEach(function(u){ var c = shotCam(s, u); if (c){ c.sse = (s.k === 'plane' || s.k === 'car') ? FM.sseMove : FM.sseHold; vs.push(c); } }); });   /* gate each view at the detail it will actually play at */
+      /* v43: hold only for the opening frame (at moving-shot detail); the rest streams in while it plays,
+         and the background prefetcher has usually loaded it already */
+      var lead = list.filter(function(s){ return s.k !== 'card'; })[0], close = isClose(lead);
+      var vs = gateViews(list, FM.tl).slice(0, 2).map(function(c){ c.sse = close ? SSE_HOLD : Math.max(c.sse || 0, SSE_MOVE); return c; });
+      if (0) list.forEach(function(s){ (s.k === 'title' || s.k === 'card' || s.k === 'end' ? [0, 1] : [0, 0.5, 1])   /* start, middle and end of every camera path (3 samples keeps Google's tile quota sane) */.forEach(function(u){ var c = shotCam(s, u); if (c){ c.sse = (s.k === 'plane' || s.k === 'car') ? FM.sseMove : FM.sseHold; vs.push(c); } }); });   /* gate each view at the detail it will actually play at */
       FM.gate.views = vs; FM.gate.stage = 'views'; FM.gate.vt = 0;
     });
   }
   function gateStep(now){
     var g = FM.gate; if (!g) return true;
     var ts = FM.ts, C = FM.C;
-    if (g.stage === 'prep') return now - g.t0 > 25000 ? finishGate() : false;
+    if (g.stage === 'prep') return now - g.t0 > g.cap ? finishGate() : false;
     if (g.vi >= g.views.length){
       /* last step of the hold: put wheels, dots and landing gear on Google's actual surface (bridges, cantilevered
          highway, runways), not on bare-earth terrain — otherwise the car can sit under the I-70 deck */
       if (g.stage !== 'heights' && g.stage !== 'done'){ g.stage = 'heights'; g.ht = now;
         tileHeights(g.list).then(function(){ if (FM && FM.gate === g) g.stage = 'done'; }, function(){ if (FM && FM.gate === g) g.stage = 'done'; }); }
-      if (g.stage === 'done' || now - g.ht > 20000) return finishGate();
+      if (g.stage === 'done' || now - g.ht > 1500 || now - g.t0 > g.cap) return finishGate();
       return false;
     }
     if (!g.vt){ var gv = g.views[g.vi]; if (gv.sse && ts) ts.maximumScreenSpaceError = gv.sse; applyCam(C, FM.v, gv); g.vt = now; return false; }
     var ready = ts && ts.tilesLoaded && now - g.vt > 260;
-    var timeout = now - g.vt > 20000;
+    var timeout = now - g.vt > Math.min(7000, g.cap);
     if (ready || timeout){ if (timeout) FM.slow = (FM.slow || 0) + 1; g.vi++; g.vt = 0; }
-    if (now - g.t0 > 240000) return finishGate();
+    if (now - g.t0 > g.cap) return finishGate();   /* never sit on black longer than this */
     return false;
   }
   function median(a, i, w){ var b = a.slice(Math.max(0, i - w), Math.min(a.length, i + w + 1)).sort(function(x, y){ return x - y; }); return b[b.length >> 1]; }
@@ -11801,8 +11848,18 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     });
     return Promise.all(jobs);
   }
+  /* close-ups (arrivals, places, holds, walks) are the hero shots: they must open sharp */
+  function isClose(s){ return !!(s && (s.place || s.k === 'hold' || s.k === 'walk' || s.k === 'midnight' || (s.k === 'car' && s.mode === 'arrive'))); }
+  function gateViews(list, tl){
+    var vs = [];
+    list.forEach(function(s){ (s.k === 'title' || s.k === 'card' || s.k === 'end' ? [0, 1] : [0, 0.5, 1]).forEach(function(u){
+      var c = shotCam(s, u, tl); if (c){ c.sse = (s.k === 'plane' || s.k === 'car') ? SSE_MOVE : SSE_HOLD; vs.push(c); } }); });
+    return vs;
+  }
   function finishGate(){
+    var grg = FM.gate && FM.gate.rg;
     FM.gate = null; FM.el.classList.remove('gating');
+    if (grg != null) pfAhead(FM.tl, grg);   /* while this region plays, load the next one(s) in the background */
     FM.ts.maximumScreenSpaceError = FM.sseMove;
     FM.revealAt = (FM.tl.shots[FM.si] || {}).k === 'reveal' ? 0 : performance.now(); FM.force = true;   /* don't dip over a reveal already playing */
     return true;
@@ -12083,11 +12140,157 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
   }
   function filmRestart(scope){
     if (!FM) return;
-    FM.tl = T.tl = filmTimeline(scope); T.scope = scope; buildScrub();
+    FM.tl = T.tl = pfTimeline(scope); T.scope = scope; buildScrub();
     T.t = 0; FM.si = null; FM.force = true; FM.seekGen = (FM.seekGen || 0) + 1; play();
   }
 
   /* ---------- start / stop ---------- */
+
+  /* =====================================================================
+     v43 — BACKGROUND PREFETCH. A second, invisible Cesium view walks the film's camera views ahead of
+     playback so Google tiles are already in the browser's HTTP cache when the film gets there.
+     Both views share ONE Google session (root.json is fetched once — shareRoot), so the tile URLs are
+     identical and the film's requests hit the cache (Cache-Control: private, max-age=14400).
+     - Warm start: opening the Map tab loads Cesium + the opening scenes (title + the flight).
+     - Lookahead: each time a region finishes gating, the next region(s) load while it plays.
+     Phones / Save-Data: lighter (one region ahead). Leaving the Map tab disposes the hidden view.
+     ===================================================================== */
+  function shareRoot(C){
+    if (!C || C.__aspenRoot) return; C.__aspenRoot = 1;
+    var orig = C.Cesium3DTileset.loadJson, memo = {};
+    if (typeof orig !== 'function') return;
+    C.Cesium3DTileset.loadJson = function(r){
+      var u = ''; try { u = String((r && r.url) || r || ''); } catch(e){}
+      if (!/tile\.googleapis\.com\/v1\/3dtiles\/root\.json/.test(u)) return orig.apply(this, arguments);
+      var k = u.replace(/([?&])session=[^&]*&?/, ''), m = memo[k];
+      if (!m || Date.now() - m.t > 2 * 3600e3){
+        m = memo[k] = {t:Date.now(), p:Promise.resolve(orig.apply(this, arguments))};
+        m.p.catch(function(){ if (memo[k] === m) delete memo[k]; });
+      }
+      return m.p.then(function(j){ return JSON.parse(JSON.stringify(j)); });   /* each tileset gets its own copy */
+    };
+  }
+  function pfLight(){
+    var c = navigator.connection || {};
+    return COARSE || !!c.saveData || /(^|-)2g|3g/.test(c.effectiveType || '');
+  }
+  function pfOff(){ var c = navigator.connection || {}; return RM || !!c.saveData || /(^|-)2g/.test(c.effectiveType || ''); }
+  function pfEnsure(){
+    if (PF) return PF.ready;
+    if (!prAvailable() || pfOff()) return null;
+    var host = document.createElement('div'); host.className = 'vt-pf'; host.setAttribute('aria-hidden', 'true');
+    host.style.cssText = 'position:fixed;left:0;top:0;width:' + innerWidth + 'px;height:' + innerHeight + 'px;opacity:0;pointer-events:none;z-index:-5;overflow:hidden;contain:strict;';
+    document.body.appendChild(host);
+    var me = PF = {host:host, q:[], done:{}, cur:null, raf:0, scale:0.5, last:0};
+    me.onResize = function(){ host.style.width = innerWidth + 'px'; host.style.height = innerHeight + 'px'; };
+    window.addEventListener('resize', me.onResize);
+    me.ready = loadCesium().then(function(C){
+      if (PF !== me) return null;
+      shareRoot(C); C.Ion.defaultAccessToken = CESIUM_TOKEN; me.C = C;
+      try { C.RequestScheduler.maximumRequestsPerServer = COARSE ? 6 : 10; C.RequestScheduler.maximumRequests = COARSE ? 18 : 30; } catch(e){}
+      var cred = document.createElement('div'); cred.style.display = 'none'; host.appendChild(cred);
+      var v = new C.Viewer(host, {globe:false, skyAtmosphere:false, skyBox:false, timeline:false, animation:false, baseLayerPicker:false, geocoder:false,
+        homeButton:false, sceneModePicker:false, navigationHelpButton:false, fullscreenButton:false, infoBox:false, selectionIndicator:false,
+        creditContainer:cred, useDefaultRenderLoop:false, useBrowserRecommendedResolution:true, msaaSamples:1});
+      v.resolutionScale = me.scale;   /* a quarter of the pixels; SSE is scaled to match, so it picks the same tiles as the film */
+      v.scene.screenSpaceCameraController.enableInputs = false;
+      me.v = v;
+      var MB = 1024 * 1024;
+      return Promise.all([
+        C.createGooglePhotorealistic3DTileset(undefined, {maximumScreenSpaceError:SSE_HOLD * me.scale, showCreditsOnScreen:false,
+          cacheBytes:(COARSE ? 48 : 128) * MB, maximumCacheOverflowBytes:(COARSE ? 24 : 64) * MB,
+          preloadFlightDestinations:false, cullRequestsWhileMoving:false, dynamicScreenSpaceError:false, foveatedScreenSpaceError:false, skipLevelOfDetail:false}),
+        C.CesiumTerrainProvider.fromIonAssetId(1).catch(function(){ return null; })
+      ]).then(function(r){
+        if (PF !== me){ try { v.destroy(); } catch(e){} return null; }
+        me.ts = r[0]; me.terr = r[1]; v.scene.primitives.add(me.ts);
+        ['airliner_aa.glb', 'airliner_ua.glb', 'gondola.glb', 'sled.glb'].forEach(function(f){ try { fetch(MODELS + f).catch(function(){}); } catch(e){} });
+        pfKick();
+        return me;
+      });
+    }).catch(function(e){ console.warn('[film prefetch] off:', e && e.message); if (PF === me) pfKill(); return null; });
+    return me.ready;
+  }
+  function pfKill(){
+    var me = PF; if (!me) return; PF = null;
+    cancelAnimationFrame(me.raf);
+    window.removeEventListener('resize', me.onResize);
+    try { if (me.v) me.v.destroy(); } catch(e){}
+    if (me.host) me.host.remove();
+  }
+  /* the film's shot list: reuse the prefetcher's (its shots are already prepped) when scope + person match */
+  function pfTimeline(scope){
+    var who = filmWho().id;
+    if (PF && PF.tl && !PF.tlTaken && PF.tlScope === scope && PF.tlWho === who){ PF.tlTaken = true; return PF.tl; }
+    var tl = filmTimeline(scope);
+    if (PF){ PF.tl = tl; PF.tlScope = scope; PF.tlWho = who; PF.tlTaken = true; PF.q = []; PF.done = {}; }
+    return tl;
+  }
+  function pfRegions(tl){ var o = []; tl.shots.forEach(function(s){ if (s.rg != null && o.indexOf(s.rg) < 0) o.push(s.rg); }); return o; }
+  /* jobs are 'rg:1' (pass 1: the opening frame of each shot, at moving-shot detail — what the film's hold waits for)
+     and 'rg:2' (pass 2: start/middle/end of every shot at full detail). Pass 1s for the next few regions go first. */
+  function pfQueue(tl, rgs, deep){
+    if (!PF || !tl) return;
+    if (PF.tl !== tl){ PF.tl = tl; PF.q = []; PF.done = {}; }
+    var q = [];
+    rgs.forEach(function(r){ var k = r + ':1'; if (r != null && !PF.done[k] && PF.cur !== k) q.push(k); });
+    rgs.slice(0, deep == null ? 1 : deep).forEach(function(r){ var k = r + ':2'; if (r != null && !PF.done[k] && PF.cur !== k) q.push(k); });
+    PF.q = q;
+    pfKick();
+  }
+  function pfMark(tl, rg){   /* the film is gating this region itself: don't fetch it twice */
+    if (!PF || PF.tl !== tl) return;
+    PF.done[rg + ':1'] = 1; var i = PF.q.indexOf(rg + ':1'); if (i >= 0) PF.q.splice(i, 1);
+  }
+  function pfAhead(tl, rg){
+    if (!PF){ var r = pfEnsure(); if (!r) return; r.then(function(){ pfAhead(tl, rg); }); return; }
+    var all = pfRegions(tl), i = all.indexOf(rg), n = pfLight() ? 2 : 4;
+    pfQueue(tl, all.slice(i + 1, i + 1 + n), pfLight() ? 0 : 2);
+  }
+  function pfWarm(){
+    if (T || PF && PF.tl) return;
+    var r = pfEnsure(); if (!r) return;
+    r.then(function(me){
+      if (!me || PF !== me || T || me.tl) return;
+      var tl = filmTimeline('all');
+      me.tl = tl; me.tlScope = 'all'; me.tlWho = filmWho().id; me.tlTaken = false; me.q = []; me.done = {};
+      var rs = pfRegions(tl).slice(0, pfLight() ? 3 : 5);
+      pfQueue(tl, rs, pfLight() ? 1 : 3);   /* the opening scenes: title, the flight, the drive out */
+    });
+  }
+  function pfKick(){
+    var me = PF; if (!me || !me.ts || me.cur != null || !me.q.length) return;
+    var tl = me.tl, job = me.q.shift(), rg = +job.split(':')[0], pass = +job.split(':')[1]; me.cur = job;
+    var list = tl.shots.filter(function(s){ return s.rg === rg && s.k !== 'reveal'; });
+    Promise.all(me.terr ? list.map(prepShot) : []).then(function(){
+      if (PF !== me || me.tl !== tl) return;
+      if (!me.terr){ list = list.filter(function(s){ return s.k !== 'car' && s.k !== 'walk' && s.k !== 'sled' && !(s.k === 'plane' && s.rw); }); }
+      var views = [];
+      try {
+        if (pass === 1){
+          list.forEach(function(s){ if (s.k === 'end') return; var c = shotCam(s, 0, tl); if (c){ c.sse = isClose(s) ? SSE_HOLD : SSE_MOVE; views.push(c); } });
+        } else views = gateViews(list, tl);
+      } catch(e){ views = []; }
+      me.views = views; me.vi = 0; me.vt = 0; me.t0 = performance.now();
+      pfLoop();
+    }, function(){ if (PF === me){ me.done[job] = 1; me.cur = null; pfKick(); } });
+  }
+  function pfLoop(){
+    var me = PF; if (!me || !me.views) return;
+    me.raf = requestAnimationFrame(pfLoop);
+    var now = performance.now();
+    if (now - me.last < (T ? 50 : 33)) return;   /* ~20 fps while the film plays, ~30 otherwise */
+    if (FM && FM.gate && FM.tl === me.tl && me.cur !== FM.gate.rg) return;   /* the film is loading a region on screen: it gets the bandwidth */
+    me.last = now;
+    var C = me.C, v = me.v, ts = me.ts;
+    if (me.vi >= me.views.length){
+      cancelAnimationFrame(me.raf); me.done[me.cur] = 1; me.cur = null; me.views = null; pfKick(); return;
+    }
+    if (!me.vt){ var gv = me.views[me.vi]; ts.maximumScreenSpaceError = (gv.sse || SSE_HOLD) * me.scale; try { applyCam(C, v, gv, false); } catch(e){} me.vt = now; }
+    try { v.resize(); v.render(); } catch(e){ console.warn('[film prefetch]', e && e.message); pfKill(); return; }
+    if ((ts.tilesLoaded && now - me.vt > 300) || now - me.vt > 15000){ me.vi++; me.vt = 0; }
+  }
+
   function startFilm(scope, from){
     var vx = $('vx'); if (!vx) return false;
     if (prOn) closePR(); if (is3d) close3d();
@@ -12133,7 +12336,8 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
         cacheBytes:(COARSE ? 256 : 512) * 1024 * 1024, maximumCacheOverflowBytes:(COARSE ? 96 : 256) * 1024 * 1024,   /* bigger caches exhausted GPU memory (untextured white tiles) */
         preloadFlightDestinations:false, preloadWhenHidden:false, cullRequestsWhileMoving:true, cullRequestsWhileMovingMultiplier:120,
         dynamicScreenSpaceError:false, foveatedScreenSpaceError:false, skipLevelOfDetail:false}); };   /* dynamic/foveated SSE starve a globe-wide tileset like Google's → flat frames */
-      return Promise.all([ion(), C.CesiumTerrainProvider.fromIonAssetId(1).catch(function(){ return null; }), loadModels(C, v)]).then(function(r){
+      shareRoot(C);
+      return Promise.all([ion(), (PF && PF.terr) ? Promise.resolve(PF.terr) : C.CesiumTerrainProvider.fromIonAssetId(1).catch(function(){ return null; }), loadModels(C, v)]).then(function(r){
         if (T !== mine) return;
         FM.ts = r[0]; FM.terr = r[1]; FM.mod = r[2];
         v.scene.primitives.add(FM.ts);
@@ -12143,7 +12347,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
         var h = new C.ScreenSpaceEventHandler(v.scene.canvas);
         [C.ScreenSpaceEventType.LEFT_DOWN, C.ScreenSpaceEventType.WHEEL, C.ScreenSpaceEventType.PINCH_START].forEach(function(ev){ h.setInputAction(function(){ tourUserInput(); }, ev); });
         FM.handler = h;
-        T.tl = FM.tl = filmTimeline(scope);
+        T.tl = FM.tl = pfTimeline(scope);
         buildScrub(); T.el.classList.remove('loading');
         T.t = 0; T.playing = true; FM.si = null; FM.force = true; syncPP(); showUi();
         v.scene.preRender.addEventListener(filmTick);
@@ -12160,6 +12364,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
   }
   function stopFilm(t){
     var f = t && t.film; if (!f) return;
+    if (PF && f.tl && PF.tl === f.tl){ PF.tl = null; PF.q = []; PF.done = {}; }   /* next run builds a fresh shot list (the tile cache stays warm) */
     try { if (f.v){ f.v.scene.preRender.removeEventListener(filmTick); if (f.handler) f.handler.destroy(); f.v.destroy(); } } catch(e){}
     if (f.host) f.host.remove();
     if (FM === f) FM = null;
@@ -12214,8 +12419,8 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
   var sec = $('valley');
   function maybe(){
     if (!sec) return;
-    if (sec.classList.contains('active') || !sec.classList.contains('panel')) setTimeout(ensure, 70);
-    else { if (T) exitTour(true); if (is3d) close3d(); if (prOn) closePR(); }   /* leaving the Map tab ends the tour + disposes the WebGL map */
+    if (sec.classList.contains('active') || !sec.classList.contains('panel')){ setTimeout(ensure, 70); clearTimeout(maybe.w); maybe.w = setTimeout(pfWarm, 1500); }
+    else { clearTimeout(maybe.w); if (T) exitTour(true); if (is3d) close3d(); if (prOn) closePR(); pfKill(); }   /* leaving the Map tab ends the tour + disposes the WebGL map */
   }
   if (sec){
     new MutationObserver(maybe).observe(sec, {attributes:true, attributeFilter:['class']});
