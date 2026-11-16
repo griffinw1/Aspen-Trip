@@ -2262,6 +2262,19 @@ dl dt.wh-me.wh-me{padding-left:10px}
 html.gc-on dialog, html.gc-on dialog *{cursor:auto!important}
 html.gc-on dialog button, html.gc-on dialog a, html.gc-on dialog [role=button], html.gc-on dialog label{cursor:pointer!important}
 html.gc-on:has(dialog[open]) .gc-dot, html.gc-on:has(dialog[open]) .gc-trail{opacity:0!important}
+
+/* v39 in-page PDF menu viewer */
+dialog.pdfv{margin:auto;inset:0;padding:0;border:1px solid rgba(176,134,58,.45);border-radius:16px;width:min(920px,94vw);height:min(88vh,1100px);background:var(--paper,#f7f2e7);color:inherit;box-shadow:0 30px 80px -20px rgba(0,0,0,.55);overflow:hidden}
+body.dark dialog.pdfv{background:#0f1a26}
+dialog.pdfv::backdrop{background:rgba(8,14,22,.62);backdrop-filter:blur(3px)}
+.pdfv-bar{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 16px;border-bottom:1px solid rgba(176,134,58,.3)}
+.pdfv-t{flex:1;min-width:0;font:600 11px/1.3 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pdfv-a{font:600 12px/1 var(--sans);color:var(--gold);text-decoration:none;border:1px solid rgba(176,134,58,.45);border-radius:99px;padding:8px 12px;white-space:nowrap}
+.pdfv-x{border:0;background:transparent;color:inherit;font-size:22px;line-height:1;width:36px;height:36px;border-radius:50%;cursor:pointer}
+.pdfv-x:hover{background:rgba(176,134,58,.15)}
+.pdfv-pages{height:calc(100% - 57px);overflow:auto;-webkit-overflow-scrolling:touch;background:#fff;padding:0}
+.pdfv-pages img{display:block;width:100%;height:auto;margin:0 auto;max-width:1100px;border-bottom:1px solid #e8e2d4}
+@media (max-width:520px){ .pdfv-a span{display:none} dialog.pdfv{width:100vw;height:92vh;max-width:100vw;border-radius:16px 16px 0 0;margin:auto auto 0} }
 /* v39 groceries */
 .groc .gr-steps{margin:.6em 0 .8em 1.2em;padding:0;display:grid;gap:.45em;font-size:.95em;line-height:1.5}
 .groc .gr-steps li::marker{color:var(--gold);font-weight:600}
@@ -10261,6 +10274,32 @@ function init(){
 if(D.readyState==='loading'){D.addEventListener('DOMContentLoaded',init);}else{init();}
 })();
 
+</script>
+<script>/* v39 menu PDFs: shown as page images hosted with the site (no download, works everywhere) */
+(function(){
+  var D=document, dlg=null, MB=(window.ASPEN_MEDIA_BASE||'media/');
+  var MENUS={"https://thewildfig.com/wp-content/uploads/2026/10/Fig-Menu-Summer-09.23.26.pdf": ["menus/fig-menu-summer-09-23-26-1.webp"], "https://www.aspensnowmass.com/-/media/aspen-snowmass/documents/pdfs/25-26/menus/2526the-cabin-menureprint.pdf": ["menus/2526the-cabin-menureprint-1.webp", "menus/2526the-cabin-menureprint-2.webp"], "https://www.aspensnowmass.com/-/media/aspen-snowmass/documents/pdfs/25-26/menus/merry-go-round-menu.pdf": ["menus/merry-go-round-menu-1.webp", "menus/merry-go-round-menu-2.webp", "menus/merry-go-round-menu-3.webp", "menus/merry-go-round-menu-4.webp", "menus/merry-go-round-menu-5.webp"], "https://www.frenchalpinebistro.com/s/DINNER-FAB-Summer-2026-digital.pdf": ["menus/dinner-fab-summer-2026-digital-1.webp", "menus/dinner-fab-summer-2026-digital-2.webp", "menus/dinner-fab-summer-2026-digital-3.webp", "menus/dinner-fab-summer-2026-digital-4.webp", "menus/dinner-fab-summer-2026-digital-5.webp", "menus/dinner-fab-summer-2026-digital-6.webp", "menus/dinner-fab-summer-2026-digital-7.webp", "menus/dinner-fab-summer-2026-digital-8.webp", "menus/dinner-fab-summer-2026-digital-9.webp", "menus/dinner-fab-summer-2026-digital-10.webp", "menus/dinner-fab-summer-2026-digital-11.webp", "menus/dinner-fab-summer-2026-digital-12.webp", "menus/dinner-fab-summer-2026-digital-13.webp"], "https://www.matsuhisarestaurants.com/wp-content/uploads/2025/10/Aspen-DOWNSTAIRS-2025-CURRENT-MENU.pdf": ["menus/aspen-downstairs-2025-current-menu-1.webp", "menus/aspen-downstairs-2025-current-menu-2.webp", "menus/aspen-downstairs-2025-current-menu-3.webp", "menus/aspen-downstairs-2025-current-menu-4.webp"], "https://www.steakhouse316.com/s/Steakhouse_Dinner_05_04_26.pdf": ["menus/steakhouse-dinner-05-04-26-1.webp"], "https://www.thelittlenell.com/-/media/thelittlenell/menus/ajax-tavern/2026/ajaxalldaymenu092126.pdf": ["menus/ajaxalldaymenu092126-1.webp"]};
+  function build(){
+    dlg=D.createElement('dialog'); dlg.className='pdfv'; dlg.setAttribute('aria-label','Menu');
+    dlg.innerHTML='<div class="pdfv-bar"><div class="pdfv-t"></div><a class="pdfv-a" target="_blank" rel="noopener">Original<span> PDF</span> &#8599;</a><button class="pdfv-x" type="button" aria-label="Close menu">&times;</button></div><div class="pdfv-pages"></div>';
+    D.body.appendChild(dlg);
+    dlg.querySelector('.pdfv-x').addEventListener('click',function(){dlg.close();});
+    dlg.addEventListener('click',function(e){ if(e.target===dlg) dlg.close(); });
+  }
+  D.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]'); if(!a) return;
+    var pages=MENUS[a.href]; if(!pages||a.closest('dialog.pdfv')) return;
+    if(e.metaKey||e.ctrlKey||e.shiftKey||e.button||!window.HTMLDialogElement) return;
+    e.preventDefault();
+    if(!dlg) build();
+    var card=a.closest('.restcard')||a.closest('.rl-stop')||a.closest('.tl'), nm=card&&card.querySelector('.rname,.rl-name,.tl-title');
+    dlg.querySelector('.pdfv-t').textContent=(nm?nm.textContent.replace(/\s+/g,' ').trim()+' · ':'')+'Menu';
+    dlg.querySelector('.pdfv-a').href=a.href;
+    var box=dlg.querySelector('.pdfv-pages'); box.innerHTML='';
+    pages.forEach(function(p,i){ var im=D.createElement('img'); im.src=MB+p.replace(/^menus\//,'menus/'); im.alt='Menu page '+(i+1); im.loading=i?'lazy':'eager'; im.decoding='async'; box.appendChild(im); });
+    box.scrollTop=0; dlg.showModal();
+  },true);
+})();
 </script>
 </body>
 </html>
