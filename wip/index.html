@@ -3057,6 +3057,8 @@ dialog.of-help::backdrop{background:rgba(8,14,22,.62);backdrop-filter:blur(3px)}
   background:rgba(155,45,42,.9);color:#fff;box-shadow:0 6px 18px -8px rgba(0,0,0,.5);white-space:nowrap;cursor:pointer}
 .wh-asother b{font-weight:700}
 @media (max-width:640px){.wh-asother{top:56px;font-size:11px;white-space:normal;text-align:center;width:max-content;max-width:calc(100% - 24px);line-height:1.35}}
+.yt-out{position:absolute;right:10px;top:10px;z-index:5;padding:6px 10px;border-radius:99px;background:rgba(10,18,28,.78);color:#f3ead7;font:600 11px/1 var(--sans);letter-spacing:.04em;text-decoration:none;border:1px solid rgba(212,175,106,.45);backdrop-filter:blur(4px)}
+.yt-out:hover{border-color:#d4af6a}
 /* v39 groceries */
 .groc .gr-steps{margin:.6em 0 .8em 1.2em;padding:0;display:grid;gap:.45em;font-size:.95em;line-height:1.5}
 .groc .gr-steps li::marker{color:var(--gold);font-weight:600}
@@ -7674,6 +7676,12 @@ body.gated .wh-fab{display:none;}
     var f = document.createElement('iframe');
     f.src = 'https://www.youtube-nocookie.com/embed/' + v[0] + '?autoplay=1&playsinline=1&rel=0&modestbranding=1' + (v[1] ? '&start=' + v[1] : '');
     f.title = v[2]; f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
+    f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+    /* fallback: some in-app browsers block embedded players; always offer a direct link */
+    setTimeout(function(){ var par = f.parentNode; if (!par || par.querySelector('.yt-out')) return;
+      if (getComputedStyle(par).position === 'static') par.style.position = 'relative';
+      var a = document.createElement('a'); a.className = 'yt-out'; a.href = 'https://www.youtube.com/watch?v=' + v[0] + (v[1] ? '&t=' + v[1] + 's' : '');
+      a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Watch on YouTube \u2197'; par.appendChild(a); }, 0);
     return f;
   }
   document.addEventListener('pointerover', function(e){ if (e.target.closest && e.target.closest('[data-v]')) warm(); }, {passive:true});
