@@ -13239,6 +13239,8 @@ function dlg(cls){var d=D.createElement('dialog');d.className='sy-sheet wh-ui '+
 function openD(d){if(d.showModal){if(!d.open){d.showModal();}}else{d.setAttribute('open','');}}
 function closeD(d){if(!d){return;}if(d.close&&d.open){d.close();}else{d.removeAttribute('open');}}
 function openPin(person){
+ /* no PINs: link immediately */ if(NAMES[String(arguments[0]||curWho()||'').toLowerCase()]){return link(String(arguments[0]||curWho()).toLowerCase(),'000000');}
+
  person=NAMES[person]?person:curWho();if(!person){return;}
  sheetFor=person;
  if(!sheet){
@@ -13312,9 +13314,10 @@ function toast(t){
 /* ---------- wiring ---------- */
 var entered=false;
 function maybeAsk(w){
- if(!entered||claim||!NAMES[w]||skips()[w]){return;}
- if(sheet&&sheet.open){return;}
- setTimeout(function(){openPin(w);},RM?0:450);
+ /* no PINs: picking your name in "Who are you?" links this device automatically (Griffin: nobody messes with others' stuff) */
+ if(!entered||!NAMES[w]||claim===w){return;}
+ if(navigator.onLine===false){return;}
+ link(w,'000000');
 }
 W.addEventListener('aspen:who',function(e){var w=e.detail&&(e.detail.who||e.detail);maybeAsk(String(w||''));});
 function onEnter(){
