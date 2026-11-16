@@ -2738,7 +2738,8 @@ body.dark .iv-day.is-on{background:var(--alpenglow);color:#0d1f2e;}
 
 /* item thumbs (light tile so product shots + icons read on navy) */
 .iv-th{position:relative;display:grid;place-items:center;width:100%;height:100%;border-radius:11px;background:#efe9de;overflow:hidden;}
-.iv-th img{width:100%;height:100%;object-fit:contain;display:block;mix-blend-mode:multiply;-webkit-user-drag:none;user-select:none;}
+.iv-th img{width:100%;height:100%;box-sizing:border-box;padding:9%;object-fit:contain;object-position:center;display:block;mix-blend-mode:multiply;-webkit-user-drag:none;user-select:none;}
+.iv-th{background:#f3efe7;}
 .iv-th .iv-ic{width:62%;height:62%;display:block;}
 .iv-th .iv-ic svg{width:100%;height:100%;display:block;stroke:#2c3036;}
 .iv-th .iv-ic::after{content:"";position:absolute;right:6px;bottom:6px;width:10px;height:10px;border-radius:50%;background:currentColor;box-shadow:0 0 0 1.5px #efe9de,0 0 0 2.5px rgba(44,48,54,.35);}
@@ -2816,10 +2817,109 @@ body.dark .iv-adds .iv-h,body.dark .iv-adds .iv-lnk,body.dark .iv-buy{color:var(
 body.dark .iv-buy{background:rgba(201,160,90,.1);}
 body.dark .iv-an:hover{color:var(--gold-bright);}
 
+/* "Your fit" line + why lines */
+.iv-fit{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-size:12.5px;line-height:1.5;color:var(--snow-soft);margin:0 0 -6px;}
+.iv-fit b{font-weight:600;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-right:2px;}
+.iv-fit i{font-style:normal;color:var(--muted);}
+.iv-dot{color:var(--muted);}
+.iv-sw{display:inline-flex;gap:4px;vertical-align:middle;}
+.iv-sw i{width:12px;height:12px;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.6),0 0 0 2px rgba(0,0,0,.18);}
+.iv-fitnone{color:var(--muted);font-style:italic;}
+.iv-why{font-size:11.5px;line-height:1.4;color:var(--muted);}
+body.dark .iv-sw i{box-shadow:0 0 0 1px rgba(255,255,255,.35);}
+/* ===== v2 (Nov 16): per person — who bar, must-haves, add/edit suitcase ===== */
+.iv > *{min-width:0;}
+.iv-vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.iv-whobar{position:relative;display:grid;gap:6px;}
+.iv-whohint{font-size:13px;color:var(--snow-soft);background:rgba(196,154,74,.1);border:1px dashed rgba(176,134,58,.5);border-radius:12px;padding:8px 12px;margin:0;}
+.iv-whorow{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;}
+.iv-whobtn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--snow);background:transparent;border:1px solid var(--glass-line);border-radius:100px;padding:5px 12px 5px 5px;min-height:36px;cursor:pointer;}
+.iv-whobtn:hover{border-color:var(--gold);}
+.iv-av{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-size:15px;color:#13263a;background:var(--alpenglow);}
+.iv-whorow .iv-back{color:var(--evergreen);text-decoration-color:rgba(31,77,56,.35);}
+.iv-ro{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--glass-line);border-radius:100px;padding:2px 8px;}
+.iv-ro-dark{color:var(--iv-soft);border-color:rgba(232,217,176,.3);}
+.iv-menu{position:absolute;top:44px;left:0;z-index:30;display:grid;min-width:200px;padding:6px;border-radius:14px;background:#13263a;border:1px solid rgba(201,160,90,.45);box-shadow:0 20px 40px -18px rgba(0,0,0,.6);}
+.iv-mi{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;font-size:13.5px;color:#efe6d2;background:transparent;border:0;border-radius:9px;padding:9px 12px;min-height:40px;cursor:pointer;}
+.iv-mi:hover,.iv-mi.is-on{background:rgba(232,217,176,.1);}
+.iv-mi i{font-style:normal;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#E8D9B0;}
+body.dark .iv-whobtn{color:var(--snow-soft);}
+body.dark .iv-whorow .iv-back{color:var(--gold-bright);}
+
+/* must-haves */
+.iv-must{background:var(--glass);border:1px solid var(--glass-line);border-radius:18px;padding:18px clamp(14px,3vw,22px) 12px;box-shadow:0 14px 30px -24px var(--ink-shadow);}
+.iv-must-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;}
+.iv-must .iv-h{color:var(--evergreen);margin:0;}
+.iv-prog{font-size:12.5px;color:var(--snow-soft);}
+.iv-prog b{font-family:var(--serif);font-size:20px;font-weight:500;color:var(--evergreen);}
+.iv-progbar{height:5px;border-radius:100px;background:rgba(0,0,0,.08);margin:10px 0 4px;overflow:hidden;}
+.iv-progbar i{display:block;height:100%;border-radius:100px;background:var(--alpenglow);transition:width var(--dur-3) var(--ease-out);}
+.iv-mgrp{margin-top:12px;}
+.iv-mgrp h4{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:0 0 4px;}
+.iv-mgrp ul{list-style:none;margin:0;padding:0;}
+.iv-mrow{border-top:1px solid var(--glass-line);}
+.iv-mrow:first-child{border-top:0;}
+.iv-mline{display:grid;grid-template-columns:20px minmax(0,1fr) auto;align-items:center;gap:8px;min-height:40px;}
+.iv-mck{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(176,134,58,.55);display:grid;place-items:center;font-size:11px;color:#fff;}
+.iv-mrow.is-ok .iv-mck{background:#5f9a7c;border-color:#5f9a7c;}
+.iv-ml{font-size:13.5px;line-height:1.35;color:var(--snow);}
+.iv-mrow.is-ok .iv-ml{color:var(--snow-soft);}
+.iv-mst{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.08em;color:#9b2d2a;background:rgba(155,45,42,.07);border:1px solid rgba(155,45,42,.3);border-radius:100px;padding:4px 10px;white-space:nowrap;cursor:pointer;min-height:28px;}
+span.iv-mst{cursor:default;}
+.iv-mst.is-ok{color:#3f7a5e;background:rgba(95,154,124,.1);border-color:rgba(95,154,124,.4);}
+.iv-mopts{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:2px 0 10px 28px;}
+.iv-mopt{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;}
+.iv-mopt a{color:var(--snow-soft);text-decoration:underline;text-decoration-color:rgba(176,134,58,.45);text-underline-offset:3px;}
+.iv-mopt a .of-tier{font-style:normal;font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-left:2px;}
+.iv-must .iv-lnk,.iv-case-h .iv-lnk{color:var(--evergreen);font-size:12px;padding:4px 0;min-height:28px;text-decoration-color:rgba(31,77,56,.35);}
+.iv-mopts .iv-buy{padding:4px 12px;min-height:30px;}
+.iv-mnote{font-size:12px;color:var(--muted);font-style:italic;margin:4px 0 0 28px;}
+body.dark .iv-mst{color:#E9B6A0;background:rgba(233,182,160,.06);border-color:rgba(233,182,160,.35);}
+body.dark .iv-mst.is-ok{color:#9fc7b4;background:rgba(159,199,180,.08);border-color:rgba(159,199,180,.4);}
+body.dark .iv-must .iv-h,body.dark .iv-prog b,body.dark .iv-must .iv-lnk{color:var(--gold-bright);}
+body.dark .iv-progbar{background:rgba(255,255,255,.08);}
+
+/* suitcase: header, add/edit form, edit mode */
+.iv-case-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 14px;margin-bottom:12px;position:relative;}
+.iv-case-h .iv-h{margin:0;}
+.iv-case-acts{display:flex;gap:14px;}
+.iv-case .iv-case-h .iv-lnk{color:#E8D9B0;text-decoration-color:rgba(232,217,176,.4);}
+.iv-emptycase{text-align:center;font-size:13px;color:var(--iv-soft);margin:-2px 0 12px;font-style:italic;}
+.iv-form{position:relative;display:grid;gap:10px;margin:0 0 14px;padding:14px;border-radius:12px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px rgba(232,217,176,.2);}
+.iv-frow{display:grid;grid-template-columns:76px minmax(0,1fr);align-items:center;gap:10px;margin:0;border:0;padding:0;min-width:0;}
+.iv-frow label,.iv-frow legend{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--iv-soft);padding:0;}
+.iv-cols legend{float:left;width:76px;}
+.iv-form input[type=text],.iv-form select{font-family:var(--sans);font-size:14px;color:#efe6d2;background:#0e1d2c;border:1px solid rgba(232,217,176,.3);border-radius:10px;padding:9px 11px;min-height:40px;width:100%;min-width:0;}
+.iv-form input[type=text]::placeholder{color:rgba(239,230,210,.4);}
+.iv-swatches{display:flex;flex-wrap:wrap;gap:6px;}
+.iv-swl{position:relative;cursor:pointer;}
+.iv-swl input{position:absolute;opacity:0;width:1px;height:1px;}
+.iv-swl i{display:block;width:24px;height:24px;border-radius:50%;box-shadow:0 0 0 1px rgba(232,217,176,.35);}
+.iv-swl input:checked + i{box-shadow:0 0 0 2px #13263a,0 0 0 4px #E8D9B0;}
+.iv-swl input:focus-visible + i{outline:2px solid #E8D9B0;outline-offset:3px;}
+.iv-chk{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--iv-ink);margin-left:86px;}
+.iv-chk input{accent-color:#C49A4A;width:16px;height:16px;}
+.iv-facts{display:flex;gap:14px;align-items:center;margin-left:86px;}
+.iv-facts .iv-save{min-height:38px;padding:8px 16px;}
+.iv-cellwrap{position:relative;min-width:0;}
+.iv-cellwrap .iv-cell{width:100%;}
+.iv-cell.is-flat{cursor:help;}
+.iv-del{position:absolute;top:-6px;right:-6px;width:24px;height:24px;border-radius:50%;border:0;background:#9b2d2a;color:#fff;font-size:14px;line-height:1;cursor:pointer;box-shadow:0 0 0 2px #12243a;z-index:2;}
+.iv-case.is-editing .iv-cell[data-iv-item^="u:"]{box-shadow:inset 0 0 0 1.5px #E8D9B0;}
+.iv-rent{background:#9cc5e6!important;}
+.iv-sim{background:rgba(232,217,176,.85)!important;font-weight:500!important;font-size:9px!important;letter-spacing:.04em;}
+@media (max-width:600px){
+  .iv-frow{grid-template-columns:1fr;gap:6px;}
+  .iv-cols legend{float:none;width:auto;margin-bottom:6px;}
+  .iv-chk,.iv-facts{margin-left:0;}
+  .iv-mopts{padding-left:0;}
+  .iv-mnote{margin-left:0;}
+}
+@media (prefers-reduced-motion:reduce){ .iv-progbar i{transition:none;} }
 /* drag ghost, fly, tooltip */
 .iv-drag,.iv-fly{position:fixed;left:0;top:0;z-index:10050;pointer-events:none;border-radius:13px;background:#efe9de;overflow:hidden;display:grid;place-items:center;
   box-shadow:0 18px 30px -10px rgba(0,0,0,.55),0 0 0 2px #E8D9B0;}
-.iv-drag img,.iv-fly img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;}
+.iv-drag img,.iv-fly img{width:100%;height:100%;box-sizing:border-box;padding:9%;object-fit:contain;object-position:center;mix-blend-mode:multiply;}
 .iv-drag .iv-ic,.iv-fly .iv-ic{width:62%;height:62%;display:block;}
 .iv-drag svg,.iv-fly svg{width:100%;height:100%;stroke:#2c3036;}
 .iv-fly{transition:transform .32s var(--ease-out),opacity .32s var(--ease-out);}
@@ -2856,6 +2956,11 @@ html.iv-dragging,html.iv-dragging *{cursor:grabbing!important;user-select:none!i
   .iv-case{padding:10px;}
   .iv-case-in{padding:14px 10px 14px;}
   .iv-stat-t span{font-size:21px;}
+  /* additions: one swipeable row per group so the list stays short on a phone */
+  .iv-arow{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 8px;margin:0 -2px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+  .iv-arow::-webkit-scrollbar{display:none;}
+  .iv-acard{flex:0 0 84%;scroll-snap-align:start;}
+  .iv-fit{font-size:12px;}
 }
 @media (max-width:360px){ .iv-slotwrap{width:56px;} .iv-slot{width:52px;height:52px;} .iv-slot.is-full .iv-th{width:44px;height:44px;} }
 @media (prefers-reduced-motion:reduce){
@@ -5300,67 +5405,153 @@ body.gated .wh-fab{display:none;}
        color     hex used for the silhouette on the mannequin
        qty       optional (shows ×N on the tile)
        img/url   optional — only a photo of THAT exact product (else a line icon)
-      crop      optional [x%, y%, zoom] to frame a tall product shot in the square tiles
+      frame     optional [x%, y%] — for tall shots with lots of white space: fill the square and centre on that point (nothing gets cut off)
      ================================================================== */
   var SUITCASE = {
+    /* Griffin's exact items (Nov 16). Photos are each brand's own product shot of that colour where one exists;
+       "similar" = closest current model when the exact one isn't sold any more. Links open in a new tab. */
     griffin: [
       { id: 'beta', name: 'Arc’teryx Beta Insulated Jacket · black', short: 'Beta Insulated', slot: 'coat', kind: 'jacket',
         warmth: 3, waterproof: true, windproof: true, dressy: 0, color: '#1c1f23',
         img: 'https://images-dynamic-arcteryx.imgix.net/details/1350x1710/F26-X000010866-Beta-Insulated-Jacket-Black-Front-View.jpg',
         url: 'https://arcteryx.com/ca/en/shop/mens/beta-insulated-jacket-0866' },
-      { id: 'tees', name: 'Fitted tees', short: 'Fitted tees', qty: 4, slot: 'top', kind: 'tee',
-        warmth: 0.5, waterproof: false, windproof: false, dressy: 0, color: '#3a3f46' },
-      { id: 'jeans-black', name: 'Black jeans', short: 'Black jeans', slot: 'bottom', kind: 'jeans',
-        warmth: 1, waterproof: false, windproof: false, dressy: 1, color: '#1d1f22' },
-      { id: 'jeans-indigo', name: 'Dark indigo jeans', short: 'Indigo jeans', slot: 'bottom', kind: 'jeans',
-        warmth: 1, waterproof: false, windproof: false, dressy: 1, color: '#25365a' },
-      { id: 'jeans-brown', name: 'Brown jeans', short: 'Brown jeans', slot: 'bottom', kind: 'jeans',
-        warmth: 1, waterproof: false, windproof: false, dressy: 1, color: '#5c4231' },
-      { id: 'slacks', name: 'Black dress slacks', short: 'Dress slacks', slot: 'bottom', kind: 'trousers',
-        warmth: 1, waterproof: false, windproof: false, dressy: 2, color: '#141619' },
+      { id: 'pool-raw-black', name: 'Poolhouse New York Tokyo Bootcut II · Raw Black (crosshatch)', short: 'Tokyo II · raw black', slot: 'bottom', kind: 'jeans',
+        warmth: 1, waterproof: false, windproof: false, dressy: 1, color: '#1b1d20',
+        img: 'https://cdn.shopify.com/s/files/1/0650/3890/9682/files/Tokyo_II_Bootcut_Raw_Black_CH_Denim.jpg?v=1790911684',
+        url: 'https://poolhousenewyork.com/products/tokyo-jeans-ii-classic-bootcut-crosshatch-1' },
+      { id: 'pool-raw-indigo', name: 'Poolhouse New York Tokyo Bootcut II · Raw Indigo', short: 'Tokyo II · raw indigo', slot: 'bottom', kind: 'jeans',
+        warmth: 1, waterproof: false, windproof: false, dressy: 1, color: '#1e2b45',
+        img: 'https://cdn.shopify.com/s/files/1/0650/3890/9682/files/tokyo_bootcut_raw_indigo_sanforized_rinsed_wide_leg_straight_leg_best_bootcut_jeans_ever_mens_bootcut_womens_bootcut-Recovered_cover.jpg?v=1792768119',
+        url: 'https://poolhousenewyork.com/products/tokyo-jeans-ii-classic-bootcut' },
+      { id: 'af-jean-brown', name: 'Abercrombie & Fitch Baggy Jean · dark brown', short: 'A&F baggy · brown', slot: 'bottom', kind: 'jeans',
+        warmth: 1, waterproof: false, windproof: false, dressy: 1, color: '#5c4231',
+        img: 'https://img.abercrombie.com/is/image/anf/KIC_131-6110-00597-400_prod1?policy=product-medium',
+        url: 'https://www.abercrombie.com/shop/us/p/baggy-jean-63334169' },
+      { id: 'af-slacks', name: 'Abercrombie & Fitch Menswear Baggy Trouser · black', short: 'A&F slacks · black', slot: 'bottom', kind: 'trousers',
+        warmth: 1, waterproof: false, windproof: false, dressy: 2, color: '#141619',
+        img: 'https://img.abercrombie.com/is/image/anf/KIC_130-5115-00182-900_prod1?policy=product-medium',
+        url: 'https://www.abercrombie.com/shop/us/p/baggy-trouser-59830819' },
+      /* Sown Again Muscle Half Crop (his "half slub muscle tee") — five colours, one tile each so the mannequin wears the colour you pick */
+      { id: 'tee-black', name: 'Sown Again Muscle Half Crop · Vintage Black', short: 'Muscle tee · black', slot: 'top', kind: 'tee', warmth: 0.5, waterproof: false, windproof: false, dressy: 1, color: '#1d1f22',
+        img: 'https://cdn.shopify.com/s/files/1/0638/0719/3243/files/2_3a1fcdaa-8be1-4915-b862-4939ed48b5c7.png?v=1769802326', url: 'https://sownagain.com/products/muscle-half-crop' },
+      { id: 'tee-cream', name: 'Sown Again Muscle Half Crop · Cream', short: 'Muscle tee · cream', slot: 'top', kind: 'tee', warmth: 0.5, waterproof: false, windproof: false, dressy: 1, color: '#e9e1cf',
+        img: 'https://cdn.shopify.com/s/files/1/0638/0719/3243/files/cream.jpg?v=1774989209', url: 'https://sownagain.com/products/muscle-half-crop' },
+      { id: 'tee-white', name: 'Sown Again Muscle Half Crop · White', short: 'Muscle tee · white', slot: 'top', kind: 'tee', warmth: 0.5, waterproof: false, windproof: false, dressy: 1, color: '#f4f2ec',
+        img: 'https://cdn.shopify.com/s/files/1/0638/0719/3243/files/3_a42a75e7-30a3-42cc-a820-fb5b41cc7c71.png?v=1774474006', url: 'https://sownagain.com/products/muscle-half-crop' },
+      { id: 'tee-green', name: 'Sown Again Muscle Half Crop · Pesto (faded green)', short: 'Muscle tee · green', slot: 'top', kind: 'tee', warmth: 0.5, waterproof: false, windproof: false, dressy: 1, color: '#7d8a6a',
+        img: 'https://cdn.shopify.com/s/files/1/0638/0719/3243/files/PESTO_d56fdca0-72d1-4a4b-876e-1aa9c2bab58d.jpg?v=1774474006', url: 'https://sownagain.com/products/muscle-half-crop' },
+      { id: 'tee-brown', name: 'Sown Again Muscle Half Crop · Coffee (brown)', short: 'Muscle tee · brown', slot: 'top', kind: 'tee', warmth: 0.5, waterproof: false, windproof: false, dressy: 1, color: '#6a4b37',
+        img: 'https://cdn.shopify.com/s/files/1/0638/0719/3243/files/1_718e26ba-5830-4092-bee4-76ac9f3d62fc.png?v=1769802326', url: 'https://sownagain.com/products/muscle-half-crop' },
       { id: 'gats-black', name: 'Maison Margiela Replica GATs · black', short: 'GATs · black', slot: 'shoes', kind: 'sneaker',
         warmth: 0.5, waterproof: false, windproof: false, dressy: 1, color: '#1b1d20',
-        img: 'https://marais.com.au/cdn/shop/files/XOMARAIS_250731_Product_MENSHOESSNEAKERSReplicaLeatherSneakerinBlack44MMMSS21293S57WS0236P1897900_6517.jpg?v=1754548692&width=1200',
-        url: 'https://marais.com.au/products/replica-leather-suede-sneaker-1', crop: [50, 76, 1.7] },
-      { id: 'gats-brown', name: 'Maison Margiela Replica GATs · brown', short: 'GATs · brown', slot: 'shoes', kind: 'sneaker',
-        warmth: 0.5, waterproof: false, windproof: false, dressy: 1, color: '#6d4b33' },
-      { id: 'colehaan', name: 'Cole Haan boots · black', short: 'Cole Haan boots', slot: 'shoes', kind: 'boot',
-        warmth: 1, waterproof: false, windproof: false, dressy: 2, color: '#16181b' }
+        /* square crop around the shoe via the retailer's Shopify CDN (region crop) so it sits centred in the tile */
+        img: 'https://marais.com.au/cdn/shop/files/XOMARAIS_250731_Product_MENSHOESSNEAKERSReplicaLeatherSneakerinBlack44MMMSS21293S57WS0236P1897900_6517.jpg?v=1754548692&crop=region&crop_left=70&crop_top=843&crop_width=1700&crop_height=1700&width=800&height=800',
+        url: 'https://marais.com.au/products/replica-leather-suede-sneaker-1' },
+      { id: 'gats-brown', name: 'Maison Margiela Replica GATs · dark brown', short: 'GATs · brown', slot: 'shoes', kind: 'sneaker',
+        warmth: 0.5, waterproof: false, windproof: false, dressy: 1, color: '#4a3528',
+        img: 'https://www.sneakinpeace.com/cdn/shop/files/maison-margeila-replica-leather-dark-brown-sneakers-trainers-1.jpg?v=1756552899&crop=region&crop_left=25&crop_top=375&crop_width=1550&crop_height=1550&width=800&height=800',
+        url: 'https://www.sneakinpeace.com/products/maison-margiela-mens-replica-leather-suede-dark-brown-low-top-sneakers' },
+      { id: 'colehaan', name: 'Cole Haan black boots (photo: Stockbridge Chelsea — similar)', short: 'Cole Haan boots', slot: 'shoes', kind: 'boot',
+        warmth: 1, waterproof: false, windproof: false, dressy: 2, color: '#16181b',
+        img: 'https://cdn.shopify.com/s/files/1/0710/9938/3948/files/STOCKBRIDGE-CHELS-WP_e_A_C44926-psd.jpg?v=1793181650',
+        url: 'https://www.colehaan.com/products/mens-stockbridge-chelsea-waterproof-boots-c44926', similar: true }
     ]
   };
 
+  /* Fit personas — one per person. Only fill what the person actually told us; null = "not set yet".
+     The Outfits screen shows the active person's persona as a compact "Your fit" line (Griffin for now). */
+  var PERSONA = {
+    griffin: { role: 'Skier', cut: 'menswear', build: 'Athletic', height: '5′8″', weight: '145 lb',
+      fit: 'Fitted / slim — not baggy', length: 'Tops slightly cropped (belt / hip) — never long; sleeves not too long',
+      sizes: { tops: 'S (chest ~37–38″, body length ~26–27″)', pants: '29–30 waist · 30 inseam', note: 'Check each brand’s size chart' },
+      colours: [['Black', '#1b1d20'], ['Charcoal', '#4a4e54'], ['Brown', '#6b4a33'], ['Navy', '#22314f'], ['Olive', '#5a5f3e']],
+      style: 'Earth tones, clean and dark', avoid: 'Bright colours · long / tall cuts · baggy fits',
+      /* Nov 16: a cotton tee under the Beta Insulated is his ski base (no cotton warnings); thermals optional. Short sleeves indoors at dinners. */
+      teeIsBase: true, tShirtIndoors: true },
+    marco: { role: 'Snowboarder', cut: 'menswear', build: null, height: null, weight: null, fit: null, length: null, sizes: null, colours: null, style: null, avoid: null },
+    stella: { role: 'Skier · lesson Day I', cut: 'womenswear', build: null, height: null, weight: null, fit: null, length: null, sizes: null, colours: null, style: null, avoid: null },
+    ben: { role: 'Skier · own skis', cut: 'menswear', build: null, height: null, weight: null, fit: null, length: null, sizes: null, colours: null, style: null, avoid: null },
+    marcy: { role: 'Beginner · lessons Days I + II', cut: 'womenswear', build: null, height: null, weight: null, fit: null, length: null, sizes: null, colours: null, style: null, avoid: null },
+    jim: { role: 'Non-skier · snowmobile Day III', cut: 'menswear', build: null, height: null, weight: null, fit: null, length: null, sizes: null, colours: null, style: null, avoid: null }
+  };
+
   /* Ideas he's considering — NOT in the suitcase. "Bought it → pack" moves one in.
-     pid = product id from the PRODUCTS list (image + link come from there). Men's only. */
+     pid = product id from the PRODUCTS list (image + link come from there). Men's / unisex only.
+     why = one line on why it suits HIM (fit · length · colour · function). noTry = can't go on the mannequin's 8 slots. */
   var ADDITIONS = {
     griffin: [
+      /* Classy waterproof town boots that grip ice. Checked on each brand's own page.
+         Left out on purpose: Thursday Boot Co. StormKing (that's the lug sole — the leather isn't sold as waterproof),
+         Red Wing Iron Ranger + Viberg (not waterproof), Diemme (no waterproof men's model listed),
+         Sorel / Timberland / Moncler / Canada Goose (sites block automated checks). */
+      { group: 'Waterproof boots', slot: 'shoes', kind: 'boot', warmth: 2, waterproof: true, windproof: true, dressy: 1, items: [
+        { pid: 'blundstone-2241-m', short: 'Blundstone All-Terrain', color: '#1b1d20',
+          why: 'Waterproof leather, Thinsulate lining, Vibram self-cleaning lug · slim black Chelsea' },
+        { pid: 'blundstone-566-m', short: 'Blundstone Thermal', color: '#1b1d20', warmth: 1.5,
+          why: 'Waterproof leather with a warm thermal lining · the slimmest, cleanest black Chelsea' },
+        { pid: 'lacanadienne-mitchel', short: 'La Canadienne Mitchel', color: '#5a3f2c', dressy: 2,
+          why: 'City Dry waterproof leather, rubber lug, side zip · moc-toe derby dressy enough for Casa Tua · brown' },
+        { pid: 'danner-arctic600', short: 'Danner Arctic 600', color: '#1b1d20', warmth: 2.5,
+          why: 'Danner Dry waterproof, 200g PrimaLoft, Vibram Arctic Grip for ice · warmest pick · side zip' },
+        { pid: 'danner-mountain-light', short: 'Danner Mountain Light', color: '#1b1d20', warmth: 1.5,
+          why: 'GORE-TEX lined, Vibram sole, made in the USA, resoleable · not insulated — pair with wool socks' } ] },
+      { group: 'Leather gloves', slot: 'gloves', kind: 'gloves', warmth: 1, waterproof: false, windproof: true, dressy: 2, items: [
+        { pid: 'dents-rushton-m', short: 'Dents Rushton', color: '#2b211b', why: 'Handsewn hairsheep, cashmere lined · classic and slim · brown' },
+        { pid: 'hestra-elk-cashmere', short: 'Hestra elk', color: '#1d1f22', why: 'Elk leather is softer and warmer than calf; cashmere lined · black' },
+        { pid: 'portolano-aspen-deer', short: 'Portolano “Aspen”', color: '#3a2b20', why: 'Italian deerskin, made in Naples — and it’s literally called Aspen · brown' },
+        { pid: 'hestra-peccary-cashmere', short: 'Hestra peccary', color: '#1d1f22', why: 'The splurge: peccary + knitted cashmere, the softest dress glove · black' } ] },
+      { group: 'Ski + everyday gloves', slot: 'gloves', kind: 'gloves', warmth: 1.5, waterproof: true, windproof: true, dressy: 0, items: [
+        { pid: 'burton-gtx-glove-m', short: 'Burton GORE-TEX', color: '#1d1f22', why: 'GORE-TEX shell + liner, easy price for ski days · black' },
+        { pid: 'hestra-army-gtx-short', short: 'Hestra Army Leather GTX', color: '#1d1f22', why: 'Leather + GORE-TEX, short cuff — slim enough to wear around town' },
+        { pid: 'hestra-fall-line-loden', short: 'Hestra Fall Line', color: '#5a5f3e', why: 'The Aspen classic leather ski glove · loden (olive) suits his colours' },
+        { pid: 'bd-mercury-mitt', short: 'Black Diamond Mercury', color: '#1d1f22', warmth: 2, why: 'Warmest option — mitt with a finger liner for the snowmobile' } ] },
+      { group: 'Scarf', slot: 'scarf', kind: 'scarf', warmth: 1, waterproof: false, windproof: false, dressy: 1, items: [
+        { pid: 'joe-ribbed-scarf-black', short: 'Johnstons ribbed', color: '#1d1f22', why: 'Black ribbed cashmere — goes with everything he owns' },
+        { pid: 'begg-wispy-navy', short: 'Begg x Co Wispy', color: '#22314f', why: 'Lightweight navy cashmere — easy to stuff in a pocket at dinner' },
+        { pid: 'begg-arran-loden', short: 'Begg x Co Arran', color: '#4b5a3c', why: 'Loden green cashmere — his olive, warmest of the set' },
+        { pid: 'joe-sparta-navy-olive', short: 'Johnstons Sparta', color: '#2e3a3a', why: 'Navy + olive — two of his colours in one' },
+        { pid: 'inis-herringbone-scarf', short: 'Inis Meáin', color: '#8a8578', why: 'Irish herringbone cashmere, the splurge · earthy grey' } ] },
+      /* Fitted base layers. Wear them under the Beta on ski days / the snowmobile, or under a henley at night. */
+      { group: 'Thermal base layers', slot: 'top', kind: 'base', warmth: 1, waterproof: false, windproof: false, dressy: 0, items: [
+        { pid: 'sw-intraknit-ls-m', short: 'Smartwool Intraknit', color: '#22314f', why: 'Seamless, body-mapped merino — fits close · deep navy' },
+        { pid: 'sw-classic-thermal-crew-m-brand', short: 'Smartwool Thermal', color: '#22314f', warmth: 1.5, why: 'The warm merino standard for ski days · check length on the chart' },
+        { pid: 'icebreaker-260-crewe-m', short: 'Icebreaker 260', color: '#4a4e54', warmth: 1.5, why: 'Midweight merino · reviewers say sleeves run long — size by the chart' },
+        { pid: 'arc-rho-hw-zip-m', short: 'Arc’teryx Rho HW', color: '#1d1f22', warmth: 1.5, why: 'Warmest; reviewers say it fits very close to the skin — exactly his fit' },
+        { pid: 'pata-cap-mid-crew-m', short: 'Patagonia Capilene', color: '#1d1f22', why: 'Synthetic midweight, dries fastest · good price' },
+        { pid: 'sw-classic-thermal-bottom-m', short: 'Smartwool bottoms', color: '#1d1f22', noTry: true, why: 'Merino bottoms under ski pants (or jeans on the snowmobile)' },
+        { pid: 'pata-cap-mid-bottom-m', short: 'Capilene bottoms', color: '#1d1f22', noTry: true, why: 'Synthetic bottoms — the cheaper pair' } ] },
+      /* Short-sleeve henleys — Griffin likes a short-sleeve top indoors at dinners. Couldn't verify Buck Mason / Todd Snyder pages (blocked). */
+      { group: 'Short-sleeve henleys', slot: 'top', kind: 'tee', warmth: 0.5, waterproof: false, windproof: false, dressy: 1, items: [
+        { pid: '3sixteen-ss-henley', short: '3sixteen henley', color: '#1d1f22', why: 'Size S body length 26¼″ on their chart — right in his range · heavyweight · black' },
+        { pid: 'vs-ss-henley-black', short: 'Velva Sheen · black', color: '#1d1f22', why: 'Pigment-dyed 1950s-style henley tee, full flat seams · black' },
+        { pid: 'vs-ss-henley-grey', short: 'Velva Sheen · grey', color: '#7b7f85', why: 'Same tee in faded grey' },
+        { pid: 'vs-ss-henley-navy', short: 'Velva Sheen · navy', color: '#22314f', why: 'Same tee in navy' },
+        { pid: 'jm-pullman-henley', short: 'Jungmaven Pullman', color: '#5a5f3e', why: 'Hemp + wool henley tee; comes in olive green, coffee bean, black, navy' } ] },
+      /* Long-sleeve henleys: fitted and not long. Fit notes are from each brand's own page. */
+      { group: 'Long-sleeve henleys', slot: 'top', kind: 'henley', warmth: 1, waterproof: false, windproof: false, dressy: 1, items: [
+        { pid: 'yitai-waffle-henley', short: 'YITAI waffle', color: '#1d1f22', why: 'Brand says “relaxed cropped fit” — cropped length is his; size down for fitted · black' },
+        { pid: 'ts-waffle-henley-black', short: 'Taylor Stitch waffle', color: '#26282b', why: 'Brand says tailored fit (size up only for looser) · faded black' },
+        { pid: 'rc-slub-slim-henley', short: 'Reigning Champ slim', color: '#22314f', warmth: 0.5, why: 'Slim-fit rib henley · navy' },
+        { pid: 'bm-thermal-henley', short: 'Buck Mason thermal', color: '#1d1f22', why: 'Classic fit — check body length; S for him · black' },
+        { pid: 'rc-waffle-henley-olive', short: 'Reigning Champ waffle', color: '#5a5f3e', why: 'Standard fit (not slim) — size down · dark olive' },
+        { pid: 'am-austin-henley', short: 'Alex Mill henley', color: '#26324a', why: 'Runs long (M is 30″ long on their model) — size S or skip · navy' } ] },
       /* No dress shirts (Griffin, Nov 16: "fitted tees or henleys look nice and are better for going out after"). */
       { group: 'Fitted tees', slot: 'top', kind: 'tee', warmth: 0.5, waterproof: false, windproof: false, dressy: 1, items: [
-        { pid: 'yitai-rib-tee', short: 'YITAI rib tee', color: '#ece9e1' },
-        { pid: '3sixteen-pima-tee', short: '3sixteen pima tee', color: '#f1efe8' },
-        { pid: 'joe-merino-tee-black', short: 'Johnstons merino tee', color: '#1d1f22' } ] },
-      { group: 'Henleys', slot: 'top', kind: 'henley', warmth: 1, waterproof: false, windproof: false, dressy: 1, items: [
-        { pid: 'yitai-waffle-henley', short: 'YITAI waffle henley', color: '#1d1f22' },
-        { pid: 'am-austin-henley', short: 'Alex Mill henley', color: '#26324a' } ] },
+        { pid: 'yitai-rib-tee', short: 'YITAI rib tee', color: '#ece9e1', why: 'Close rib knit — sits fitted' },
+        { pid: '3sixteen-pima-tee', short: '3sixteen pima tee', color: '#f1efe8', why: 'Heavyweight pima, clean collar · 2-pack' },
+        { pid: 'joe-merino-tee-black', short: 'Johnstons merino tee', color: '#1d1f22', why: 'Superfine merino — a tee that works at Matsuhisa · black' } ] },
       /* one elevated layer for the nicer nights — Casa Tua "jackets encouraged", NYE at Matsuhisa */
       { group: 'Nicer-night layer', slot: 'coat', kind: 'overshirt', warmth: 1.5, waterproof: false, windproof: true, dressy: 2, items: [
-        { pid: 'ss-havana-blazer-navy', short: 'Suitsupply blazer', color: '#1f2a44', kind: 'blazer', warmth: 1 },
-        { pid: 'drakes-wool-overshirt', short: 'Drake’s overshirt', color: '#1f2a44' },
-        { pid: 'mashburn-cashmere-chore', short: 'Mashburn chore jacket', color: '#3a3d42' } ] },
+        { pid: 'ss-havana-blazer-navy', short: 'Suitsupply blazer', color: '#1f2a44', kind: 'blazer', warmth: 1, why: 'Tailored-fit navy blazer — satisfies Casa Tua’s “jackets encouraged”' },
+        { pid: 'drakes-wool-overshirt', short: 'Drake’s overshirt', color: '#1f2a44', why: 'Structured wool overshirt — dressier than a sweater, easier than a blazer · navy' },
+        { pid: 'mashburn-cashmere-chore', short: 'Mashburn chore jacket', color: '#3a3d42', why: 'Cashmere flannel chore jacket · charcoal' } ] },
       { group: 'Sweater · optional', slot: 'top', kind: 'sweater', warmth: 1.5, waterproof: false, windproof: false, dressy: 1, items: [
-        { pid: 'naadam-luxe-crew', short: 'Naadam crew', color: '#3b3f45' },
-        { pid: 'joe-cashmere-crew-charcoal', short: 'Johnstons crew', color: '#44484e' } ] },
-      { group: 'Gloves', slot: 'gloves', kind: 'gloves', warmth: 1, waterproof: false, windproof: true, dressy: 2, items: [
-        { pid: 'dents-rushton-m', short: 'Dents gloves', color: '#2b211b' },
-        { pid: 'hestra-elk-cashmere', short: 'Hestra elk', color: '#1d1f22' },
-        { pid: 'hestra-peccary-cashmere', short: 'Hestra peccary', color: '#1d1f22' } ] },
+        { pid: 'naadam-luxe-crew', short: 'Naadam crew', color: '#3b3f45', why: 'Cashmere crew in his greys/black' },
+        { pid: 'joe-cashmere-crew-charcoal', short: 'Johnstons crew', color: '#44484e', why: 'Scottish cashmere · charcoal' } ] },
       { group: 'Sunglasses', slot: 'sunglasses', kind: 'shades', warmth: 0, waterproof: false, windproof: false, dressy: 1, items: [
-        { pid: 'rayban-wayfarer', short: 'Wayfarer', color: '#111214' },
-        { pid: 'persol-714', short: 'Persol 714', color: '#6b4a2b' },
-        { pid: 'op-gregory-peck-sun', short: 'Gregory Peck', color: '#7a4a2a' } ] },
-      { group: 'Scarf', slot: 'scarf', kind: 'scarf', warmth: 1, waterproof: false, windproof: false, dressy: 1, items: [
-        { pid: 'joe-ribbed-scarf-black', short: 'Johnstons scarf', color: '#1d1f22' },
-        { pid: 'begg-arran-loden', short: 'Begg x Co Arran', color: '#4b5a3c' },
-        { pid: 'inis-herringbone-scarf', short: 'Inis Meáin scarf', color: '#8a8578' } ] }
+        { pid: 'rayban-wayfarer', short: 'Wayfarer', color: '#111214', why: 'The black classic' },
+        { pid: 'persol-714', short: 'Persol 714', color: '#6b4a2b', why: 'Folding Havana — brown fits his palette' },
+        { pid: 'op-gregory-peck-sun', short: 'Gregory Peck', color: '#7a4a2a', why: 'The splurge round frame' } ] }
     ]
   };
 
@@ -5669,6 +5860,25 @@ body.gated .wh-fab{display:none;}
       {"id": "am-austin-henley", "name": "Austin Henley in Thermal Cotton · Navy", "brand": "Alex Mill", "retailer": "Alex Mill", "url": "https://www.alexmill.com/products/austin-henley-in-thermal-cotton-in-navy-night", "img": "https://www.alexmill.com/cdn/shop/files/MK150-3903-NAVY-NIGHT-72421_ad88e3a1-9f95-4ee9-9bf0-409f11aa7922_1024x1024.jpg?v=1789582086", "slot": "top", "cat": "henley", "warmth": 2, "tier": "better", "style": ["classic", "cozy"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "travel"], "rent": false},
       {"id": "drakes-wool-overshirt", "name": "Navy Wool Quarter-Zip Overshirt", "brand": "Drake's", "retailer": "Drake's", "url": "https://www.drakes.com/products/navy-wool-quarter-zip-overshirt", "img": "https://www.drakes.com/cdn/shop/files/DR2A1A27552-01250-1MTG_1200x1200.jpg?v=1793800222", "slot": "mid", "cat": "overshirt", "warmth": 2, "tier": "better", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["casatua", "nye", "steakhouse", "frenchalpine", "wildfig"], "rent": false},
       {"id": "mashburn-cashmere-chore", "name": "Chore Jacket in Charcoal Cashmere Flannel", "brand": "Sid Mashburn", "retailer": "Sid Mashburn", "url": "https://shopmashburn.com/products/sid-mashburn-chore-jacket-charcoal-cashmere-flannel-s77104", "img": "https://shopmashburn.com/cdn/shop/files/S77104_0060_1200x1200.jpg?v=1754490419", "slot": "mid", "cat": "overshirt", "warmth": 2, "tier": "splurge", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["casatua", "nye", "steakhouse", "frenchalpine", "wildfig"], "rent": false},
+      {"id": "danner-mountain-light", "name": "Mountain Light · Black (GORE-TEX)", "brand": "Danner", "retailer": "Danner", "url": "https://www.danner.com/mountain-light-black.html", "img": "https://i.lfi.media/is/image/LaCrosse/danner_13_pdp/31530", "slot": "feet", "cat": "winter boots", "warmth": 3, "tier": "splurge", "style": ["classic", "sporty"], "cut": "menswear", "occ": ["travel", "wildfig", "whitehouse", "frenchalpine", "steakhouse", "nye"], "rent": false},
+      {"id": "lacanadienne-mitchel", "name": "Mitchel Leather Lace-Up Boot (City Dry waterproof)", "brand": "La Canadienne", "retailer": "La Canadienne", "url": "https://lacanadienneshoes.com/products/mitchel-mens-leather-lace-up-boot", "img": "https://lacanadienneshoes.com/cdn/shop/files/mitchel_lea_brown_0.jpg?v=1788352328&width=2048", "slot": "feet", "cat": "dress boots", "warmth": 3, "tier": "better", "style": ["classic", "dressy"], "cut": "menswear", "occ": ["wildfig", "casatua", "frenchalpine", "nye", "steakhouse", "bellyup"], "rent": false},
+      {"id": "hestra-fall-line-loden", "name": "Fall Line 5-Finger · Loden", "brand": "Hestra", "retailer": "Hestra", "url": "https://www.hestragloves.us/products/fall-line-5-finger-loden-loden", "img": "https://www.hestragloves.us/cdn/shop/files/3000780-8718711.png?v=1793198220", "slot": "hands", "cat": "gloves", "warmth": 4, "tier": "better", "style": ["sporty", "classic"], "cut": "unisex", "occ": ["ski", "snowmobile"], "rent": false},
+      {"id": "hestra-army-gtx-short", "name": "Army Leather Gore-Tex Short 5-Finger", "brand": "Hestra", "retailer": "Hestra", "url": "https://www.hestragloves.us/products/army-leather-gore-tex-short-5-finger-na", "img": "https://www.hestragloves.us/cdn/shop/files/1776176451009-30370-320020_1_Meta.png?v=1776179366", "slot": "hands", "cat": "gloves", "warmth": 4, "tier": "better", "style": ["sporty"], "cut": "unisex", "occ": ["ski", "snowmobile", "travel"], "rent": false},
+      {"id": "joe-sparta-navy-olive", "name": "Sparta Scarf · Navy & Olive", "brand": "Johnstons of Elgin", "retailer": "Johnstons of Elgin", "url": "https://www.johnstonsofelgin.com/products/sparta-navy-olive-green-scarf", "img": "https://johnstonsofelgin.com/cdn/shop/files/WB003045RU7957NAVYOLIVE7O7A3165_RT_flat_lay.jpg?v=1793611062", "slot": "acc", "cat": "scarf", "warmth": 3, "tier": "better", "style": ["classic"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "joe-olive-tweed-scarf", "name": "Tweed Olive Green Cashmere Scarf", "brand": "Johnstons of Elgin", "retailer": "Johnstons of Elgin", "url": "https://www.johnstonsofelgin.com/products/olive-tweed-cashmere-scarf", "img": "https://johnstonsofelgin.com/cdn/shop/files/WA16-RU7489-OLIVE.jpg?v=1791542704", "slot": "acc", "cat": "scarf", "warmth": 3, "tier": "better", "style": ["classic", "cozy"], "cut": "unisex", "occ": ["travel", "wildfig", "bellyup", "whitehouse", "frenchalpine", "casatua", "nye", "steakhouse"], "rent": false},
+      {"id": "sw-intraknit-ls-m", "name": "Men's Intraknit Seamless Long Sleeve · Deep Navy", "brand": "Smartwool", "retailer": "Smartwool", "url": "https://www.smartwool.com/products/mens-intraknit-seamless-long-sleeve-sw003025", "img": "https://cdn.shopify.com/s/files/1/0910/5172/1073/files/SW003025092-HERO.jpg?v=1786135566", "slot": "top", "cat": "base top", "warmth": 2, "tier": "better", "style": ["sporty"], "cut": "menswear", "occ": ["ski", "snowmobile", "travel"], "rent": false},
+      {"id": "sw-classic-thermal-crew-m-brand", "name": "Men's Classic Thermal Merino Base Layer Crew", "brand": "Smartwool", "retailer": "Smartwool", "url": "https://www.smartwool.com/products/mens-classic-thermal-merino-base-layer-crew-sw016349", "img": "https://cdn.shopify.com/s/files/1/0910/5172/1073/files/SW016349545-HERO.png?v=1791203951", "slot": "top", "cat": "base top", "warmth": 3, "tier": "better", "style": ["sporty"], "cut": "menswear", "occ": ["ski", "snowmobile", "travel"], "rent": false},
+      {"id": "arc-rho-hw-zip-m", "name": "Rho Heavyweight Zip Neck · Men's", "brand": "Arc'teryx", "retailer": "evo", "url": "https://www.evo.com/products/233872-arc-teryx-rho-heavyweight-zip-neck-top-men-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1172408.jpg?v=1767736161", "slot": "top", "cat": "base top", "warmth": 3, "tier": "splurge", "style": ["sporty"], "cut": "menswear", "occ": ["ski", "snowmobile"], "rent": false},
+      {"id": "icebreaker-260-crewe-m", "name": "Men's Merino 260 Oasis Long Sleeve Crewe", "brand": "Icebreaker", "retailer": "Icebreaker", "url": "https://na.icebreaker.com/products/merino-260-tech-long-sleeve-crewe-thermal-top-ib104371013", "img": "https://cdn.shopify.com/s/files/1/0931/1866/0907/files/IB104371013-1.jpg?v=1756212888", "slot": "top", "cat": "base top", "warmth": 3, "tier": "better", "style": ["sporty"], "cut": "menswear", "occ": ["ski", "snowmobile", "travel"], "rent": false},
+      {"id": "ts-waffle-henley-black", "name": "The Organic Cotton Henley · Faded Black Waffle", "brand": "Taylor Stitch", "retailer": "Taylor Stitch", "url": "https://www.taylorstitch.com/products/organic-cotton-waffle-henley-in-faded-black-2310", "img": "https://www.taylorstitch.com/cdn/shop/files/instock_m_q423_Organic_Cotton_Waffle_Henley_Coal_001.jpg?v=1791418362&width=1600", "slot": "top", "cat": "henley", "warmth": 2, "tier": "better", "style": ["classic", "cozy"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "travel"], "rent": false},
+      {"id": "rc-slub-slim-henley", "name": "1X1 Slub Slim Henley · Navy", "brand": "Reigning Champ", "retailer": "Reigning Champ", "url": "https://reigningchamp.com/products/1x1-slub-slim-henley-navy", "img": "https://reigningchamp.com/cdn/shop/files/FW25_RC-2332_NAVY_T-SHIRT_off_jp.jpg?v=1754502823", "slot": "top", "cat": "henley", "warmth": 1, "tier": "better", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "travel"], "rent": false},
+      {"id": "rc-waffle-henley-olive", "name": "Lightweight Waffle Henley · Dark Olive", "brand": "Reigning Champ", "retailer": "Reigning Champ", "url": "https://reigningchamp.com/products/lightweight-waffle-standard-henley-2356-dark-olive", "img": "https://reigningchamp.com/cdn/shop/files/FW26_RC-2356_DARKOLIVE_T-SHIRT_off_jp.jpg?v=1788374874", "slot": "top", "cat": "henley", "warmth": 2, "tier": "better", "style": ["classic", "cozy"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "travel"], "rent": false},
+      {"id": "bm-thermal-henley", "name": "Vintage Thermal Henley · Black", "brand": "Buck Mason", "retailer": "Buck Mason", "url": "https://www.buckmason.com/products/vintage-thermal-henley", "img": "https://cdn.shopify.com/s/files/1/0123/5065/2473/files/BM11143.283BLK_01844_1024x.jpg?v=1756940543", "slot": "top", "cat": "henley", "warmth": 2, "tier": "better", "style": ["classic", "cozy"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "travel"], "rent": false},
+      {"id": "3sixteen-ss-henley", "name": "Short Sleeve Henley · Black", "brand": "3sixteen", "retailer": "3sixteen", "url": "https://www.3sixteen.com/products/short-sleeve-henley-black", "img": "https://www.3sixteen.com/cdn/shop/files/3S-12DEC23-SS-HENLEY-BLACK-FRONT_1200x.jpg?v=1701983101", "slot": "top", "cat": "henley", "warmth": 1, "tier": "better", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "travel"], "rent": false},
+      {"id": "vs-ss-henley-black", "name": "Pigment S/S Henley Tee · Black", "brand": "Velva Sheen", "retailer": "Velva Sheen", "url": "https://velvasheen.com/products/pigment-s-s-henley-tee-grey-copy", "img": "https://www.velvasheen.com/cdn/shop/files/161517_Black.jpg?v=1757452111", "slot": "top", "cat": "henley", "warmth": 1, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "travel"], "rent": false},
+      {"id": "vs-ss-henley-navy", "name": "Pigment S/S Henley Tee · Navy", "brand": "Velva Sheen", "retailer": "Velva Sheen", "url": "https://velvasheen.com/products/pigment-s-s-henley-tee-navy", "img": "https://www.velvasheen.com/cdn/shop/files/161517_Navy.jpg?v=1757452218", "slot": "top", "cat": "henley", "warmth": 1, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "travel"], "rent": false},
+      {"id": "vs-ss-henley-grey", "name": "Pigment S/S Henley Tee · Grey", "brand": "Velva Sheen", "retailer": "Velva Sheen", "url": "https://velvasheen.com/products/pigment-s-s-henley-tee-grey", "img": "https://www.velvasheen.com/cdn/shop/files/161517_Grey.jpg?v=1757451885", "slot": "top", "cat": "henley", "warmth": 1, "tier": "good", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "travel"], "rent": false},
+      {"id": "jm-pullman-henley", "name": "Pullman Henley Tee (hemp + wool)", "brand": "Jungmaven", "retailer": "Jungmaven", "url": "https://jungmaven.com/products/hemp-shirt-tee-henley-pullman", "img": "https://cdn.shopify.com/s/files/1/1123/4596/files/PULLMANHENLEY632.jpg?v=1789603103", "slot": "top", "cat": "henley", "warmth": 1, "tier": "better", "style": ["classic"], "cut": "menswear", "occ": ["wildfig", "bellyup", "whitehouse", "frenchalpine", "steakhouse", "travel"], "rent": false},
       {"id": "pata-snowdrifter-jkt-m", "name": "Patagonia Snowdrifter Jacket - Men's", "brand": "Patagonia", "retailer": "evo", "url": "https://www.evo.com/products/241400-patagonia-snowdrifter-jacket-men-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1366488.jpg?v=1790811328", "slot": "outer", "cat": "ski shell", "warmth": 3, "tier": "better", "style": ["sporty", "classic"], "cut": "menswear", "occ": ["ski", "snowmobile"], "rent": true},
       {"id": "arc-beta-ar-jkt-m", "name": "Arc'teryx Beta AR Jacket - Men's", "brand": "Arc'teryx", "retailer": "evo", "url": "https://www.evo.com/products/255314-arc-teryx-beta-ar-jacket-men-s", "img": "https://www.evo.com/cdn/shop/files/product-image-1172461.jpg?v=1767736163", "slot": "outer", "cat": "ski shell", "warmth": 3, "tier": "splurge", "style": ["sporty"], "cut": "menswear", "occ": ["ski", "snowmobile", "travel", "whitehouse", "bellyup"], "rent": true},
       {"id": "hh-garibaldi-jkt-m", "name": "Helly Hansen Garibaldi 2.0 Jacket", "brand": "Helly Hansen", "retailer": "evo", "url": "https://www.evo.com/products/175499-helly-hansen-garibaldi-2-0-jacket", "img": "https://www.evo.com/cdn/shop/files/product-image-1123578.jpg?v=1777044802", "slot": "outer", "cat": "insulated ski jacket", "warmth": 4, "tier": "good", "style": ["sporty", "classic"], "cut": "menswear", "occ": ["ski", "snowmobile"], "rent": true},
@@ -6460,11 +6670,12 @@ body.gated .wh-fab{display:none;}
     if (id0) setTimeout(function () { openOutfit(id0); }, 60);
   }
   /* ================= OUTFITS v1 · suitcase + mannequin (renderer) =================
+     v2 (Nov 16): per person — follows window.AspenWho; each person has their own suitcase (data SUITCASE[p] +
+     device/synced aspenSuitcase_v1[p]), days/moments from their role, must-haves, and picks for their cut.
      Days → moments (each moment saves its own outfit) → mannequin with 8 slots →
      warmth bar (outfit vs recommended band) → suitcase grid → additions.
      Storage (this device): aspenInvFits_v1 {pid:{momentId:{slot:ref}}} · aspenInvBought_v1 {pid:[productId]}
      · aspenInvMoment_v1 (last moment). ref = 'i:<suitcase id>' | 'p:<product id>' (a try-on / bought addition). */
-  var INV_PERSON = 'griffin';           /* v1 demo: Griffin only; data is keyed by person */
   var INV_SLOTS = [
     { k: 'hat', l: 'Hat', side: 'L', ic: 'beanie' }, { k: 'sunglasses', l: 'Sunglasses', side: 'L', ic: 'sun' },
     { k: 'scarf', l: 'Scarf', side: 'L', ic: 'scarf' }, { k: 'coat', l: 'Coat', side: 'L', ic: 'jacket' },
@@ -6488,8 +6699,8 @@ body.gated .wh-fab{display:none;}
   var INV_DAYS = [
     { id: 'd0', date: '2026-12-27', d: 'Sun 27', moments: [
       { id: 'd0-travel', l: 'Travel', t: 'Flight + drive', exp: 'travel' },
-      { id: 'd0-dinner', l: 'Dinner', t: 'Wild Fig · 6:30', exp: 'town', carry: ['coat', 'bottom', 'shoes'], dressy: 1 },
-      { id: 'd0-out', l: 'Going out', t: 'Belly Up · 9:30', exp: 'late', same: 'd0-dinner' } ] },
+      /* one outfit: Wild Fig → 4-min walk → Belly Up, no trip home (concert group); others just have dinner */
+      { id: 'd0-dinner', l: 'Dinner → Belly Up', t: 'Wild Fig 6:30 → 9:30 show', exp: 'late', carry: ['coat', 'bottom', 'shoes'], dressy: 1, belly: true } ] },
     { id: 'd1', date: '2026-12-28', d: 'Mon 28', moments: [
       { id: 'd1-ski', l: 'Skiing', t: 'Snowmass', exp: 'ski', rule: 'ski' },
       { id: 'd1-dinner', l: 'Dinner', t: 'White House · 7', exp: 'town', carry: ['coat'] } ] },
@@ -6503,54 +6714,285 @@ body.gated .wh-fab{display:none;}
       { id: 'd3-dinner', l: 'Dinner', t: 'French Alpine · 7:30', exp: 'town', carry: ['coat'], dressy: 1 } ] },
     { id: 'd4', date: '2026-12-31', d: 'Thu 31', moments: [
       { id: 'd4-ski', l: 'Skiing', t: 'Highlands', exp: 'ski', rule: 'ski', same: 'd1-ski' },
-      { id: 'd4-nye', l: 'NYE night', t: 'Fireworks 8 → Matsuhisa', exp: 'nye', carry: ['coat'], dressy: 2, rule: 'nye' } ] },
+      { id: 'd4-nye', l: 'NYE night', t: 'Fireworks 8 → Matsuhisa → midnight', exp: 'nye', carry: ['coat'], dressy: 2, rule: 'nye' } ] },
     { id: 'd5', date: '2027-01-01', d: 'Fri 1', moments: [
       { id: 'd5-springs', l: 'Hot springs', t: 'Iron Mountain · 12', exp: 'springs', rule: 'swim' },
       { id: 'd5-home', l: 'Night in', t: 'Cook-in', exp: 'home' } ] },
     { id: 'd6', date: '2027-01-02', d: 'Sat 2', moments: [
       { id: 'd6-ski', l: 'Skiing', t: 'Snowmass', exp: 'ski', rule: 'ski', same: 'd1-ski' },
-      { id: 'd6-dinner', l: 'Dinner', t: 'Steakhouse 316 · 7:30', exp: 'town', carry: ['coat'], dressy: 2 },
-      { id: 'd6-out', l: 'Nightcap', t: 'J-Bar', exp: 'late', same: 'd6-dinner' } ] },
+      /* one outfit: Steakhouse 316 → J-Bar nightcap, no trip home */
+      { id: 'd6-dinner', l: 'Dinner → J-Bar', t: 'Steakhouse 316 7:30 → nightcap', exp: 'late', carry: ['coat'], dressy: 2 } ] },
     { id: 'd7', date: '2027-01-03', d: 'Sun 3', moments: [
       { id: 'd7-travel', l: 'Travel', t: 'Checkout 10 → DEN', exp: 'travel', same: 'd0-travel' } ] }
   ];
   /* example outfits shipped with the page (Griffin's own pieces only) */
   var INV_SEED = {
     griffin: {
-      'd1-ski': { coat: 'i:beta', top: 'i:tees' },
-      'd2-dinner': { coat: 'i:beta', bottom: 'i:slacks', shoes: 'i:colehaan', top: 'i:tees' }
+      'd1-ski': { coat: 'i:beta', top: 'i:tee-black' },
+      'd2-dinner': { coat: 'i:beta', bottom: 'i:af-slacks', shoes: 'i:colehaan', top: 'i:tee-black' }
     }
   };
 
+  /* Starter picks for everyone else (and the must-have options), by cut. Respectable brands only, every link
+     checked (page 200 + image). Groups carry the item attributes used by the mannequin + warmth bar. */
+  function SG(group, slot, kind, warmth, waterproof, dressy, m, w, why) { return { group: group, slot: slot, kind: kind, warmth: warmth, waterproof: waterproof, windproof: waterproof, dressy: dressy, m: m, w: w, why: why || '' }; }
+  var STARTER = {
+    boots: SG('Waterproof boots', 'shoes', 'boot', 2, true, 1,
+      [['blundstone-2241-m', 'Blundstone All-Terrain', '#1b1d20'], ['danner-arctic600', 'Danner Arctic 600', '#1b1d20'], ['lacanadienne-mitchel', 'La Canadienne Mitchel', '#5a3f2c']],
+      [['blundstone-584-w', 'Blundstone Thermal', '#5c4231'], ['lacanadienne-heroic', 'La Canadienne Heroic', '#1b1d20'], ['sorel-joan-of-arctic-w', 'Sorel Joan of Arctic', '#1b1d20']], 'Waterproof with real tread for icy sidewalks'),
+    coat: SG('Warm coat', 'coat', 'coat', 2.5, false, 2,
+      [['yitai-peacoat-black', 'YITAI peacoat', '#1b1d20'], ['am-theo-parka', 'Alex Mill Theo parka', '#22314f'], ['mackage-jay', 'Mackage Jay', '#1b1d20']],
+      [['am-sloane-coat', 'Alex Mill Sloane', '#4a4e54'], ['flylow-truckee-parka-w', 'Flylow down parka', '#1b1d20'], ['toteme-shawl-coat', 'Toteme shawl coat', '#1b1d20']], 'For walks to dinner at ~10°F'),
+    gloves: SG('Leather gloves', 'gloves', 'gloves', 1, false, 2,
+      [['dents-rushton-m', 'Dents Rushton', '#2b211b'], ['hestra-elk-cashmere', 'Hestra elk', '#1d1f22'], ['hestra-peccary-cashmere', 'Hestra peccary', '#1d1f22']],
+      [['dents-touch-cashmere-w', 'Dents touchscreen', '#1d1f22'], ['hestra-hairsheep-pique-w', 'Hestra hairsheep', '#1d1f22']], 'Lined, for town'),
+    beanie: SG('Beanie', 'hat', 'beanie', 0.5, false, 0,
+      [['smartwool-rib-beanie', 'Smartwool beanie', '#6b5a48'], ['am-cashmere-beanie', 'Alex Mill cashmere', '#22314f'], ['pata-fishermans-beanie', 'Patagonia beanie', '#4a4e54']], null, 'Also for your head in the hot-spring pools'),
+    sunglasses: SG('Sunglasses', 'sunglasses', 'shades', 0, false, 1,
+      [['smith-lowdown2', 'Smith Lowdown 2', '#1b1d20'], ['rayban-wayfarer', 'Ray-Ban Wayfarer', '#111214'], ['persol-714', 'Persol 714', '#6b4a2b']], null, 'Snow glare is brutal at 8,000 ft'),
+    scarf: SG('Scarf', 'scarf', 'scarf', 1, false, 1,
+      [['joe-ribbed-scarf-black', 'Johnstons ribbed', '#1d1f22'], ['begg-arran-loden', 'Begg x Co Arran', '#4b5a3c'], ['inis-herringbone-scarf', 'Inis Meáin', '#8a8578']],
+      [['begg-arran-stole-black', 'Begg x Co stole', '#1d1f22'], ['joe-ribbed-scarf-black', 'Johnstons ribbed', '#1d1f22'], ['toteme-monogram-scarf', 'Toteme scarf', '#c9b79a']]),
+    skijacket: SG('Ski / snow jacket', 'coat', 'jacket', 3, true, 0,
+      [['stio-environ-jkt-m', 'Stio Environ', '#2f4a3a'], ['pata-snowdrifter-jkt-m', 'Patagonia Snowdrifter', '#1d1f22'], ['arc-beta-ar-jkt-m', 'Arc’teryx Beta AR', '#1d1f22']],
+      [['stio-environ-jkt-w', 'Stio Environ', '#2f4a3a'], ['pata-ins-powder-town-jkt-w', 'Patagonia Powder Town', '#22314f'], ['arc-beta-ar-jkt-w', 'Arc’teryx Beta AR', '#1d1f22']], 'Waterproof shell — or rent one (Ski tab)'),
+    skipants: SG('Ski / snow pants', 'bottom', 'skipants', 2, true, 0,
+      [['hh-legendary-pant-m', 'Helly Hansen Legendary', '#1d1f22'], ['stio-environ-pant-m', 'Stio Environ', '#1d1f22'], ['flylow-baker-ins-bib-m', 'Flylow Baker bib', '#1d1f22']],
+      [['tnf-freedom-ins-pant-w', 'North Face Freedom', '#1d1f22'], ['stio-environ-bib-w', 'Stio Environ bib', '#1d1f22'], ['hh-powderqueen-bib-w', 'Helly Hansen Powderqueen', '#1d1f22']], 'Waterproof — or rent (Ski tab)'),
+    base: SG('Base layers', 'top', 'base', 1, false, 0,
+      [['pata-cap-mid-crew-m', 'Patagonia Capilene', '#1d1f22'], ['sw-classic-thermal-crew-m-brand', 'Smartwool Thermal', '#22314f'], ['icebreaker-260-crewe-m', 'Icebreaker 260', '#4a4e54']],
+      [['evo-heavy-merino-crew-w', 'evo merino', '#1d1f22'], ['sw-classic-thermal-crew-w', 'Smartwool Thermal', '#2e4a4a']], 'Merino or synthetic — no cotton next to skin'),
+    socks: SG('Ski socks', null, 'socks', 0, false, 0,
+      [['sw-full-cushion-otc-m', 'Smartwool OTC', '#4a4e54'], ['dt-edge-otc-m', 'Darn Tough Edge', '#4a4e54']],
+      [['sw-full-cushion-otc-w', 'Smartwool OTC', '#4a4e54'], ['dt-edge-otc-w', 'Darn Tough Edge', '#4a4e54']], 'One thin-to-mid merino pair in the boot'),
+    goggles: SG('Goggles', 'sunglasses', 'goggles', 0, false, 0,
+      [['smith-squad', 'Smith Squad', '#1d1f22'], ['smith-io-mag', 'Smith I/O MAG', '#1d1f22'], ['smith-4d-mag', 'Smith 4D MAG', '#1d1f22']], null, 'Low-light lens for snowy days'),
+    skigloves: SG('Waterproof gloves', 'gloves', 'gloves', 1.5, true, 0,
+      [['burton-gtx-glove-m', 'Burton GORE-TEX', '#1d1f22'], ['hestra-fall-line-loden', 'Hestra Fall Line', '#5a5f3e'], ['bd-mercury-mitt', 'Black Diamond Mercury', '#1d1f22']],
+      [['burton-gtx-glove-w', 'Burton GORE-TEX', '#1d1f22'], ['dakine-sequoia-glove-w', 'Dakine Sequoia', '#1d1f22'], ['bd-mercury-mitt', 'Black Diamond Mercury', '#1d1f22']], 'Lifts + the snowmobile'),
+    gaiter: SG('Neck gaiter', 'scarf', 'gaiter', 0.5, false, 0,
+      [['blackstrap-tube', 'BlackStrap Tube', '#1d1f22'], ['sw-merino-neck-gaiter', 'Smartwool merino', '#4a4e54']], null, 'Pull it up on the lift'),
+    swim: SG('Swimsuit', 'bottom', 'swim', 0, false, 0,
+      [['pata-baggies-7-m', 'Patagonia Baggies', '#22314f'], ['pata-wavefarer-volley-m', 'Patagonia Wavefarer', '#1d1f22']],
+      [['pata-cross-shore-onepiece-w', 'Patagonia Cross Shore', '#1d1f22'], ['rhythm-classic-onepiece-w', 'Rhythm one-piece', '#1d1f22']], 'Iron Mountain Hot Springs'),
+    sandals: SG('Flip-flops', 'shoes', 'sandal', 0, false, 0,
+      [['reef-cushion-phantom-m', 'Reef', '#1d1f22'], ['olukai-ohana-m', 'OluKai ʻOhana', '#1d1f22']],
+      [['reef-cushion-vista-w', 'Reef', '#1d1f22'], ['olukai-ohana-w', 'OluKai ʻOhana', '#1d1f22']], 'For the pool deck'),
+    dinner: SG('Dinner layer', 'coat', 'blazer', 1, false, 2,
+      [['ss-havana-blazer-navy', 'Suitsupply blazer', '#1f2a44'], ['drakes-wool-overshirt', 'Drake’s overshirt', '#1f2a44'], ['mashburn-cashmere-chore', 'Mashburn chore jacket', '#3a3d42']],
+      [['am-primrose-blazer', 'Alex Mill blazer', '#1d1f22'], ['toteme-skater-dress', 'Toteme dress', '#1d1f22'], ['frame-silk-blouse', 'FRAME silk blouse', '#1d1f22']], 'Casa Tua: jackets encouraged · NYE is dressy')
+  };
+  STARTER.dinner.wKinds = { 'toteme-skater-dress': ['bottom', 'trousers'], 'frame-silk-blouse': ['top', 'shirt'] };
+
+  /* "+ Add to suitcase" categories → mannequin slot + defaults; the name refines it (e.g. "ski pants", "snow boots"). */
+  var IV_CATS = [
+    { k: 'hat', l: 'Hat', slot: 'hat', kind: 'beanie', warmth: 0.5 }, { k: 'sunglasses', l: 'Sunglasses', slot: 'sunglasses', kind: 'shades', warmth: 0 },
+    { k: 'scarf', l: 'Scarf', slot: 'scarf', kind: 'scarf', warmth: 1 }, { k: 'coat', l: 'Coat', slot: 'coat', kind: 'coat', warmth: 2 },
+    { k: 'top', l: 'Top', slot: 'top', kind: 'tee', warmth: 0.5 }, { k: 'bottom', l: 'Bottom', slot: 'bottom', kind: 'jeans', warmth: 1 },
+    { k: 'gloves', l: 'Gloves', slot: 'gloves', kind: 'gloves', warmth: 1 }, { k: 'shoes', l: 'Shoes', slot: 'shoes', kind: 'sneaker', warmth: 0.5 },
+    { k: 'base', l: 'Thermal / base', slot: 'top', kind: 'base', warmth: 1 }, { k: 'ski', l: 'Ski / snow', slot: null, kind: 'ski', warmth: 1 },
+    { k: 'swim', l: 'Swim', slot: 'bottom', kind: 'swim', warmth: 0 }
+  ];
+  var IV_COLORS = [['Black', '#1b1d20'], ['Charcoal', '#4a4e54'], ['Grey', '#8a8f96'], ['White', '#f1efe8'], ['Cream', '#e6dcc6'], ['Brown', '#6b4a33'], ['Tan', '#b08a5a'],
+    ['Navy', '#22314f'], ['Blue', '#3e5f8a'], ['Olive', '#5a5f3e'], ['Green', '#2f4a3a'], ['Burgundy', '#6e2a2a'], ['Red', '#a33a32']];
+  function catOf(k) { var r = IV_CATS[0]; IV_CATS.forEach(function (c) { if (c.k === k) r = c; }); return r; }
+  /* category + name → item attributes */
+  function itemFromForm(name, cat, color, wp) {
+    var c = catOf(cat), n = name.toLowerCase(), it = { slot: c.slot, kind: c.kind, warmth: c.warmth, waterproof: false, windproof: false, dressy: 1 };
+    function set(slot, kind, warmth, waterproof, dressy) { it.slot = slot; it.kind = kind; it.warmth = warmth; if (waterproof) { it.waterproof = it.windproof = true; } if (dressy !== undefined) it.dressy = dressy; }
+    if (cat === 'hat' && /helmet/.test(n)) set('hat', 'helmet', 0.5, false, 0);
+    if (cat === 'sunglasses' && /goggle/.test(n)) set('sunglasses', 'goggles', 0, false, 0);
+    if (cat === 'scarf' && /gaiter|buff|balaclava|tube/.test(n)) set('scarf', 'gaiter', 0.5, false, 0);
+    if (cat === 'coat') {
+      if (/ski|snowboard|shell|insulated|gore|beta|parka|puffer|down/.test(n)) set('coat', 'jacket', 3, /ski|snowboard|shell|gore|beta|waterproof/.test(n), 0);
+      else if (/blazer|sport coat|suit/.test(n)) set('coat', 'blazer', 1, false, 2);
+      else if (/overshirt|shacket|chore|shirt jacket/.test(n)) set('coat', 'overshirt', 1.5, false, 2);
+      else it.dressy = 2;
+    }
+    if (cat === 'top') {
+      if (/henley/.test(n)) set('top', 'henley', 1);
+      else if (/sweater|cashmere|knit|crew|jumper|cardigan|hoodie|fleece/.test(n)) set('top', 'sweater', 1.5);
+      else if (/turtle|roll ?neck|mock/.test(n)) set('top', 'sweater', 1.2, false, 2);
+      else if (/shirt|button|oxford|blouse|silk/.test(n) && !/t-?shirt/.test(n)) set('top', 'shirt', 0.5, false, 2);
+      else it.dressy = 0;
+    }
+    if (cat === 'bottom') {
+      if (/trouser|slack|chino|wool pant|dress pant/.test(n)) set('bottom', 'trousers', 1, false, 2);
+      else if (/dress|skirt/.test(n)) set('bottom', 'trousers', 0.8, false, 2);
+      else if (/ski|snow|bib/.test(n)) set('bottom', 'skipants', 2, true, 0);
+      else if (/jogger|sweat|legging/.test(n)) set('bottom', 'trousers', 1, false, 0);
+    }
+    if (cat === 'gloves' && /ski|mitt|gore|waterproof|snow/.test(n)) set('gloves', 'gloves', 1.5, true, 0);
+    if (cat === 'shoes') {
+      if (/snow|winter|sorel|blundstone|danner|duck|insulated|waterproof|thermal/.test(n)) set('shoes', 'boot', 2, true, 1);
+      else if (/boot|chelsea/.test(n)) set('shoes', 'boot', 1, false, 2);
+      else if (/sandal|flip|slide/.test(n)) set('shoes', 'sandal', 0, false, 0);
+      else if (/loafer|derby|oxford|heel|dress/.test(n)) set('shoes', 'sneaker', 0.5, false, 2);
+    }
+    if (cat === 'base' && /bottom|legging|long john|tight|underwear/.test(n)) set(null, 'base', 1, false, 0);
+    if (cat === 'ski') {
+      if (/pant|bib/.test(n)) set('bottom', 'skipants', 2, true, 0);
+      else if (/jacket|shell|coat|parka/.test(n)) set('coat', 'jacket', 3, true, 0);
+      else if (/glove|mitt/.test(n)) set('gloves', 'gloves', 1.5, true, 0);
+      else if (/goggle/.test(n)) set('sunglasses', 'goggles', 0, false, 0);
+      else if (/helmet/.test(n)) set('hat', 'helmet', 0.5, false, 0);
+      else if (/gaiter|buff|balaclava/.test(n)) set('scarf', 'gaiter', 0.5, false, 0);
+      else if (/sock/.test(n)) set(null, 'socks', 0, false, 0);
+      else if (/base|thermal|merino/.test(n)) set('top', 'base', 1, false, 0);
+      else set(null, 'ski', 1, false, 0);
+    }
+    if (cat === 'swim' && /sandal|flip|slide/.test(n)) set('shoes', 'sandal', 0, false, 0);
+    if (wp) it.waterproof = it.windproof = true;
+    it.name = name; it.short = name.length > 22 ? name.slice(0, 21) + '…' : name; it.cat = cat; it.color = color || '#4a4e54';
+    return it;
+  }
+
+  /* ---- who: the outfits view follows window.AspenWho; viewing someone else never changes it ---- */
+  var IV_SUIT = 'aspenSuitcase_v1';       /* {person: {itemId: item}} — synced per person (people/{person}) */
   var IV_FITS = 'aspenInvFits_v1', IV_BOUGHT = 'aspenInvBought_v1', IV_MOM = 'aspenInvMoment_v1', IV_WX = 'aspenInvWx_v1';
-  var ivFits = {}, ivBought = {}, ivMom = 'd1-ski', ivDraft = {}, ivSel = null, ivWx = null;
-  try { ivFits = JSON.parse(localStorage.getItem(IV_FITS) || '{}') || {}; } catch (e) { ivFits = {}; }
-  try { ivBought = JSON.parse(localStorage.getItem(IV_BOUGHT) || '{}') || {}; } catch (e) { ivBought = {}; }
+  var ivFits = {}, ivBought = {}, ivSuit = {}, ivMom = 'd1-ski', ivDraft = {}, ivSel = null, ivWx = null;
+  var ivMine = 'everyone', ivWho = 'griffin', ivEdit = false, ivMenu = false, ivForm = null, ivMustOpen = {};
+  function rdLS(k) { try { return JSON.parse(localStorage.getItem(k) || '{}') || {}; } catch (e) { return {}; } }
+  ivFits = rdLS(IV_FITS); ivBought = rdLS(IV_BOUGHT); ivSuit = rdLS(IV_SUIT);
   try { ivMom = localStorage.getItem(IV_MOM) || 'd1-ski'; } catch (e) {}
   try { var wx0 = JSON.parse(localStorage.getItem(IV_WX) || 'null'); if (wx0 && Date.now() - wx0.t < 6 * 3600e3) ivWx = wx0.d; } catch (e) {}
-
   function ivSave(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
-  function ivMoment(id) { var r = null; INV_DAYS.forEach(function (d) { d.moments.forEach(function (m) { if (m.id === id) { r = m; r._day = d; } }); }); return r; }
-  if (!ivMoment(ivMom)) ivMom = 'd1-ski';
+  function isPerson(p) { return !!(p && OUTFITS.people[p]); }
+  function canEdit() { return isPerson(ivMine) && ivWho === ivMine; }
+  function pname(p) { return (OUTFITS.people[p] || {}).name || p; }
+  function cutOf(p) { return (PERSONA[p] && PERSONA[p].cut) || (OUTFITS.people[p] || {}).cut || 'menswear'; }
+
+  /* ---- each person's own days + moments (role from OUTFITS.people[p].plan) ---- */
+  var IV_BELLY = ['griffin', 'marco', 'stella', 'ben'];   /* the four Belly Up ticket holders */
+  var IV_SKI_AT = { d1: 'Snowmass', d2: 'Ajax', d4: 'Highlands', d6: 'Snowmass' };
+  function personDays(p) {
+    var plan = (OUTFITS.people[p] || {}).plan || {};
+    return INV_DAYS.map(function (d) {
+      var nd = { id: d.id, date: d.date, d: d.d, moments: [] };
+      d.moments.forEach(function (m) {
+        var c = {}; for (var k in m) c[k] = m[k];
+        if (m.belly && IV_BELLY.indexOf(p) < 0) { c.l = 'Dinner'; c.t = 'Wild Fig · 6:30'; c.exp = 'town'; }
+        if (m.exp === 'ski') {
+          var r = plan[d.id];
+          if (r === 'board') { c.l = 'Riding'; c.t = IV_SKI_AT[d.id] + ' · snowboard'; }
+          else if (r === 'lesson') { c.l = 'Ski lesson'; c.t = 'Buttermilk · meet 9:45'; c.exp = 'lesson'; }
+          else if (r === 'nonski' || !r) { c.l = 'Town day'; c.t = 'Aspen'; c.exp = 'day'; c.rule = null; c.same = null; }
+        }
+        if (c.same) { var sm = null; INV_DAYS.forEach(function (dd) { dd.moments.forEach(function (mm) { if (mm.id === c.same) sm = { d: dd, m: mm }; }); });
+          if (sm && sm.m.exp === 'ski' && !/^(ski|board|lesson)$/.test(plan[sm.d.id] || '')) c.same = null; }
+        nd.moments.push(c);
+      });
+      return nd;
+    });
+  }
+  var ivDays = INV_DAYS;
+  function ivMoment(id) { var r = null; ivDays.forEach(function (d) { d.moments.forEach(function (m) { if (m.id === id) { r = m; r._day = d; } }); }); return r; }
 
   /* ---- items ---- */
-  function addEntry(pid) { var r = null; (ADDITIONS[INV_PERSON] || []).forEach(function (g) { g.items.forEach(function (it) { if (it.pid === pid) r = { g: g, it: it }; }); }); return r; }
-  function prodItem(pid) {
-    var e = addEntry(pid), p = PROD[pid]; if (!e || !p) return null;
-    return { id: pid, ref: 'p:' + pid, name: p.brand + ' — ' + p.name, short: e.it.short, slot: e.g.slot, kind: e.it.kind || e.g.kind, warmth: e.it.warmth !== undefined ? e.it.warmth : e.g.warmth,
-      waterproof: e.g.waterproof, windproof: e.g.windproof, dressy: e.g.dressy, color: e.it.color, img: p.img, url: p.url, brand: p.brand, tier: p.tier, cut: p.cut };
+  function addEntry(pid, who) {
+    var r = null; who = who || ivWho;
+    (ADDITIONS[who] || []).forEach(function (g) { g.items.forEach(function (it) { if (it.pid === pid) r = { g: g, it: it }; }); });
+    if (r) return r;
+    var cut = cutOf(who) === 'womenswear' ? 'w' : 'm';
+    Object.keys(STARTER).forEach(function (k) {
+      var g = STARTER[k], list = (g[cut] || []).concat(g.m && !g.w ? [] : []);
+      if (!g.w) list = g.m;            /* unisex groups only list m */
+      list.forEach(function (x) { if (!r && x[0] === pid) { var it = { pid: x[0], short: x[1], color: x[2] }; var wk = g.wKinds && g.wKinds[pid]; if (wk) { it.slot = wk[0]; it.kind = wk[1]; } r = { g: g, it: it }; } });
+    });
+    return r;
   }
-  function bought(pid) { return (ivBought[INV_PERSON] || []).indexOf(pid) >= 0; }
-  function suitcase() {
-    var list = (SUITCASE[INV_PERSON] || []).map(function (it) { var c = {}; for (var k in it) c[k] = it[k]; c.ref = 'i:' + it.id; return c; });
-    (ivBought[INV_PERSON] || []).forEach(function (pid) { var p = prodItem(pid); if (p) { p.owned = true; list.push(p); } });
-    return list;
+  function prodItem(pid, who) {
+    var e = addEntry(pid, who), p = PROD[pid]; if (!e || !p) return null;
+    return { id: pid, ref: 'p:' + pid, name: p.brand + ' — ' + p.name, short: e.it.short, slot: e.it.slot !== undefined ? e.it.slot : e.g.slot, kind: e.it.kind || e.g.kind,
+      warmth: e.it.warmth !== undefined ? e.it.warmth : e.g.warmth, waterproof: e.it.waterproof !== undefined ? e.it.waterproof : e.g.waterproof, windproof: e.g.windproof,
+      dressy: e.it.dressy !== undefined ? e.it.dressy : e.g.dressy, color: e.it.color, why: e.it.why || '', noTry: !!e.it.noTry || !e.g.slot,
+      img: p.img, url: p.url, brand: p.brand, tier: p.tier, cut: p.cut };
+  }
+  function bought(pid, who) { return (ivBought[who || ivWho] || []).indexOf(pid) >= 0; }
+  function userItems(who) { var o = ivSuit[who || ivWho] || {}; return Object.keys(o).map(function (k) { var c = {}; for (var x in o[k]) c[x] = o[k][x]; c.id = k; c.ref = 'u:' + k; c.user = true; return c; }).sort(function (a, b) { return (a.at || 0) - (b.at || 0); }); }
+  function suitcase(who) {
+    who = who || ivWho;
+    var list = (SUITCASE[who] || []).map(function (it) { var c = {}; for (var k in it) c[k] = it[k]; c.ref = 'i:' + it.id; return c; });
+    (ivBought[who] || []).forEach(function (pid) { var p = prodItem(pid, who); if (p) { p.owned = true; list.push(p); } });
+    return list.concat(userItems(who));
   }
   function ivItem(ref) {
     if (!ref) return null;
-    if (ref.slice(0, 2) === 'i:') { var id = ref.slice(2), r = null; (SUITCASE[INV_PERSON] || []).forEach(function (it) { if (it.id === id) { r = {}; for (var k in it) r[k] = it[k]; r.ref = ref; } }); return r; }
-    var p = prodItem(ref.slice(2)); if (p) p.preview = !bought(ref.slice(2)); return p;
+    var kind = ref.slice(0, 2), id = ref.slice(2), r = null;
+    if (kind === 'i:') { (SUITCASE[ivWho] || []).forEach(function (it) { if (it.id === id) { r = {}; for (var k in it) r[k] = it[k]; r.ref = ref; } }); return r; }
+    if (kind === 'u:') { userItems().forEach(function (it) { if (it.id === id) r = it; }); return r; }
+    var p = prodItem(id); if (p) p.preview = !bought(id); return p;
   }
+
+  /* ---- must-haves: from the person's itinerary role + trip requirements (not guesses about them) ---- */
+  function has(items, fn) { return items.some(fn); }
+  var MUST_TESTS = {
+    wpBoots: function (x) { return x.slot === 'shoes' && x.kind === 'boot' && x.waterproof; },
+    coat: function (x) { return x.slot === 'coat' && x.warmth >= 2; },
+    gloves: function (x) { return x.slot === 'gloves'; },
+    beanie: function (x) { return x.slot === 'hat' && x.kind === 'beanie'; },
+    sunglasses: function (x) { return x.slot === 'sunglasses' && x.kind !== 'goggles'; },
+    id: function (x) { return x.kind === 'id'; },
+    wpOuter: function (x) { return x.slot === 'coat' && x.waterproof; },
+    wpPants: function (x) { return x.slot === 'bottom' && (x.kind === 'skipants' || x.waterproof); },
+    base: function (x) { return x.kind === 'base'; },
+    socks: function (x) { return x.kind === 'socks'; },
+    goggles: function (x) { return x.kind === 'goggles'; },
+    wpGloves: function (x) { return x.slot === 'gloves' && x.waterproof; },
+    gaiter: function (x) { return x.kind === 'gaiter'; },
+    swim: function (x) { return x.kind === 'swim'; },
+    sandals: function (x) { return x.kind === 'sandal'; }
+  };
+  function mustList(p) {
+    var plan = (OUTFITS.people[p] || {}).plan || {}, rides = ['d1', 'd2', 'd4', 'd6'].some(function (d) { return /^(ski|board|lesson)$/.test(plan[d] || ''); });
+    var board = plan.d1 === 'board', men = cutOf(p) !== 'womenswear', G = [];
+    G.push({ g: 'Everyday', items: [['wpBoots', 'Insulated waterproof boots with tread', 'boots'], ['coat', 'Warm coat', 'coat'], ['gloves', 'Gloves', 'gloves'],
+      ['beanie', 'Beanie', 'beanie'], ['sunglasses', 'Sunglasses', 'sunglasses'], ['id', 'Photo ID (flights · Belly Up is 21+)', null]] });
+    if (rides) G.push({ g: board ? 'Ride days' : 'Ski days', note: 'Helmet: rent it with your ' + (board ? 'board' : 'skis') + ' at Four Mountain Sports.', items: [
+      ['wpOuter', board ? 'Snowboard / ski jacket' : 'Ski jacket', 'skijacket', 'rent'], ['wpPants', board ? 'Snowboard pants' : 'Ski pants', 'skipants', 'rent'], ['base', 'Base layers', 'base'],
+      ['socks', 'Ski socks', 'socks'], ['goggles', 'Goggles', 'goggles'], ['wpGloves', board ? 'Waterproof gloves or mittens' : 'Ski gloves', 'skigloves'], ['gaiter', 'Neck gaiter', 'gaiter']] });
+    G.push({ g: 'Snowmobile', note: 'Helmets provided — bring everything else.', items: [['wpOuter', 'Warm waterproof jacket', 'skijacket', 'rent'], ['wpPants', 'Snow pants', 'skipants', 'rent'],
+      ['wpGloves', 'Waterproof gloves', 'skigloves'], ['wpBoots', 'Snow boots', 'boots']] });
+    G.push({ g: 'Hot springs', items: [['swim', men ? 'Swim trunks' : 'Swimsuit', 'swim'], ['sandals', 'Flip-flops', 'sandals']] });
+    G.push({ g: 'Dinners', items: [['elevated', men ? 'One elevated outfit — Casa Tua: jackets encouraged' : 'One dressy outfit for NYE', 'dinner']] });
+    /* each requirement counted once (first group wins) */
+    var per = PERSONA[p] || {};
+    if (per.teeIsBase) G.forEach(function (g) { g.items = g.items.filter(function (x) { return x[0] !== 'base'; }); if (/^(Ski|Ride) days$/.test(g.g)) g.note = (g.note ? g.note + ' ' : '') + 'Base: a tee under the Beta works for you — thermals optional.'; });
+    var seen = {}; G.forEach(function (g) { g.items = g.items.filter(function (x) { if (seen[x[0]]) return false; seen[x[0]] = 1; return true; }); });
+    return G.filter(function (g) { return g.items.length; });
+  }
+  function mustCovered(key, items) {
+    if (key === 'elevated') return items.filter(function (x) { return x.dressy >= 2; }).length >= 2 || has(items, function (x) { return x.kind === 'blazer' || x.kind === 'overshirt'; });
+    return has(items, MUST_TESTS[key]);
+  }
+  function starterPicks(key, who) {
+    var g = STARTER[key]; if (!g) return [];
+    var cut = cutOf(who) === 'womenswear' ? 'w' : 'm', list = g.w ? g[cut] : g.m;
+    return (list || []).filter(function (x) { var p = PROD[x[0]]; return p && (p.cut === 'unisex' || p.cut === cutOf(who)); });
+  }
+
+  /* ---- outfit for the current moment ---- */
+  function dk(mid) { return ivWho + '|' + mid; }
+  function savedFit(pid, mid) {
+    var l = ivFits[pid] && ivFits[pid][mid];
+    if (l === null) return null;
+    return l || (INV_SEED[pid] && INV_SEED[pid][mid]) || null;
+  }
+  function isSaved(mid) { var f = savedFit(ivWho, mid); return !!(f && Object.keys(f).length); }
+  function curFit2() {
+    if (ivDraft[dk(ivMom)]) return ivDraft[dk(ivMom)];
+    var s = savedFit(ivWho, ivMom), f = {};
+    if (s) { for (var k in s) f[k] = s[k]; }
+    else {
+      var m = ivMoment(ivMom), list = m._day.moments, i = list.indexOf(m), prev = i > 0 ? (ivDraft[dk(list[i - 1].id)] || savedFit(ivWho, list[i - 1].id)) : null;
+      if (prev && m.carry) m.carry.forEach(function (k) { if (prev[k]) f[k] = prev[k]; });
+    }
+    /* drop anything that's no longer in the suitcase */
+    Object.keys(f).forEach(function (k) { if (!ivItem(f[k])) delete f[k]; });
+    return (ivDraft[dk(ivMom)] = f);
+  }
+  function dirty() { var s = savedFit(ivWho, ivMom) || {}, f = curFit2(); return JSON.stringify(sortObj(s)) !== JSON.stringify(sortObj(f)); }
+  function sortObj(o) { var r = {}; Object.keys(o).sort().forEach(function (k) { if (o[k]) r[k] = o[k]; }); return r; }
 
   /* ---- weather + exposure ---- */
   function windChill(t, v) { return (t > 50 || v < 3) ? t : 35.74 + 0.6215 * t - 35.75 * Math.pow(v, 0.16) + 0.4275 * t * Math.pow(v, 0.16); }
@@ -6560,10 +7002,11 @@ body.gated .wh-fab{display:none;}
     switch (m.exp) {
       case 'ski': t = windChill(w.hi - 12, Math.max(10, w.wind * 2.5)); txt = 'summit ' + Math.round(t) + '°F with wind'; break;
       case 'sled': var t0 = w.lo + 0.4 * (w.hi - w.lo); t = windChill(t0, w.wind + 20); txt = Math.round(t) + '°F wind chill at speed'; break;
+      case 'lesson': t = windChill(w.hi - 6, Math.max(5, w.wind * 1.5)); txt = Math.round(t) + '°F at Buttermilk'; break;
       case 'base': t = w.hi - 4; txt = Math.round(t) + '°F at the base'; break;
       case 'day': t = w.hi - 2; txt = Math.round(t) + '°F downtown'; break;
-      case 'town': t = w.lo + 6; txt = Math.round(t) + '°F on the walk'; break;
-      case 'late': t = w.lo + 3; txt = Math.round(t) + '°F late'; break;
+      case 'town': t = w.lo + 6; txt = 'walk ' + Math.round(t) + '°F · warm inside'; break;
+      case 'late': t = w.lo + 3; txt = 'walk home ' + Math.round(t) + '°F · warm inside'; break;
       case 'nye': t = windChill(w.lo + 4, w.wind); txt = Math.round(t) + '°F at the fireworks'; break;
       case 'springs': t = w.hi + 8; txt = Math.round(t) + '°F in Glenwood · pools ~100°F'; break;
       case 'travel': t = w.hi - 5; txt = Math.round(t) + '°F on I-70'; break;
@@ -6584,42 +7027,23 @@ body.gated .wh-fab{display:none;}
     var it = {}; INV_SLOTS.forEach(function (s) { it[s.k] = ivItem(f[s.k]); });
     var any = INV_SLOTS.some(function (s) { return it[s.k]; }); if (!any) return '';
     var w = exposure(m).wx, shoes = it.shoes, snow = w.src === 'forecast' ? (w.snowIn || 0) >= 0.2 : w.pSnow >= 0.45;
+    if (m.rule === 'sled' && !(it.coat && it.coat.waterproof)) return 'Snowmobile: a warm waterproof jacket — open cold for 2.5 hours.';
     if (m.rule === 'sled' && !(shoes && shoes.waterproof)) return 'Snowmobile: deep snow — waterproof boots needed.';
-    if (m.rule === 'ski' && !(it.bottom && it.bottom.waterproof)) return 'Ski pants needed — rent or pack a pair.';
+    if (m.rule === 'ski' && !(it.bottom && it.bottom.waterproof)) return (m.l === 'Riding' ? 'Snowboard' : 'Ski') + ' pants needed — rent or pack a pair.';
     if (m.rule === 'ski' && !it.gloves) return 'Add waterproof ski gloves.';
-    if (m.rule === 'swim') return 'Hot springs: swim trunks — not in the suitcase yet.';
+    if (m.rule === 'swim' && !(it.bottom && it.bottom.kind === 'swim')) return 'Hot springs: add your swimsuit' + (suitcase().some(function (x) { return x.kind === 'swim' && !x.preview; }) ? '.' : ' — not in the suitcase yet.');
     if (snow && m.exp !== 'home' && m.exp !== 'springs' && shoes && !shoes.waterproof) return 'Snow likely — ' + shoes.short + ' aren’t waterproof. Swap to boots.';
     /* Casa Tua's house rules ban only ripped jeans, hoodies, sleeveless tops (men), sportswear/shorts/caps after 4 PM and sandals —
        a fitted tee or henley is fine. Jackets are encouraged, never required. */
     if (m.rule === 'casatua' && !(it.coat && (it.coat.kind === 'blazer' || it.coat.kind === 'overshirt'))) return 'Casa Tua: jackets encouraged — a blazer or overshirt dresses it up.';
     if (m.rule === 'nye' && shoes && !shoes.waterproof) return 'Icy sidewalks at midnight — boots with grip.';
-    var b = recBand(m), s = fitScore(f);
-    if (s < b.lo) return 'A bit cold for ' + exposure(m).txt.replace(/ with wind| at speed/, '') + ' — add a layer.';
+    var b = recBand(m), s = fitScore(f), evening = /^(town|late|nye)$/.test(m.exp);
+    /* evenings: the warmth bar judges the walk outside (coat on); indoors a short-sleeve tee is fine */
+    if (evening && !it.coat) return 'Bring a coat for the walk — a tee is fine inside.';
+    if (s < b.lo) return evening ? 'A bit cold for the walk — gloves or a scarf help.' : 'A bit cold for ' + exposure(m).txt.replace(/ with wind| at speed/, '') + ' — add a layer.';
     if (s > b.hi) return 'Warm — you could skip a layer.';
     return '';
   }
-
-  /* ---- outfit for the current moment ---- */
-  function savedFit(pid, mid) {
-    var l = ivFits[pid] && ivFits[pid][mid];
-    if (l === null) return null;
-    return l || (INV_SEED[pid] && INV_SEED[pid][mid]) || null;
-  }
-  function isSaved(mid) { var f = savedFit(INV_PERSON, mid); return !!(f && Object.keys(f).length); }
-  function curFit2() {
-    if (ivDraft[ivMom]) return ivDraft[ivMom];
-    var s = savedFit(INV_PERSON, ivMom), f = {};
-    if (s) { for (var k in s) f[k] = s[k]; }
-    else {
-      /* carry over from the day's previous moment */
-      var m = ivMoment(ivMom), list = m._day.moments, i = list.indexOf(m), prev = i > 0 ? (ivDraft[list[i - 1].id] || savedFit(INV_PERSON, list[i - 1].id)) : null;
-      if (prev && m.carry) m.carry.forEach(function (k) { if (prev[k]) f[k] = prev[k]; });
-    }
-    return (ivDraft[ivMom] = f);
-  }
-  function dirty() { var s = savedFit(INV_PERSON, ivMom) || {}, f = curFit2(); return JSON.stringify(sortObj(s)) !== JSON.stringify(sortObj(f)); }
-  function sortObj(o) { var r = {}; Object.keys(o).sort().forEach(function (k) { if (o[k]) r[k] = o[k]; }); return r; }
-
   /* ---- SVG mannequin ---- */
   function mir(d) { return d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g, function (_, x, y) { return (160 - parseFloat(x)) + ' ' + y; }); }
   var FIG = {
@@ -6633,6 +7057,7 @@ body.gated .wh-fab{display:none;}
     longSl: 'M50 64 L37 74 L29 132 L27 178 L41 179 L45 134 L52 96 Z',
     coatL: 'M47 62 Q64 55 78 57 L78 210 L42 210 Z', coatSl: 'M47 62 L33 72 L24 132 L23 182 L42 183 L46 136 L54 96 Z', hood: 'M60 57 Q80 44 100 57 L96 64 Q80 58 64 64 Z',
     pants: 'M54 172 L106 172 L104 262 L101 330 L84 330 L81 204 L79 204 L76 330 L59 330 L56 262 Z',
+    shorts: 'M54 172 L106 172 L105 224 L84 224 L80 200 L76 224 L55 224 Z',
     sneaker: 'M55 326 L78 326 L80 341 L50 341 Z', boot: 'M57 310 L78 310 L80 341 L50 341 Z',
     beanie: 'M64 28 Q64 10 80 10 Q96 10 96 28 Z', band: 'M63 24 L97 24 L97 31 L63 31 Z',
     scarf: 'M65 52 Q80 61 95 52 L97 60 Q80 70 63 60 Z', tail: 'M86 61 L91 96 L84 98 L80 63 Z'
@@ -6645,8 +7070,8 @@ body.gated .wh-fab{display:none;}
     var h = '<svg class="' + (opts.cls || 'iv-fig') + '" viewBox="0 0 160 350" aria-hidden="true" focusable="false">';
     h += '<g class="iv-body">' + FIG.head + '<path d="' + FIG.neck + '"/><path d="' + FIG.torso + '"/><path d="' + FIG.armL + '"/><path d="' + mir(FIG.armL) + '"/><path d="' + FIG.legL + '"/><path d="' + FIG.legR + '"/>' +
       '<circle cx="34" cy="184" r="6"/><circle cx="126" cy="184" r="6"/><ellipse cx="66" cy="334" rx="12" ry="6"/><ellipse cx="94" cy="334" rx="12" ry="6"/></g>';
-    if (it.bottom) h += gp(GAR.pants, it.bottom.color, st(it.bottom));
-    if (it.shoes) { var sd = it.shoes.kind === 'boot' ? GAR.boot : GAR.sneaker; h += '<g' + st(it.shoes) + '>' + gp(sd, it.shoes.color) + gp(mir(sd), it.shoes.color) + '</g>'; }
+    if (it.bottom) h += gp(it.bottom.kind === 'swim' ? GAR.shorts : GAR.pants, it.bottom.color, st(it.bottom));
+    if (it.shoes) { var sd = it.shoes.kind === 'boot' ? GAR.boot : GAR.sneaker; if (it.shoes.kind === 'sandal') sd = 'M55 334 L78 334 L80 341 L50 341 Z'; h += '<g' + st(it.shoes) + '>' + gp(sd, it.shoes.color) + gp(mir(sd), it.shoes.color) + '</g>'; }
     if (it.top) {
       var long = it.top.kind !== 'tee';
       h += '<g' + st(it.top) + '>' + gp(GAR.teeBody, it.top.color) + gp(long ? GAR.longSl : GAR.teeSl, it.top.color) + gp(mir(long ? GAR.longSl : GAR.teeSl), it.top.color) +
@@ -6658,16 +7083,17 @@ body.gated .wh-fab{display:none;}
     }
     if (it.gloves) h += '<g' + st(it.gloves) + '><ellipse cx="34" cy="186" rx="7.5" ry="9.5" fill="' + it.gloves.color + '"/><ellipse cx="126" cy="186" rx="7.5" ry="9.5" fill="' + it.gloves.color + '"/></g>';
     if (it.scarf) h += '<g' + st(it.scarf) + '>' + gp(GAR.scarf, it.scarf.color) + gp(GAR.tail, it.scarf.color) + '</g>';
-    if (it.hat) h += '<g' + st(it.hat) + '>' + gp(GAR.beanie, it.hat.color) + gp(GAR.band, it.hat.color) + '</g>';
-    if (it.sunglasses) h += '<g' + st(it.sunglasses) + '><rect x="66" y="28" width="12" height="7" rx="3" fill="' + it.sunglasses.color + '"/><rect x="82" y="28" width="12" height="7" rx="3" fill="' + it.sunglasses.color + '"/><path d="M78 31 L82 31" stroke="' + it.sunglasses.color + '" stroke-width="1.5"/></g>';
+    if (it.hat) h += '<g' + st(it.hat) + '>' + gp(it.hat.kind === 'helmet' ? 'M61 32 Q61 8 80 8 Q99 8 99 32 Z' : GAR.beanie, it.hat.color) + (it.hat.kind === 'helmet' ? '' : gp(GAR.band, it.hat.color)) + '</g>';
+    if (it.sunglasses && it.sunglasses.kind === 'goggles') h += '<g' + st(it.sunglasses) + '><rect x="62" y="26" width="36" height="11" rx="5" fill="' + it.sunglasses.color + '"/></g>';
+    else if (it.sunglasses) h += '<g' + st(it.sunglasses) + '><rect x="66" y="28" width="12" height="7" rx="3" fill="' + it.sunglasses.color + '"/><rect x="82" y="28" width="12" height="7" rx="3" fill="' + it.sunglasses.color + '"/><path d="M78 31 L82 31" stroke="' + it.sunglasses.color + '" stroke-width="1.5"/></g>';
     return h + '</svg>';
   }
   function ivThumb(it, cls) {
-    var tip = it ? esc(it.name) + ' · warmth ' + it.warmth + '/3 · ' + (it.waterproof ? 'waterproof' : 'not waterproof') : '';
+    var tip = it ? esc(it.name) + (it.slot ? ' · warmth ' + it.warmth + '/3 · ' + (it.waterproof ? 'waterproof' : 'not waterproof') : '') + (it.rented ? ' · renting' : '') : '';
     return '<span class="' + (cls || 'iv-th') + (it && it.img ? ' has-img' : '') + '"' + (it ? ' data-tip="' + tip + '"' : '') + '>' +
-      (it ? (it.img ? '<img src="' + esc(it.img) + '" alt="" decoding="async" draggable="false"' + (it.crop ? ' style="object-fit:cover;object-position:' + it.crop[0] + '% ' + it.crop[1] + '%;transform:scale(' + it.crop[2] + ');transform-origin:' + it.crop[0] + '% ' + it.crop[1] + '%"' : '') + '>' : '<span class="iv-ic" style="color:' + esc(it.color) + '">' + ivIcon(KIND_IC[it.kind] || 'tag') + '</span>') : '') + '</span>';
+      (it ? (it.img ? '<img src="' + esc(it.img) + '" alt="" decoding="async" draggable="false"' + (it.frame ? ' style="object-fit:cover;object-position:' + it.frame[0] + '% ' + it.frame[1] + '%;padding:4%"' : '') + '>' : '<span class="iv-ic" style="color:' + esc(it.color) + '">' + ivIcon(KIND_IC[it.kind] || 'tag') + '</span>') : '') + '</span>';
   }
-  var KIND_IC = { jacket: 'jacket', coat: 'coat', blazer: 'blazer', overshirt: 'blazer', henley: 'sweater', tee: 'tee', shirt: 'shirt', sweater: 'sweater', jeans: 'pants', trousers: 'pants', sneaker: 'shoe', boot: 'boot', beanie: 'beanie', shades: 'sun', scarf: 'scarf', gloves: 'glove' };
+  var KIND_IC = { helmet: 'beanie', goggles: 'sun', gaiter: 'scarf', socks: 'sock', swim: 'swim', sandal: 'sandal', skipants: 'pants', id: 'id', ski: 'tag', base: 'tee', jacket: 'jacket', coat: 'coat', blazer: 'blazer', overshirt: 'blazer', henley: 'sweater', tee: 'tee', shirt: 'shirt', sweater: 'sweater', jeans: 'pants', trousers: 'pants', sneaker: 'shoe', boot: 'boot', beanie: 'beanie', shades: 'sun', scarf: 'scarf', gloves: 'glove' };
   var IV_IC = {
     jacket: '<path d="M17 8l-7 4-3 12 5 2v14h24V26l5-2-3-12-7-4-4 4h-6z"/><path d="M24 12v28"/>',
     coat: '<path d="M18 7l-7 4-2 30h8l2-14M30 7l7 4 2 30h-8l-2-14"/><path d="M18 7l6 12 6-12M24 19v22"/>',
@@ -6682,17 +7108,34 @@ body.gated .wh-fab{display:none;}
     scarf: '<path d="M14 10c6 4 14 4 20 0l2 6c-6 4-18 4-24 0z"/><path d="M28 18l-2 22 6 1 2-22"/>',
     beanie: '<path d="M10 32c0-10 6-18 14-18s14 8 14 18z"/><path d="M8 32h32v6H8z"/>',
     sun: '<path d="M5 20h38"/><path d="M7 20c0 8 3 11 8 11s7-4 7-11M41 20c0 8-3 11-8 11s-7-4-7-11"/>',
-    tag: '<path d="M8 22V8h14l18 18-14 14z"/><circle cx="15" cy="15" r="2.5"/>'
+    tag: '<path d="M8 22V8h14l18 18-14 14z"/><circle cx="15" cy="15" r="2.5"/>',
+    sock: '<path d="M18 6h12v20l-2 8c-1 5-5 8-10 8h-4c-3 0-5-2-5-5s2-5 5-5h2z"/><path d="M18 12h12"/>',
+    swim: '<path d="M10 14h28l-2 20c-5 0-8-3-10-8-2 5-5 8-10 8z"/><path d="M10 19h28"/>',
+    sandal: '<path d="M10 38c-2-12 2-28 10-28s10 10 8 28z"/><path d="M14 24l5 4 5-4"/>',
+    id: '<rect x="6" y="12" width="36" height="24" rx="3"/><circle cx="17" cy="23" r="4"/><path d="M26 20h10M26 26h8"/>'
   };
   function ivIcon(k) { return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (IV_IC[k] || IV_IC.tag) + '</svg>'; }
-
   /* ---- render ---- */
+  function whoBar() {
+    var own = canEdit(), h = '<div class="iv-whobar">';
+    if (!isPerson(ivMine)) h += '<p class="iv-whohint">Pick who you are (top of the page) to build your closet — here’s ' + esc(pname(ivWho)) + '’s as an example.</p>';
+    h += '<div class="iv-whorow"><button type="button" class="iv-whobtn" data-iv-menu="1" aria-haspopup="true" aria-expanded="' + ivMenu + '"><span class="iv-av" aria-hidden="true">' + esc(pname(ivWho).charAt(0)) + '</span>' +
+      (own ? esc(pname(ivWho)) + '’s closet' : 'Viewing ' + esc(pname(ivWho)) + '’s closet') + ' <span aria-hidden="true">▾</span></button>' +
+      (!own && isPerson(ivMine) ? '<button type="button" class="iv-lnk iv-back" data-iv-view="' + ivMine + '">Back to mine</button>' : '') +
+      (!own ? '<span class="iv-ro">View only</span>' : '') + '</div>';
+    if (ivMenu) h += '<div class="iv-menu" role="menu">' + OUTFITS.order.map(function (p) {
+      return '<button type="button" role="menuitemradio" aria-checked="' + (p === ivWho) + '" class="iv-mi' + (p === ivWho ? ' is-on' : '') + '" data-iv-view="' + p + '">' + esc(pname(p)) + (p === ivMine ? ' <i>you</i>' : '') + '</button>';
+    }).join('') + '</div>';
+    return h + '</div>';
+  }
   function invRender() {
     var root = $('ofInv'); if (!root) return;
-    var m = ivMoment(ivMom), day = m._day, f = curFit2(), band = recBand(m), score = fitScore(f), warn = ivWarning(m, f);
-    var h = '';
+    ivDays = personDays(ivWho);
+    if (!ivMoment(ivMom)) ivMom = ivDays[1].moments[0].id;
+    var m = ivMoment(ivMom), day = m._day, f = curFit2(), band = recBand(m), score = fitScore(f), warn = ivWarning(m, f), own = canEdit();
+    var h = whoBar() + personaLine(ivWho);
     /* day chips */
-    h += '<div class="iv-rows"><div class="iv-days" role="tablist" aria-label="Day">' + INV_DAYS.map(function (d) {
+    h += '<div class="iv-rows"><div class="iv-days" role="tablist" aria-label="Day">' + ivDays.map(function (d) {
       var on = d.id === day.id, dots = d.moments.map(function (mm) { return '<i class="' + (isSaved(mm.id) ? 'on' : '') + '"></i>'; }).join('');
       return '<button type="button" role="tab" class="iv-day' + (on ? ' is-on' : '') + '" aria-selected="' + on + '" data-iv-day="' + d.id + '"><span>' + esc(d.d) + '</span><span class="iv-dots" aria-label="' + d.moments.filter(function (mm) { return isSaved(mm.id); }).length + ' of ' + d.moments.length + ' planned">' + dots + '</span></button>';
     }).join('') + '</div>';
@@ -6712,7 +7155,6 @@ body.gated .wh-fab{display:none;}
       if (si === 0) h += '<div class="iv-stage" data-iv-stage="1">' + figureSVG(f) + '</div>';
     });
     h += '</div>';
-    /* warmth bar */
     var cls = score < band.lo ? 'is-under' : score > band.hi ? 'is-over' : 'is-in';
     var empty = !INV_SLOTS.some(function (s) { return f[s.k]; });
     h += '<div class="iv-stat"><div class="iv-stat-t"><span><b>Warmth</b> ' + (empty ? '—' : Math.round(score)) + '<i>/10</i></span><span class="iv-rec">Recommended ' + Math.round(band.lo) + '–' + Math.round(band.hi) + '</span></div>' +
@@ -6721,40 +7163,114 @@ body.gated .wh-fab{display:none;}
       (empty ? '' : '<span class="iv-mark" style="left:' + (score * 10) + '%"></span>') + '</div>' +
       '<p class="iv-ctx">' + esc(longDate(day)) + ' · ' + esc(m.l) + ' · ' + esc(band.e.txt) + ' <span class="iv-src">' + (band.e.wx.src === 'forecast' ? 'forecast' : 'typical') + '</span></p>' +
       (warn ? '<p class="iv-warn" role="status">' + esc(warn) + '</p>' : '') + '</div>';
-    /* actions */
     var same = m.same && ivMoment(m.same);
-    h += '<div class="iv-acts"><button type="button" class="iv-save' + (isSaved(m.id) && !dirty() ? ' is-saved' : '') + '" data-iv-act="save"' + (empty && !isSaved(m.id) ? ' disabled' : '') + '>' +
+    if (own) h += '<div class="iv-acts"><button type="button" class="iv-save' + (isSaved(m.id) && !dirty() ? ' is-saved' : '') + '" data-iv-act="save"' + (empty && !isSaved(m.id) ? ' disabled' : '') + '>' +
       (isSaved(m.id) && !dirty() ? 'Saved for ' + esc(day.d) + ' · ' + esc(m.l) + ' ✓' : 'Save for ' + esc(day.d) + ' · ' + esc(m.l)) + '</button>' +
       (same ? '<button type="button" class="iv-lnk" data-iv-act="same">Same as ' + esc(same.l) + (same._day.id !== day.id ? ' (' + esc(same._day.d) + ')' : '') + '</button>' : '') +
-      '<button type="button" class="iv-lnk" data-iv-act="clear"' + (empty ? ' disabled' : '') + '>Clear</button></div><p class="iv-msg" id="ivMsg" role="status"></p></section>';
-    /* suitcase */
-    var sc = suitcase(), cap = Math.max(16, Math.ceil((sc.length + 3) / 8) * 8);
-    h += '<section class="iv-case" aria-label="Your suitcase"><div class="iv-handle" aria-hidden="true"></div><div class="iv-case-in"><h3 class="iv-h">Your suitcase</h3><div class="iv-grid" id="ivGrid">';
-    for (var i = 0; i < cap; i++) {
-      var it = sc[i];
-      if (!it) { h += '<span class="iv-cell is-empty" aria-hidden="true"></span>'; continue; }
-      var on = INV_SLOTS.some(function (s) { return f[s.k] === it.ref; }), sel = ivSel && ivSel.ref === it.ref;
-      h += '<button type="button" class="iv-cell' + (on ? ' is-on' : '') + (sel ? ' is-sel' : '') + '" data-iv-item="' + esc(it.ref) + '" data-iv-drag="' + esc(it.ref) + '" data-iv-from="case" aria-pressed="' + (sel ? 'true' : 'false') + '" aria-label="' + esc(it.name) + (on ? ' (wearing)' : '') + '">' +
-        ivThumb(it, 'iv-th') + (it.qty ? '<span class="iv-qty">×' + it.qty + '</span>' : '') + '<span class="iv-cl">' + esc(it.short) + '</span></button>';
-    }
-    h += '</div></div></section>';
-    /* additions */
-    h += '<section class="iv-adds" aria-label="Additions"><h3 class="iv-h">Additions</h3>';
-    (ADDITIONS[INV_PERSON] || []).forEach(function (g) {
-      var items = g.items.filter(function (x) { return !bought(x.pid) && PROD[x.pid] && PROD[x.pid].cut !== 'womenswear'; });
-      if (!items.length) return;
-      h += '<div class="iv-agrp"><h4>' + esc(g.group) + '</h4><div class="iv-arow">' + items.map(function (x) {
-        var p = prodItem(x.pid), trying = f[p.slot] === p.ref;
-        return '<article class="iv-acard" data-iv-add="' + esc(x.pid) + '">' + ivThumb(p, 'iv-ath') + '<div class="iv-ameta"><span class="iv-ab">' + esc(p.brand) + ' <span class="iv-ext" aria-hidden="true">↗</span> <i class="of-tier of-tier-' + esc(p.tier) + '">' + esc(p.tier) + '</i></span>' +
-          '<a class="iv-an" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer">' + esc(PROD[x.pid].name) + '</a></div>' +
-          '<div class="iv-abtns"><button type="button" class="iv-lnk' + (trying ? ' is-on' : '') + '" data-iv-try="' + esc(x.pid) + '" aria-pressed="' + trying + '">' + (trying ? 'Trying on' : 'Try on') + '</button>' +
-          '<button type="button" class="iv-buy" data-iv-buy="' + esc(x.pid) + '">Bought it → pack</button></div></article>';
-      }).join('') + '</div></div>';
-    });
-    h += '</section>';
+      '<button type="button" class="iv-lnk" data-iv-act="clear"' + (empty ? ' disabled' : '') + '>Clear</button></div>';
+    else h += '<div class="iv-acts"><span class="iv-ro iv-ro-dark">View only — saving is for ' + esc(pname(ivWho)) + '</span><button type="button" class="iv-lnk" data-iv-act="clear"' + (empty ? ' disabled' : '') + '>Clear</button></div>';
+    h += '<p class="iv-msg" id="ivMsg" role="status"></p></section>';
+    h += renderMust() + renderCase(f, own) + renderAdds(f, own);
     root.innerHTML = h;
     var on2 = root.querySelector('.iv-day.is-on'); if (on2) keepInView(on2);
     var on3 = root.querySelector('.iv-mom.is-on'); if (on3) keepInView(on3);
+  }
+
+  function renderMust() {
+    var items = suitcase().filter(function (x) { return !x.preview; }), G = mustList(ivWho), own = canEdit(), total = 0, done = 0;
+    G.forEach(function (g) { g.items.forEach(function (x) { total++; if (mustCovered(x[0], items)) done++; }); });
+    var h = '<section class="iv-must" aria-label="Must-haves"><div class="iv-must-h"><h3 class="iv-h">Must-haves</h3><span class="iv-prog"><b>' + done + '</b> of ' + total + ' covered</span></div>' +
+      '<div class="iv-progbar" aria-hidden="true"><i style="width:' + (total ? done / total * 100 : 0) + '%"></i></div>';
+    G.forEach(function (g) {
+      h += '<div class="iv-mgrp"><h4>' + esc(g.g) + '</h4><ul>';
+      g.items.forEach(function (x) {
+        var key = x[0], ok = mustCovered(key, items), picks = ok ? [] : starterPicks(x[2], ivWho), open = !!ivMustOpen[key];
+        h += '<li class="iv-mrow' + (ok ? ' is-ok' : '') + '"><div class="iv-mline"><span class="iv-mck" aria-hidden="true">' + (ok ? '✓' : '') + '</span><span class="iv-ml">' + esc(x[1]) + '</span>' +
+          (ok ? '<span class="iv-mst is-ok">Covered</span>' : (picks.length || key === 'id' ? '<button type="button" class="iv-mst" data-iv-must="' + key + '" aria-expanded="' + open + '">Need ' + (open ? '▴' : '▾') + '</button>' : '<span class="iv-mst">Need</span>')) + '</div>';
+        if (!ok && open) {
+          h += '<div class="iv-mopts">';
+          if (key === 'id') h += own ? '<button type="button" class="iv-buy" data-iv-bring="id">I’ll bring it</button>' : '';
+          picks.forEach(function (pk) {
+            var p = PROD[pk[0]];
+            h += '<span class="iv-mopt"><a href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer">' + esc(pk[1]) + ' <i class="of-tier of-tier-' + esc(p.tier) + '">' + esc(p.tier) + '</i></a>' +
+              (own ? '<button type="button" class="iv-lnk" data-iv-buy="' + esc(pk[0]) + '">Add</button>' : '') + '</span>';
+          });
+          if (x[3] === 'rent') h += (own ? '<button type="button" class="iv-lnk" data-iv-rent="' + key + '">I’ll rent</button>' : '') + '<a class="iv-lnk iv-skilink" href="#ski" data-iv-ski="1">Rental options →</a>';
+          h += '</div>';
+        }
+        h += '</li>';
+      });
+      h += '</ul>' + (g.note ? '<p class="iv-mnote">' + esc(g.note) + '</p>' : '') + '</div>';
+    });
+    return h + '</section>';
+  }
+
+  function renderCase(f, own) {
+    var sc = suitcase(), cap = Math.max(16, Math.ceil((sc.length + 3) / 8) * 8), h = '';
+    h += '<section class="iv-case' + (ivEdit ? ' is-editing' : '') + '" aria-label="Your suitcase"><div class="iv-handle" aria-hidden="true"></div><div class="iv-case-in"><div class="iv-case-h"><h3 class="iv-h">' + (own ? 'Your suitcase' : esc(pname(ivWho)) + '’s suitcase') + '</h3>' +
+      (own ? '<span class="iv-case-acts"><button type="button" class="iv-lnk" data-iv-add="1" aria-expanded="' + !!ivForm + '">+ Add to suitcase</button>' + (userItems().length ? '<button type="button" class="iv-lnk" data-iv-act="edit" aria-pressed="' + ivEdit + '">' + (ivEdit ? 'Done' : 'Edit') + '</button>' : '') + '</span>' : '') + '</div>';
+    if (own && ivForm) h += renderForm();
+    if (!sc.length) h += '<p class="iv-emptycase">' + (own ? 'Empty for now — add what you’re bringing.' : 'Nothing packed yet.') + '</p>';
+    h += '<div class="iv-grid" id="ivGrid">';
+    for (var i = 0; i < cap; i++) {
+      var it = sc[i];
+      if (!it) { h += '<span class="iv-cell is-empty" aria-hidden="true"></span>'; continue; }
+      var on = INV_SLOTS.some(function (s) { return f[s.k] === it.ref; }), sel = ivSel && ivSel.ref === it.ref, edit = ivEdit && it.user;
+      h += '<div class="iv-cellwrap"><button type="button" class="iv-cell' + (on ? ' is-on' : '') + (sel ? ' is-sel' : '') + (it.noTry || !it.slot ? ' is-flat' : '') + '" data-iv-item="' + esc(it.ref) + '"' + (it.slot && !edit ? ' data-iv-drag="' + esc(it.ref) + '" data-iv-from="case"' : '') + ' aria-label="' + esc(it.name) + (on ? ' (wearing)' : '') + (edit ? ' — edit' : '') + '">' +
+        ivThumb(it, 'iv-th') + (it.qty ? '<span class="iv-qty">×' + it.qty + '</span>' : '') + (it.rented ? '<span class="iv-qty iv-rent">rent</span>' : '') + (it.similar ? '<span class="iv-qty iv-sim" title="Photo is the closest current model">similar</span>' : '') + '<span class="iv-cl">' + esc(it.short) + '</span></button>' +
+        (edit ? '<button type="button" class="iv-del" data-iv-del="' + esc(it.id) + '" aria-label="Delete ' + esc(it.name) + '">×</button>' : '') + '</div>';
+    }
+    return h + '</div></div></section>';
+  }
+  function renderForm() {
+    var v = ivForm || {}, col = v.color || '#1b1d20';
+    return '<form class="iv-form" data-iv-form="1" autocomplete="off"><div class="iv-frow"><label for="ivFn">Item</label><input id="ivFn" name="n" type="text" maxlength="48" required placeholder="e.g. Navy wool coat" value="' + esc(v.name || '') + '"></div>' +
+      '<div class="iv-frow"><label for="ivFc">Category</label><select id="ivFc" name="c">' + IV_CATS.map(function (c) { return '<option value="' + c.k + '"' + (c.k === (v.cat || 'top') ? ' selected' : '') + '>' + esc(c.l) + '</option>'; }).join('') + '</select></div>' +
+      '<fieldset class="iv-frow iv-cols"><legend>Colour</legend><div class="iv-swatches">' + IV_COLORS.map(function (c) {
+        return '<label class="iv-swl" title="' + c[0] + '"><input type="radio" name="col" value="' + c[1] + '"' + (c[1] === col ? ' checked' : '') + '><i style="background:' + c[1] + '"></i><span class="iv-vh">' + c[0] + '</span></label>';
+      }).join('') + '</div></fieldset>' +
+      '<label class="iv-chk"><input type="checkbox" name="wp"' + (v.waterproof ? ' checked' : '') + '> Waterproof</label>' +
+      '<div class="iv-facts"><button type="submit" class="iv-save">' + (v.id ? 'Save changes' : 'Add to suitcase') + '</button><button type="button" class="iv-lnk" data-iv-cancel="1">Cancel</button></div></form>';
+  }
+  function renderAdds(f, own) {
+    var groups = [];
+    if (ADDITIONS[ivWho]) groups = ADDITIONS[ivWho].map(function (g) { return { group: g.group, items: g.items.map(function (x) { return x.pid; }) }; });
+    else {
+      var plan = (OUTFITS.people[ivWho] || {}).plan || {}, rides = ['d1', 'd2', 'd4', 'd6'].some(function (d) { return /^(ski|board|lesson)$/.test(plan[d] || ''); });
+      ['boots', 'coat', 'skijacket', 'skipants', 'base', 'skigloves', 'gloves', 'goggles', 'beanie', 'scarf', 'sunglasses', 'swim', 'dinner'].forEach(function (k) {
+        if (!rides && (k === 'goggles' || k === 'base')) return;
+        groups.push({ group: STARTER[k].group, items: starterPicks(k, ivWho).map(function (x) { return x[0]; }) });
+      });
+    }
+    var h = '<section class="iv-adds" aria-label="' + (ADDITIONS[ivWho] ? 'Additions' : 'Starter picks') + '"><h3 class="iv-h">' + (ADDITIONS[ivWho] ? 'Additions' : 'Starter picks') + '</h3>';
+    var cut = cutOf(ivWho);
+    groups.forEach(function (g) {
+      var items = g.items.filter(function (pid) { var p = PROD[pid]; return p && !bought(pid) && (p.cut === 'unisex' || p.cut === cut); });
+      if (!items.length) return;
+      h += '<div class="iv-agrp"><h4>' + esc(g.group) + '</h4><div class="iv-arow">' + items.map(function (pid) {
+        var p = prodItem(pid); if (!p) return '';
+        var trying = p.slot && f[p.slot] === p.ref;
+        return '<article class="iv-acard" data-iv-addcard="' + esc(pid) + '">' + ivThumb(p, 'iv-ath') + '<div class="iv-ameta"><span class="iv-ab">' + esc(p.brand) + ' <span class="iv-ext" aria-hidden="true">↗</span> <i class="of-tier of-tier-' + esc(p.tier) + '">' + esc(p.tier) + '</i></span>' +
+          '<a class="iv-an" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer">' + esc(PROD[pid].name) + '</a>' + (p.why ? '<span class="iv-why">' + esc(p.why) + '</span>' : '') + '</div>' +
+          '<div class="iv-abtns">' + (p.noTry ? '' : '<button type="button" class="iv-lnk' + (trying ? ' is-on' : '') + '" data-iv-try="' + esc(pid) + '" aria-pressed="' + !!trying + '">' + (trying ? 'Trying on' : 'Try on') + '</button>') +
+          (own ? '<button type="button" class="iv-buy" data-iv-buy="' + esc(pid) + '">Bought it → pack</button>' : '') + '</div></article>';
+      }).join('') + '</div></div>';
+    });
+    return h + '</section>';
+  }
+
+  /* compact "Your fit" line from PERSONA (only filled fields; nothing invented) */
+  function personaLine(pid) {
+    var p = PERSONA[pid]; if (!p) return '';
+    var bits = [];
+    if (p.build || p.height) bits.push([p.build, p.height, p.weight].filter(Boolean).join(' · '));
+    if (p.fit) bits.push(p.fit.split(' — ')[0]);
+    if (p.length) bits.push('Tops cropped, never long');
+    if (p.sizes) bits.push('S tops · ' + p.sizes.pants.replace(' waist', '').replace(' inseam', '') + ' <i>(check charts)</i>');
+    if (!bits.length && !p.colours) return '<p class="iv-fit"><b>Your fit</b> <span class="iv-fitnone">not set yet</span></p>';
+    return '<p class="iv-fit" title="' + esc([p.fit, p.length, p.sizes && p.sizes.tops, p.avoid && ('Avoid: ' + p.avoid)].filter(Boolean).join(' · ')) + '"><b>Your fit</b> ' +
+      bits.map(function (x) { return '<span>' + x + '</span>'; }).join('<span class="iv-dot" aria-hidden="true">·</span>') +
+      (p.colours ? '<span class="iv-dot" aria-hidden="true">·</span><span class="iv-sw" role="img" aria-label="Colours: ' + esc(p.colours.map(function (c) { return c[0]; }).join(', ')) + '">' + p.colours.map(function (c) { return '<i style="background:' + c[1] + '" title="' + esc(c[0]) + '"></i>'; }).join('') + '</span>' : '') + '</p>';
   }
   function longDate(d) { var p = d.date.split('-'); return d.d.split(' ')[0] + ' ' + (p[1] === '12' ? 'Dec' : 'Jan') + ' ' + (+p[2]); }
   function keepInView(el) {
@@ -6763,10 +7279,9 @@ body.gated .wh-fab{display:none;}
     if (l < p.scrollLeft) p.scrollLeft = Math.max(0, l - 16); else if (r > p.scrollLeft + p.clientWidth) p.scrollLeft = r - p.clientWidth + 16;
   }
   function ivFlash(msg) { var el = $('ivMsg'); if (!el) return; el.textContent = msg; clearTimeout(el._t); el._t = setTimeout(function () { el.textContent = ''; }, 2400); }
-
   /* ---- equip / unequip ---- */
   function equip(ref, fromEl) {
-    var it = ivItem(ref); if (!it) return;
+    var it = ivItem(ref); if (!it || !it.slot) return;
     var f = curFit2(); f[it.slot] = ref; ivSel = null; invRender();
     var slot = document.querySelector('#ofInv .iv-slot[data-iv-slot="' + it.slot + '"]');
     if (slot && !REDUCED) { slot.classList.add('is-pop'); if (fromEl) ivFly(fromEl, slot); }
@@ -6783,20 +7298,64 @@ body.gated .wh-fab{display:none;}
     }); });
     setTimeout(function () { if (g.parentNode) g.parentNode.removeChild(g); }, 360);
   }
+  function packProduct(pid, fromTh) {
+    if (!canEdit()) return;
+    var from = fromTh ? fromTh.getBoundingClientRect() : null, html = fromTh ? fromTh.innerHTML : '';
+    ivBought[ivWho] = ivBought[ivWho] || []; if (ivBought[ivWho].indexOf(pid) < 0) ivBought[ivWho].push(pid); ivSave(IV_BOUGHT, ivBought);
+    invRender();
+    var cell = document.querySelector('#ofInv .iv-cell[data-iv-item="p:' + pid + '"]');
+    if (cell && from && from.width && !REDUCED) {
+      var g = document.createElement('div'); g.className = 'iv-fly'; g.innerHTML = html; g.setAttribute('aria-hidden', 'true');
+      g.style.left = from.left + 'px'; g.style.top = from.top + 'px'; g.style.width = from.width + 'px'; g.style.height = from.height + 'px'; document.body.appendChild(g);
+      var b = cell.getBoundingClientRect();
+      requestAnimationFrame(function () { requestAnimationFrame(function () { g.style.transform = 'translate(' + (b.left - from.left) + 'px,' + (b.top - from.top) + 'px) scale(' + (b.width / from.width) + ')'; g.style.opacity = '.4'; }); });
+      setTimeout(function () { if (g.parentNode) g.parentNode.removeChild(g); cell.classList.add('is-pop'); }, 360);
+    }
+    ivFlash('Packed ' + ((prodItem(pid) || {}).short || 'it') + '.');
+  }
+  function putUser(item) {
+    if (!canEdit()) return;
+    var o = ivSuit[ivWho] = ivSuit[ivWho] || {}, id = item.id || ('u' + Date.now().toString(36) + Math.floor(Math.random() * 1e3));
+    var rec = {}; ['name', 'short', 'cat', 'slot', 'kind', 'warmth', 'waterproof', 'windproof', 'dressy', 'color', 'rented', 'at'].forEach(function (k) { if (item[k] !== undefined && item[k] !== null) rec[k] = item[k]; });
+    if (item.slot === null) rec.slot = '';
+    rec.at = (o[id] && o[id].at) || Date.now();
+    o[id] = rec; ivSave(IV_SUIT, ivSuit); return id;
+  }
+  function delUser(id) {
+    if (!canEdit()) return;
+    var o = ivSuit[ivWho] || {}; delete o[id]; if (!Object.keys(o).length) delete ivSuit[ivWho]; ivSave(IV_SUIT, ivSuit);
+    Object.keys(ivDraft).forEach(function (k) { var f = ivDraft[k]; Object.keys(f).forEach(function (s) { if (f[s] === 'u:' + id) delete f[s]; }); });
+  }
+  function openSki() { var a = document.querySelector('#navlinks a[href="#ski"]'); if (a) a.click(); else location.hash = '#ski'; }
 
   /* ---- tap handling ---- */
   var ivSuppress = 0;
   function invClick(e) {
     if (Date.now() - ivSuppress < 350) { e.preventDefault(); return; }
-    var t = e.target.closest ? e.target.closest('[data-iv-day],[data-iv-mom],[data-iv-slot],[data-iv-item],[data-iv-act],[data-iv-try],[data-iv-buy],[data-iv-help]') : null;
-    if (!t || !t.closest('#ofInv,#ivHelp,.iv-topbar')) return;
+    var t = e.target.closest ? e.target.closest('[data-iv-day],[data-iv-mom],[data-iv-slot],[data-iv-item],[data-iv-act],[data-iv-try],[data-iv-buy],[data-iv-help],[data-iv-menu],[data-iv-view],[data-iv-must],[data-iv-bring],[data-iv-rent],[data-iv-ski],[data-iv-add],[data-iv-cancel],[data-iv-del]') : null;
+    if (!t || !t.closest('#ofInv,#ivHelp,.iv-topbar')) { if (ivMenu && !(e.target.closest && e.target.closest('.iv-menu'))) { ivMenu = false; invRender(); } return; }
     if (t.hasAttribute('data-iv-help')) { openHelp(); return; }
-    if (t.hasAttribute('data-iv-day')) { var d = null; INV_DAYS.forEach(function (x) { if (x.id === t.getAttribute('data-iv-day')) d = x; }); if (d) setMoment(d.moments[0].id); return; }
+    if (t.hasAttribute('data-iv-menu')) { ivMenu = !ivMenu; invRender(); var mi = document.querySelector('#ofInv .iv-mi.is-on'); if (mi) mi.focus(); return; }
+    if (t.hasAttribute('data-iv-view')) { ivWho = t.getAttribute('data-iv-view'); ivMenu = false; ivEdit = false; ivForm = null; ivSel = null; invRender(); var wb = document.querySelector('#ofInv .iv-whobtn'); if (wb) wb.focus(); return; }
+    if (t.hasAttribute('data-iv-ski')) { e.preventDefault(); openSki(); return; }
+    if (t.hasAttribute('data-iv-day')) { var d = null; ivDays.forEach(function (x) { if (x.id === t.getAttribute('data-iv-day')) d = x; }); if (d) setMoment(d.moments[0].id); return; }
     if (t.hasAttribute('data-iv-mom')) { setMoment(t.getAttribute('data-iv-mom')); return; }
+    if (t.hasAttribute('data-iv-must')) { var mk = t.getAttribute('data-iv-must'); ivMustOpen[mk] = !ivMustOpen[mk]; invRender(); var mb = document.querySelector('#ofInv [data-iv-must="' + mk + '"]'); if (mb) mb.focus(); return; }
+    if (t.hasAttribute('data-iv-bring')) { putUser({ name: 'Photo ID', short: 'Photo ID', cat: 'other', slot: null, kind: 'id', warmth: 0, dressy: 0, color: '#8a8f96' }); invRender(); ivFlash('Photo ID packed.'); return; }
+    if (t.hasAttribute('data-iv-rent')) {
+      var rk = t.getAttribute('data-iv-rent'), board = ((OUTFITS.people[ivWho] || {}).plan || {}).d1 === 'board';
+      if (rk === 'wpOuter') putUser({ name: (board ? 'Snowboard' : 'Ski') + ' jacket · renting', short: 'Jacket · rent', cat: 'ski', slot: 'coat', kind: 'jacket', warmth: 3, waterproof: true, windproof: true, dressy: 0, color: '#3e5f8a', rented: true });
+      else putUser({ name: (board ? 'Snowboard' : 'Ski') + ' pants · renting', short: 'Ski pants · rent', cat: 'ski', slot: 'bottom', kind: 'skipants', warmth: 2, waterproof: true, windproof: true, dressy: 0, color: '#1d1f22', rented: true });
+      invRender(); ivFlash('Marked as renting — see the Ski tab for shops.'); return;
+    }
+    if (t.hasAttribute('data-iv-add')) { ivForm = ivForm ? null : { cat: 'top', color: '#1b1d20' }; invRender(); var fn = $('ivFn'); if (fn) fn.focus(); return; }
+    if (t.hasAttribute('data-iv-cancel')) { ivForm = null; invRender(); return; }
+    if (t.hasAttribute('data-iv-del')) { var did = t.getAttribute('data-iv-del'), it0 = ivItem('u:' + did); delUser(did); invRender(); ivFlash('Removed ' + (it0 ? it0.short : 'it') + '.'); return; }
     if (t.hasAttribute('data-iv-item')) {
-      var ref = t.getAttribute('data-iv-item');
-      /* tap = put it on (or take it off if already worn) */
-      var it = ivItem(ref), f = curFit2();
+      var ref = t.getAttribute('data-iv-item'), it = ivItem(ref); if (!it) return;
+      if (ivEdit && it.user) { ivForm = { id: it.id, name: it.name, cat: it.cat || 'top', color: it.color, waterproof: !!it.waterproof }; invRender(); var fn2 = $('ivFn'); if (fn2) fn2.focus(); return; }
+      if (!it.slot) { showTip(t, true); return; }
+      var f = curFit2();
       if (f[it.slot] === ref) { unequip(it.slot); return; }
       equip(ref, t.querySelector('.iv-th')); return;
     }
@@ -6807,34 +7366,35 @@ body.gated .wh-fab{display:none;}
       return;
     }
     if (t.hasAttribute('data-iv-try')) {
-      var p = prodItem(t.getAttribute('data-iv-try')), f2 = curFit2();
+      var p = prodItem(t.getAttribute('data-iv-try')), f2 = curFit2(); if (!p || !p.slot) return;
       if (f2[p.slot] === p.ref) { unequip(p.slot); return; }
       equip(p.ref, t.closest('.iv-acard').querySelector('.iv-ath')); return;
     }
     if (t.hasAttribute('data-iv-buy')) {
       var pid = t.getAttribute('data-iv-buy'), card = t.closest('.iv-acard'), th = card && card.querySelector('.iv-ath');
-      var from = th ? th.getBoundingClientRect() : null;
-      ivBought[INV_PERSON] = ivBought[INV_PERSON] || []; if (ivBought[INV_PERSON].indexOf(pid) < 0) ivBought[INV_PERSON].push(pid); ivSave(IV_BOUGHT, ivBought);
-      invRender();
-      var cell = document.querySelector('#ofInv .iv-cell[data-iv-item="p:' + pid + '"]');
-      if (cell && from && !REDUCED) {
-        var g = document.createElement('div'); g.className = 'iv-fly'; g.innerHTML = th.innerHTML; g.setAttribute('aria-hidden', 'true');
-        g.style.left = from.left + 'px'; g.style.top = from.top + 'px'; g.style.width = from.width + 'px'; g.style.height = from.height + 'px'; document.body.appendChild(g);
-        var b = cell.getBoundingClientRect();
-        requestAnimationFrame(function () { requestAnimationFrame(function () { g.style.transform = 'translate(' + (b.left - from.left) + 'px,' + (b.top - from.top) + 'px) scale(' + (b.width / from.width) + ')'; g.style.opacity = '.4'; }); });
-        setTimeout(function () { if (g.parentNode) g.parentNode.removeChild(g); cell.classList.add('is-pop'); }, 360);
-      }
-      ivFlash('Packed ' + (prodItem(pid) || {}).short + '.');
-      return;
+      packProduct(pid, th); return;
     }
     if (t.hasAttribute('data-iv-act')) {
       var a = t.getAttribute('data-iv-act'), m = ivMoment(ivMom);
       if (a === 'save') {
-        ivFits[INV_PERSON] = ivFits[INV_PERSON] || {}; ivFits[INV_PERSON][ivMom] = sortObj(curFit2()); ivSave(IV_FITS, ivFits);
-        invRender(); ivFlash('Saved on this device.');
-      } else if (a === 'clear') { ivDraft[ivMom] = {}; invRender(); }
-      else if (a === 'same') { var s = ivDraft[m.same] || savedFit(INV_PERSON, m.same) || {}, c = {}; for (var k2 in s) c[k2] = s[k2]; ivDraft[ivMom] = c; invRender(); }
+        if (!canEdit()) return;
+        ivFits[ivWho] = ivFits[ivWho] || {}; ivFits[ivWho][ivMom] = sortObj(curFit2()); ivSave(IV_FITS, ivFits);
+        invRender(); ivFlash('Saved.');
+      } else if (a === 'clear') { ivDraft[dk(ivMom)] = {}; invRender(); }
+      else if (a === 'same') { var s = ivDraft[dk(m.same)] || savedFit(ivWho, m.same) || {}, c = {}; for (var k2 in s) c[k2] = s[k2]; ivDraft[dk(ivMom)] = c; invRender(); }
+      else if (a === 'edit') { ivEdit = !ivEdit; if (!ivEdit) ivForm = null; invRender(); }
     }
+  }
+  function invSubmit(e) {
+    var fm = e.target; if (!fm.getAttribute || !fm.getAttribute('data-iv-form')) return;
+    e.preventDefault();
+    var name = (fm.elements.n.value || '').trim(); if (!name) { fm.elements.n.focus(); return; }
+    var colEl = fm.querySelector('input[name="col"]:checked');
+    var it = itemFromForm(name, fm.elements.c.value, colEl ? colEl.value : '#1b1d20', fm.elements.wp.checked);
+    if (ivForm && ivForm.id) it.id = ivForm.id;
+    var id = putUser(it), editing = !!(ivForm && ivForm.id);
+    ivForm = null; invRender(); ivFlash((editing ? 'Updated ' : 'Added ') + it.short + '.');
+    var cell = document.querySelector('#ofInv .iv-cell[data-iv-item="u:' + id + '"]'); if (cell) { cell.classList.add('is-pop'); if (!editing) cell.focus(); }
   }
   function setMoment(id) { ivMom = id; ivSel = null; try { localStorage.setItem(IV_MOM, id); } catch (x) {} invRender(); }
 
@@ -6946,8 +7506,20 @@ body.gated .wh-fab{display:none;}
     var inv = document.createElement('div'); inv.id = 'ofInv'; inv.className = 'iv';
     if (head) { head.parentNode.insertBefore(bar, head.nextSibling); bar.parentNode.insertBefore(inv, bar.nextSibling); }
     else { wrap.insertBefore(inv, wrap.firstChild); wrap.insertBefore(bar, inv); }
+    /* who: follow the site-wide picker; 'everyone'/unset → Griffin's closet as a view-only example */
+    ivMine = getWho(); ivWho = isPerson(ivMine) ? ivMine : 'griffin';
+    function onWho(w) {
+      w = normWho(w); var wasMine = ivWho === ivMine || !isPerson(ivMine);
+      ivMine = w; if (wasMine) { ivWho = isPerson(w) ? w : 'griffin'; ivEdit = false; ivForm = null; } invRender();
+    }
+    window.addEventListener('aspen:who', function (e) { onWho(e.detail); });
+    try { if (window.AspenWho && typeof window.AspenWho.on === 'function') window.AspenWho.on(onWho); } catch (x) {}
+    window.addEventListener('storage', function (e) { if (e.key === WHO_KEY) onWho(e.newValue); if (e.key === IV_SUIT) { ivSuit = rdLS(IV_SUIT); invRender(); } });
+    /* synced from another device (AspenSync fires 'aspen:sync' after writing localStorage) */
+    window.addEventListener('aspen:sync', function (e) { var k = e.detail && e.detail.key; if (k === IV_SUIT) { ivSuit = rdLS(IV_SUIT); invRender(); } });
     invRender();
     document.addEventListener('click', invClick);
+    inv.addEventListener('submit', invSubmit);
     inv.addEventListener('pointerdown', ivDown);
     document.addEventListener('pointermove', ivMove, { passive: false });
     document.addEventListener('pointerup', ivUp);
@@ -6958,12 +7530,12 @@ body.gated .wh-fab{display:none;}
     inv.addEventListener('contextmenu', function (e) { if (e.target.closest && e.target.closest('[data-iv-drag]')) e.preventDefault(); });
     inv.addEventListener('focusin', function (e) { var el = e.target.closest && e.target.closest('.iv-cell[data-iv-item], .iv-slot.is-full'); if (el && el.matches(':focus-visible')) showTip(el); });
     inv.addEventListener('focusout', hideTip);
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { if (ivSel) { ivSel = null; invRender(); } hideTip(); } });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { if (ivMenu) { ivMenu = false; invRender(); } else if (ivSel) { ivSel = null; invRender(); } hideTip(); } });
     window.addEventListener('scroll', hideTip, { passive: true });
     ivForecast();
   }
 
-  window.AspenOutfits = { open: openOutfit, data: OUTFITS, products: PROD, who: function () { return who; }, suitcase: SUITCASE, additions: ADDITIONS };
+  window.AspenOutfits = { open: openOutfit, data: OUTFITS, products: PROD, who: function () { return who; }, suitcase: SUITCASE, additions: ADDITIONS, persona: PERSONA };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 
@@ -14410,6 +14982,7 @@ var SPECS=[
   read:function(p){var o=jget('aspenOutfitFilters_v1')||{};return o[p]?{_:o[p]}:{};},
   put:function(items,p){var o=jget('aspenOutfitFilters_v1')||{};if(items._){o[p]=items._;}else{delete o[p];}jset('aspenOutfitFilters_v1',o);}}),
  spec('eggs','aspenEggs_v2','people',perPerson('aspenEggs_v2')), /* eggs2 v1: secrets found, golden snowflakes, hints */
+ spec('suitcase','aspenSuitcase_v1','people',perPerson('aspenSuitcase_v1')),
  spec('bought','aspenInvBought_v1','people',{per:true,
   read:function(p){var o=jget('aspenInvBought_v1')||{},a=o[p],r={};if(Array.isArray(a)){a.forEach(function(x){r[x]=1;});}return r;},
   put:function(items,p){var o=jget('aspenInvBought_v1')||{},a=Array.isArray(o[p])?o[p]:[];
