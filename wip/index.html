@@ -12736,9 +12736,15 @@ if(D.readyState==='loading'){D.addEventListener('DOMContentLoaded',init);}else{i
 })();
 </script>
 <script>/* every outside link opens in its own tab */
-document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a||a.target)return;
- try{var u=new URL(a.href,location.href);}catch(x){return;} if(!/^https?:$/.test(u.protocol)||u.origin===location.origin)return;
- a.target='_blank';a.rel='noopener';},true);
+document.addEventListener('click',function(e){
+ if(e.defaultPrevented||e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+ var a=e.target.closest&&e.target.closest('a[href]');if(!a||a.hasAttribute('download'))return;
+ try{var u=new URL(a.href,location.href);}catch(x){return;}
+ if(!/^https?:$/.test(u.protocol)||u.origin===location.origin)return;
+ /* open outside links in a separate tab via window.open: works in every browser, including in-app browsers that ignore target=_blank */
+ e.preventDefault(); var w=window.open(u.href,'_blank','noopener');
+ if(w===undefined){location.href=u.href;}
+},true);
 </script>
 <script>/* outfits: "Need help?" opens the layering guide */
 (function(){var b=document.getElementById('ofHelpBtn'),d=document.getElementById('ofHelp'),x=document.getElementById('ofHelpX');
