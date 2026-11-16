@@ -2881,6 +2881,12 @@ dialog.of-help::backdrop{background:rgba(8,14,22,.62);backdrop-filter:blur(3px)}
 .of-soon{margin:26px auto 10px;max-width:560px;text-align:center;padding:26px 22px;border:1px dashed rgba(176,134,58,.45);border-radius:16px}
 .of-soon b{display:block;font:500 26px/1.2 'Cormorant Garamond',serif;color:var(--snow);margin-bottom:8px}
 .of-soon span{font-size:14px;color:var(--soft,#9aa5a0)}
+
+/* v40 "What to order" on day stops */
+.rl-stop .rl-order{margin:10px 0 2px;padding:10px 12px;border-radius:10px;background:linear-gradient(135deg,rgba(176,134,58,.14),rgba(176,134,58,.04));border-left:3px solid var(--gold)}
+.rl-stop .rl-order-k{display:block;font:600 9.5px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.rl-stop .rl-order-v{font:italic 16px/1.45 var(--serif);color:var(--snow)}
+.rl-stop .rl-order-v .rl-unv{display:block;font:normal 11px/1.4 var(--sans);opacity:.6;margin-top:3px}
 /* v39 groceries */
 .groc .gr-steps{margin:.6em 0 .8em 1.2em;padding:0;display:grid;gap:.45em;font-size:.95em;line-height:1.5}
 .groc .gr-steps li::marker{color:var(--gold);font-weight:600}
@@ -4235,17 +4241,17 @@ body.gated .wh-fab{display:none;}
       <div class="tl star"><div class="tl-time">4:00 PM</div><div class="tl-title">Check In &middot; 42 Nighthawk Drive</div><p class="tl-body">Host walk-through, pick rooms. All four mountains visible from the living room. First order of business: the hot tub.</p><div class="media" data-m="d0_checkin"></div></div>
       <div class="tl"><div class="tl-time">~4:15 PM</div><div class="tl-title">Griffin + Marco &rarr; FMS Downtown &middot; Rentals</div><p class="tl-body">Drop the bags and drive straight down (about 10 min) to Four Mountain Sports Downtown, 520 E Durant Ave. <strong>It closes at 5 PM</strong>, not 7. Griffin gets skis, boots and poles; Marco gets his snowboard and boots. Pickup after 2 PM the day before is free. Boot fitting takes a while, so don&rsquo;t dawdle. Bring the gear back to the house.</p><p class="tl-note">Running late from I-70? Call (970) 920-2337. The fallback is FMS Snowmass Base Village at 8 AM Mon. Marcy + Stella&rsquo;s lesson gear comes with their lesson package at Buttermilk. Ben brings his own skis.</p></div>
       <div class="tl"><div class="tl-time">5:30 PM</div><div class="tl-title">Head Downtown</div><p class="tl-body">Everyone rides down together around 5:15. The rentals are already at the house, so you leave fully loaded tomorrow. Park for the evening in the Rio Grande garage (427 Rio Grande Pl) or on the street, then wander the downtown malls until dinner.</p><div class="media" data-m="d0_downtown"></div></div>
-      <div class="tl star"><div class="tl-time">6:30 PM</div><div class="tl-title">Welcome Dinner &middot; Wild Fig</div><p class="tl-body">Mediterranean at 305 S Mill St, downtown (it moved from Hyman Ave) &mdash; mezze, grilled fish, lamb. Easy enough after a travel day, but still feels like the trip has started. The early seating means you&rsquo;re done by ~8:15 for Belly Up.</p><p class="tl-note">Tables release <strong>about 30 days out</strong> on SevenRooms (checked Nov 15: the latest bookable date was Dec 15) &mdash; reserve the morning of <strong>Fri Nov 27, 2026</strong> for Sun Dec 27, 6:30 PM &times; 6, or call (970) 925-5160.</p><p class="tl-note">Backup: <strong>Meat &amp; Cheese</strong> (319 E Hopkins) is just as good and takes no reservations &mdash; walk in. Or cook in and save the energy.</p><div class="media" data-m="d0_wildfig"></div><div class="rl rl-stop" data-rest="wildfig"><span class="rl-name">Wild Fig</span><div class="rl-pills">
+      <div class="tl star"><div class="tl-time">6:30 PM</div><div class="tl-title">Welcome Dinner &middot; Wild Fig</div><p class="tl-body">Mediterranean at 305 S Mill St, downtown (it moved from Hyman Ave) &mdash; mezze, grilled fish, lamb. Easy enough after a travel day, but still feels like the trip has started. The early seating means you&rsquo;re done by ~8:15 for Belly Up.</p><p class="tl-note">Tables release <strong>about 30 days out</strong> on SevenRooms (checked Nov 15: the latest bookable date was Dec 15) &mdash; reserve <strong>Fri Nov 27, 2026</strong> (SevenRooms; not midnight &mdash; check from 8:00 AM MT / 9:00 AM CT) for Sun Dec 27, 6:30 PM &times; 6, or call (970) 925-5160.</p><p class="tl-note">Backup: <strong>Meat &amp; Cheese</strong> (319 E Hopkins) is just as good and takes no reservations &mdash; walk in. Or cook in and save the energy.</p><div class="media" data-m="d0_wildfig"></div><div class="rl rl-stop" data-rest="wildfig"><span class="rl-name">Wild Fig</span><div class="rl-pills">
       <a class="rl-pill" href="https://thewildfig.com/wp-content/uploads/2026/10/Fig-Menu-Summer-09.23.26.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
       <a class="rl-pill" href="https://thewildfig.com/aspen/" target="_blank" rel="noopener">Website</a>
       <a class="rl-pill rl-book" href="https://www.sevenrooms.com/explore/thewildfig/reservations/create/search/" target="_blank" rel="noopener">Book · SevenRooms</a>
       <a class="rl-pill" href="tel:+19709255160">Call (970) 925-5160</a>
       <a class="rl-pill rl-wear" href="#outfits" data-outfit="wildfig">What to wear →</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">Burrata &amp; prosciutto with fresh figs (to share) · Cacio e pepe with house linguine (you can add a lobster tail) · Lobster paccheri, or the whole grilled fish of the day</span></div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
       <dt>Hours</dt><dd>Dinner nightly. The site lists no times; it also now serves lunch. <em class="rl-unv">(unverified: exact dinner hours)</em></dd>
       <dt>Dress</dt><dd>Lively Mediterranean bistro. Smart casual, après-to-dinner is fine. <em class="rl-unv">(unverified: no dress code posted)</em></dd>
       <dt>Order</dt><dd>Burrata &amp; prosciutto with fresh figs (to share) · Cacio e pepe with house linguine (you can add a lobster tail) · Lobster paccheri, or the whole grilled fish of the day</dd>
-      <dt>Book</dt><dd>SevenRooms, released about 30 days out (book Fri Nov 27). Call if 6:30 isn't showing.</dd>
+      <dt>Book</dt><dd>SevenRooms, released 30 days out: book Fri Nov 27, checking from 8:00 AM MT (9:00 AM CT); it does not open at midnight. Call if 6:30 isn't showing.</dd>
       <dt>Tips</dt><dd>Moved to 305 S Mill. Older listings still say 315 E Hyman. · 6:30 is early on purpose: Belly Up doors are at 8:30, a 5-minute walk away.</dd>
   </dl></details></div></div>
       <div class="tl"><div class="tl-time">~8:15 PM</div><div class="tl-title">Walk to Belly Up &middot; 5 min</div><p class="tl-body">From Wild Fig, walk south on Mill St, turn left on Cooper Ave, then right on Galena St &mdash; Belly Up is on Galena just before Durant (~300 m). You&rsquo;re there right as doors open at 8:30, early enough for a good spot on the floor. <a href="https://www.google.com/maps/dir/?api=1&amp;origin=39.18892,-106.82075&amp;destination=39.18743,-106.81896&amp;travelmode=walking" target="_blank" rel="noopener">Walking directions &rarr;</a></p><p class="tl-note">The other two take the Suburban (and Griffin&rsquo;s rentals) home from the garage &mdash; 5 min up Red Mountain. The driver skips the wine at dinner.</p></div>
@@ -4268,7 +4274,7 @@ body.gated .wh-fab{display:none;}
       <div class="tl"><div class="tl-time">7:00 PM</div><div class="tl-title">Dinner &middot; Casual</div><p class="tl-body">White House Tavern, Meat &amp; Cheese, or Slope Side Tavern &mdash; easy, no reservation needed.</p><div class="media" data-m="d1_dinner"></div><div class="rl rl-stop" data-rest="whitehouse"><span class="rl-name">White House Tavern</span><div class="rl-pills">
       <a class="rl-pill" href="https://www.theinfatuation.com/aspen/reviews/white-house-tavern" target="_blank" rel="noopener">Menu highlights</a>
       <a class="rl-pill" href="tel:+19709251007">Call (970) 925-1007</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">The crispy chicken sandwich · Macho salad · French dip</span></div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
       <dt>Hours</dt><dd>About 11 AM – 9 PM daily <em class="rl-unv">(unverified; listings conflict)</em></dd>
       <dt>Order</dt><dd>The crispy chicken sandwich · Macho salad · French dip</dd>
       <dt>Book</dt><dd>Walk-in in practice; call to check <em class="rl-unv">(unverified)</em></dd>
@@ -4276,7 +4282,7 @@ body.gated .wh-fab{display:none;}
   </dl></details></div><div class="rl rl-stop" data-rest="meatcheese"><span class="rl-name">Meat &amp; Cheese</span><div class="rl-pills">
       <a class="rl-pill" href="https://www.meatandcheeseaspen.com/menu-1" target="_blank" rel="noopener">Menu</a>
       <a class="rl-pill" href="https://www.meatandcheeseaspen.com/" target="_blank" rel="noopener">Website</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">A charcuterie &amp; cheese board to share · Rotisserie chicken <em class="rl-unv">(unverified, seen in gallery)</em> · The burger</span></div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
       <dt>Hours</dt><dd>Winter hours aren't posted yet (the site shows Oct hours and 'November: closed').</dd>
       <dt>Order</dt><dd>A charcuterie &amp; cheese board to share · Rotisserie chicken <em class="rl-unv">(unverified, seen in gallery)</em> · The burger</dd>
       <dt>Book</dt><dd>No reservations: first come, first served</dd>
@@ -4298,7 +4304,7 @@ body.gated .wh-fab{display:none;}
       </div>
       <div class="tl star"><div class="tl-time">12:30 PM</div><div class="tl-title">Lunch &middot; Bonnie&rsquo;s</div><p class="tl-body">Mid-mountain. The apple strudel is the reason &mdash; order it. Arrive 12:30 to beat the crowd.</p><div class="media" data-m="d2_bonnies"></div><div class="rl rl-stop" data-rest="bonnies"><span class="rl-name">Bonnie’s</span><div class="rl-pills">
       <a class="rl-pill" href="https://www.aspensnowmass.com/visit/dining/aspen-mountain/bonnies" target="_blank" rel="noopener">Menu &amp; hours</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">Apple strudel · White-bean chili · Pancakes, if you're up early</span></div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
       <dt>Hours</dt><dd>9 AM – 3:30 PM (breakfast 9–10:30, lunch 10:30–3:30). Open Dec 2026 – Apr 2027.</dd>
       <dt>Order</dt><dd>Apple strudel · White-bean chili · Pancakes, if you're up early</dd>
       <dt>Book</dt><dd>Walk-in (cafeteria line). 'Grab a table before the lifts get busy.'</dd>
@@ -4309,23 +4315,23 @@ body.gated .wh-fab{display:none;}
       <a class="rl-pill" href="https://www.thelittlenell.com/-/media/thelittlenell/menus/ajax-tavern/2026/ajaxalldaymenu092126.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
       <a class="rl-pill" href="https://www.thelittlenell.com/dine/ajax-tavern" target="_blank" rel="noopener">Website</a>
       <a class="rl-pill" href="tel:+19709206334">Call (970) 920-6334</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">Ajax truffle fries · Ajax Wagyu double cheeseburger · Wagyu steak sandwich</span></div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
       <dt>Hours</dt><dd>Daily 11:30 AM – 4 PM; happy hour 2–4 PM</dd>
       <dt>Order</dt><dd>Ajax truffle fries · Ajax Wagyu double cheeseburger · Wagyu steak sandwich</dd>
       <dt>Book</dt><dd>Resy via the Little Nell site, or call</dd>
       <dt>Tips</dt><dd>48-hour cancellation policy on reservations, with a per-person no-show charge.</dd>
   </dl></details></div></div>
-      <div class="tl star"><div class="tl-time">7:00 PM</div><div class="tl-title">Dinner &middot; Casa Tua</div><p class="tl-body"><strong>Locked in.</strong> Northern Italian in the low-lit, art-filled rooms at 403 S Galena &mdash; steps from Rubey Park, five minutes from the house. Veal Milanese, ricotta cavatelli, burrata.</p><p class="tl-note">Books on <a href="https://www.sevenrooms.com/explore/casatuaaspen/reservations/create/search" target="_blank" rel="noopener">SevenRooms</a>, released daily <strong>30 days out</strong> &mdash; book the morning of <strong>Sun Nov 29, 2026</strong>. If 6 at 7 PM isn&rsquo;t showing, join their SevenRooms waitlist and call (970) 920-7277. Two-hour seating; dress code applies (no hoodies, ripped jeans or caps).</p><div class="media" data-m="d2_casatua"></div><div class="rl rl-stop" data-rest="casatua"><span class="rl-name">Casa Tua</span><div class="rl-pills">
-      <a class="rl-pill" href="https://www.casatualife.com/aspen" target="_blank" rel="noopener">Menu</a>
+      <div class="tl star"><div class="tl-time">7:00 PM</div><div class="tl-title">Dinner &middot; Casa Tua</div><p class="tl-body"><strong>Locked in.</strong> Northern Italian in the low-lit, art-filled rooms at 403 S Galena &mdash; steps from Rubey Park, five minutes from the house. Veal Milanese, ricotta cavatelli, burrata.</p><p class="tl-note">Books on <a href="https://www.sevenrooms.com/explore/casatuaaspen/reservations/create/search" target="_blank" rel="noopener">SevenRooms</a>, released daily <strong>30 days out</strong> &mdash; book <strong>Sun Nov 29, 2026</strong> (SevenRooms; not midnight &mdash; check from 8:00 AM MT / 9:00 AM CT). If 6 at 7 PM isn&rsquo;t showing, join their SevenRooms waitlist and call (970) 920-7277. Two-hour seating; dress code applies (no hoodies, ripped jeans or caps).</p><div class="media" data-m="d2_casatua"></div><div class="rl rl-stop" data-rest="casatua"><span class="rl-name">Casa Tua</span><div class="rl-pills">
+      <a class="rl-pill" href="https://www.casatualife.com/menu/aspen" target="_blank" rel="noopener">Menu</a>
       <a class="rl-pill rl-book" href="https://www.sevenrooms.com/explore/casatuaaspen/reservations/create/search" target="_blank" rel="noopener">Book · SevenRooms</a>
       <a class="rl-pill" href="tel:+19709207277">Call (970) 920-7277</a>
       <a class="rl-pill rl-wear" href="#outfits" data-outfit="casatua">What to wear →</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">Burrata with pappa al pomodoro · Pici cacio e pepe or the tagliatelle with porcini &amp; black truffle · Bone-in veal Milanese or whole grilled branzino <em class="rl-unv">(from Casa Tua&rsquo;s official Aspen menu)</em></span></div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
       <dt>Hours</dt><dd>Open now (no Oct–Dec closure). Dinner nightly. <em class="rl-unv">(unverified: exact hours; third-party listings show about 5–9 PM or later)</em></dd>
       <dt>Dress</dt><dd>Dressy Aspen Italian. No ripped jeans, hoodies, sleeveless tops (men) or sandals (men). After 4 PM, no sportswear, shorts (men) or caps. Jackets encouraged for men.</dd>
-      <dt>Order</dt><dd>Burrata · Bucatini cacio e pepe or the lobster spaghetti · Casa Tua chicken or the branzino <em class="rl-unv">(unverified: from third-party listings, not an official menu)</em></dd>
+      <dt>Order</dt><dd>Burrata with pappa al pomodoro · Pici cacio e pepe or the tagliatelle with porcini &amp; black truffle · Bone-in veal Milanese or whole grilled branzino <em class="rl-unv">(from Casa Tua&rsquo;s official Aspen menu)</em></dd>
       <dt>Book</dt><dd>SevenRooms, released daily 30 days ahead (Dec 29 opens Sun Nov 29). Waitlist on SevenRooms. 2-hour seating, 15-minute grace period.</dd>
-      <dt>Tips</dt><dd>2-hour table: order mains reasonably promptly. · Arrive within 15 minutes or the table may be released.</dd>
+      <dt>Tips</dt><dd>Parties of 6+ get a 20% gratuity added automatically. · 2-hour table: order mains reasonably promptly. · Arrive within 15 minutes or the table may be released.</dd>
   </dl></details></div></div>
     </div>
   </div>
@@ -4344,14 +4350,14 @@ body.gated .wh-fab{display:none;}
       <p class="tl-note"><strong>Booked</strong> &mdash; 3 doubles (3 drivers + 3 riders) on the 9:30 AM departure, exactly as planned. Questions or changes: (970) 925-4614.</p></div>
       <div class="tl"><div class="tl-time">1:30 PM</div><div class="tl-title">Return to Aspen + Warm Up</div><p class="tl-body">Lunch is included on the tour, so you roll back into town already fed. Drop gear, thaw out.</p><div class="media" data-m="d3_warmup"></div></div>
       <div class="tl star"><div class="tl-time">2:30 PM</div><div class="tl-title">Afternoon in Downtown Aspen</div><p class="tl-body">Stroll Galena and Mill Streets, duck into the galleries and the (free) Aspen Art Museum, and grab coffee or an apr&egrave;s drink. Low-key and warm after a cold morning &mdash; and it walks right into dinner.</p><p class="tl-note">Bluebird-day alternative: ride the Silver Queen sightseeing gondola to the 11,212 ft Sundeck for the views &mdash; ~15 min each way, last ride up ~3:30 PM. Great for Jim and the non-skiers.</p><div class="media" data-m="d3_downtown"></div></div>
-      <div class="tl"><div class="tl-time">7:30 PM</div><div class="tl-title">Dinner &middot; French Alpine Bistro</div><p class="tl-body">French-Alpine comfort &mdash; fondue, raclette, and a deep wine list, exactly right for a snowy night. 400 E Hopkins Ave (downstairs, at the corner of Mill), a few minutes from the house.</p><p class="tl-note">Books <strong>exactly 30 days out</strong> &mdash; reserve on OpenTable the morning of <strong>Mon Nov 30, 2026</strong>.</p><p class="tl-note">Or cook in &mdash; a fondue or raclette night at the house is just as cozy, and no driving.</p>
+      <div class="tl"><div class="tl-time">7:30 PM</div><div class="tl-title">Dinner &middot; French Alpine Bistro</div><p class="tl-body">French-Alpine comfort &mdash; fondue, raclette, and a deep wine list, exactly right for a snowy night. 400 E Hopkins Ave (downstairs, at the corner of Mill), a few minutes from the house.</p><p class="tl-note">Books <strong>exactly 30 days out</strong> &mdash; reserve on OpenTable <strong>Mon Nov 30, 2026 at 12:00 AM MT (1:00 AM CT)</strong>.</p><p class="tl-note">Or cook in &mdash; a fondue or raclette night at the house is just as cozy, and no driving.</p>
       <div class="media" data-m="d3_fa"></div><div class="rl rl-stop" data-rest="frenchalpine"><span class="rl-name">French Alpine Bistro</span><div class="rl-pills">
       <a class="rl-pill" href="https://www.frenchalpinebistro.com/s/DINNER-FAB-Summer-2026-digital.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
       <a class="rl-pill" href="https://www.frenchalpinebistro.com/" target="_blank" rel="noopener">Website</a>
       <a class="rl-pill rl-book" href="https://www.opentable.com/restref/client/?rid=228100" target="_blank" rel="noopener">Book · OpenTable</a>
       <a class="rl-pill" href="tel:+19709251566">Call (970) 925-1566</a>
       <a class="rl-pill rl-wear" href="#outfits" data-outfit="frenchalpine">What to wear →</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">Cheese fondue ('liquid Swiss gold'), 2-person minimum per pot, so order 3 pots for 6 · Soupe à l'oignon gratinée · Escargots en brioche, or the steak tartare</span></div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
       <dt>Hours</dt><dd>Closed for fall and reopens Nov 25, 2026. Dinner hours aren't posted. <em class="rl-unv">(unverified)</em></dd>
       <dt>Dress</dt><dd>Cozy, candlelit Alpine chalet: smart casual, sweaters welcome. <em class="rl-unv">(unverified: no dress code posted)</em></dd>
       <dt>Order</dt><dd>Cheese fondue ('liquid Swiss gold'), 2-person minimum per pot, so order 3 pots for 6 · Soupe à l'oignon gratinée · Escargots en brioche, or the steak tartare</dd>
@@ -4376,7 +4382,7 @@ body.gated .wh-fab{display:none;}
       <a class="rl-pill" href="https://www.aspensnowmass.com/-/media/aspen-snowmass/documents/pdfs/25-26/menus/merry-go-round-menu.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
       <a class="rl-pill" href="https://www.aspensnowmass.com/visit/dining/aspen-highlands/merry-go-round" target="_blank" rel="noopener">Website</a>
       <a class="rl-pill" href="tel:+19704293054">Call (970) 429-3054</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">Fresh-baked cinnamon roll (morning) · 'The Jerry' bacon double burger, or a burrito bowl · A Bloody Mary on the deck</span></div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
       <dt>Hours</dt><dd>9 AM – 3:30 PM (grab-and-go all day, lunch 11–2:30). Open Dec 12, 2026 – Apr 11, 2027.</dd>
       <dt>Order</dt><dd>Fresh-baked cinnamon roll (morning) · 'The Jerry' bacon double burger, or a burrito bowl · A Bloody Mary on the deck</dd>
       <dt>Book</dt><dd>Walk-in</dd>
@@ -4384,14 +4390,14 @@ body.gated .wh-fab{display:none;}
   </dl></details></div></div>
       <div class="tl"><div class="tl-time">3:00 PM</div><div class="tl-title">Drop Skis &middot; Request Snowmass Transfer</div><p class="tl-body">Drop at FMS Highlands (76 Boomerang Rd, before 5 PM) and ask for Snowmass Base Village for Sat Jan 2. Boots and helmets come home.</p></div>
       <div class="tl star"><div class="tl-time">~7:30 PM</div><div class="tl-title">Torchlight &amp; Fireworks &middot; Gondola Plaza</div><p class="tl-body">At dusk, instructors and patrol carry lit torches down the face of Aspen Mountain, and the fireworks go up over town at <strong>8:00 PM</strong>. Watch from the base by the gondola, then it&rsquo;s a 5-minute walk to Matsuhisa.</p><p class="tl-note">8 PM is the 2025 schedule &mdash; confirm the 2026 times when Aspen Snowmass posts them in December.</p><p class="tl-note">Both are visible directly from the deck at 42 Nighthawk &mdash; an excellent alternative if the group prefers champagne at home.</p><div class="media" data-m="d4_nye"></div></div>
-      <div class="tl star"><div class="tl-time">8:45 PM</div><div class="tl-title">NYE Dinner &middot; Matsuhisa</div><p class="tl-body">Omakase at Nobu Matsuhisa &mdash; 8&ndash;10 courses (black cod miso is the signature), ~3 hrs. 303 E Main St, downtown. The 8:45 seating starts right after the fireworks and runs to about midnight &mdash; ring in 2027 at the table.</p><p class="tl-note"><strong>Books exactly 30 days out</strong> &mdash; reserve on OpenTable the moment it opens (~Dec 1). Cook-in is the easy fallback.</p>
+      <div class="tl star"><div class="tl-time">8:45 PM</div><div class="tl-title">NYE Dinner &middot; Matsuhisa</div><p class="tl-body">Omakase at Nobu Matsuhisa &mdash; 8&ndash;10 courses (black cod miso is the signature), ~3 hrs. 303 E Main St, downtown. The 8:45 seating starts right after the fireworks and runs to about midnight &mdash; ring in 2027 at the table.</p><p class="tl-note"><strong>Books exactly 30 days out</strong> &mdash; reserve on OpenTable Tue Dec 1 at 12:00 AM MT (1:00 AM CT). Cook-in is the easy fallback.</p>
       <div class="media" data-m="d4_mat_photos"></div><div class="media" data-m="d4_matsuhisa"></div><div class="rl rl-stop" data-rest="matsuhisa"><span class="rl-name">Matsuhisa</span><div class="rl-pills">
       <a class="rl-pill" href="https://www.matsuhisarestaurants.com/wp-content/uploads/2025/10/Aspen-DOWNSTAIRS-2025-CURRENT-MENU.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
       <a class="rl-pill" href="https://www.matsuhisarestaurants.com/aspen/" target="_blank" rel="noopener">Website</a>
       <a class="rl-pill rl-book" href="https://www.opentable.com/restref/client/?rid=6946" target="_blank" rel="noopener">Book · OpenTable</a>
       <a class="rl-pill" href="tel:+19705446628">Call (970) 544-6628</a>
       <a class="rl-pill rl-wear" href="#outfits" data-outfit="matsuhisa">What to wear →</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">Omakase: the 8-course tasting, ordered from your server on the night (not available upstairs) · Broiled black cod with miso · Yellowtail sashimi with jalapeño, and rock shrimp tempura</span></div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
       <dt>Hours</dt><dd>Downstairs bar and dining room: daily 5:30 PM to close. Upstairs resumes nightly service Dec 11.</dd>
       <dt>Dress</dt><dd>Polished Aspen-chic. NYE crowd dresses up. <em class="rl-unv">(unverified: no dress code posted)</em></dd>
       <dt>Order</dt><dd>Omakase: the 8-course tasting, ordered from your server on the night (not available upstairs) · Broiled black cod with miso · Yellowtail sashimi with jalapeño, and rock shrimp tempura</dd>
@@ -4430,14 +4436,14 @@ body.gated .wh-fab{display:none;}
       <a class="rl-pill" href="https://www.aspensnowmass.com/-/media/aspen-snowmass/documents/pdfs/25-26/menus/2526the-cabin-menureprint.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
       <a class="rl-pill" href="https://www.aspensnowmass.com/visit/dining/snowmass/the-cabin" target="_blank" rel="noopener">Website</a>
       <a class="rl-pill rl-book" href="https://www.exploretock.com/the-cabin-aspen" target="_blank" rel="noopener">Book · Tock</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">Elk stroganoff · Coconut crème brûlée · Tacos from the outdoor taco bar at après</span></div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
       <dt>Hours</dt><dd>Lunch 11:30 AM – 2 PM; après 2:30–4 PM. Open Dec 5, 2026 – Apr 4, 2027.</dd>
       <dt>Order</dt><dd>Elk stroganoff · Coconut crème brûlée · Tacos from the outdoor taco bar at après</dd>
       <dt>Book</dt><dd>Tock is recommended for the sit-down lunch. No reservations for the après bar &amp; grill.</dd>
       <dt>Tips</dt><dd>DJ sets and live music at après.</dd>
   </dl></details></div><div class="rl rl-stop" data-rest="basecamp"><span class="rl-name">Base Camp</span><div class="rl-pills">
       <a class="rl-pill" href="https://www.basecampsnowmass.com/menu" target="_blank" rel="noopener">Menu</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">Burgers, sandwiches, soups <em class="rl-unv">(unverified)</em></span></div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
       <dt>Hours</dt><dd>Not found officially (listings conflict)</dd>
       <dt>Order</dt><dd>Burgers, sandwiches, soups <em class="rl-unv">(unverified)</em></dd>
       <dt>Book</dt><dd>Walk-in <em class="rl-unv">(unverified)</em></dd>
@@ -4450,7 +4456,7 @@ body.gated .wh-fab{display:none;}
       <a class="rl-pill rl-book" href="https://www.sevenrooms.com/reservations/steakhouse316" target="_blank" rel="noopener">Book · SevenRooms</a>
       <a class="rl-pill" href="tel:+19709201893">Call (970) 920-1893</a>
       <a class="rl-pill rl-wear" href="#outfits" data-outfit="s316">What to wear →</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">Prime cowboy rib eye or bone-in filet (or the porterhouse for two) · Branding Iron onion rings · Lobster mac 'n' cheese or potato pavé with béarnaise; bread pudding for dessert</span></div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
       <dt>Hours</dt><dd>Dinner seven nights a week from 5:30 PM.</dd>
       <dt>Dress</dt><dd>Dark, clubby, red-velvet steakhouse. Dress up a notch. <em class="rl-unv">(unverified: no dress code posted)</em></dd>
       <dt>Order</dt><dd>Prime cowboy rib eye or bone-in filet (or the porterhouse for two) · Branding Iron onion rings · Lobster mac 'n' cheese or potato pavé with béarnaise; bread pudding for dessert</dd>
@@ -4463,7 +4469,7 @@ body.gated .wh-fab{display:none;}
       <a class="rl-pill" href="https://auberge.com/hotel-jerome/j-bar/lunch-dinner/" target="_blank" rel="noopener">Menu</a>
       <a class="rl-pill" href="https://auberge.com/hotel-jerome/dine/j-bar/" target="_blank" rel="noopener">Website</a>
       <a class="rl-pill" href="tel:+19709201000">Call (970) 920-1000</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">J-Bar Burger · The Aspen Crud, a bourbon milkshake from the Prohibition era · Short rib poutine or the fried chicken sandwich</span></div><details class="rl-more"><summary>Hours, dress &amp; what to order</summary><dl class="rl-info">
       <dt>Hours</dt><dd>About 11:45 AM – 11 PM Sun–Wed, to midnight Thu–Sat <em class="rl-unv">(unverified; sources conflict)</em></dd>
       <dt>Order</dt><dd>J-Bar Burger · The Aspen Crud, a bourbon milkshake from the Prohibition era · Short rib poutine or the fried chicken sandwich</dd>
       <dt>Book</dt><dd>Mostly walk-in; call the hotel to check for a group of 6 <em class="rl-unv">(unverified)</em></dd>
@@ -4527,7 +4533,7 @@ body.gated .wh-fab{display:none;}
     <span class="eyebrow">The Table</span>
     <h2>Restaurants</h2>
     <div class="sec-rule"><span class="ln"></span><span class="dia"></span><span class="ln r"></span></div>
-    <p class="lead">Every night out is chosen &mdash; Wild Fig on arrival, Casa Tua on Day 2, French Alpine on Day 3, Matsuhisa for NYE, Steakhouse 316 to close &mdash; but none are reserved yet. They all open about <strong>30 days out</strong>, so the bookings land <strong>Nov 27</strong> (Wild Fig), Nov 29, Nov 30, ~Dec 1, and Dec 3. Set alarms.</p>
+    <p class="lead">Every night out is chosen &mdash; Wild Fig on arrival, Casa Tua on Day 2, French Alpine on Day 3, Matsuhisa for NYE, Steakhouse 316 to close &mdash; but none are reserved yet. They all open about <strong>30 days out</strong>, so the bookings land <strong>Nov 27</strong> (Wild Fig), Nov 29, Nov 30, Tue Dec 1 (12:00 AM MT), and Dec 3. Set alarms.</p>
   </div>
 
   <div class="sub-head reveal">Marquee Dining</div>
@@ -4555,7 +4561,7 @@ body.gated .wh-fab{display:none;}
       <dt>Hours</dt><dd>Dinner nightly. The site lists no times; it also now serves lunch. <em class="rl-unv">(unverified: exact dinner hours)</em></dd>
       <dt>Dress</dt><dd>Lively Mediterranean bistro. Smart casual, après-to-dinner is fine. <em class="rl-unv">(unverified: no dress code posted)</em></dd>
       <dt>Order</dt><dd>Burrata &amp; prosciutto with fresh figs (to share) · Cacio e pepe with house linguine (you can add a lobster tail) · Lobster paccheri, or the whole grilled fish of the day</dd>
-      <dt>Book</dt><dd>SevenRooms, released about 30 days out (book Fri Nov 27). Call if 6:30 isn't showing.</dd>
+      <dt>Book</dt><dd>SevenRooms, released 30 days out: book Fri Nov 27, checking from 8:00 AM MT (9:00 AM CT); it does not open at midnight. Call if 6:30 isn't showing.</dd>
       <dt>Tips</dt><dd>Moved to 305 S Mill. Older listings still say 315 E Hyman. · 6:30 is early on purpose: Belly Up doors are at 8:30, a 5-minute walk away.</dd>
   </dl>
 </div>
@@ -4575,7 +4581,7 @@ body.gated .wh-fab{display:none;}
         </dl>
         <div class="rl" data-rest="casatua">
   <div class="rl-pills">
-      <a class="rl-pill" href="https://www.casatualife.com/aspen" target="_blank" rel="noopener">Menu</a>
+      <a class="rl-pill" href="https://www.casatualife.com/menu/aspen" target="_blank" rel="noopener">Menu</a>
       <a class="rl-pill rl-book" href="https://www.sevenrooms.com/explore/casatuaaspen/reservations/create/search" target="_blank" rel="noopener">Book · SevenRooms</a>
       <a class="rl-pill" href="tel:+19709207277">Call (970) 920-7277</a>
       <a class="rl-pill rl-wear" href="#outfits" data-outfit="casatua">What to wear →</a>
@@ -4583,9 +4589,9 @@ body.gated .wh-fab{display:none;}
   <dl class="rl-info">
       <dt>Hours</dt><dd>Open now (no Oct–Dec closure). Dinner nightly. <em class="rl-unv">(unverified: exact hours; third-party listings show about 5–9 PM or later)</em></dd>
       <dt>Dress</dt><dd>Dressy Aspen Italian. No ripped jeans, hoodies, sleeveless tops (men) or sandals (men). After 4 PM, no sportswear, shorts (men) or caps. Jackets encouraged for men.</dd>
-      <dt>Order</dt><dd>Burrata · Bucatini cacio e pepe or the lobster spaghetti · Casa Tua chicken or the branzino <em class="rl-unv">(unverified: from third-party listings, not an official menu)</em></dd>
+      <dt>Order</dt><dd>Burrata with pappa al pomodoro · Pici cacio e pepe or the tagliatelle with porcini &amp; black truffle · Bone-in veal Milanese or whole grilled branzino <em class="rl-unv">(from Casa Tua&rsquo;s official Aspen menu)</em></dd>
       <dt>Book</dt><dd>SevenRooms, released daily 30 days ahead (Dec 29 opens Sun Nov 29). Waitlist on SevenRooms. 2-hour seating, 15-minute grace period.</dd>
-      <dt>Tips</dt><dd>2-hour table: order mains reasonably promptly. · Arrive within 15 minutes or the table may be released.</dd>
+      <dt>Tips</dt><dd>Parties of 6+ get a 20% gratuity added automatically. · 2-hour table: order mains reasonably promptly. · Arrive within 15 minutes or the table may be released.</dd>
   </dl>
 </div>
       </div>
@@ -4628,7 +4634,7 @@ body.gated .wh-fab{display:none;}
         <dl class="rkv">
           <dt>Address</dt><dd>303 E Main St, Aspen</dd>
           <dt>Order</dt><dd>Omakase, 8&ndash;10 courses &middot; black cod miso is the signature &middot; add sake pairings</dd>
-          <dt>Status</dt><dd class="warn">Books ~30 days ahead (&asymp; Dec 1 for NYE) &middot; reserve on OpenTable the moment it opens &middot; bar seats sometimes walk-in</dd>
+          <dt>Status</dt><dd class="warn">Books exactly 30 days ahead &middot; reserve on OpenTable Tue Dec 1 at 12:00 AM MT (1:00 AM CT) &middot; bar seats sometimes walk-in</dd>
         </dl>
         <div class="rl" data-rest="matsuhisa">
   <div class="rl-pills">
@@ -4657,7 +4663,7 @@ body.gated .wh-fab{display:none;}
         <dl class="rkv">
           <dt>Address</dt><dd>316 E Hopkins Ave &middot; 5 min from Red Mountain</dd>
           <dt>Order</dt><dd>Dry-aged ribeye or filet, creamed spinach, potato gratin &middot; chocolate souffl&eacute; (45-min) at the start</dd>
-          <dt>Book date</dt><dd>Books <strong>exactly 30 days out</strong> &mdash; Jan 2 opens <strong>Thu Dec 3, 2026</strong>, book it the morning it opens</dd>
+          <dt>Book date</dt><dd>Books <strong>exactly 30 days out</strong> &mdash; Jan 2 opens <strong>Thu Dec 3, 2026</strong>, book it Thu Dec 3 (SevenRooms; not midnight, check 8:00 AM MT / 9:00 AM CT)</dd>
           <dt>Getting home</dt><dd>High Mountain Taxi runs free from Rubey Park 12:30&ndash;2:00 AM on Saturdays</dd>
         </dl>
         <div class="rl" data-rest="s316">
@@ -4742,7 +4748,7 @@ body.gated .wh-fab{display:none;}
       <tr><td>Ajax Tavern</td><td>American slope-side</td><td>Base of the gondola at The Little Nell &middot; best apr&egrave;s in American skiing &middot; truffle fries</td></tr>
       <tr><td>White House Tavern</td><td>Neighborhood American</td><td>302 E Hopkins &middot; the famous chicken sandwich &middot; quiet and cozy</td></tr>
       <tr><td>Meat &amp; Cheese</td><td>Gourmet casual</td><td>319 E Hopkins &middot; charcuterie + sandwiches &middot; <strong>no reservations &mdash; walk-in only</strong>, and worth it</td></tr>
-      <tr><td>Wild Fig</td><td>Mediterranean</td><td>305 S Mill &middot; <strong>the Day 0 welcome dinner</strong> &middot; books ~30 days out (Fri Nov 27)</td></tr>
+      <tr><td>Wild Fig</td><td>Mediterranean</td><td>305 S Mill &middot; <strong>the Day 0 welcome dinner</strong> &middot; books Fri Nov 27, from 8:00 AM MT (9:00 AM CT)</td></tr>
       <tr><td>Slope Side Tavern</td><td>Modern American</td><td>520 E Cooper &middot; sceney bar-meets-restaurant</td></tr>
       <tr><td>Bonnie&rsquo;s</td><td>On-mtn (Ajax)</td><td>Mid-mountain Ajax &middot; the apple strudel &middot; walk-in, arrive early</td></tr>
       <tr><td>Merry-Go-Round</td><td>On-mtn (Highlands)</td><td>Atop the Exhibition lift &middot; market-style, full bar, sunny deck &middot; walk-in &middot; (970) 429-3054 &middot; Day 4 lunch</td></tr>
@@ -6842,7 +6848,7 @@ body.gated .wh-fab{display:none;}
     {n:'Matsuhisa',s:'Matsuhisa',d:'Day 4 \u00b7 Thu Dec 31 NYE dinner',p:'Omakase at 303 E Main St \u2014 the New Year\u2019s Eve seating, 8:45 PM (after the 8 PM fireworks). Books exactly 30 days out (\u2248 Dec 1).',c:[39.1917,-106.8215],k:'M',cat:'dining',day:'D4',z:15},
     {n:'Steakhouse 316',s:'Steakhouse 316',d:'Day 6 \u00b7 Sat Jan 2 closing dinner',p:'Prime dry-aged steakhouse at 316 E Hopkins \u2014 the closing night. Books exactly 30 days out (\u2248 Dec 3).',c:[39.1905,-106.8202],k:'S',cat:'dining',day:'D6',z:15},
     {n:'Belly Up Aspen',s:'Belly Up',d:'Day 0 \u00b7 Sun Dec 27 \u00b7 Cloonee',p:'Cloonee at Aspen\u2019s famous music club, 450 S Galena \u2014 doors 8:30, show 9:30, 21+. Four GA tickets bought. A 5-minute walk from Wild Fig after the 6:30 dinner.',c:[39.1874,-106.8190],k:'B',cat:'activity',day:'D0',z:15},
-    {n:'Wild Fig',s:'Wild Fig',d:'Day 0 \u00b7 Sun Dec 27 welcome dinner',p:'Mediterranean at 305 S Mill St. The arrival-night dinner \u2014 books ~30 days out (Fri Nov 27).',c:[39.18892,-106.82075],k:'W',cat:'dining',day:'D0',z:15},
+    {n:'Wild Fig',s:'Wild Fig',d:'Day 0 \u00b7 Sun Dec 27 welcome dinner',p:'Mediterranean at 305 S Mill St. The arrival-night dinner \u2014 books Fri Nov 27, from 8:00 AM MT (9:00 AM CT).',c:[39.18892,-106.82075],k:'W',cat:'dining',day:'D0',z:15},
     {n:'Casa Tua',s:'Casa Tua',d:'Day 2 \u00b7 Tue Dec 29 dinner',p:'The Day 2 nice night \u2014 Northern Italian at 403 S Galena, steps from Rubey Park. Books on SevenRooms 30 days out (Sun Nov 29).',c:[39.1888,-106.8203],k:'C',cat:'dining',day:'D2',z:15},
     {n:'Pine Creek Cookhouse',s:'Cookhouse',d:'Optional · backcountry dinner',p:'The splurge alternative to French Alpine Bistro for Day 3 — sleigh in from the King Cabin, Ashcroft.',c:[39.0556,-106.7958],k:'P',cat:'dining',day:'Opt',z:13},
     {n:'Aspen/Pitkin Airport (ASE)',s:'Airport',d:'5 min from the house',p:'Sardy Field. The Suburban comes from DEN, but ASE is the local strip.',c:[39.2236,-106.8687],k:'A',cat:'travel',day:'',z:13}
@@ -8004,8 +8010,8 @@ body.gated .wh-fab{display:none;}
   var TASKS=[
     {id:'wildfig', kind:'on', date:'2026-11-27', who:'Marcy', forWho:'Everyone (6)',
      title:'Reserve Wild Fig — welcome dinner',
-     when:'Sun Dec 27 · 6:30 PM · table for 6',
-     why:'Wild Fig releases tables about 30 days ahead on SevenRooms (checked Nov 15: nothing past Dec 15 was open yet). Book the morning Dec 27 opens — holiday week fills fast.',
+     when:'Fri Nov 27 · SevenRooms · check 8:00 AM MT (9:00 AM CT), not midnight',
+     why:'Dec 27 opens on SevenRooms on Fri Nov 27. SevenRooms does NOT release at midnight (on Nov 16 the new date was still closed at 1:42 AM MT). Exact minute being confirmed — check at 8:00 AM MT (9:00 AM CT) and keep refreshing. If 6:30 isn’t there, call (970) 925-5160.',
      how:[{t:'web',label:'Book online (SevenRooms)',v:'https://www.sevenrooms.com/explore/thewildfig/reservations/create/search/'},
           {t:'tel',label:'Call (970) 925-5160',v:'+19709255160'}],
      say:'"Table for 6 on Sunday, December 27 at 6:30, under Wright. We need to be out by about 8:15."',
@@ -8035,7 +8041,7 @@ more:['Includes lift ticket, skis, boots and helmet. 10 AM – 3 PM. Be at the b
 
     {id:'mountain', kind:'by', date:'2026-11-27', who:'Marcy', forWho:'Griffin, Ben, Marco, Stella, Marcy',
      title:'Buy lift tickets',
-     when:'Buy by Fri Nov 27 for the biggest early discount',
+     when:'Buy by Fri Nov 27 (safe) · true last day Sat Nov 28, ~11:59 PM MT (12:59 AM CT)',
      why:'The Flex Pass is sold out for this season. Regular multi-day lift tickets are the plan now. Buying 30+ days ahead saves the most.',
      how:[{t:'web',label:'Lift tickets',v:'https://www.aspensnowmass.com/visit/tickets-and-passes/lift-tickets'},
           {t:'tel',label:'Call (877) 308-7859',v:'+18773087859'}],
@@ -8047,7 +8053,7 @@ more:['The Flex Pass is gone. These regular tickets fit our days: 4 days in a 6-
 
     {id:'rentals', kind:'by', date:'2026-11-27', who:'Marcy', forWho:'Griffin, Marco, Stella, Marcy',
      title:'Reserve ski + snowboard rentals (Four Mountain Sports)',
-     when:'Book by Fri Nov 27 for the biggest discount',
+     when:'Book by Fri Nov 27 (safe) · true last day Sat Nov 28, ~11:59 PM MT (12:59 AM CT)',
      why:'Booking 30+ days ahead saves the most; 7+ days ahead still saves some.',
      how:[{t:'web',label:'Reserve rentals',v:'https://shop.aspensnowmass.com/s/winter-rentals/four-mountain-sports'}],
      say:'Ski and Snowboard Rental → date → ADULT 13 & UP → SKI (Marco: SNOWBOARD) → PACKAGE (includes boots) → STANDARD → helmet: YES for everyone → number of days → Add To Cart.\nGriffin and Marco: start Dec 28, 6-Day (keeps gear stored over the days off).\nStella: 1-Day on Dec 29, Dec 31 and Jan 2 (three separate items).\nMarcy: 1-Day on Dec 31 and Jan 2.\nDec 31 pickups (Stella, Marcy): FMS Highlands, Highlands Village.\nText Griffin the total.',
@@ -8058,8 +8064,8 @@ more:['Multi-day rentals run on consecutive days. You pay for days in between, s
 
     {id:'casatua', kind:'on', date:'2026-11-29', who:'Marcy', forWho:'Everyone (6)',
       title:'Book Casa Tua — Day 2 dinner',
-      when:'Tue Dec 29 · 7:00 PM · table for 6',
-      why:'Casa Tua releases tables daily, 30 days ahead, on SevenRooms — so Dec 29 opens Sun Nov 29.',
+      when:'Sun Nov 29 · SevenRooms · check 8:00 AM MT (9:00 AM CT), not midnight',
+      why:'Dec 29 opens on SevenRooms on Sun Nov 29. SevenRooms does NOT release at midnight (on Nov 16 the new date was still closed at 1:42 AM MT). Exact minute being confirmed — check at 8:00 AM MT (9:00 AM CT) and keep refreshing. If 7 PM isn’t there, join the SevenRooms waitlist, then call (970) 920-7277. Note: parties of 6+ get a 20% gratuity added.',
       how:[{t:'web',label:'Book on SevenRooms',v:'https://www.sevenrooms.com/explore/casatuaaspen/reservations/create/search'},{t:'tel',label:'Call (970) 920-7277',v:'+19709207277'}],
       say:'Guests: 6 · Date: Tue Dec 29 · Time: 7:00 PM (6:30–7:30 is fine) · Room: Aspen Restaurant (not the members club).\nIf nothing shows: tap "Notify me"/waitlist for 6 at 7 PM, then call.',
       more:['403 S Galena St · they allocate 2 hours per table · 15-minute grace period (reply to the confirmation text if running late).',
@@ -8067,8 +8073,8 @@ more:['Multi-day rentals run on consecutive days. You pay for days in between, s
             'Decide first: the time window you will accept (e.g. 6:30–7:30) and whether 8 PM is OK if 7 PM is gone.']},
     {id:'frenchalpine', kind:'on', date:'2026-11-30', who:'Marcy', forWho:'Everyone (6)',
      title:'Book French Alpine Bistro — Day 3 dinner',
-     when:'Wed Dec 30 · 7:30 PM · table for 6',
-     why:'Tables open 30 days ahead — book the morning of Mon Nov 30.',
+     when:'Mon Nov 30 · 12:00 AM MT (1:00 AM CT) on OpenTable',
+     why:'Dec 30 opens on OpenTable at midnight MT on Mon Nov 30 (confirmed: the matching date was open by 1:45 AM MT on Nov 16). Not up at midnight? Book at 7:00 AM MT (8:00 AM CT). Online showed no tables for 6, so be ready to call (970) 925-1566 when they open.',
      how:[{t:'web',label:'Book on OpenTable',v:'https://www.opentable.com/restref/client/?rid=228100&restref=228100'},
           {t:'tel',label:'Call (970) 925-1566',v:'+19709251566'},
           {t:'mail',label:'Email them',v:'reservations@frenchalpinebistro.com'}],
@@ -8079,8 +8085,8 @@ more:['Multi-day rentals run on consecutive days. You pay for days in between, s
 
     {id:'matsuhisa', kind:'on', date:'2026-12-01', who:'Marcy', forWho:'Everyone (6)',
      title:'Book Matsuhisa — New Year’s Eve dinner',
-     when:'Thu Dec 31 · 8:45 PM · table for 6',
-     why:'The downstairs dining room takes reservations 30 days ahead — book first thing Tue Dec 1.',
+     when:'Tue Dec 1 · 12:00 AM MT (1:00 AM CT) on OpenTable',
+     why:'Dec 31 opens on OpenTable at midnight MT on Tue Dec 1 (confirmed on Nov 16 for the matching date). Book the downstairs room. If OpenTable shows nothing for 6, call (970) 544-6628 when they open that afternoon.',
      how:[{t:'web',label:'Book on OpenTable',v:'https://www.opentable.com/restref/client/?rid=6946&restref=6946'},
           {t:'tel',label:'Call (970) 544-6628',v:'+19705446628'}],
      say:'Party of 6 · Thursday Dec 31 · 8:45 PM (right after the 8 PM fireworks) · name Wright.',
@@ -8089,8 +8095,8 @@ more:['Multi-day rentals run on consecutive days. You pay for days in between, s
 
     {id:'steak316', kind:'on', date:'2026-12-03', who:'Marcy', forWho:'Everyone (6)',
      title:'Book Steakhouse 316 — closing dinner',
-     when:'Sat Jan 2 · 7:30 PM · table for 6',
-     why:'Book on Thu Dec 3, 30 days ahead.',
+     when:'Thu Dec 3 · SevenRooms · check 8:00 AM MT (9:00 AM CT), not midnight',
+     why:'Jan 2 opens on SevenRooms on Thu Dec 3. SevenRooms does NOT release at midnight (on Nov 16 the new date was still closed at 1:42 AM MT). Exact minute being confirmed — check at 8:00 AM MT (9:00 AM CT) and keep refreshing. If 7:30 isn’t showing, call (970) 920-1893; they have more times by phone.',
      how:[{t:'web',label:'Book online (SevenRooms)',v:'https://www.sevenrooms.com/reservations/steakhouse316'},
           {t:'tel',label:'Call (970) 920-1893',v:'+19709201893'}],
      say:'Party of 6 · Saturday Jan 2 · 7:30 PM · name Wright.',
@@ -8099,7 +8105,7 @@ more:['Multi-day rentals run on consecutive days. You pay for days in between, s
 
     {id:'clothes', kind:'by', date:'2026-12-13', who:'Marcy', forWho:'Marcy, Jim, Stella (+ Griffin, unless he buys his own)',
      title:'Rent ski jackets & pants',
-     when:'Order by Sun Dec 13 · needed from Mon Dec 28',
+     when:'Order by Sun Dec 20 (6+ days before the first rental day, for free shipping)',
      why:'Jim needs warm gear too: the snowmobile ranch gives out helmets only.',
      how:[{t:'web',label:'Kit Lender (ships kits)',v:'https://www.kitlender.com/'},
           {t:'web',label:'Slope Threads (Golden pickup)',v:'https://slopethreads.com/'},
@@ -8113,7 +8119,7 @@ more:[' for the first 3 days (3-day minimum), then. Free shipping and returns. N
 
     {id:'springs', kind:'by', date:'2026-12-15', who:'Marcy', forWho:'Everyone (6)',
      title:'Book Iron Mountain Hot Springs',
-     when:'Fri Jan 1 · 12:00 PM entry · 6 people',
+     when:'On sale now · book by Tue Dec 15 · free cancel until 12:00 PM MT Wed Dec 30 (1:00 PM CT)',
      why:'You need a reservation (a 3-hour visit). New Year’s Day is busy, so book early.',
      how:[{t:'web',label:'Buy tickets',v:'https://www.ironmountainhotsprings.com/'},
           {t:'tel',label:'Call (970) 945-4766',v:'+19709454766'}],
@@ -8125,7 +8131,7 @@ more:['Jan 1 was wide open on Nov 16, every time from 9 AM to 7 PM.',
 
     {id:'bellyup', kind:'by', date:'2026-12-26', who:'Griffin', forWho:'Whoever arrives separately (Marco, Stella, Ben have tickets)',
      title:'Transfer a Belly Up ticket to whoever arrives separately',
-     when:'Sat Dec 26 after 4 PM MT · concert Sun Dec 27',
+     when:'Sat Dec 26 · from ~4:00 PM MT (5:00 PM CT) · concert Sun Dec 27',
      why:'Guests who walk in with Griffin don’t need a transfer. Tickets can’t be sent before 4 PM the day before.',
      how:[{t:'web',label:'How transfers work',v:'https://bellyupaspen.com/faq/'}],
      say:'The 4: Griffin, Marco, Stella, Ben. Anyone walking in with Griffin needs nothing.\nWhoever arrives separately: they make a Belly Up account with their email first. After 4 PM MT Sat Dec 26, Griffin logs in → Transfer → picks the ticket → types their email → Transfer Tickets. They open the email from guestrelations@bellyupaspen.com and add it to their phone wallet.',
