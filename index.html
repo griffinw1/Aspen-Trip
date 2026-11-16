@@ -1621,6 +1621,11 @@ body.dark .vx.full{background:#07111c;}
 [data-tz="lo"] .vx-tlbl.minor{opacity:0;transition:opacity var(--dur-2) var(--ease-out);}
 [data-tz="lo"] .leaflet-marker-icon:hover .vx-tlbl.minor,[data-tz="lo"] .leaflet-marker-icon.on .vx-tlbl.minor,[data-tz="lo"] .vx-m3:hover .vx-tlbl.minor,[data-tz="lo"] .vx-m3.on .vx-tlbl.minor{opacity:1;}
 .vx-tool[hidden]{display:none !important;}
+/* collision handling (declutterTown) hides whatever would overlap */
+.vx-hid{visibility:hidden !important;}
+/* in Downtown the tile-baked place names (Esri reference layer) would sit under our labels */
+#vxMap.vx-town .vx-labels{display:none;}
+.vx-tw.vx-hid,.vx-m3.tw.vx-hid{pointer-events:none;}
 /* "1 block" scale in the legend */
 .vx-legend i.ln-drive{border-top:3px dashed #E0B65E;}
 .vx-blk-lg{gap:7px;}
@@ -1686,6 +1691,242 @@ body.dark .vx .maplibregl-ctrl-attrib a{color:#c9a05a;}
   .vx-tpin{transition:none;}
   .vx-3dload .sp{animation:none;}
 }
+
+/* ---- v40: smooth walk into Downtown ---- */
+.vx-tpin,.vx-tlbl,.vx-street span,.vx-blk span{transition:opacity .42s var(--ease-out) var(--d,0ms),transform var(--dur-2) var(--ease-spring);}
+.vx-stage.vx-flying .vx-tpin,.vx-stage.vx-flying .vx-tlbl,.vx-stage.vx-flying .vx-street span,.vx-stage.vx-flying .vx-blk span{opacity:0 !important;transition:none;}
+.vx-stage .vx-veil{position:absolute;inset:0;z-index:840;display:flex;align-items:flex-end;justify-content:center;padding-bottom:64px;pointer-events:none;opacity:0;
+  transition:opacity .35s var(--ease-out);background:radial-gradient(ellipse at 50% 50%,rgba(255,250,240,0) 45%,rgba(14,30,22,.22) 100%);
+  -webkit-backdrop-filter:blur(1.5px);backdrop-filter:blur(1.5px);}
+.vx-stage.vx-going .vx-veil{opacity:1;}
+.vx-veil span{font:500 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#F3E6C2;background:rgba(14,30,22,.72);padding:9px 14px;border-radius:20px;}
+@media (prefers-reduced-motion:reduce){ .vx-stage .vx-veil{-webkit-backdrop-filter:none;backdrop-filter:none;} .vx-tpin,.vx-tlbl,.vx-street span,.vx-blk span{transition:opacity .2s linear;} }
+
+</style>
+<style id="vx-v40">
+/* ============================================================
+   v40 cinematic tour — "▶ Play the tour" / "▶ Play Day N".
+   Paste AFTER map3d.css. Film chrome is always black/champagne
+   (letterbox), the entry buttons follow the page theme.
+   Reserved, non-overlapping zones inside .vt-frame:
+     desktop ≥640px : lower-third + chapter card = bottom-left ≤46% wide;
+                      photo = top-right ≤28% wide; title/end = centre (exclusive).
+     narrow  <640px : photo = top-left ≤46% wide; lower-third / chapter = bottom,
+                      full width minus 44px on the right (MapLibre "i").
+   ============================================================ */
+
+/* ---- entry on the Map tab ---- */
+.vt-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 12px;margin:0 0 16px;}
+.vt-go{display:inline-flex;align-items:center;gap:14px;padding:9px 24px 9px 9px;border:0;border-radius:40px;cursor:pointer;
+  background:var(--alpenglow);color:#143a2a;box-shadow:0 14px 34px -16px rgba(150,110,40,.75),inset 0 0 0 1px rgba(255,255,255,.35);
+  transition:transform var(--dur-2) var(--ease-spring),box-shadow var(--dur-2) var(--ease-out);text-align:left;}
+.vt-go:hover{transform:translateY(-2px) scale(1.01);box-shadow:0 18px 40px -16px rgba(150,110,40,.85),inset 0 0 0 1px rgba(255,255,255,.45);}
+.vt-go:focus-visible,.vt-go2:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+.vt-gi{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#143a2a;flex:none;box-shadow:0 0 0 4px rgba(20,58,42,.18);}
+.vt-gi svg{width:20px;height:20px;fill:#F3E6C2;margin-left:3px;}
+.vt-gt{display:flex;flex-direction:column;line-height:1.1;}
+.vt-gt b{font:600 23px/1.05 var(--serif);letter-spacing:.01em;}
+.vt-gt small{font:500 10.5px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;opacity:.78;margin-top:3px;}
+.vt-go2{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:30px;cursor:pointer;background:var(--glass);
+  border:1px solid var(--glass-line);color:var(--snow);font:500 11.5px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  transition:border-color var(--dur-1) var(--ease-out),transform var(--dur-2) var(--ease-out);}
+.vt-go2:hover{border-color:var(--gold);transform:translateY(-1px);}
+.vt-go2 svg{width:14px;height:14px;fill:var(--gold);}
+.vt-go2[hidden]{display:none;}
+.vx-tool[data-t="fly"] svg{fill:currentColor;stroke:none;}
+@media (max-width:420px){ .vt-go{padding-right:18px;} .vt-gt b{font-size:21px;} }
+
+/* ---- full-bleed: the map stage becomes the screen ---- */
+body.vt-on .vx.full{padding:0;background:#000;}
+body.vt-on .vx.full .vx-days,body.vt-on .vx.full .vx-side,body.vt-on .vx-tools,body.vt-on .vx-tools-r,body.vt-on .vx-expand,
+body.vt-on .vx-legend,body.vt-on .vx-offer,body.vt-on .vt-cta,body.vt-on .vx-toast,body.vt-on .vx .maplibregl-ctrl-group,
+body.vt-on .vx .maplibregl-cooperative-gesture-screen,body.vt-on #snow{display:none !important;}
+body.vt-on .vx.full .vx-body{display:block;height:100%;}
+body.vt-on .vx.full .vx-stage{height:100%;border:0;border-radius:0;box-shadow:none;}
+body.vt-on .vx .maplibregl-ctrl-bottom-right{bottom:var(--vt-lbB,92px);z-index:3;}
+body.vt-on .vx .maplibregl-ctrl-attrib{background:rgba(0,0,0,.45);color:#cfd6dc;}
+body.vt-on .vx .maplibregl-ctrl-attrib a{color:#e8c26a;}
+body.vt-on{--vt-lbB:92px;}
+@media (max-width:639px){ body.vt-on{--vt-lbB:106px;} }
+
+/* ---- player ---- */
+.vt{--lbT:52px;--lbB:var(--vt-lbB,92px);--vt-night:0;--vt-warm:0;--gold-hi:#E8C26A;
+  position:absolute;inset:0;z-index:950;color:#fff;font-family:var(--sans);pointer-events:none;}
+.vt.narrow{--lbT:46px;}
+.vt-top,.vt-bot{position:absolute;left:0;right:0;background:#000;pointer-events:auto;}
+.vt-top{top:0;height:var(--lbT);display:flex;align-items:center;gap:14px;padding:0 10px 0 20px;}
+.vt-bot{bottom:0;height:var(--lbB);padding:10px 20px calc(10px + env(safe-area-inset-bottom,0px));}
+.vt.narrow .vt-top{padding-left:14px;} .vt.narrow .vt-bot{padding:9px 12px calc(9px + env(safe-area-inset-bottom,0px));}
+.vt-brand{display:flex;align-items:baseline;gap:8px;white-space:nowrap;}
+.vt-brand span{font:500 15px/1 var(--serif);letter-spacing:.32em;text-transform:uppercase;color:#F3E6C2;}
+.vt-brand i{font:italic 400 15px/1 var(--serif);color:var(--gold-hi);}
+.vt-where{flex:1;min-width:0;text-align:center;font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#c9c3b3;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.vt.narrow .vt-where{visibility:hidden;}
+.vt-tr{display:flex;gap:4px;margin-left:auto;}
+.vt-btn{width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:50%;background:transparent;color:#F3E6C2;cursor:pointer;
+  transition:background var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out);}
+.vt-btn:hover{background:rgba(255,255,255,.1);}
+.vt-btn:focus-visible{outline:2px solid var(--gold-hi);outline-offset:1px;}
+.vt-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.vt-pp{width:46px;height:46px;background:#F3E6C2;color:#0b1420;}
+.vt-pp:hover{background:#fff;}
+.vt-pp svg{fill:currentColor;stroke:currentColor;stroke-width:1.2;}
+.vt-mus[aria-pressed="true"]{color:#0b1420;background:var(--gold-hi);}
+.vt-ctrls{display:flex;flex-direction:column;gap:6px;height:100%;justify-content:center;}
+.vt-row{display:flex;align-items:center;gap:6px;min-width:0;}
+.vt-time{font:500 12px/1 var(--sans);letter-spacing:.06em;color:#d9d3c3;margin-left:8px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.vt-chl{margin-left:auto;min-width:0;font:500 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:#a9a393;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:none;}
+.vt.narrow .vt-chl{display:block;}
+.vt-scrub{display:flex;height:18px;cursor:pointer;touch-action:none;outline:none;}
+.vt-scrub:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px;border-radius:4px;}
+.vt-seg{position:relative;height:18px;padding-right:3px;box-sizing:border-box;}
+.vt-seg b{position:absolute;left:0;right:3px;top:7px;height:4px;border-radius:2px;background:rgba(255,255,255,.2);overflow:hidden;transition:height var(--dur-1) var(--ease-out),top var(--dur-1) var(--ease-out);}
+.vt-seg b s{display:block;height:100%;background:linear-gradient(90deg,#C49A4A,#E8D9B0);transform-origin:0 50%;transform:scaleX(0);}
+.vt-seg.on b,.vt-scrub:hover .vt-seg b{top:6px;height:6px;}
+.vt-seg i.tk{position:absolute;top:5px;width:2px;height:8px;margin-left:-1px;border-radius:1px;background:rgba(255,255,255,.45);pointer-events:none;}
+.vt-seg i.tk.st{background:var(--gold-hi);height:10px;top:4px;}
+/* auto-hide (the bars stay — it's a letterbox) */
+.vt-ctrls,.vt-tr,.vt-where{transition:opacity .45s var(--ease-out);}
+.vt:not(.ui) .vt-ctrls,.vt:not(.ui) .vt-tr{opacity:0;}
+.vt:not(.ui){cursor:none;}
+.vt:not(.ui) .vt-ctrls *,.vt:not(.ui) .vt-tr *{pointer-events:none;}
+
+/* ---- frame + film texture ---- */
+.vt-frame{position:absolute;left:0;right:0;top:var(--lbT);bottom:var(--lbB);overflow:hidden;}
+.vt-fx,.vt-tint,.vt-vig,.vt-dip{position:absolute;inset:0;pointer-events:none;}
+.vt-fx{width:100%;height:100%;z-index:2;}
+.vt-tint{z-index:1;background:
+  linear-gradient(0deg,rgba(255,150,70,calc(var(--vt-warm)*.11)),rgba(255,196,128,calc(var(--vt-warm)*.05)) 60%,rgba(0,0,0,0)),
+  rgba(6,14,36,calc(var(--vt-night)*.26));}
+.vt-vig{z-index:3;background:radial-gradient(120% 95% at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.42) 100%);}
+.vt-vig::after{content:"";position:absolute;inset:0;opacity:.09;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.vt-dip{z-index:4;background:#000;opacity:1;}
+.vt.loading .vt-frame::after{content:"Raising the mountains…";position:absolute;inset:0;z-index:9;display:grid;place-items:center;
+  font:500 12px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#E8D9B0;}
+
+/* ---- text zones ---- */
+.vt-z{position:absolute;z-index:6;opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .7s var(--ease-out),transform .9s var(--ease-out),visibility 0s linear .7s;}
+.vt-z.on{opacity:1;visibility:visible;transform:none;transition:opacity .8s var(--ease-out) .15s,transform 1s var(--ease-out) .15s,visibility 0s;}
+.vt-ey{font:600 10.5px/1.3 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--gold-hi);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.vt-you{font:600 9.5px/1 var(--sans);letter-spacing:.14em;color:#0b1420;background:var(--gold-hi);padding:3px 7px;border-radius:20px;}
+
+/* lower-third */
+.vt-lt{left:clamp(16px,3.2vw,44px);bottom:clamp(14px,2.6vh,28px);max-width:min(46%,540px);padding:14px 20px 15px 18px;
+  background:linear-gradient(90deg,rgba(4,9,16,.78),rgba(4,9,16,.52));border-left:2px solid var(--gold-hi);border-radius:2px 6px 6px 2px;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 18px 40px -20px rgba(0,0,0,.8);}
+.vt-lt h4{font:500 31px/1.08 var(--serif);color:#fff;margin:5px 0 4px;letter-spacing:.005em;}
+.vt-lt h4 span{color:var(--gold-hi);font-style:italic;}
+.vt-what{font:400 15px/1.4 var(--sans);color:#f1ece0;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.vt-who{font:italic 400 14px/1.35 var(--serif);color:#cbd2d8;margin:3px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.vt-fact{margin:10px 0 0;padding-top:9px;border-top:1px solid rgba(232,194,106,.28);font:400 13.5px/1.42 var(--sans);color:#e9e2cf;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.vt-fact b{display:inline-block;margin-right:7px;font:600 9.5px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--gold-hi);vertical-align:1px;}
+.vt-chip{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font:500 12px/1 var(--sans);letter-spacing:.04em;color:#F3E6C2;
+  padding:6px 10px 6px 8px;border-radius:20px;background:rgba(240,196,106,.16);}
+.vt-chip svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.vt-chip.vt-walk{background:rgba(143,240,184,.15);color:#c9f7dc;} .vt-chip.vt-sled{background:rgba(158,216,251,.16);color:#d6eefc;}
+
+/* chapter card */
+.vt-chap{left:clamp(16px,3.2vw,44px);bottom:clamp(14px,2.6vh,28px);max-width:min(62%,640px);display:flex;align-items:flex-end;gap:20px;}
+.vt-num{font:300 clamp(70px,10vw,128px)/.82 var(--serif);color:transparent;-webkit-text-stroke:1.2px var(--gold-hi);text-shadow:0 0 30px rgba(232,194,106,.25);flex:none;}
+.vt-ct{min-width:0;padding-bottom:4px;text-shadow:0 2px 14px rgba(0,0,0,.75);}
+.vt-ct h3{font:500 clamp(34px,4.2vw,52px)/1 var(--serif);color:#fff;margin:6px 0 8px;}
+.vt-line{font:italic 400 18px/1.35 var(--serif);color:#f3eee2;margin:0;}
+.vt-ct .vt-fact{max-width:440px;}
+
+/* photo (polaroid) */
+.vt-photo{right:clamp(16px,3.2vw,44px);top:clamp(14px,2.6vh,28px);width:min(28%,300px);margin:0;padding:8px 8px 0;background:#f7f1e3;
+  box-shadow:0 22px 50px -18px rgba(0,0,0,.85);transform:rotate(1.6deg) translateY(14px);max-height:calc(100% - 40px);display:flex;flex-direction:column;}
+.vt-photo.on{transform:rotate(1.6deg);}
+.vt-ph{overflow:hidden;aspect-ratio:4/3;background:#ddd;flex:0 1 auto;min-height:0;}
+.vt-ph img{width:100%;height:100%;object-fit:cover;display:block;animation:vtKen 9s var(--ease-in-out) both;}
+@keyframes vtKen{from{transform:scale(1.08);}to{transform:scale(1);}}
+.vt-photo figcaption{font:italic 400 14px/1.3 var(--serif);color:#3a3328;padding:7px 4px 9px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+
+/* title / end (centre, exclusive) */
+.vt-title,.vt-end{inset:0;margin:auto;width:fit-content;height:fit-content;max-width:calc(100% - 32px);max-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;text-shadow:0 2px 24px rgba(0,0,0,.7);}
+.vt-kick{font:600 11px/1.3 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--gold-hi);}
+.vt-title h2,.vt-end h2{font:400 clamp(58px,10vw,128px)/.95 var(--serif);letter-spacing:.2em;text-transform:uppercase;color:#fff;margin:12px 0 10px;padding-left:.2em;}
+.vt-end h2{text-transform:none;letter-spacing:.01em;padding-left:0;font-size:clamp(40px,6.4vw,78px);}
+.vt-title h2.vt-mid{letter-spacing:.12em;}
+.vt-dates{font:italic 400 clamp(18px,2.2vw,24px)/1.3 var(--serif);color:#f3eee2;}
+.vt-sub{font:400 15px/1.4 var(--sans);letter-spacing:.06em;color:#e3dccb;margin:12px 0 0;}
+.vt-ask{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:22px;pointer-events:auto;
+  font:500 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#d9d3c3;}
+.vt-ask button,.vt-endb button{pointer-events:auto;cursor:pointer;border-radius:30px;font:500 12px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;
+  padding:11px 16px;border:1px solid rgba(243,230,194,.45);background:rgba(0,0,0,.35);color:#F3E6C2;transition:background var(--dur-1) var(--ease-out);}
+.vt-ask button:hover,.vt-endb button:hover{background:rgba(243,230,194,.16);}
+.vt-ask button:focus-visible,.vt-endb button:focus-visible,.vt-resume:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px;}
+.vt-endb{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:26px;}
+.vt-endb .vt-cta1{background:var(--alpenglow);color:#143a2a;border-color:transparent;display:inline-flex;align-items:center;gap:8px;font-weight:600;}
+.vt-endb .vt-cta1 svg{width:14px;height:14px;fill:currentColor;}
+.vt-resume{position:absolute;z-index:8;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:auto;display:inline-flex;align-items:center;gap:9px;
+  padding:13px 22px 13px 16px;border-radius:40px;border:0;cursor:pointer;background:rgba(243,230,194,.94);color:#0b1420;
+  font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;box-shadow:0 16px 40px -14px rgba(0,0,0,.8);}
+.vt-resume svg{width:15px;height:15px;fill:currentColor;}
+.vt-resume[hidden]{display:none;}
+/* when the title or end card is up, nothing else shares the frame */
+.vt[data-k="title"] .vt-lt,.vt[data-k="title"] .vt-photo,.vt[data-k="end"] .vt-lt,.vt[data-k="end"] .vt-photo,.vt[data-k="midnight"] .vt-lt{display:none;}
+.vt[data-k="end"] .vt-resume{display:none;}
+
+/* route head + tour pins */
+.vt-head{width:14px;height:14px;border-radius:50%;background:#fff6dc;box-shadow:0 0 0 4px rgba(240,196,106,.45),0 0 20px 7px rgba(255,217,138,.75);pointer-events:none;}
+body.vt-on .vt-pin .vx-pin{box-shadow:0 0 0 3px rgba(232,217,176,.45),0 0 18px 4px rgba(255,217,138,.35),0 5px 12px rgba(0,0,0,.5);}
+
+/* ---- phones: stacked zones ---- */
+.vt.narrow .vt-lt,.vt.narrow .vt-chap{left:12px;right:44px;bottom:12px;max-width:none;}
+.vt.narrow .vt-lt{padding:11px 14px 12px 13px;}
+.vt.narrow .vt-lt h4{font-size:24px;}
+.vt.narrow .vt-what{font-size:14px;}
+.vt.narrow .vt-fact{font-size:12.5px;margin-top:8px;padding-top:7px;}
+.vt.narrow .vt-chap{gap:12px;}
+.vt.narrow .vt-num{font-size:68px;}
+.vt.narrow .vt-ct h3{font-size:32px;}
+.vt.narrow .vt-line{font-size:16px;}
+.vt.narrow .vt-photo{left:12px;right:auto;top:12px;width:min(46%,200px);transform:rotate(-1.4deg) translateY(10px);}
+.vt.narrow .vt-photo.on{transform:rotate(-1.4deg);}
+.vt.narrow .vt-photo figcaption{font-size:12.5px;}
+.vt.narrow .vt-btn{width:38px;height:38px;}
+.vt.narrow .vt-pp{width:44px;height:44px;}
+.vt.narrow .vt-brand span{font-size:13px;letter-spacing:.26em;}
+/* short landscape frames: keep the lower-third compact */
+@media (max-height:520px){ .vt-fact{-webkit-line-clamp:2;} .vt-lt h4{font-size:24px;} .vt-photo{width:min(22%,220px);} .vt-who{display:none;} }
+
+@media (prefers-reduced-motion:reduce){
+  .vt-z,.vt-z.on{transform:none !important;transition:opacity .4s linear,visibility 0s;}
+  .vt-ph img{animation:none;}
+  .vt-go{transition:none;}
+}
+
+/* ---- Photoreal (Cesium + Google 3D Tiles) ---- */
+.vx-pr{background:#9fc4e4;}
+.vx-pr .cesium-viewer,.vx-pr .cesium-widget,.vt-pr .cesium-viewer,.vt-pr .cesium-widget{width:100%;height:100%;}
+.vx-pr .cesium-widget canvas{filter:saturate(.8) brightness(1.04) contrast(1.02);}   /* nudge the mixed-season imagery toward winter */
+.vx-prpins{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:3;}
+.vx-prpins > *{position:absolute;left:0;top:0;pointer-events:auto;will-change:transform;}
+.vx-prpins .vx-m3:not(.tw){width:32px;height:32px;}
+.vx-prcred{position:absolute;right:10px;bottom:10px;z-index:4;width:max-content;max-width:min(62%,560px);display:flex;align-items:center;gap:6px;
+  font:500 10px/1.2 var(--sans);color:#fff;background:rgba(0,0,0,.45);padding:3px 8px;border-radius:12px;pointer-events:auto;}
+.vx-prcred .cesium-credit-logoContainer{display:inline-flex !important;align-items:center;}
+.vx-prcred .cesium-credit-logoContainer img{height:16px !important;width:auto !important;}
+.vx-prcred .cesium-credit-textContainer{display:inline !important;}
+.vx-prcred .cesium-credit-textContainer img{height:12px !important;vertical-align:-2px !important;}
+.vx-prcred a{color:#e8c26a;}
+.vx-prcred .cesium-credit-expand-link{color:#e8c26a;text-decoration:underline;cursor:pointer;}
+.vx-stage.ispr .vx-legend{bottom:44px;}
+.vt-pr{position:absolute;inset:0;z-index:600;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .8s var(--ease-out),visibility 0s linear .8s;--vt-night:0;}
+.vt-pr.on{opacity:1;visibility:visible;transition:opacity .8s var(--ease-out),visibility 0s;}
+.vt-pr .cesium-widget canvas{filter:saturate(calc(.78 - .3 * var(--vt-night))) brightness(calc(1.05 - .55 * var(--vt-night))) contrast(1.03);}
+.vt-pr .vx-prcred{right:56px;bottom:calc(var(--vt-lbB,92px) + 10px);}   /* Google's attribution stays on screen, clear of the lower-third */
+@media (max-width:639px){ .vt-pr .vx-prcred{right:10px;bottom:auto;top:56px;max-width:46%;} }
+.vt.pr .vt-photo{display:none;}   /* in a photoreal close-up the place itself is the picture */
+
+.vx-prcred .cesium-widget-credits{position:static !important;display:flex !important;flex-wrap:wrap;align-items:center;gap:2px 6px;
+  font-size:10px !important;line-height:1.25;color:#fff !important;background:none !important;padding:0 !important;}
+.vx-prcred .cesium-credit-delimiter{opacity:.5;}
 
 </style>
 <style>
@@ -2387,6 +2628,20 @@ body:not(.dark) .bp-stub::before,body:not(.dark) .bp-stub::after{background:#f4e
 }
 .wh-bp-seat{display:inline-block;font-style:normal;font:600 11px/1 'Jost',sans-serif;color:#1b2a22;background:var(--wh-gold-b,#e0b65e);border-radius:99px;padding:4px 8px;margin-right:4px}
 .wh-bp-seat.o{background:transparent;color:var(--wh-soft);border:1px solid rgba(176,138,62,.35)}
+
+/* v39 outfits interim cleanup: no person chips, guide in a "Need help?" dialog */
+#outfits .of-picker,#outfits .of-pending,#outfits .of-who-line,#outfits .of-prof{display:none!important}
+#outfits .sec-head{position:relative}
+.of-help-btn{position:absolute;top:0;right:0;display:inline-flex;align-items:center;gap:7px;padding:7px 8px 7px 13px;border-radius:99px;border:1px solid rgba(176,134,58,.4);background:transparent;color:var(--gold);font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.of-help-btn span{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:rgba(176,134,58,.18);font-size:11px;letter-spacing:0}
+.of-help-btn:hover{border-color:var(--gold)}
+@media (max-width:640px){.of-help-btn{position:static;margin:14px auto 0}}
+dialog.of-help{margin:auto;inset:0;padding:0;border:1px solid rgba(176,134,58,.45);border-radius:16px;width:min(900px,94vw);max-height:88vh;background:#0f1a26;color:#efe6d2;overflow:hidden}
+body:not(.dark) dialog.of-help{background:#f7f2e7;color:#1b2a22}
+dialog.of-help::backdrop{background:rgba(8,14,22,.62);backdrop-filter:blur(3px)}
+.of-help-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 12px 20px;border-bottom:1px solid rgba(176,134,58,.3)}
+.of-help-bar b{font:500 22px/1.2 'Cormorant Garamond',serif}
+.of-help-body{overflow:auto;max-height:calc(88vh - 60px);padding:16px}
 /* v39 groceries */
 .groc .gr-steps{margin:.6em 0 .8em 1.2em;padding:0;display:grid;gap:.45em;font-size:.95em;line-height:1.5}
 .groc .gr-steps li::marker{color:var(--gold);font-weight:600}
@@ -4474,7 +4729,8 @@ body.gated .wh-fab{display:none;}
     <span class="eyebrow">Dress the Part</span>
     <h2>Outfits &amp; What to Wear</h2>
     <div class="sec-rule"><span class="ln"></span><span class="dia"></span><span class="ln r"></span></div>
-    <p class="lead">Every day and every dinner, for each of the six of us. Aspen in late December is cold and bright, the dinners run from fondue-cozy to New Year&rsquo;s Eve dressy, and most nights start with a walk through 10&deg;F air. Pick your name to see only your plan.</p>
+    <p class="lead">Every day and every dinner. Aspen in late December is cold and bright, the dinners run from fondue-cozy to New Year&rsquo;s Eve dressy, and most nights start with a walk through 10&deg;F air.</p>
+    <button type="button" class="of-help-btn" id="ofHelpBtn" aria-haspopup="dialog">Need help? <span aria-hidden="true">?</span></button>
   </div>
 
   <!-- person picker (chips are built by JS from OUTFITS.people; this is the fallback) -->
@@ -4483,8 +4739,7 @@ body.gated .wh-fab{display:none;}
   </div>
   <p class="of-pending" id="ofPending"></p>
 
-  <div class="sub-head">The System</div>
-  <div id="ofSystem"></div>
+  <dialog class="of-help" id="ofHelp" aria-label="How to layer for Aspen"><div class="of-help-bar"><b>How to layer for Aspen</b><button type="button" class="pdfv-x" id="ofHelpX" aria-label="Close">&times;</button></div><div class="of-help-body"><div id="ofSystem"></div></div></dialog>
 
   <div class="sub-head">Day by Day</div>
   <div class="of-strip" id="ofDays" tabindex="0" aria-label="Day-by-day outfits"></div>
@@ -7206,7 +7461,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
    ============================================================ */
 (function(){
   "use strict";
-  var DATA = {"places":{"home":{"n":"42 Nighthawk Drive","s":"Home","c":[39.205983,-106.822458],"cat":"home","k":"H","a":"Red Mountain · home base","ph":[["emb_b10debd6a7","The great room"],["emb_f15a54385d","The view from the house"],["emb_a960957e31","The hot tub"]]},"den":{"n":"Denver International (DEN)","s":"DEN","c":[39.8561,-104.6737],"cat":"travel","k":"D","a":"Turo Suburban pickup · AA 2357 / AA 1832","ph":[]},"citymkt":{"n":"City Market · Glenwood Springs","s":"City Market","c":[39.53866,-107.32321],"cat":"travel","k":"G","a":"Groceries, alcohol, fuel — far cheaper than Aspen","ph":[["d0_canyon_1","I-70 threads Glenwood Canyon above the Colorado River"],["d0_canyon_3","The drive west through the canyon"]]},"fmsdt":{"n":"Four Mountain Sports · Downtown","s":"FMS Downtown","c":[39.18732,-106.81829],"cat":"activity","k":"R","a":"520 E Durant · rentals, 9 AM–5 PM · two blocks from the gondola","ph":[]},"wildfig":{"n":"Wild Fig","s":"Wild Fig","c":[39.18892,-106.82075],"cat":"dining","k":"W","a":"305 S Mill (Hyman + Mill) · Mediterranean","ph":[["d0_wildfig_1","Wild Fig’s dining room — red banquettes, snow outside"],["d0_wildfig_2","The marble bar"],["d0_wildfig_3","Bar burger and a glass of red"]]},"bellyup":{"n":"Belly Up Aspen","s":"Belly Up","c":[39.18743,-106.81896],"cat":"activity","k":"B","a":"450 S Galena · Cloonee · 21+","ph":[["d0_bellyup_1","A packed floor at Belly Up"],["d0_bellyup_2","DJs on the Belly Up stage"],["d0_bellyup_3","Hands up"]]},"buttermilk":{"n":"Buttermilk","s":"Buttermilk","c":[39.2055,-106.8606],"cat":"mountain","k":"L","a":"Ski school base · beginner lessons","ph":[]},"snowmass":{"n":"Snowmass Base Village","s":"Snowmass","c":[39.20971,-106.94787],"cat":"mountain","k":"S","a":"3,300+ acres · Elk Camp + Big Burn","ph":[["d1_snowmass_2","The view from Elk Camp"],["d1_snowmass_3","Snowmass groomers on a bluebird day"],["d6_mall","Snowmass base village at dusk"]]},"whitehouse":{"n":"White House Tavern","s":"White House","c":[39.19022,-106.82058],"cat":"dining","k":"T","a":"302 E Hopkins · casual","ph":[["d1_wh_1","The little white house on Hopkins"],["d1_wh_4","The famous sandwiches"]]},"gondola":{"n":"Silver Queen Gondola","s":"Gondola Plaza","c":[39.18645,-106.81822],"cat":"mountain","k":"A","a":"601 E Dean · Gondola Plaza, Ajax base (no FMS shop here)","ph":[["d2_ajax_1","The Silver Queen Gondola climbing Ajax"],["d2_ajax_3","Galena Street runs straight into the mountain"]]},"bonnies":{"n":"Bonnie’s","s":"Bonnie’s","c":[39.16179,-106.82438],"cat":"dining","k":"b","a":"Mid-mountain Ajax · lunch","ph":[["d2_bonnies_1","Bonnie’s sits mid-mountain on Ajax"]]},"tavern":{"n":"Ajax Tavern","s":"Ajax Tavern","c":[39.18655,-106.81795],"cat":"dining","k":"t","a":"The Little Nell · après patio","ph":[["d2_tavern_1","Après on the Ajax Tavern patio"],["d2_tavern_2","The Ajax Tavern burger"]]},"casatua":{"n":"Casa Tua","s":"Casa Tua","c":[39.18755,-106.81914],"cat":"dining","k":"C","a":"403 S Galena · Northern Italian","ph":[["d2_casatua_1","The Library room"],["d2_casatua_2","The bar and fireplace"],["d2_casatua_3","Casa Tua at dusk"]]},"tlazy7":{"n":"T-Lazy-7 Ranch","s":"T-Lazy-7","c":[39.16662,-106.87843],"cat":"activity","k":"7","a":"3129 Maroon Creek Rd · Klondike Lunch tour","ph":[["d3_tlazy7_1","Doubles lined up below the Maroon Bells"],["d3_tlazy7_4","Inside the cabin"]]},"bells":{"n":"Maroon Bells · Maroon Lake","s":"Maroon Bells","c":[39.09678,-106.94546],"cat":"activity","k":"M","a":"Turnaround of the snowmobile tour","ph":[["d3_tlazy7_5","The Maroon Bells in winter"],["d3_tlazy7_2","A T-Lazy-7 guide at the Bells"]]},"downtown":{"n":"Downtown Aspen · the malls","s":"Downtown","c":[39.18865,-106.81905],"cat":"activity","k":"d","a":"Galleries, Art Museum, shops","ph":[["d3_downtown_1","The Hyman Avenue mall in winter"],["d3_downtown_2","Cooper Avenue"],["d3_downtown_3","Galena Street under Aspen Mountain"]]},"frenchalp":{"n":"French Alpine Bistro","s":"French Alpine","c":[39.18995,-106.81935],"cat":"dining","k":"F","a":"400 E Hopkins · downstairs at Mill · fondue + raclette","ph":[["d3_fa_1","Copper, candlelight, fondue"],["d3_fa_2","The Jungfraubahn poster room"]]},"highlands":{"n":"Aspen Highlands","s":"Highlands","c":[39.1823,-106.8556],"cat":"mountain","k":"4","a":"Base village · FMS Highlands","ph":[["d4_highlands_1","Highland Bowl, on Highland Peak"],["d4_highlands_2","Prayer flags at the 12,392 ft summit"]]},"mgr":{"n":"Merry-Go-Round","s":"Merry-Go-Round","c":[39.15955,-106.86582],"cat":"dining","k":"m","a":"Mid-mountain Highlands · walk-in","ph":[["d4_mgr_1","Merry-Go-Round’s deck"]]},"nyeplaza":{"n":"Gondola Plaza · torchlight + fireworks","s":"Fireworks","c":[39.18685,-106.81835],"cat":"activity","k":"✦","a":"~7:30 torchlight · 8:00 fireworks","ph":[["d4_nye_1","Fireworks over the torch-lit face of Ajax"],["d4_nye_2","The 8 PM fireworks over downtown"]]},"matsuhisa":{"n":"Matsuhisa","s":"Matsuhisa","c":[39.19063,-106.82029],"cat":"dining","k":"N","a":"303 E Main · omakase","ph":[["d4_mat_1","Matsuhisa Aspen — the sushi bar"],["d4_mat_3","New-style sashimi, yellowtail jalapeño"]]},"iron":{"n":"Iron Mountain Hot Springs","s":"Hot Springs","c":[39.55526,-107.33626],"cat":"activity","k":"5","a":"281 Centennial Dr · 16 pools","ph":[["d5_iron_1","Riverside pools in winter"],["d5_iron_2","Steam on the terraced pools"]]},"s316":{"n":"Steakhouse 316","s":"Steakhouse 316","c":[39.19021,-106.82002],"cat":"dining","k":"6","a":"316 E Hopkins · closing dinner","ph":[]},"jbar":{"n":"J-Bar · Hotel Jerome","s":"J-Bar","c":[39.19092,-106.81952],"cat":"dining","k":"J","a":"Hotel Jerome · 330 E Main · nightcap","ph":[["d6_jbar_1","The historic J-Bar at Hotel Jerome"],["d6_jbar_2","Last call"]]},"vail":{"n":"Vail Village (or Frisco)","s":"Vail","c":[39.6403,-106.3742],"cat":"dining","k":"V","a":"Lunch stop · Frisco is ~30 min further east","ph":[["d7_drive_2","The top of Vail Pass"],["d7_drive_1","Dillon Reservoir, frozen, on the way home"]]},"pinecreek":{"n":"Pine Creek Cookhouse","s":"Cookhouse","c":[39.0556,-106.7958],"cat":"dining","k":"P","a":"Optional Day III splurge · sleigh from King Cabin","ph":[["rest_pinecreek_1","The cabin at dusk"],["rest_pinecreek_2","The sleigh ride in"]]},"riogrande":{"n":"Rio Grande parking garage","s":"Rio Grande garage","c":[39.19144,-106.81781],"cat":"travel","k":"P","a":"427 Rio Grande Pl · park here for Day 0 evening","ph":[],"town":1},"meatcheese":{"n":"Meat & Cheese","s":"Meat & Cheese","c":[39.18988,-106.82038],"cat":"dining","k":"&","a":"319 E Hopkins · walk-in only, the backup any night","ph":[],"town":1},"clarks":{"n":"Clark’s Market","s":"Clark’s Market","c":[39.19263,-106.81926],"cat":"travel","k":"$","a":"300 Puppy Smith St · in-town groceries","ph":[],"town":1},"artmuseum":{"n":"Aspen Art Museum","s":"Art Museum","c":[39.18826,-106.81654],"cat":"activity","k":"a","a":"637 E Hyman · galleries + rooftop deck","ph":[],"town":1},"rubey":{"n":"Rubey Park Transit Center","s":"Rubey Park","c":[39.18754,-106.81964],"cat":"travel","k":"r","a":"Durant between Mill + Galena · RFTA buses + High Mountain Taxi pickups","ph":[],"town":1},"wagner":{"n":"Wagner Park","s":"Wagner Park","c":[39.18826,-106.82069],"cat":"activity","k":"w","a":"Between Mill + Monarch, Cooper + Durant · the snowy town green","ph":[],"town":1}},"days":[{"id":"d0","r":"0","t":"Arrival","date":"Sun Dec 27","iso":"2026-12-27","stops":[{"p":"den","time":"9:51 AM","what":"Land · pick up the Suburban","who":"Everyone (Marco meets at baggage claim)"},{"p":"citymkt","time":"~12:30 PM","what":"Groceries + fuel","via":"drive"},{"p":"home","time":"4:00 PM","what":"Check in · hot tub","via":"drive"},{"p":"fmsdt","time":"~4:15 PM","what":"Griffin + Marco grab rentals (closes 5 PM)","via":"drive","note":"Park at the Rio Grande garage"},{"p":"wildfig","time":"6:30 PM","what":"Welcome dinner","via":"walk","star":1},{"p":"bellyup","time":"9:30 PM","what":"Cloonee · doors 8:30","via":"walk","star":1,"who":"The four with tickets"}]},{"id":"d1","r":"I","t":"Snowmass","date":"Mon Dec 28","iso":"2026-12-28","stops":[{"p":"buttermilk","time":"8:45 AM","what":"Lesson #1","via":"drive","from":"home","who":"Marcy + Stella"},{"p":"snowmass","time":"9:00 AM","what":"Ski Snowmass","via":"drive","from":"home","who":"Griffin · Ben · Marco","star":1,"note":"3 PM: drop skis at FMS Snowmass, request transfer to FMS Downtown"},{"p":"whitehouse","time":"7:00 PM","what":"Casual dinner","via":"drive","from":"home","note":"Meat & Cheese is the walk-in backup"}]},{"id":"d2","r":"II","t":"Ajax","date":"Tue Dec 29","iso":"2026-12-29","stops":[{"p":"buttermilk","time":"8:30 AM","what":"Lesson #2","via":"drive","from":"home","who":"Marcy"},{"p":"fmsdt","time":"9:00 AM","what":"Pick up skis · transferred overnight","via":"drive","from":"home","who":"Griffin · Marco · Ben","note":"No FMS shop at the gondola — skis wait at FMS Downtown"},{"p":"gondola","time":"9:15 AM","what":"Up the Silver Queen Gondola","via":"walk"},{"p":"bonnies","time":"12:30 PM","what":"Lunch on the mountain","via":"lift"},{"p":"fmsdt","time":"2:45 PM","what":"Ski down · drop skis, request the Highlands transfer","via":"ski","from":"bonnies"},{"p":"tavern","time":"3:00 PM","what":"Après (optional)","via":"walk"},{"p":"casatua","time":"7:00 PM","what":"Dinner","via":"drive","from":"home","star":1}]},{"id":"d3","r":"III","t":"Snowmobile","date":"Wed Dec 30","iso":"2026-12-30","stops":[{"p":"tlazy7","time":"9:30 AM","what":"Klondike Lunch tour departs","via":"drive","from":"home","note":"Helmets only — bring your own warm gear","star":1},{"p":"bells","time":"~11:00 AM","what":"Maroon Bells turnaround","via":"sled"},{"p":"downtown","time":"2:30 PM","what":"Afternoon in town","via":"drive","from":"tlazy7"},{"p":"frenchalp","time":"7:30 PM","what":"Fondue dinner","via":"walk","star":1}]},{"id":"d4","r":"IV","t":"NYE","date":"Thu Dec 31","iso":"2026-12-31","stops":[{"p":"highlands","time":"9:10 AM","what":"Skis at FMS Highlands","via":"drive","from":"home"},{"p":"mgr","time":"12:30 PM","what":"Lunch mid-mountain","via":"lift"},{"p":"nyeplaza","time":"~7:30 PM","what":"Torchlight + 8 PM fireworks","via":"drive","from":"home","star":1},{"p":"matsuhisa","time":"8:45 PM","what":"NYE omakase","via":"walk","star":1,"note":"No free taxi Thursday — DD or Uber XL home"}]},{"id":"d5","r":"V","t":"Hot Springs","date":"Fri Jan 1","iso":"2027-01-01","stops":[{"p":"iron","time":"12:00 PM","what":"Timed entry","via":"drive","from":"home","star":1},{"p":"home","time":"7:00 PM","what":"Cook-in dinner","via":"drive"}]},{"id":"d6","r":"VI","t":"Family Ski","date":"Sat Jan 2","iso":"2027-01-02","stops":[{"p":"snowmass","time":"8:50 AM","what":"All six ski together","via":"drive","from":"home","star":1},{"p":"s316","time":"7:30 PM","what":"Closing dinner","via":"drive","from":"home","star":1},{"p":"jbar","time":"Late","what":"Nightcap · free High Mountain Taxi","via":"walk"}]},{"id":"d7","r":"VII","t":"Departure","date":"Sun Jan 3","iso":"2027-01-03","stops":[{"p":"home","time":"10:00 AM","what":"Checkout · depart 10:30"},{"p":"vail","time":"12:30 PM","what":"Lunch","via":"drive","viaPts":[[39.545,-107.33]]},{"p":"den","time":"2:30 PM","what":"Return the Suburban · fly home","via":"drive"}]}],"town":{"b":[[39.1857,-106.8226],[39.1929,-106.8152]],"places":["fmsdt","riogrande","wildfig","bellyup","casatua","frenchalp","s316","whitehouse","meatcheese","matsuhisa","jbar","clarks","artmuseum","rubey","gondola","nyeplaza","tavern","wagner"],"lp":{"bellyup":"r","casatua":"l","fmsdt":"r","rubey":"l","s316":"t","whitehouse":"l","meatcheese":"b","frenchalp":"r","matsuhisa":"l","jbar":"r","nyeplaza":"l","gondola":"b","tavern":"r","wagner":"l","wildfig":"l","artmuseum":"r","clarks":"r","riogrande":"r"},"walks":[{"d":"d0","t":"Arrival night","when":"4:15 → 9:30 PM","legs":[["fmsdt","riogrande","drive"],["riogrande","wildfig","walk"],["wildfig","bellyup","walk"]]},{"d":"d1","t":"Casual night","when":"7:00 PM","legs":[["whitehouse","meatcheese","walk"]],"note":"Meat & Cheese is the walk-in backup — across the street"},{"d":"d2","t":"Casa Tua","when":"7:00 PM","legs":[["rubey","casatua","walk"]],"note":"Drop-off at Rubey Park, or park in the Rio Grande garage"},{"d":"d3","t":"Fondue night","when":"7:30 PM","legs":[["downtown","frenchalp","walk"]]},{"d":"d4","t":"New Year’s Eve","when":"~7:30 → 8:45 PM","legs":[["nyeplaza","matsuhisa","walk"]]},{"d":"d6","t":"Closing night","when":"7:30 PM → late","legs":[["s316","jbar","walk"]]}],"streets":[["Main St",39.1903,-106.81637,14],["Hopkins Ave",39.1895,-106.81655,14],["Hyman Ave",39.18815,-106.8172,14],["Cooper Ave",39.18752,-106.81715,14],["Durant Ave",39.1868,-106.8173,14],["Monarch St",39.188,-106.8214,-76],["Mill St",39.1881,-106.82007,-76],["Galena St",39.1901,-106.81815,-76],["Hunter St",39.189,-106.81707,-76],["Aspen St",39.18995,-106.822,-76]]}};
+  var DATA = {"places":{"home":{"n":"42 Nighthawk Drive","s":"Home","c":[39.205983,-106.822458],"cat":"home","k":"H","a":"Red Mountain · home base","ph":[["emb_b10debd6a7","The great room"],["emb_f15a54385d","The view from the house"],["emb_a960957e31","The hot tub"]]},"den":{"n":"Denver International (DEN)","s":"DEN","c":[39.8561,-104.6737],"cat":"travel","k":"D","a":"Turo Suburban pickup · AA 2357 / AA 1832","ph":[["dp_den_tent","Landing at DEN — the snow-covered tent roof of the Jeppesen Terminal"]]},"citymkt":{"n":"City Market · Glenwood Springs","s":"City Market","c":[39.53866,-107.32321],"cat":"travel","k":"G","a":"Groceries, alcohol, fuel — far cheaper than Aspen","ph":[["d0_canyon_1","I-70 threads Glenwood Canyon above the Colorado River"],["d0_canyon_3","The drive west through the canyon"]]},"fmsdt":{"n":"Four Mountain Sports · Downtown","s":"FMS Downtown","c":[39.18732,-106.81829],"cat":"activity","k":"R","a":"520 E Durant · rentals, 9 AM–5 PM · two blocks from the gondola","ph":[]},"wildfig":{"n":"Wild Fig","s":"Wild Fig","c":[39.18892,-106.82075],"cat":"dining","k":"W","a":"305 S Mill (Hyman + Mill) · Mediterranean","ph":[["d0_wildfig_1","Wild Fig’s dining room — red banquettes, snow outside"],["d0_wildfig_2","The marble bar"],["d0_wildfig_3","Bar burger and a glass of red"]]},"bellyup":{"n":"Belly Up Aspen","s":"Belly Up","c":[39.18743,-106.81896],"cat":"activity","k":"B","a":"450 S Galena · Cloonee · 21+","ph":[["d0_bellyup_1","A packed floor at Belly Up"],["d0_bellyup_2","DJs on the Belly Up stage"],["d0_bellyup_3","Hands up"]]},"buttermilk":{"n":"Buttermilk","s":"Buttermilk","c":[39.2055,-106.8606],"cat":"mountain","k":"L","a":"Ski school base · beginner lessons","ph":[["dp_bm_view","Buttermilk — wide, gentle beginner terrain"],["d1_school","Look for the red jacket — that’s your instructor"]]},"snowmass":{"n":"Snowmass Base Village","s":"Snowmass","c":[39.20971,-106.94787],"cat":"mountain","k":"S","a":"3,300+ acres · Elk Camp + Big Burn","ph":[["d1_snowmass_2","The view from Elk Camp"],["d1_snowmass_3","Snowmass groomers on a bluebird day"],["d6_mall","Snowmass base village at dusk"]]},"whitehouse":{"n":"White House Tavern","s":"White House","c":[39.19022,-106.82058],"cat":"dining","k":"T","a":"302 E Hopkins · casual","ph":[["d1_wh_1","The little white house on Hopkins"],["d1_wh_4","The famous sandwiches"]]},"gondola":{"n":"Silver Queen Gondola","s":"Gondola Plaza","c":[39.18645,-106.81822],"cat":"mountain","k":"A","a":"601 E Dean · Gondola Plaza, Ajax base (no FMS shop here)","ph":[["d2_ajax_1","The Silver Queen Gondola climbing Ajax"],["d2_ajax_3","Galena Street runs straight into the mountain"]]},"bonnies":{"n":"Bonnie’s","s":"Bonnie’s","c":[39.16179,-106.82438],"cat":"dining","k":"b","a":"Mid-mountain Ajax · lunch","ph":[["d2_bonnies_1","Bonnie’s sits mid-mountain on Ajax"]]},"tavern":{"n":"Ajax Tavern","s":"Ajax Tavern","c":[39.18655,-106.81795],"cat":"dining","k":"t","a":"The Little Nell · après patio","ph":[["d2_tavern_1","Après on the Ajax Tavern patio"],["d2_tavern_2","The Ajax Tavern burger"]]},"casatua":{"n":"Casa Tua","s":"Casa Tua","c":[39.18755,-106.81914],"cat":"dining","k":"C","a":"403 S Galena · Northern Italian","ph":[["d2_casatua_1","The Library room"],["d2_casatua_2","The bar and fireplace"],["d2_casatua_3","Casa Tua at dusk"]]},"tlazy7":{"n":"T-Lazy-7 Ranch","s":"T-Lazy-7","c":[39.16662,-106.87843],"cat":"activity","k":"7","a":"3129 Maroon Creek Rd · Klondike Lunch tour","ph":[["d3_tlazy7_1","Doubles lined up below the Maroon Bells"],["d3_tlazy7_4","Inside the cabin"]]},"bells":{"n":"Maroon Bells · Maroon Lake","s":"Maroon Bells","c":[39.09678,-106.94546],"cat":"activity","k":"M","a":"Turnaround of the snowmobile tour","ph":[["d3_tlazy7_5","The Maroon Bells in winter"],["d3_tlazy7_2","A T-Lazy-7 guide at the Bells"]]},"downtown":{"n":"Downtown Aspen · the malls","s":"Downtown","c":[39.18865,-106.81905],"cat":"activity","k":"d","a":"Galleries, Art Museum, shops","ph":[["d3_downtown_1","The Hyman Avenue mall in winter"],["d3_downtown_2","Cooper Avenue"],["d3_downtown_3","Galena Street under Aspen Mountain"]]},"frenchalp":{"n":"French Alpine Bistro","s":"French Alpine","c":[39.18995,-106.81935],"cat":"dining","k":"F","a":"400 E Hopkins · downstairs at Mill · fondue + raclette","ph":[["d3_fa_1","Copper, candlelight, fondue"],["d3_fa_2","The Jungfraubahn poster room"]]},"highlands":{"n":"Aspen Highlands","s":"Highlands","c":[39.1823,-106.8556],"cat":"mountain","k":"4","a":"Base village · FMS Highlands","ph":[["d4_highlands_1","Highland Bowl, on Highland Peak"],["d4_highlands_2","Prayer flags at the 12,392 ft summit"]]},"mgr":{"n":"Merry-Go-Round","s":"Merry-Go-Round","c":[39.15955,-106.86582],"cat":"dining","k":"m","a":"Mid-mountain Highlands · walk-in","ph":[["d4_mgr_1","Merry-Go-Round’s deck"]]},"nyeplaza":{"n":"Gondola Plaza · torchlight + fireworks","s":"Fireworks","c":[39.18685,-106.81835],"cat":"activity","k":"✦","a":"~7:30 torchlight · 8:00 fireworks","ph":[["d4_nye_1","Fireworks over the torch-lit face of Ajax"],["d4_nye_2","The 8 PM fireworks over downtown"]]},"matsuhisa":{"n":"Matsuhisa","s":"Matsuhisa","c":[39.19063,-106.82029],"cat":"dining","k":"N","a":"303 E Main · omakase","ph":[["d4_mat_1","Matsuhisa Aspen — the sushi bar"],["d4_mat_3","New-style sashimi, yellowtail jalapeño"]]},"iron":{"n":"Iron Mountain Hot Springs","s":"Hot Springs","c":[39.55526,-107.33626],"cat":"activity","k":"5","a":"281 Centennial Dr · 16 pools","ph":[["d5_iron_1","Riverside pools in winter"],["d5_iron_2","Steam on the terraced pools"]]},"s316":{"n":"Steakhouse 316","s":"Steakhouse 316","c":[39.19021,-106.82002],"cat":"dining","k":"6","a":"316 E Hopkins · closing dinner","ph":[["rest_s316_1","Prime filet in the skillet"]]},"jbar":{"n":"J-Bar · Hotel Jerome","s":"J-Bar","c":[39.19092,-106.81952],"cat":"dining","k":"J","a":"Hotel Jerome · 330 E Main · nightcap","ph":[["d6_jbar_1","The historic J-Bar at Hotel Jerome"],["d6_jbar_2","Last call"]]},"vail":{"n":"Vail Village (or Frisco)","s":"Vail","c":[39.6403,-106.3742],"cat":"dining","k":"V","a":"Lunch stop · Frisco is ~30 min further east","ph":[["d7_drive_2","The top of Vail Pass"],["d7_drive_1","Dillon Reservoir, frozen, on the way home"]]},"pinecreek":{"n":"Pine Creek Cookhouse","s":"Cookhouse","c":[39.0556,-106.7958],"cat":"dining","k":"P","a":"Optional Day III splurge · sleigh from King Cabin","ph":[["rest_pinecreek_1","The cabin at dusk"],["rest_pinecreek_2","The sleigh ride in"]]},"riogrande":{"n":"Rio Grande parking garage","s":"Rio Grande garage","c":[39.19144,-106.81781],"cat":"travel","k":"P","a":"427 Rio Grande Pl · park here for Day 0 evening","ph":[],"town":1},"meatcheese":{"n":"Meat & Cheese","s":"Meat & Cheese","c":[39.18988,-106.82038],"cat":"dining","k":"&","a":"319 E Hopkins · walk-in only, the backup any night","ph":[],"town":1},"clarks":{"n":"Clark’s Market","s":"Clark’s Market","c":[39.19263,-106.81926],"cat":"travel","k":"$","a":"300 Puppy Smith St · in-town groceries","ph":[],"town":1},"artmuseum":{"n":"Aspen Art Museum","s":"Art Museum","c":[39.18826,-106.81654],"cat":"activity","k":"a","a":"637 E Hyman · galleries + rooftop deck","ph":[],"town":1},"rubey":{"n":"Rubey Park Transit Center","s":"Rubey Park","c":[39.18754,-106.81964],"cat":"travel","k":"r","a":"Durant between Mill + Galena · RFTA buses + High Mountain Taxi pickups","ph":[],"town":1},"wagner":{"n":"Wagner Park","s":"Wagner Park","c":[39.18826,-106.82069],"cat":"activity","k":"w","a":"Between Mill + Monarch, Cooper + Durant · the snowy town green","ph":[],"town":1}},"days":[{"id":"d0","r":"0","t":"Arrival","date":"Sun Dec 27","iso":"2026-12-27","stops":[{"p":"den","time":"9:51 AM","what":"Land · pick up the Suburban","who":"Everyone (Marco meets at baggage claim)"},{"p":"citymkt","time":"~12:30 PM","what":"Groceries + fuel","via":"drive"},{"p":"home","time":"4:00 PM","what":"Check in · hot tub","via":"drive"},{"p":"fmsdt","time":"~4:15 PM","what":"Griffin + Marco grab rentals (closes 5 PM)","via":"drive","note":"Park at the Rio Grande garage"},{"p":"wildfig","time":"6:30 PM","what":"Welcome dinner","via":"walk","star":1},{"p":"bellyup","time":"9:30 PM","what":"Cloonee · doors 8:30","via":"walk","star":1,"who":"The four with tickets"}]},{"id":"d1","r":"I","t":"Snowmass","date":"Mon Dec 28","iso":"2026-12-28","stops":[{"p":"buttermilk","time":"8:45 AM","what":"Lesson #1","via":"drive","from":"home","who":"Marcy + Stella"},{"p":"snowmass","time":"9:00 AM","what":"Ski Snowmass","via":"drive","from":"home","who":"Griffin · Ben · Marco","star":1,"note":"3 PM: drop skis at FMS Snowmass, request transfer to FMS Downtown"},{"p":"whitehouse","time":"7:00 PM","what":"Casual dinner","via":"drive","from":"home","note":"Meat & Cheese is the walk-in backup"}]},{"id":"d2","r":"II","t":"Ajax","date":"Tue Dec 29","iso":"2026-12-29","stops":[{"p":"buttermilk","time":"8:30 AM","what":"Lesson #2","via":"drive","from":"home","who":"Marcy"},{"p":"fmsdt","time":"9:00 AM","what":"Pick up skis · transferred overnight","via":"drive","from":"home","who":"Griffin · Marco · Ben","note":"No FMS shop at the gondola — skis wait at FMS Downtown"},{"p":"gondola","time":"9:15 AM","what":"Up the Silver Queen Gondola","via":"walk"},{"p":"bonnies","time":"12:30 PM","what":"Lunch on the mountain","via":"lift"},{"p":"fmsdt","time":"2:45 PM","what":"Ski down · drop skis, request the Highlands transfer","via":"ski","from":"bonnies"},{"p":"tavern","time":"3:00 PM","what":"Après (optional)","via":"walk"},{"p":"casatua","time":"7:00 PM","what":"Dinner","via":"drive","from":"home","star":1}]},{"id":"d3","r":"III","t":"Snowmobile","date":"Wed Dec 30","iso":"2026-12-30","stops":[{"p":"tlazy7","time":"9:30 AM","what":"Klondike Lunch tour departs","via":"drive","from":"home","note":"Helmets only — bring your own warm gear","star":1},{"p":"bells","time":"~11:00 AM","what":"Maroon Bells turnaround","via":"sled"},{"p":"downtown","time":"2:30 PM","what":"Afternoon in town","via":"drive","from":"tlazy7"},{"p":"frenchalp","time":"7:30 PM","what":"Fondue dinner","via":"walk","star":1}]},{"id":"d4","r":"IV","t":"NYE","date":"Thu Dec 31","iso":"2026-12-31","stops":[{"p":"highlands","time":"9:10 AM","what":"Skis at FMS Highlands","via":"drive","from":"home"},{"p":"mgr","time":"12:30 PM","what":"Lunch mid-mountain","via":"lift"},{"p":"nyeplaza","time":"~7:30 PM","what":"Torchlight + 8 PM fireworks","via":"drive","from":"home","star":1},{"p":"matsuhisa","time":"8:45 PM","what":"NYE omakase","via":"walk","star":1,"note":"No free taxi Thursday — DD or Uber XL home"}]},{"id":"d5","r":"V","t":"Hot Springs","date":"Fri Jan 1","iso":"2027-01-01","stops":[{"p":"iron","time":"12:00 PM","what":"Timed entry","via":"drive","from":"home","star":1},{"p":"home","time":"7:00 PM","what":"Cook-in dinner","via":"drive"}]},{"id":"d6","r":"VI","t":"Family Ski","date":"Sat Jan 2","iso":"2027-01-02","stops":[{"p":"snowmass","time":"8:50 AM","what":"All six ski together","via":"drive","from":"home","star":1},{"p":"s316","time":"7:30 PM","what":"Closing dinner","via":"drive","from":"home","star":1},{"p":"jbar","time":"Late","what":"Nightcap · free High Mountain Taxi","via":"walk"}]},{"id":"d7","r":"VII","t":"Departure","date":"Sun Jan 3","iso":"2027-01-03","stops":[{"p":"home","time":"10:00 AM","what":"Checkout · depart 10:30"},{"p":"vail","time":"12:30 PM","what":"Lunch","via":"drive","viaPts":[[39.545,-107.33]]},{"p":"den","time":"2:30 PM","what":"Return the Suburban · fly home","via":"drive"}]}],"town":{"b":[[39.1857,-106.8226],[39.1929,-106.8152]],"places":["fmsdt","riogrande","wildfig","bellyup","casatua","frenchalp","s316","whitehouse","meatcheese","matsuhisa","jbar","clarks","artmuseum","rubey","gondola","nyeplaza","tavern","wagner"],"lp":{"bellyup":"r","casatua":"l","fmsdt":"r","rubey":"l","s316":"t","whitehouse":"l","meatcheese":"b","frenchalp":"r","matsuhisa":"l","jbar":"r","nyeplaza":"l","gondola":"b","tavern":"r","wagner":"l","wildfig":"l","artmuseum":"r","clarks":"r","riogrande":"r"},"walks":[{"d":"d0","t":"Arrival night","when":"4:15 → 9:30 PM","legs":[["fmsdt","riogrande","drive"],["riogrande","wildfig","walk"],["wildfig","bellyup","walk"]]},{"d":"d1","t":"Casual night","when":"7:00 PM","legs":[["whitehouse","meatcheese","walk"]],"note":"Meat & Cheese is the walk-in backup — across the street"},{"d":"d2","t":"Casa Tua","when":"7:00 PM","legs":[["rubey","casatua","walk"]],"note":"Drop-off at Rubey Park, or park in the Rio Grande garage"},{"d":"d3","t":"Fondue night","when":"7:30 PM","legs":[["downtown","frenchalp","walk"]]},{"d":"d4","t":"New Year’s Eve","when":"~7:30 → 8:45 PM","legs":[["nyeplaza","matsuhisa","walk"]]},{"d":"d6","t":"Closing night","when":"7:30 PM → late","legs":[["s316","jbar","walk"]]}],"streets":[["Main St",39.1903,-106.81637,14],["Hopkins Ave",39.1895,-106.81655,14],["Hyman Ave",39.18815,-106.8172,14],["Cooper Ave",39.18752,-106.81715,14],["Durant Ave",39.1868,-106.8173,14],["Monarch St",39.188,-106.8214,-76],["Mill St",39.1881,-106.82007,-76],["Galena St",39.1901,-106.81815,-76],["Hunter St",39.189,-106.81707,-76],["Aspen St",39.18995,-106.822,-76]]},"facts":{"den":["DEN covers about 33,500 acres — the largest airport in North America by land area.","https://en.wikipedia.org/wiki/Denver_International_Airport"],"citymkt":["Doc Holliday died in Glenwood Springs in 1887; a memorial stands in Linwood Cemetery above town.","https://en.wikipedia.org/wiki/Doc_Holliday"],"home":["Aspen sits at about 7,900 ft. It began as a silver-mining camp in 1879.","https://en.wikipedia.org/wiki/Aspen,_Colorado"],"buttermilk":["Buttermilk has hosted the Winter X Games since 2002.","https://en.wikipedia.org/wiki/Buttermilk_(ski_area)"],"snowmass":["Snowmass opened in 1967; its 4,406 ft of vertical is among the most in the U.S.","https://en.wikipedia.org/wiki/Snowmass_(ski_area)"],"gondola":["Aspen Mountain opened in 1946 — its Lift-1 was then the longest chairlift in the world.","https://en.wikipedia.org/wiki/Aspen_Mountain_(ski_area)"],"bonnies":["Aspen Mountain has no beginner (green) runs at all.","https://en.wikipedia.org/wiki/Aspen_Mountain_(ski_area)"],"tlazy7":["In winter, Maroon Creek Road past the ranch is closed to cars — the Bells are reached on snow.","https://en.wikipedia.org/wiki/Maroon_Bells"],"bells":["Maroon Peak (14,156 ft) and North Maroon Peak (14,014 ft) are both Colorado fourteeners.","https://en.wikipedia.org/wiki/Maroon_Bells"],"downtown":["Aspen’s silver boom collapsed in the Panic of 1893; skiing revived the town after World War II.","https://en.wikipedia.org/wiki/Aspen,_Colorado"],"highlands":["Highland Bowl tops out at 12,392 ft — skiers hike the last stretch, skis on their shoulders.","https://en.wikipedia.org/wiki/Aspen_Highlands"],"mgr":["Aspen Highlands opened in 1958.","https://en.wikipedia.org/wiki/Aspen_Highlands"],"nyeplaza":["The Silver Queen Gondola rises about 3,300 vertical feet to Ajax’s 11,212-ft summit.","https://en.wikipedia.org/wiki/Aspen_Mountain_(ski_area)"],"matsuhisa":["Nobu Matsuhisa opened his first U.S. restaurant, Matsuhisa, in Beverly Hills in 1987.","https://en.wikipedia.org/wiki/Nobu_Matsuhisa"],"iron":["Iron Mountain Hot Springs opened in 2015, with 16 mineral pools along the Colorado River.","https://www.ironmountainhotsprings.com/"],"jbar":["Hotel Jerome opened in 1889; the J-Bar’s “Aspen Crud” bourbon milkshake dates to Prohibition.","https://en.wikipedia.org/wiki/Hotel_Jerome"],"vail":["Vail opened in December 1962. Vail Pass, on the drive home, crests at 10,662 ft.","https://en.wikipedia.org/wiki/Vail_Ski_Resort"]},"chapters":{"d0":["Fly in, drive the canyon, check in on Red Mountain — then Wild Fig and Cloonee.",["The I-70 stretch through Glenwood Canyon opened in 1992, one of the last pieces of the Interstate system.","https://en.wikipedia.org/wiki/Glenwood_Canyon"]],"d1":["Lessons at Buttermilk for Marcy and Stella; the rest take on Snowmass.",null],"d2":["Up the Silver Queen for a day on Ajax, then Casa Tua.",null],"d3":["Snowmobiles to the Maroon Bells, an afternoon in town, fondue night.",null],"d4":["Highlands by day — torchlight, fireworks and Matsuhisa by night.",null],"d5":["A slow New Year’s Day in the Glenwood hot springs.",null],"d6":["One last day on Snowmass, then the closing dinner at 316.",null],"d7":["Checkout, the long drive over Vail Pass, and home.",null]}};
   var PRE  = {"routes":{"d0:1":{"g":"arfrFjg{}Rj@r`@~M`NzRoC`[ia@|a@D|J|LwAvkPzE~g@vQdf@|W`Yf^zM`wCdB|eAfVpyAtAjJtF|DhMmKlj@mo@jcQ[|bDoI~~@kAbwA`C`bGcV|_BqCnlCvDfp@c@`bAoHl^jI`c@O|hAgVrx@bTf`BqAryDzFxr@rX|dA|JnMjtBlEpT~Hbv@pi@z`BzwBzcApiBdrBrzA|ZzZvD~MaDpx@cLtp@u@hz@}P|Y}Gh[kIdt@xBzm@wJpqA_Rrs@uDn{@m[~pBtDnSndAv~ArBn]mOpq@oa@~g@{Kt\\mCxfAqRfj@dEhi@aFjh@|@rt@eWnp@_XluAiP`_@gVvY_s@zc@i_@vJmMd]rK`a@gDxXdG~_@yQ`j@cChY|HlXlH~rA_Dpi@`ZjcA}EndAvB|w@gf@zxCo_@ny@}PrS_Cbd@om@zgB_FpcAz@ns@mNdvCvZ~jC~M|r@vm@lp@zy@reCjiAdx@jq@zQriAjJxL`Ftr@~bAxOpbAdSlg@iMd_CzD~wAeBz\\~F~g@lCdpAeHpm@bX~iBsKzoAc_@rbA{Q|z@tBtxBjg@~kAjoAxxAfBdo@vN`j@Nl{DdMdr@_ApbAjPnj@zCvz@nUv]|UnNpT|Xb^d`AlVdz@zIjpAph@hqApF|o@n\\j~@n_@vl@np@~oB`VnMfi@uAvQ~GvSf^z_@lZbXbc@hm@zh@jn@xkAdiAr]rOjK`[tz@`QzWhJzEpZvAtb@xa@h`@dRdX~CfYhR|Os@tl@w\\hRvGfT|]dO`Jl_AwMxNxAnN|VfAv|@hIdf@_A~YoWbvAeEzm@pBzk@kH`Vmn@|^eRh]kp@p_@khAgFkz@h_@aw@pr@sOrYoY~L{sAbvAmPjAsP{Kwd@wLmOtB_KzL}GhXk@`eA_Tbm@ac@vZcdAr[eaAcJ_M`EgVpw@ccA`bB{Ubs@iDrfBdc@~nEqYlkCjBpi@~Sjo@rr@fwAjb@`r@le@~g@|j@z|Aha@j[vCzTwLpl@eH|E{TrAgInLqSv~@wGfaAsO`a@uF|`@cW|]g[rdBgb@phAaD~p@fNvhAe\\nbAM~wAsJxq@kWza@}e@xpBzA`p@}LnaARxx@}Vdo@eUfW{fAz_@oXbC_JxGyO`{@qaAtk@aa@rbAkFnz@}s@fg@qM~i@rGxtAtTlj@nI|e@faAloBvaAbfArVn`Af@zt@`Ypg@zVjzBjt@p_Clt@vpAzD`PeCrr@jN~o@kIdrAtL~wAkEdn@jDjk@_OxwAhC``@cBfl@hB|oBzIjeBsV~oAsAl\\xDl]td@``BzCnbBnWtuA}TpcCaDnrApUpmBx^bu@fg@hyA~KdKtXtDbIdIrJtfAkBt^xd@~^~Onh@xBv^b]ln@hKrq@zVvL|EfJdTnnAxw@h{@pX|v@lBjk@pU`PhJhUzXv\\yAx`AvC`WhGnGfZlFpa@~aAvo@tp@e@~PkS|Y{LpbB}PpQoCrLlFlWrZrTlErLsGbe@jCf\\aGlt@xGh~@bKfOpo@jc@lM|[wD~VtDcNhLgAFaLjl@r@|HwCaBpE","min":216,"mi":181.6},"d0:2":{"g":"kiipF`q`nS`BqExb@vClNwBR|PvXyOt`@uIvPaOhR_n@b\\s`@z`@oVx[|@pdAcYdt@esAx[yhA`k@uk@pLmFxqAeM|i@mTdcDkvChSqv@pFuj@{E}h@Lq}@t[_zBvq@akKxXsz@fWq}AlPkc@~`@{e@ffAk^d{@ybAdHcg@sGms@jG{{AxJwZltByrCx[odA~VkRtUq_@vY{qDbYmjAzo@gv@n]qPrMw@bq@yb@|Sml@xXaa@dL{b@~_BqrBhnDi~@l}@_m@dTcZxzAky@tMaDxi@`@jVwQpf@ujAh[_e@jB}y@rINhNciAoWkMiKtIuXoGgYjIwEhU","min":63,"mi":41.8},"d0:3":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@~AsMjPxDOrA","min":6,"mi":1.7},"d0:4":{"g":"_wdnFp}}jSa@|CgCo@o@dFoA[a@nD","min":5,"mi":0.2},"d0:5":{"g":"kaenFxl~jS`@oDnAZn@eFfCn@DY","min":4,"mi":0.2},"d1:0":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@iNbiAaIkBmD`[BxCv@fL]nJ}@fAsApDkPbXeI~OsBhFuJlZeGzNuCfFqCvD{L`NnDnH^rAfFm@f@Df@bAAv@iGzJwEhC_GzEa@hAX~@t@Lz@q@lAgCp@Qt@ZlF}B?j@qE`JGV\\b@v@YjHyElBi@fBR|CGvAYj@k@nDAt@c@dAM`Bk@Zu@XIdCtBhDhB|@rBwAmMu@}@u@uBm@mENwCWu@k@a@]A{GvBoBnAW??i@dBaCIi@aAFyBQ}HaDWDQ`@","min":20,"mi":6.5},"d1:1":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@iNbiAaIkBmD`[BxCv@fL]nJ}@fAsApDkPbXeI~OsBhF_Md_@{DbJuCfFiExFcK~K}CdBeE|AwBb@cER{Zg@gANsBE{F^qExA{_@hXa@CyVlIua@hVkEnEoHzMoA~AsDzCkRxJcB`B}HfKgBpAmKfEqFrDwB`AcBd@aKzALpBv@~CbDlF|AnD~OzJpD`ErG|FzDvErB~CpB|EbCdDvCrF|D|FxBdHtApCjEdG~@lCpD|PTdDFpHrBzNxBvHfC~FvIxMtHrE~FzGrHdGrCdDtDfCBjAr@`AH~@g@|JBrVz@tC|CdEpBzFrDbFhB`D|@bAf@NjAL|@MbGqCj@CbAXt@bAnCrGbClE~IpMrClI`HpDr@dAbAVvDzBvAtAv@nCzC~Pl@zFH|BW|Ba@dAPX`A?r@XLxCVGPqA","min":25,"mi":12.1},"d1:2":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaArDu@lBXzC`AfGAjEbD|@T`Ac@hCmDlCwB`AEpAhCzAbA~K|DnDx@q@lFjCn@","min":5,"mi":1.5},"d2:0":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@iNbiAaIkBmD`[BxCv@fL]nJ}@fAsApDkPbXeI~OsBhFuJlZeGzNuCfFqCvD{L`NnDnH^rAfFm@f@Df@bAAv@iGzJwEhC_GzEa@hAX~@t@Lz@q@lAgCp@Qt@ZlF}B?j@qE`JGV\\b@v@YjHyElBi@fBR|CGvAYj@k@nDAt@c@dAM`Bk@Zu@XIdCtBhDhB|@rBwAmMu@}@u@uBm@mENwCWu@k@a@]A{GvBoBnAW??i@dBaCIi@aAFyBQ}HaDWDQ`@","min":20,"mi":6.5},"d2:1":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@~AsMjPxDOrA","min":6,"mi":1.7},"d2:2":{"g":"_wdnFp}}jSNsAfBb@CL","min":1,"mi":0.1},"d2:5":{"g":"_wdnFp}}jSNsAfBb@","min":1,"mi":0.1},"d2:6":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@~AsMvRrEo@pFq@Q","min":6,"mi":1.8},"d3:0":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@iNbiAaIkBmD`[BxCv@fLWnIOt@s@p@Cp@PZrBl@|CxBxA~At@nB~@bKTj]JvAb@x@dA^tOB|CVr[p\\`IpFvFfMfDhAzFdA`DrAr@nAL|AF|BQ`FPxB^bCbA|Bj@~@jBtA|Cf@|@p@vChGdBdFfJ|HbEfIhDlDfBzF|@lEvFzJr@f@pCBpARh@^n@bAfCfH","min":17,"mi":5.8},"d3:1":{"g":"_v`nFztikSnAbD~AbBfGfDfChBrBNz@`@vHfHhH`DfPdK|D~ChPdPxMfGrNxH`GlGl@nAl@XhAErGf@hCx@hQ~RnNvDvLpE|@p@rFnG~AbAhEt@lUzBpDx@hJjGxGdD`BzAhCxEjDdDtGrCbLnDhDpCpC|AxO|ErFjAvKfGlGvBxBlAfCvG~LnUz@dGhChFh@`G^fBjD`HzBxL\\z_@VtAz@jBx@v@zLjGbEzGnBdItB`Dp@bChAtBFjEkB|GHVf@E","min":14,"mi":6.2},"d3:2":{"g":"_v`nFztikSgCgHo@cAi@_@qASqCCs@g@wF{J}@mEgB{FiDmDcEgIgJ}HeBeFwCiG}@q@}Cg@kBuAk@_AcA}B_@cCQyBPaFG}BM}As@oAaDsA{FeAgDiAwFgMaIqFs[q\\}CWuOCeA_@c@y@KwAUk]_@kF_@wCu@oByA_B}CyBo@cATkNcAkL@wEdDeWX_@d@GbGtAxOkpAlKdCMfA","min":13,"mi":4.7},"d3:3":{"g":"g_enFhb~jSa@~CkAYBOsD_A","min":3,"mi":0.1},"d4:0":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@iNbiAaIkBgDbYAvEv@fLWnIOt@s@p@Cp@PZrBl@|CxBxA~At@nB~@bKTj]JvAb@x@dA^tOB|CVxCrCrPzQxEtEzB|AjC|AX}@HqAV_@h@If@Nr@z@","min":12,"mi":4.2},"d4:2":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@~AsMvRrEM`A","min":6,"mi":1.7},"d4:3":{"g":"usdnF`~}jS_@tDsFwAkAQCJ}FqAyAbL_B_@","min":9,"mi":0.4},"d5:0":{"g":"glhnFrw~jSvEiUfYkItXnGhKuInWjMiNbiAaIkByChy@y^fp@oVrq@eSdXyPbIiu@nB{_@hX_y@l_@iWn\\u{@pk@wmD~{@k`BxuBiOpg@uUj\\}Sll@mq@~a@sg@nN_x@v|@}Md`@qGfg@}XlrDqUl^aW|Qk[reA_tB`qC}Kn^gG`{AdHfr@eHbg@yt@f|@seAz^md@xf@iU~j@wWx|AyTfj@eu@d{Ke[bxBGn~@pEzh@{F|i@{T~w@c`DnsCip@rVcjA~JgMzE{l@~m@s[zhAep@`oAchA|[q[Wcc@hWmZh_@{Vxt@sMrIu^xHlA~^mh@dGg]lSgYmHue@zG^_m@eIHaKrL_PXkEpSxIh[qQfF","min":68,"mi":44.1},"d5:1":{"g":"gslpFpacnSpQgFyIi[jEqS`Pl@~J{NdII_@~l@te@{GfYlHf]mSfl@aIgEc]t^yHrMsIlWit@bZc_@va@oWr_@RdhAg^zm@gmAx[yhAnm@{m@hxA_Qpn@{UdcDkvChSqv@pFuj@{E}h@Lq}@t[_zBvq@akKxXsz@fWq}AlPkc@~`@{e@ffAk^d{@ybAdHcg@sGms@jG{{AxJwZltByrCx[odA~VkRtUq_@vY{qDbYmjAzo@gv@n]qPrMw@bq@yb@|Sml@xXaa@dL{b@~_BqrBhnDi~@l}@_m@dTcZxzAky@tMaDxi@`@jVwQpf@ujAh[_e@jB}y@rINhNciAoWkMiKtIuXoGgYjIwEhU","min":69,"mi":44.2},"d6:0":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaAxCq@dA@|EtAfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|DnDx@iNbiAaIkBmD`[BxCv@fL]nJ}@fAsApDkPbXeI~OsBhF_Md_@{DbJuCfFiExFcK~K}CdBeE|AwBb@cER{Zg@gANsBE{F^qExA{_@hXa@CyVlIua@hVkEnEoHzMoA~AsDzCkRxJcB`B}HfKgBpAmKfEqFrDwB`AcBd@aKzALpBv@~CbDlF|AnD~OzJpD`ErG|FzDvErB~CpB|EbCdDvCrF|D|FxBdHtApCjEdG~@lCpD|PTdDFpHrBzNxBvHfC~FvIxMtHrE~FzGrHdGrCdDtDfCBjAr@`AH~@g@|JBrVz@tC|CdEpBzFrDbFhB`D|@bAf@NjAL|@MbGqCj@CbAXt@bAnCrGbClE~IpMrClI`HpDr@dAbAVvDzBvAtAv@nCzC~Pl@zFH|BW|Ba@dAPX`A?r@XLxCVGPqA","min":25,"mi":12.1},"d6:1":{"g":"glhnFrw~jSXBj@hArA_F`A{IC{ERJbHkDvA_@tCWfCaArDu@lBXzC`AfGAjEbD|@T`Ac@hCmDlCwBn@Kf@VhAfClAr@~K|D`GxAWrB","min":5,"mi":1.4},"d6:2":{"g":"}henFlh~jSReBiDs@In@","min":2,"mi":0.1},"d7:1":{"g":"glhnFrw~jSvEiUfYkItXnGhKuInWjMiNbiAaIkByChy@y^fp@oVrq@eSdXyPbIiu@nB{_@hX_y@l_@iWn\\u{@pk@wmD~{@k`BxuBiOpg@uUj\\}Sll@mq@~a@sg@nN_x@v|@}Md`@qGfg@}XlrDqUl^aW|Qk[reA_tB`qC}Kn^gG`{AdHfr@eHbg@yt@f|@seAz^md@xf@iU~j@wWx|AyTfj@eu@d{Ke[bxBGn~@pEzh@gFxg@uSjw@}aDfvCip@rVcjA~JgMzE{l@~m@s[zhAep@`oAchA|[q[Wcc@hWmZh_@{Vxt@sMrIu^xHlA~^mh@dGg]lScVgH{`@rDfF{EeN|H^_m@yM|BmD~I|BlFpBi\\aMm[kNqOe`@aSeKmOqG}~@vFiu@kCuZlG_f@yE{L}YyVeEuMdBiOlQ_RbL}cBbTo\\GcS{k@yi@wd@ifA_b@cNeDyWzBk~@_f@}v@eTgMwAqk@oZoy@mv@mx@kVisAm\\_U}K{r@w[qk@uCaa@yOqg@cd@q]nAi`@eKuhAmGcHcVeCyNaLge@iyA_b@kw@qSkoBhDonAbT_iBF{X}WwuAkCu`Bcf@_eB}Ce]hY_iBiImhBK_zCyCo_@|QurAcFgp@|Dqs@qFkxAvIywAiRqk@cAiy@ev@kuAiv@yeCwUwsBiZcl@Mcr@{Uw~@s}@weAmb@kcAa`@{g@oKsl@yTkg@wGkmAjAwYvIwUrt@{g@|Eay@lc@_gA`~@kf@bLot@fJuNh]mErlAod@nQyUfTaj@nCiPaB{k@xLg}@gBcs@je@{nBvYag@hIgl@GczAt\\q`A}MklAlB{i@fb@eiAd]yiBzVm]tE}]vPyd@tH}gAtRkz@`HcIl\\yGjMql@wB{U_b@c\\}i@m|Amc@{e@gb@yp@agAsbCwEc\\jAg`@lF}VnUuDI_U","min":135,"mi":104.4},"d7:2":{"g":"ig}pFndghSUnVgPnAnKsoB{b@{fEv@}wAvYcaAnfAoeBdQul@~OyI~}@lIbeA_\\p]iUbYgo@fB}iA~FoXvL}LvOq@zs@bYrNcAfuA{vApXeLrPsZ`v@sp@b`Ak_@|x@dHjX{A~i@iWjZka@nb@mWxKia@~Ao`AtQouAt@ov@eI}f@c@gv@iIoWaPgIyy@dN}Og@oa@mh@}LkFkMz@{c@vZcP`@aYwRiX_Dq_@_Rca@o`@gd@_GiQyUa^_`AeLuIgfAw\\ip@_kA_p@al@iWkb@y_@gZ_Uq_@{QoHwo@XqXyWuf@w`Ba]ch@s^uaAkG_r@oh@iqAaIslAcXe~@i_@waAsRgXsWuNoTu\\{Cmz@gP_j@bAqeA_Lyo@M_yDwOwk@gB{m@}GwO_hAclAmf@klAyAcwBlPcw@z_@ccA~KcqA_XsjBbHkm@oCiqA{Fcf@dB{^_E_wAvNamB}@gRgSwf@cPccAms@qcAcwAgQmq@_RegAgv@wz@gfCqm@gp@}M_r@e[wmCnN}rCu@gu@|EybApm@ehB|Byc@nQgTr^}w@ff@wyCwBuw@`FicAcZsfAdDeh@qFytAwIuW~BmY|Pyh@iGs^`E}[yKo`@hMa\\d^_Jzq@ib@vWi[zUok@zSekAnV}n@aAgt@dFeg@iEck@lRmi@nCmfAtLc^v`@_g@rOur@_De_@idAu~AqCqRv[kqB|Cix@~Qur@xJioAkBks@hIis@|Ga[dQyZp@uy@|Kuo@rDey@mEyP_WcWwvBq~AieAikBq}A_tBss@gh@eYcLctBgEaJwLqXkdAyF}k@jAa`E_PmrAtQgfABmkAgIi^rHu`@uCauBtCshCjVqcBcBw}F`A}wArI_`Ad@akDhl@glObSmwAiGiSiMcIwwAgAgmAiW}nCy@a^mL}W}WwPeb@}F}j@fBwaQ}K_Pk`@JsMvWdDhMo[vX}O[gI{FmCkg@","min":151,"mi":121.3}},"fromHome":{"den":[283,224.6],"citymkt":[63,41.7],"fmsdt":[6,1.7],"wildfig":[5,1.5],"bellyup":[6,1.8],"buttermilk":[20,6.5],"snowmass":[25,12.1],"whitehouse":[5,1.5],"gondola":[6,1.7],"bonnies":[33,4.5],"tavern":[6,1.7],"casatua":[6,1.8],"tlazy7":[17,5.8],"bells":[31,12.1],"downtown":[5,1.6],"frenchalp":[5,1.4],"highlands":[12,4.2],"mgr":[45,7.7],"nyeplaza":[6,1.7],"matsuhisa":[5,1.4],"iron":[68,44.1],"s316":[5,1.4],"jbar":[5,1.4],"vail":[135,104.4],"pinecreek":[36,13.8],"riogrande":[4,1.3],"meatcheese":[5,1.4],"clarks":[4,1.3],"artmuseum":[6,1.7],"rubey":[6,1.7],"wagner":[5,1.6]},"town":{"fmsdt>riogrande":{"g":"{xdnF||}jSNsAkPyD_BrMoDy@sBq@XsAlAuBNL","min":2,"m":850},"riogrande>wildfig":{"g":"crenFzy}jSOMmAtBQt@LD?NbCp@l@FHL~@LvIxBCNjAXa@nD","min":8,"m":594},"wildfig>bellyup":{"g":"kaenFxl~jS`@oDnAZn@eFfCn@DY","min":4,"m":317},"whitehouse>meatcheese":{"g":"sienFtk~jS@I`@HHm@","min":1,"m":45},"rubey>casatua":{"g":"wxdnFze~jSTkB_@K","min":1,"m":67},"downtown>frenchalp":{"g":"g_enFhb~jSa@~CkAYBOsD_A","min":3,"m":226},"nyeplaza>matsuhisa":{"g":"usdnF`~}jS_@tDsFwAU?u@QCJyEiAc@GyAbL_B_@","min":9,"m":659},"s316>jbar":{"g":"}henFlh~jSReBiDs@In@","min":2,"m":164}}};
   var ELEV = {"home":2477,"den":1637,"citymkt":1781,"fmsdt":2419,"wildfig":2415,"bellyup":2418,"buttermilk":2401,"snowmass":2556,"whitehouse":2411,"gondola":2423,"bonnies":3181,"tavern":2423,"casatua":2420,"tlazy7":2517,"bells":2920,"downtown":2418,"frenchalp":2414,"highlands":2464,"mgr":3043,"nyeplaza":2418,"matsuhisa":2411,"iron":1743,"s316":2411,"jbar":2412,"vail":2493,"pinecreek":2914,"riogrande":2406,"meatcheese":2413,"clarks":2401,"artmuseum":2418,"rubey":2417,"wagner":2414};   /* ground elevation (m) per place — for the Google Earth 3D links */
   var P = DATA.places, DAYS = DATA.days, ROUTES = PRE.routes, FROMHOME = PRE.fromHome;
@@ -7253,6 +7508,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     moon:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>',
     town:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V10l4-2v13M9 21V5l6 3v13M15 21v-8l4 1.5V21M11.5 10.5h1M11.5 13.5h1M11.5 16.5h1"/></svg>',
     cube:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12L4 7.5M12 12v9"/></svg>',
+    play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>',
     fly:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18c4-1 6-5 9-9s6-4.5 9-4"/><path d="M17.5 3.5L21 5l-1.6 3.4"/><circle cx="4" cy="18" r="1.6"/></svg>',
     stop:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/></svg>',
     fold:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg>',
@@ -7370,7 +7626,8 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       + '<button class="vx-tool" data-t="rings" aria-pressed="false" title="Distance from the house">' + ICON.ring + '<span>Rings</span></button>'
       + (TOWN ? '<button class="vx-tool" data-t="town" aria-pressed="false" title="Drill down into downtown Aspen, on foot">' + ICON.town + '<span>Downtown</span></button>' : '')
       + '<button class="vx-tool keep" data-t="3d" aria-pressed="false" title="Real 3D terrain + buildings">' + ICON.cube + '<span>3D</span></button>'
-      + '<button class="vx-tool keep vx-flybtn" data-t="fly" aria-pressed="false" hidden title="Animate the camera along this day’s route">' + ICON.fly + '<span>Fly the route</span></button>'
+      + (CESIUM_TOKEN ? '<button class="vx-tool keep" data-t="pr" aria-pressed="false" title="Google photorealistic 3D (trees, buildings, the real mountain)">' + ICON.globe + '<span>Photoreal</span></button>' : '')
+      + '<button class="vx-tool keep vx-flybtn" data-t="fly" hidden title="Play this day as a 3D film">' + ICON.play + '<span>Play this day</span></button>'
       ;
     var right = $('vxToolsR');
     if (right) right.innerHTML = '<button class="vx-tool sq" data-t="locate" title="How far am I from the house?" aria-label="Show my location">' + ICON.locate + '</button>'
@@ -7379,13 +7636,14 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     [].forEach.call(document.querySelectorAll('#vxTools [data-t], #vxToolsR [data-t]'), function(b){
       b.addEventListener('click', function(){
         var k = b.getAttribute('data-t');
-        if (k === 'pistes'){ prefs.pistes = !pistesOn(); savePrefs(); applyOverlays(); }
+        if (k === 'pistes'){ prefs.pistes = !pistesOn(); savePrefs(); applyOverlays(); if (pistesOn() && map && map.getZoom() < 9) toast('Zoom in to see the ski runs.'); }
         else if (k === 'rings'){ prefs.rings = !prefs.rings; savePrefs(); applyOverlays(); }
         else if (k === 'locate'){ locate(); }
         else if (k === 'fit'){ if (is3d) frame3d(true); else fitCurrent(); }
         else if (k === 'town'){ if (townOn) show(townPrev || 'trip', true); else enterTown(true); }
-        else if (k === '3d'){ if (is3d) close3d(); else open3d(); }
-        else if (k === 'fly'){ if (flyRun) stopFly(); else startFly(); }
+        else if (k === '3d'){ if (prOn){ closePR(); open3d(); } else if (is3d) close3d(); else open3d(); }
+        else if (k === 'pr'){ if (prOn) closePR(); else openPR(); }
+        else if (k === 'fly'){ if (dayById(cur) || cur === 'town') startTour(cur, b); }
       });
     });
     var ex = $('vxExpand');
@@ -7399,10 +7657,11 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     if (r) r.setAttribute('aria-pressed', !!prefs.rings);
     var tw = t.querySelector('[data-t="town"]'), d3 = t.querySelector('[data-t="3d"]'), fl = t.querySelector('[data-t="fly"]');
     if (tw) tw.setAttribute('aria-pressed', !!townOn);
-    if (d3){ d3.setAttribute('aria-pressed', !!is3d); d3.setAttribute('aria-label', is3d ? 'Back to the flat map' : 'Open the 3D view'); }
+    var prb = t.querySelector('[data-t="pr"]'); if (prb) prb.setAttribute('aria-pressed', !!prOn);
+    if (d3){ d3.setAttribute('aria-pressed', !!is3d && !prOn); d3.setAttribute('aria-label', is3d ? 'Back to the flat map' : 'Open the 3D view'); }
     if (fl){
-      fl.hidden = !is3d; fl.setAttribute('aria-pressed', !!flyRun);
-      fl.innerHTML = (flyRun ? ICON.stop + '<span>Stop</span>' : ICON.fly + '<span>Fly the route</span>');
+      fl.hidden = !dayById(cur) && cur !== 'town';
+      var fs = fl.querySelector('span'); if (fs) fs.textContent = cur === 'town' ? 'Play the walks' : 'Play this day';
     }
   }
 
@@ -7419,7 +7678,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {maxZoom:19, maxNativeZoom:18, opacity:.9, className:'vx-labels'})
     ]);
     base.topo = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {maxZoom:19, maxNativeZoom:18, className:'vx-topo', attribution:'Terrain &copy; Esri, USGS, NPS'});
-    overlays.pistes = L.tileLayer('https://tiles.opensnowmap.org/pistes/{z}/{x}/{y}.png', {maxZoom:19, maxNativeZoom:18, minZoom:13, opacity:.8, className:'vx-pistes', attribution:'Runs &copy; <a href="https://www.opensnowmap.org" target="_blank" rel="noopener">OpenSnowMap</a> &middot; &copy; OpenStreetMap'});
+    overlays.pistes = L.tileLayer('https://tiles.opensnowmap.org/pistes/{z}/{x}/{y}.png', {maxZoom:19, maxNativeZoom:18, minZoom:9, opacity:.85, className:'vx-pistes', updateWhenZooming:false, keepBuffer:3, attribution:'Runs &copy; <a href="https://www.opensnowmap.org">OpenSnowMap</a> &middot; &copy; OpenStreetMap'});
     ringLayer = buildRings();
     layerDay = L.layerGroup().addTo(map);
     layerTrip = L.layerGroup().addTo(map);
@@ -7429,6 +7688,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     map.on('zoomend', declutter);
     map.on('zoomend moveend', checkOffer);
     map.on('zoomend', function(){ if (townOn) legend('town'); tz(); });
+    map.on('moveend', function(){ if (townOn) declutterSoon(); });
     map.on('popupclose', function(){ setActive(-1, false); });
     var first = TODAY_DAY || 'trip';
     show(cur || first, false, true);
@@ -7547,7 +7807,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     /* keep pins clear of the tool bar (top), tool column (right) and legend (bottom) */
     var o = narrow ? {paddingTopLeft:[40, 66], paddingBottomRight:[60, 60]} : {paddingTopLeft:[56, 70], paddingBottomRight:[70, 60]};
     o.maxZoom = cur === 'town' ? 17.5 : 15;
-    if (animate && !RM){ o.duration = 0.9; map.flyToBounds(cur_bounds, o); }
+    if (animate && !RM){ o.duration = cur === 'town' ? 1.8 : 0.9; o.easeLinearity = 0.2; map.flyToBounds(cur_bounds, o); }
     else map.fitBounds(cur_bounds, o);
   }
 
@@ -7734,6 +7994,10 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       if (li){ programmatic = Date.now(); scrollCardIntoView(ol, li); }
     }
     if (townOn){ townFly(i, fly, openPop); return; }
+    if (fly && prOn && cur !== 'trip'){
+      var dp = dayById(cur); if (dp && dp.stops[i]) prFlyTo(P[dp.stops[i].p].c, dp.stops[i].p);
+      return;
+    }
     if (fly && is3d && cur !== 'trip'){
       var d3 = dayById(cur); if (!d3 || !d3.stops[i]) return;
       var pk3 = d3.stops[i].p;
@@ -7831,11 +8095,11 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     var ex = $('vxExpand'); if (ex){ ex.innerHTML = on ? ICON.shrink : ICON.expand; ex.setAttribute('aria-label', on ? 'Exit full screen' : 'Full-screen map'); }
     setTimeout(function(){
       if (map){ map.invalidateSize(); if (!is3d) fitCurrent(false); }
-      if (m3){ m3.resize(); if (on) m3.scrollZoom.enable(); else m3.scrollZoom.disable();
-        if (COARSE && m3.cooperativeGestures){ if (on) m3.cooperativeGestures.disable(); else m3.cooperativeGestures.enable(); } }
+      /* inline: ⌘/Ctrl + scroll (desktop) or two fingers (phone) to zoom, so the page still scrolls; full screen: plain wheel */
+      if (m3){ m3.resize(); if (m3.cooperativeGestures && !T){ if (on) m3.cooperativeGestures.disable(); else m3.cooperativeGestures.enable(); } }
     }, 60);
   }
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape'){ var vx = $('vx'); if (vx && vx.classList.contains('full') && !($('lb') && $('lb').classList.contains('on'))) toggleFull(false); } });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !T){ var vx = $('vx'); if (vx && vx.classList.contains('full') && !($('lb') && $('lb').classList.contains('on'))) toggleFull(false); } });
 
   /* =====================================================================
      DOWNTOWN DRILL-DOWN — the walkable core (Main → Durant, Aspen St → Spring)
@@ -7886,11 +8150,36 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     if (!townOn && cur !== 'town') townPrev = cur || 'trip';
     townOn = true; cur = 'town'; hideOffer();
     buildTownItems();
+    if (animate) townArrive();
     railActive('town');
     renderTownHead(); renderTownStops();
     if (map){ map.stop(); dropGo(); map.closePopup(); activeIdx = -1; renderTown(animate); }
     if (is3d) update3d(animate);
-    syncTools(); swapAnim();
+    if (prOn) drawPR(animate);
+    syncTools(); syncCta(); swapAnim();
+  }
+  /* the walk into town: one eased camera move under a light veil; pins + labels stay hidden while the camera
+     moves (no per-frame label work), then collision-resolve once and fade in, staggered */
+  var arrT = 0;
+  function townArrive(){
+    var st = stageEl(); if (!st) return;
+    if (!st.querySelector('.vx-veil')){ var vl = document.createElement('div'); vl.className = 'vx-veil'; vl.innerHTML = '<span>Walking into town…</span>'; st.appendChild(vl); }
+    st.classList.add('vx-going'); st.classList.add('vx-flying');
+    clearTimeout(arrT);
+    var done = false, finish = function(){
+      if (done) return; done = true; clearTimeout(arrT);
+      requestAnimationFrame(function(){
+        declutterTown();
+        var root = prOn ? $('vxpr') : is3d ? $('vx3d') : $('vxMap');
+        if (root) [].forEach.call(root.querySelectorAll('.vx-tpin,.vx-tlbl,.vx-street span,.vx-blk span'), function(e, i){ e.style.setProperty('--d', Math.min(i * 28, 700) + 'ms'); });
+        st.classList.remove('vx-going', 'vx-flying');
+      });
+    };
+    setTimeout(function(){
+      if (is3d && m3) m3.once('moveend', function(){ if (m3) m3.once('idle', finish); else finish(); });
+      else if (map) map.once('moveend', finish);
+    }, 60);
+    arrT = setTimeout(finish, RM ? 500 : 3400);
   }
   function renderTown(animate){
     clearPins(); markers = [];
@@ -7926,13 +8215,59 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     cur_bounds = L.latLngBounds(TOWN.b);
     fitCurrent(animate);
     legend('town'); tz();
+    if (map) map.once('moveend', declutterSoon);
   }
   function townPinHtml(k){
     var pl = P[k], col = (CAT[pl.cat] || CAT.home).c, lp = (TOWN.lp && TOWN.lp[k]) || 'r';
-    return '<div class="vx-tpin' + (onWalk(k) ? ' star' : '') + '" style="--c:' + col + '"><b>' + esc(pl.k) + '</b></div><span class="vx-tlbl lp-' + lp + (onWalk(k) ? '' : ' minor') + '">' + esc(pl.s) + '</span>';
+    return '<div class="vx-tpin' + (onWalk(k) ? ' star' : '') + '" style="--c:' + col + '"><b>' + esc(pl.k) + '</b></div><span class="vx-tlbl lp-' + lp + '" data-lp="' + lp + '" data-k="' + esc(k) + '">' + esc(pl.s) + '</span>';
   }
-  /* label density: below z16.6 only the evening-walk stops keep their names (the rest show on zoom/hover) */
-  function tz(){ var el = $('vxMap'); if (el && map) el.setAttribute('data-tz', map.getZoom() >= 16.6 ? 'hi' : 'lo'); }
+  function tz(){ var el = $('vxMap'); if (el && map){ el.setAttribute('data-tz', 'hi'); el.classList.toggle('vx-town', !!townOn); } declutterSoon(); }
+  /* ---- zero overlapping text in Downtown: greedy placement by priority, measured from the DOM ----
+     selected stop > evening-walk places > walk chips > other places > street names.
+     Badges first (a badge that would sit on a higher-priority badge hides its marker),
+     then labels try their preferred side, then r/l/t/b; anything still colliding is hidden. */
+  var dcT = 0;
+  function declutterSoon(){ clearTimeout(dcT); dcT = setTimeout(declutterTown, 30); }
+  function declutterTown(){
+    if (!townOn || T) return;
+    var root = prOn ? $('vxpr') : is3d ? $('vx3d') : $('vxMap'); if (!root) return;
+    var box = root.getBoundingClientRect(), placed = [];
+    /* the map's own controls are obstacles too: no label may sit under a button */
+    [].forEach.call(document.querySelectorAll('#vxTools > *, #vxToolsR > *, #vxExpand, #vxLegend, .vx-offer, #vxMap .leaflet-control-zoom, #vx3d .maplibregl-ctrl-group, #vx3d .maplibregl-ctrl-attrib, #vxMap .leaflet-control-attribution'), function(e){
+      var cs = getComputedStyle(e); if (cs.display === 'none' || cs.visibility === 'hidden') return;
+      var r = e.getBoundingClientRect(); if (r.width > 1) placed.push({l:r.left - 4, t:r.top - 4, r:r.right + 4, b:r.bottom + 4});
+    });
+    var R = function(el, pad){ var r = el.getBoundingClientRect(); pad = pad == null ? 2 : pad; return {l:r.left - pad, t:r.top - pad, r:r.right + pad, b:r.bottom + pad, w:r.width}; };
+    var hits = function(a){ for (var i = 0; i < placed.length; i++){ var b = placed[i]; if (a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b) return true; } return false; };
+    var onScreen = function(a){ return a.r > box.left && a.l < box.right && a.b > box.top && a.t < box.bottom; };
+    var wraps = [].slice.call(root.querySelectorAll(is3d || prOn ? '.vx-m3.tw' : '.vx-tw'));
+    wraps.forEach(function(w){ w.classList.remove('vx-hid'); var l = w.querySelector('.vx-tlbl'); if (l){ l.classList.remove('vx-hid'); l.className = l.className.replace(/lp-\w/, 'lp-' + (l.getAttribute('data-lp') || 'r')); } });
+    var pri = function(w){ var l = w.querySelector('.vx-tlbl'), k = l && l.getAttribute('data-k');
+      return w.classList.contains('on') || (w.querySelector('.vx-tpin') && w.querySelector('.vx-tpin').parentNode.classList.contains('on')) ? 0 : (k && onWalk(k) ? 1 : 3); };
+    wraps.sort(function(a, b){ return pri(a) - pri(b); });
+    /* 1. badges */
+    wraps.forEach(function(w){ var bd = w.querySelector('.vx-tpin'); if (!bd) return; var r = R(bd, 1);
+      if (!onScreen(r)) return; if (hits(r)) w.classList.add('vx-hid'); else placed.push(r); });
+    var chips = [].slice.call(root.querySelectorAll('.vx-blk span')), streets = [].slice.call(root.querySelectorAll('.vx-street span'));
+    chips.concat(streets).forEach(function(e){ e.classList.remove('vx-hid'); });
+    var label = function(w){
+      if (w.classList.contains('vx-hid')) return;
+      var l = w.querySelector('.vx-tlbl'); if (!l) return;
+      var first = l.getAttribute('data-lp') || 'r', order = [first].concat(['r','l','t','b'].filter(function(x){ return x !== first; }));
+      for (var i = 0; i < order.length; i++){
+        l.className = l.className.replace(/lp-\w/, 'lp-' + order[i]);
+        var r = R(l), inside = r.l >= box.left && r.r <= box.right && r.t >= box.top && r.b <= box.bottom;
+        if (!onScreen(r)) return;
+        if (inside && !hits(r)){ placed.push(r); return; }   /* never half off the edge */
+      }
+      l.className = l.className.replace(/lp-\w/, 'lp-' + first); l.classList.add('vx-hid');
+    };
+    wraps.filter(function(w){ return pri(w) <= 1; }).forEach(label);
+    chips.forEach(function(e){ var r = R(e); if (!onScreen(r)) return; if (hits(r)) e.classList.add('vx-hid'); else placed.push(r); });
+    wraps.filter(function(w){ return pri(w) > 1; }).forEach(label);
+    /* street names last, and never right next to a pin */
+    streets.forEach(function(e){ var r = R(e, 6); if (!onScreen(r)) return; if (hits(r)) e.classList.add('vx-hid'); else placed.push(r); });
+  }
   function townIcon(k){ return L.divIcon({className:'vx-pinwrap vx-tw', html:townPinHtml(k), iconSize:[22,22], iconAnchor:[11,11], popupAnchor:[0,-12]}); }
   function townPopup(k){
     var dl = daysAt(k);
@@ -7992,9 +8327,10 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       p.classList.toggle('dim', it.t === 'walk' && !p.classList.contains('w' + it.wi));
     });
     if (it.t === 'place'){
-      var m = markers[i], el = m && m.getElement && m.getElement(); if (el) el.classList.add('on');
+      var m = markers[i], el = m && m.getElement && m.getElement(); if (el) el.classList.add('on'); declutterSoon();
       if (!fly) return;
       var c = P[it.k].c;
+      if (prOn){ prFlyTo(c, it.k); return; }
       if (is3d){ fly3dTo(c, 17.3, openPop ? townPopup(it.k) : null); return; }
       if (!map) return;
       var go = function(){ if (openPop && m) m.openPopup(); };
@@ -8049,7 +8385,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       'atmosphere-blend':['interpolate',['linear'],['zoom'],0,1,10,1,13,0]}
   };
   var is3d = false, m3 = null, m3Ready = false, m3Markers = [], m3Pop = null, mlPromise = null, m3Warned = {}, userMoved = false;
-  var flyRun = null;
+  var flyRun = null;   /* kept so older call sites stay valid; always null now */
   function isDark(){ return document.body.classList.contains('dark'); }
   function stageEl(){ return document.querySelector('#valley .vx-stage'); }
   function webglOK(){
@@ -8072,6 +8408,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     return mlPromise;
   }
   function open3d(){
+    if (prOn) closePR();
     if (is3d) return;
     if (!webglOK()){ toast('3D needs WebGL, which this browser has turned off.'); return; }
     var st = stageEl(), mapEl = $('vxMap'); if (!st || !mapEl) return;
@@ -8114,8 +8451,9 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       sky: dk ? SKY.dark : SKY.light
     };
     m3 = new ml.Map({container:el, style:style, center:[-106.875, 39.16], zoom:10.3, pitch:52, bearing:-38, maxPitch:80,
-      attributionControl:{compact:true}, scrollZoom:full, dragRotate:true, touchPitch:true, pitchWithRotate:true, fadeDuration:150,
-      cooperativeGestures: COARSE && !full, maxBounds:[[-108.4, 38.6], [-103.9, 40.4]]});
+      attributionControl:{compact:true}, scrollZoom:true, dragRotate:true, touchPitch:true, pitchWithRotate:true, fadeDuration:150,
+      pixelRatio: Math.min(window.devicePixelRatio || 1, COARSE ? 1.5 : 2),
+      cooperativeGestures: !full, maxBounds:[[-108.4, 38.6], [-103.9, 40.4]]});
     m3.addControl(new ml.NavigationControl({visualizePitch:true}), 'bottom-right');
     m3.on('error', function(e){
       var sid = e && e.sourceId, msg = (e && e.error && e.error.message) || 'map error';
@@ -8123,16 +8461,22 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
         try { m3.removeLayer('bld'); m3.removeLayer('streets'); } catch(_){} return; }
       if (!m3Warned[sid || msg]){ m3Warned[sid || msg] = 1; console.warn('[AspenMap 3D]', sid || '', msg); }
     });
-    ['mousedown', 'touchstart', 'wheel', 'dragstart'].forEach(function(ev){
-      m3.on(ev, function(e){ if (e && e.originalEvent){ userMoved = true; if (flyRun) stopFly(); } });
+    /* +/− buttons, double-click and keyboard zoom count as the user taking the camera too */
+    el.addEventListener('click', function(e){ if (e.target.closest && e.target.closest('.maplibregl-ctrl')) userMoved = true; }, true);
+    ['mousedown', 'touchstart', 'wheel', 'dragstart', 'dblclick'].forEach(function(ev){
+      m3.on(ev, function(e){ if (e && e.originalEvent){ userMoved = true; if (T) tourUserInput(); } });
     });
     var tz3 = function(){ if (m3) el.setAttribute('data-tz', m3.getZoom() >= 16.6 ? 'hi' : 'lo'); };
     m3.on('zoomend', function(){ if (townOn) legend('town'); tz3(); }); tz3();
+    m3.on('moveend', function(){ if (townOn && !T) declutterSoon(); });
     m3.on('load', function(){
       if (!m3) return;
       m3Ready = true;
       var ld = el.querySelector('.vx-3dload'); if (ld) ld.remove();
-      addOverlays3d(); draw3d();
+      addOverlays3d(); draw3d(); townGround();
+      /* start with the attribution collapsed to its (i) — expanded, it runs under the legend */
+      var at = el.querySelector('.maplibregl-ctrl-attrib'); if (at) at.classList.remove('maplibregl-compact-show');
+      if (tourPending) return;   /* the tour takes the camera from here */
       if (RM){ frame3d(false); return; }
       /* a slow tilted sweep across the valley, then frame what's selected */
       m3.easeTo({bearing:6, pitch:62, zoom:10.8, duration:3200, easing:function(t){ return t; }});
@@ -8208,7 +8552,17 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     });
     legend(cur === 'town' ? 'town' : (cur === 'trip' ? 'trip' : 'day'));
   }
-  function update3d(animate){ if (!m3 || !m3Ready) return; draw3d(); frame3d(animate); }
+  function update3d(animate){ if (!m3 || !m3Ready) return; draw3d(); townGround(); frame3d(animate); }
+  /* Downtown in 3D: pin the camera's ground height to the town (≈2,418 m × exaggeration) instead of re-clamping
+     to overzoomed DEM tiles on every zoom step — that re-clamp is what made zooming jump and snap back. */
+  function townGround(){
+    if (!m3) return;
+    try {
+      try { if (m3.getLayer('streets')) m3.setLayoutProperty('streets', 'visibility', townOn && !T ? 'none' : 'visible'); } catch(e){}   /* our own labels replace them in town */
+    if (townOn && !T){ m3.setCenterClampedToGround(false); m3.setCenterElevation(((ELEV && ELEV.downtown) || 2418) * 1.25); }
+      else m3.setCenterClampedToGround(true);
+    } catch(e){}
+  }
   function bounds3d(pts){
     var b = [[180, 90], [-180, -90]];
     pts.forEach(function(c){ b[0][0] = Math.min(b[0][0], c[1]); b[0][1] = Math.min(b[0][1], c[0]); b[1][0] = Math.max(b[1][0], c[1]); b[1][1] = Math.max(b[1][1], c[0]); });
@@ -8222,26 +8576,21 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     if (!m3 || !m3Ready) return;
     var pts;
     if (cur === 'town'){
-      /* fitBounds at 56° pitch shrinks the town to a strip under Aspen Mountain — aim the camera directly instead:
-         stand north of town, look SSW across the grid at the mountain */
+      /* Stand north of town and look south-southwest, so Aspen Mountain is the backdrop and never in front
+         of the lens. townGround() pins the centre height to the town, so the centre is exact (no solve/
+         settle-pan that used to fight the user's zoom). Then make sure the eye is well above the ground:
+         if not (small screens zoom out further → camera drifts onto Red Mountain), tilt toward top-down. */
       var w = m3.getContainer().clientWidth, tc = [(TOWN.b[0][0] + TOWN.b[1][0]) / 2, (TOWN.b[0][1] + TOWN.b[1][1]) / 2];
-      var cam = {center:[tc[1], tc[0]], zoom:16.6 + 0.6 * Math.log2(Math.max(320, w) / 800), pitch:56, bearing:194};
-      /* with terrain on, the screen-centre ray lands on the mountain behind town — solve the camera once
-         (jump, measure where town projects, pan it to ~55% height), then restore and fly there */
+      var cam = {center:[tc[1], tc[0]], zoom:16.5 + 0.6 * Math.log2(Math.max(320, w) / 800), pitch:52, bearing:186};
       var was = {center:m3.getCenter(), zoom:m3.getZoom(), pitch:m3.getPitch(), bearing:m3.getBearing()};
       m3.jumpTo(cam);
-      var p = m3.project([tc[1], tc[0]]), h = m3.getContainer().clientHeight;
-      m3.panBy([p.x - w / 2, p.y - h * 0.55], {duration:0});
-      cam.center = m3.getCenter();
-      if (animate && !RM){ m3.jumpTo(was); m3.flyTo(L3(cam, {duration:2200, essential:true})); } else m3.jumpTo(cam);
-      /* terrain tiles arriving change the centre elevation — re-measure once the view settles and nudge */
-      var fix = function(){
-        if (!m3 || cur !== 'town' || userMoved || flyRun) return;
-        var q = m3.project([tc[1], tc[0]]), hh = m3.getContainer().clientHeight, dx = q.x - w / 2, dy = q.y - hh * 0.55;
-        if (Math.abs(dx) > 30 || Math.abs(dy) > 30) m3.panBy([dx, dy], {duration: RM ? 0 : 600});
-      };
-      m3.once('moveend', function(){ m3.once('idle', fix); });
-      if (!(animate && !RM)) m3.once('idle', fix);
+      for (var g = 0; g < 6 && camClear() < 160 && cam.pitch > 30; g++){ cam.pitch -= 5; m3.jumpTo(cam); }
+      if (animate && !RM){
+        m3.jumpTo(was);
+        var far = Math.abs(was.zoom - cam.zoom) > 3;
+        if (far) m3.flyTo(L3(cam, {duration:2100, curve:1.25, essential:true}));
+        else m3.easeTo(L3(cam, {duration:1800, easing:function(t){ return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }, essential:true}));
+      }
       return;
     }
     else pts = view3d().pins.filter(function(p){ return cur !== 'trip' || (p.k !== 'den' && p.k !== 'vail'); }).map(function(p){ return P[p.k].c; });
@@ -8268,7 +8617,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
   }
   function closePop3(){ if (m3Pop){ m3Pop.remove(); m3Pop = null; } }
   function theme3d(){
-    if (!m3 || !m3Ready) return;
+    if (!m3 || !m3Ready || T) return;   /* the tour owns the light while it plays */
     var dk = isDark();
     try { m3.setSky(dk ? SKY.dark : SKY.light); } catch(e){}
     try { m3.setPaintProperty('img', 'raster-brightness-max', dk ? 0.8 : 1); } catch(e){}
@@ -8292,102 +8641,991 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     }, 40);
   }
 
-  /* ---------- "Fly the route": camera along the day's legs ---------- */
+  /* "Fly the route" was retired in v40 — the cinematic tour ("Play this day") replaces it. */
+  function stopFly(){}
+
+  /* =====================================================================
+     CINEMATIC TOUR (v40) — "▶ Play the tour" / "▶ Play this day"
+     One requestAnimationFrame loop plays a precomputed timeline of shots
+     (title → per-day chapter, legs, stops → NYE set piece → end card).
+     - Camera paths are PRE-SMOOTHED: Douglas–Peucker → centripetal
+       Catmull–Rom → arc-length table; bearings come from a point far ahead
+       and are low-passed over a long window. No per-frame polyline chasing.
+     - Timing is frame-rate independent (dt clock); every move is eased.
+     - Stateless render: any time t maps to camera, route, pins, captions,
+       light — so scrubbing / skipping / resuming are exact.
+     Lives inside the map IIFE (uses P, DAYS, legFor, decode, m3, …).
+     ===================================================================== */
+  var FACTS = DATA.facts || {}, CHAP = DATA.chapters || {};
+  var T = null, tourPending = null;
+  var VALLEY = [39.192, -106.872];
+  var TRIP_START = '2026-12-27';
+
+  /* ---------- small math ---------- */
+  function clamp(v, a, b){ return v < a ? a : v > b ? b : v; }
+  function lerp(a, b, t){ return a + (b - a) * t; }
+  function smooth(a, b, x){ var t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); }
+  function easeIO(t){ return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }   /* cubic in-out */
+  function easeSine(t){ return -(Math.cos(Math.PI * t) - 1) / 2; }
+  function angLerp(a, b, t){ var d = ((b - a) % 360 + 540) % 360 - 180; return a + d * t; }
   function mDist(a, b){ return haversineMi(a, b) * 1609.34; }
-  function flyLegs(){
-    var legs = [];
-    if (cur === 'town'){
-      TOWN.walks.forEach(function(w){ var d = dayById(w.d); w.legs.forEach(function(l){ var t = townLeg(l);
-        legs.push({pts:t.pts, name:'Day ' + d.r + ' · ' + P[l[0]].s + ' → ' + P[l[1]].s, z: t.via === 'walk' ? 17.4 : 16.4, end:l[1]}); }); });
-    } else {
-      var d = cur === 'trip' ? DAYS[0] : dayById(cur);
-      d.stops.forEach(function(s, i){
-        var leg = legFor(d, i); if (!leg) return;
-        var pts = leg.r && leg.r.g ? decode(leg.r.g) : [P[leg.from].c, P[leg.to].c];
-        legs.push({pts:pts, name:P[leg.from].s + ' → ' + P[leg.to].s, via:leg.via, end:leg.to});
-      });
-    }
-    legs.forEach(function(l){
-      var cum = [0]; for (var j = 1; j < l.pts.length; j++) cum.push(cum[j-1] + mDist(l.pts[j-1], l.pts[j]));
-      l.cum = cum; l.len = cum[cum.length - 1] || 1;
-      if (l.z == null) l.z = l.len > 40000 ? 11.4 : l.len > 6000 ? 12.9 : l.via === 'walk' ? 16.8 : l.via === 'lift' || l.via === 'ski' ? 14.2 : 15;
-      l.dur = Math.min(22000, 2600 + Math.sqrt(l.len) * 52);
-    });
-    return legs;
-  }
-  function at(l, dist){
-    dist = Math.max(0, Math.min(l.len, dist));
-    var j = 1; while (j < l.cum.length - 1 && l.cum[j] < dist) j++;
-    var a = l.pts[j-1], b = l.pts[j], seg = (l.cum[j] - l.cum[j-1]) || 1, t = (dist - l.cum[j-1]) / seg;
-    return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
-  }
-  function brg(a, b){
-    var r = Math.PI / 180, y = Math.sin((b[1]-a[1])*r) * Math.cos(b[0]*r),
-        x = Math.cos(a[0]*r) * Math.sin(b[0]*r) - Math.sin(a[0]*r) * Math.cos(b[0]*r) * Math.cos((b[1]-a[1])*r);
-    return Math.atan2(y, x) / r;
-  }
-  function angD(from, to){ var d = ((to - from) % 360 + 540) % 360 - 180; return d; }
-  function flyHud(txt){
-    var st = stageEl(); if (!st) return;
-    var h = st.querySelector('.vx-flyhud');
-    if (!txt){ if (h) h.remove(); return; }
-    if (!h){ h = document.createElement('div'); h.className = 'vx-flyhud'; h.setAttribute('aria-live', 'polite'); st.appendChild(h); }
-    h.textContent = txt;
-  }
-  function startFly(){
-    if (!m3 || !m3Ready){ toast('One moment — the 3D map is still loading.'); return; }
-    stopFly();
-    var legs = flyLegs(); if (!legs.length){ toast('No route to fly on this view.'); return; }
-    closePop3();
-    var run = flyRun = {legs:legs, li:0, raf:0, timer:0};
-    syncTools();
-    var label = function(i){ return 'Leg ' + (i + 1) + ' of ' + legs.length + ' · ' + legs[i].name; };
-    if (RM){   /* reduced motion: jump cuts from stop to stop */
-      var k = 0;
-      var cut = function(){
-        if (flyRun !== run) return;
-        if (k >= legs.length){ stopFly(); return; }
-        var l = legs[k], e = l.pts[l.pts.length - 1], s = l.pts[0];
-        m3.jumpTo({center:[e[1], e[0]], zoom:Math.min(16, l.z), pitch:60, bearing:brg(s, e)});
-        flyHud(label(k)); k++;
-        run.timer = setTimeout(cut, 2000);
-      };
-      cut(); return;
-    }
-    var bearing = m3.getBearing(), zoom = m3.getZoom(), t0 = 0, waiting = true;
-    function goto(i){
-      var l = legs[i], p = l.pts[0], q = at(l, Math.min(l.len, Math.max(150, l.len * 0.08)));
-      bearing = brg(p, q); zoom = l.z; waiting = true; flyHud(label(i));
-      m3.flyTo({center:[p[1], p[0]], zoom:l.z, pitch:62, bearing:bearing, duration:1600, essential:true});
-      m3.once('moveend', function(){ if (flyRun !== run) return; waiting = false; t0 = performance.now(); run.raf = requestAnimationFrame(step); });
-    }
-    function step(now){
-      if (flyRun !== run || waiting) return;
-      var l = legs[run.li], t = Math.max(0, Math.min(1, (now - t0) / l.dur));
-      var e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-      var dist = e * l.len, p = at(l, dist), ahead = Math.max(120, l.len * 0.06);
-      if (dist + ahead * 0.25 < l.len){ var q = at(l, dist + ahead); bearing += angD(bearing, brg(p, q)) * 0.06; }
-      zoom += (l.z - zoom) * 0.05;
-      m3.jumpTo({center:[p[1], p[0]], bearing:bearing, zoom:zoom, pitch:62});
-      if (t >= 1){
-        run.li++;
-        if (run.li >= legs.length){ var last = legs[legs.length - 1]; stopFly(); toast('Arrived · ' + P[last.end].n); return; }
-        var nx = legs[run.li], gap = mDist(l.pts[l.pts.length - 1], nx.pts[0]);
-        if (gap > 300){ run.timer = setTimeout(function(){ if (flyRun === run) goto(run.li); }, 600); return; }
-        t0 = now + 600; flyHud(label(run.li));
+
+  /* ---------- path smoothing ---------- */
+  function toXY(ref, c){ return [(c[1] - ref[1]) * 111320 * Math.cos(ref[0] * Math.PI / 180), (c[0] - ref[0]) * 110540]; }
+  function toLL(ref, p){ return [ref[0] + p[1] / 110540, ref[1] + p[0] / (111320 * Math.cos(ref[0] * Math.PI / 180))]; }
+  function d2(a, b){ var x = a[0] - b[0], y = a[1] - b[1]; return Math.sqrt(x * x + y * y); }
+  function simplify(pts, eps){   /* iterative Douglas–Peucker */
+    if (pts.length < 3) return pts.slice();
+    var keep = new Uint8Array(pts.length), stack = [[0, pts.length - 1]]; keep[0] = keep[pts.length - 1] = 1;
+    while (stack.length){
+      var seg = stack.pop(), a = pts[seg[0]], b = pts[seg[1]], dx = b[0] - a[0], dy = b[1] - a[1], L2 = dx * dx + dy * dy, mi = -1, md = 0;
+      for (var i = seg[0] + 1; i < seg[1]; i++){
+        var p = pts[i], t = L2 ? clamp(((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / L2, 0, 1) : 0;
+        var e = d2(p, [a[0] + t * dx, a[1] + t * dy]); if (e > md){ md = e; mi = i; }
       }
-      run.raf = requestAnimationFrame(step);
+      if (md > eps){ keep[mi] = 1; stack.push([seg[0], mi], [mi, seg[1]]); }
     }
-    goto(0);
+    return pts.filter(function(_, i){ return keep[i]; });
   }
-  function stopFly(){
-    if (!flyRun) return;
-    cancelAnimationFrame(flyRun.raf); clearTimeout(flyRun.timer);
-    flyRun = null; flyHud(null);
-    if (m3){ try { m3.stop(); } catch(e){} }
+  function catmull(P0, total){   /* centripetal Catmull–Rom (alpha 0.5), Barry–Goldman form */
+    if (P0.length < 3){ var o = []; for (var k = 0; k <= 20; k++) o.push([lerp(P0[0][0], P0[P0.length-1][0], k/20), lerp(P0[0][1], P0[P0.length-1][1], k/20)]); return o; }
+    var n = P0.length, P = [[2*P0[0][0]-P0[1][0], 2*P0[0][1]-P0[1][1]]].concat(P0, [[2*P0[n-1][0]-P0[n-2][0], 2*P0[n-1][1]-P0[n-2][1]]]);
+    var per = Math.max(4, Math.ceil(total / (n - 1))), out = [];
+    function lp(a, b, ta, tb, t){ var w = (tb - ta) || 1e-6; return [((tb - t) * a[0] + (t - ta) * b[0]) / w, ((tb - t) * a[1] + (t - ta) * b[1]) / w]; }
+    for (var i = 1; i < P.length - 2; i++){
+      var p0 = P[i-1], p1 = P[i], p2 = P[i+1], p3 = P[i+2];
+      var t0 = 0, t1 = t0 + Math.max(1e-3, Math.sqrt(d2(p0, p1))), t2 = t1 + Math.max(1e-3, Math.sqrt(d2(p1, p2))), t3 = t2 + Math.max(1e-3, Math.sqrt(d2(p2, p3)));
+      for (var j = 0; j < per; j++){
+        var t = t1 + (t2 - t1) * j / per;
+        var A1 = lp(p0, p1, t0, t1, t), A2 = lp(p1, p2, t1, t2, t), A3 = lp(p2, p3, t2, t3, t);
+        var B1 = lp(A1, A2, t0, t2, t), B2 = lp(A2, A3, t1, t3, t);
+        out.push(lp(B1, B2, t1, t2, t));
+      }
+    }
+    out.push(P0[n - 1]);
+    return out;
+  }
+  function buildPath(ll){
+    var ref = ll[0], xy = ll.map(function(c){ return toXY(ref, c); }), raw = 0;
+    for (var i = 1; i < xy.length; i++) raw += d2(xy[i-1], xy[i]);
+    var s = simplify(xy, Math.max(14, raw * 0.014));
+    var pts = catmull(s, 260), cum = [0];
+    for (var j = 1; j < pts.length; j++) cum.push(cum[j-1] + d2(pts[j-1], pts[j]));
+    var len = cum[cum.length - 1] || 1, N = pts.length, bear = new Float32Array(N);
+    var la = clamp(len * 0.16, 140, 9000);   /* look far ahead, not at the next vertex */
+    for (var k = 0; k < N; k++){
+      var a = posXY(pts, cum, cum[k]), b = posXY(pts, cum, Math.min(len, cum[k] + la));
+      if (d2(a, b) < 5 && k) { bear[k] = bear[k-1]; continue; }
+      bear[k] = Math.atan2(b[0] - a[0], b[1] - a[1]) * 180 / Math.PI;
+    }
+    /* low-pass: circular moving average over ~22% of the path */
+    var W = Math.max(3, Math.round(N * 0.11)), sm = new Float32Array(N);
+    for (var q = 0; q < N; q++){
+      var sx = 0, sy = 0;
+      for (var r = Math.max(0, q - W); r <= Math.min(N - 1, q + W); r++){ var rad = bear[r] * Math.PI / 180; sx += Math.sin(rad); sy += Math.cos(rad); }
+      sm[q] = Math.atan2(sx, sy) * 180 / Math.PI;
+    }
+    var rawCum = [0];
+    for (var z = 1; z < ll.length; z++) rawCum.push(rawCum[z-1] + mDist(ll[z-1], ll[z]));
+    return {ref:ref, pts:pts, cum:cum, len:len, bear:sm, ll:ll, rawCum:rawCum, rawLen:rawCum[rawCum.length-1] || 1};
+  }
+  function idxAt(cum, s){ var lo = 0, hi = cum.length - 1; while (hi - lo > 1){ var m = (lo + hi) >> 1; if (cum[m] < s) lo = m; else hi = m; } return lo; }
+  function posXY(pts, cum, s){
+    var i = idxAt(cum, s), j = Math.min(i + 1, pts.length - 1), seg = (cum[j] - cum[i]) || 1, t = clamp((s - cum[i]) / seg, 0, 1);
+    return [lerp(pts[i][0], pts[j][0], t), lerp(pts[i][1], pts[j][1], t)];
+  }
+  function pathPos(path, f){ return toLL(path.ref, posXY(path.pts, path.cum, clamp(f, 0, 1) * path.len)); }
+  function pathBear(path, f){
+    var s = clamp(f, 0, 1) * path.len, i = idxAt(path.cum, s), j = Math.min(i + 1, path.pts.length - 1), seg = (path.cum[j] - path.cum[i]) || 1;
+    return angLerp(path.bear[i], path.bear[j], clamp((s - path.cum[i]) / seg, 0, 1));
+  }
+  function rawUpTo(path, f){   /* the real road line up to fraction f (for the progressive draw) */
+    var s = clamp(f, 0, 1) * path.rawLen, ll = path.ll, out = [ll[0]];
+    for (var i = 1; i < ll.length; i++){
+      if (path.rawCum[i] <= s){ out.push(ll[i]); continue; }
+      var seg = (path.rawCum[i] - path.rawCum[i-1]) || 1, t = (s - path.rawCum[i-1]) / seg;
+      out.push([lerp(ll[i-1][0], ll[i][0], t), lerp(ll[i-1][1], ll[i][1], t)]); break;
+    }
+    return out;
+  }
+
+  /* ---------- who is watching ---------- */
+  function whoName(){
+    try { var w = window.AspenWho && window.AspenWho.get && window.AspenWho.get();
+      if (w && w !== 'everyone' && window.AspenWho.people && window.AspenWho.people[w]) return window.AspenWho.people[w].n; } catch(e){}
+    return null;
+  }
+  function stopFor(s){   /* 'you' | 'other' | null */
+    if (!s.who) return null;
+    var me = whoName(); if (!me) return null;
+    var w = s.who.toLowerCase();
+    if (/everyone|all six/.test(w)) return 'you';
+    if (w.indexOf(me.toLowerCase()) >= 0) return 'you';
+    var names = ['griffin','marco','stella','ben','marcy','jim'];
+    return names.some(function(n){ return w.indexOf(n) >= 0; }) ? 'other' : null;
+  }
+
+  /* ---------- timeline ---------- */
+  function stopZoom(k){
+    var pl = P[k], z = TOWNSET[k] ? 16.35 : pl.cat === 'mountain' ? 14.1 : 14.8;
+    if (k === 'den' || k === 'vail') z = 13.2; if (k === 'citymkt' || k === 'iron') z = 14.4;
+    if (T && T.tl && T.tl.scope === 'town' && TOWNSET[k]) z = 16.95;
+    if (k === 'bells' || k === 'tlazy7') z = 13.9; if (k === 'bonnies' || k === 'mgr') z = 14.5; if (k === 'home') z = 15.3;
+    return z - (T && T.narrow ? 0.45 : 0);
+  }
+  function legShape(via, km){
+    if (via === 'walk') return {dur:clamp(3200 + km * 4000, 3200, 4600), z:16.6, p:62};
+    if (via === 'lift') return {dur:3200, z:14.2, p:64};
+    if (via === 'ski')  return {dur:3000, z:14.4, p:66};
+    if (via === 'sled') return {dur:4600, z:13.6, p:62};
+    if (km > 60) return {dur:clamp(3400 + Math.sqrt(km) * 150, 4600, 5400), z:10.4, p:50};   /* long haul: high + fast but smooth */
+    if (km > 12) return {dur:4400, z:12.4, p:56};
+    return {dur:3500, z:14.4, p:60};
+  }
+  function tod(s){ var m = parseTime(s.time); return m == null ? null : m; }
+  function buildTimeline(scope){
+    var shots = [], chapters = [], total = 0;
+    function add(sh){ sh.t0 = total; total += sh.dur; shots.push(sh); return sh; }
+    if (scope === 'all') add({k:'title', dur: RM ? 5500 : 6500, tod:17 * 60, ch:-1, cut:true});
+    var days = scope === 'all' ? DAYS : scope === 'town' ? townDays() : [dayById(scope)];
+    days.forEach(function(d){
+      var ci = chapters.length, chap = {d:d, t0:total, stops:[], lbl:{}};
+      chapters.push(chap);
+      var homeStop = -1; d.stops.forEach(function(s, i){ if (s.p === 'home') homeStop = i; });
+      d.stops.forEach(function(s, i){ if (s.p !== 'home') (chap.lbl[s.p] = chap.lbl[s.p] || []).push(String(i + 1 - (homeStop >= 0 && homeStop < i ? 1 : 0))); });
+      var first = null; d.stops.forEach(function(s){ if (first == null) first = tod(s); });
+      add({k:'chapter', d:d, dur: RM ? 3400 : 3800, tod: first != null ? Math.max(6 * 60, first - 40) : 9 * 60, ch:ci, cut:true});
+      var here = null, lastTod = first != null ? first : 9 * 60, seen = {};
+      d.stops.forEach(function(s, i){
+        var leg = d.town ? (i > 0 ? d.legs[i - 1] : null) : legFor(d, i), t1 = tod(s); if (t1 == null) t1 = lastTod + 60;
+        var mine = stopFor(s), brief = mine === 'other' || (seen[s.p] && !s.star) || /optional/i.test(s.what) || (s.p === 'home' && i > 0) || (s.p === 'home' && d.id === 'd7');
+        var legRec = null;
+        if (leg){
+          var pts = leg.pts || (leg.r && leg.r.g ? decode(leg.r.g) : [P[leg.from].c, P[leg.to].c]);
+          legRec = {via:leg.via, from:leg.from, to:leg.to, path:buildPath(pts), r:leg.r};
+          var km = legRec.path.rawLen / 1000, chained = here === leg.from;
+          /* show the flight when it carries the story: chained legs, the day's first leg, long drives.
+             Short "from the house again" hops just draw their line and cut. */
+          var showLeg = !RM && (chained || km > 12);
+          if (showLeg){
+            var sh = d.town ? {dur:clamp(2600 + legRec.path.rawLen * 9, 4000, 9000), z:17.0, p:62} : legShape(leg.via, km);   /* town: walking pace */
+            add({k:'leg', d:d, i:i, s:s, leg:legRec, dur: brief ? sh.dur * 0.8 : sh.dur, z:sh.z, p:sh.p, tod0:lastTod, tod1:t1, ch:ci, cut: !chained});
+            here = leg.to;
+          }
+        }
+        var kind = (d.id === 'd4' && s.p === 'nyeplaza') ? 'nye' : 'stop';
+        var dur = kind === 'nye' ? 9000 : brief ? 2400 : s.star ? 5000 : 3400;
+        var st = add({k:kind, d:d, i:i, s:s, p:s.p, leg:legRec, dur:dur, tod:t1, ch:ci, cut: here !== s.p, star:!!s.star, brief:brief, mine:mine, ph:seen[s.p] ? 1 : 0});
+        chap.stops.push(st);
+        seen[s.p] = 1; here = s.p; lastTod = t1;
+      });
+      if (d.id === 'd4') add({k:'midnight', d:d, dur: RM ? 4000 : 6000, tod:24 * 60, ch:ci, cut:true});
+      chap.t1 = total;
+    });
+    add({k:'end', dur: RM ? 4000 : 6500, tod:22 * 60, ch:chapters.length - 1, cut:true, scope:scope});
+    /* camera hand-off: each shot starts where the last one ended unless it is a cut */
+    var lastEnd = null;
+    shots.forEach(function(sh){ sh.sc = sh.cut ? null : lastEnd; prep(sh); lastEnd = sh.ec || null; });
+    return {shots:shots, chapters:chapters, total:total, scope:scope};
+  }
+  function prep(sh){
+    if (sh.k === 'leg'){
+      var p = sh.leg.path, zTo = stopZoom(sh.leg.to), zFrom = sh.sc ? sh.sc.z : stopZoom(sh.leg.from);
+      sh.b0 = sh.sc ? sh.sc.b : pathBear(p, 0); sh.z0 = zFrom; sh.z1 = zTo; sh.p0 = sh.sc ? sh.sc.p : 60;
+      sh.ec = {c:P[sh.leg.to].c, z:zTo, p:62, b:pathBear(p, 1)};
+    } else if (sh.k === 'stop'){
+      var z = stopZoom(sh.p), amp = RM ? 0 : (sh.star ? 34 : sh.brief ? 14 : 24);
+      sh.b0 = sh.sc ? sh.sc.b : (TOWNSET[sh.p] ? 194 : -20); sh.z0 = sh.sc ? sh.sc.z : z; sh.p0 = sh.sc ? sh.sc.p : 62;
+      sh.z = z; sh.amp = amp;
+      sh.ec = {c:P[sh.p].c, z:z + (RM ? 0 : 0.18), p:62, b:sh.b0 + amp};
+    } else if (sh.k === 'nye'){
+      sh.ec = {c:P.nyeplaza.c, z:15.9, p:62, b:194};
+    }
+  }
+  /* camera for a shot at local progress u (0..1) */
+  function camAt(sh, u){
+    var e, c, n = T.narrow;
+    switch (sh.k){
+      case 'title':
+        e = RM ? 0 : easeSine(u);
+        return {c:VALLEY, z:(n ? 10.2 : 10.75) + 0.25 * e, p:56, b:-48 + 40 * e};
+      case 'chapter':
+        if (!sh.est) sh.est = establishing(sh.d);
+        e = RM ? 0 : easeSine(u);
+        return {c:sh.est.c, z:sh.est.z + 0.2 * e, p:52 + 4 * e, b:sh.est.b + 14 * e};
+      case 'leg':
+        var p = sh.leg.path, f = RM ? 1 : easeIO(u);
+        var head = pathPos(p, f), ahead = pathPos(p, Math.min(1, f + 0.05)), lean = smooth(0, 0.2, u) * (1 - smooth(0.78, 1, u));
+        c = [lerp(head[0], ahead[0], lean), lerp(head[1], ahead[1], lean)];
+        var zMid = sh.z, z;
+        z = u < 0.5 ? lerp(sh.z0, zMid, smooth(0, 0.32, u)) : lerp(zMid, sh.z1, smooth(0.68, 1, u));
+        var pit = u < 0.5 ? lerp(sh.p0, sh.p, smooth(0, 0.3, u)) : lerp(sh.p, 62, smooth(0.7, 1, u));
+        var b = angLerp(sh.b0, pathBear(p, f), smooth(0, 0.3, u));
+        return {c:c, z:z - (n && sh.z > 12 ? 0.35 : 0), p:pit, b:b};
+      case 'stop':
+        e = easeSine(u);
+        return {c:P[sh.p].c, z:lerp(sh.z0, sh.z, smooth(0, 0.35, u)) + (RM ? 0 : 0.18 * e), p:lerp(sh.p0, 62, smooth(0, 0.35, u)), b:sh.b0 + sh.amp * e};
+      case 'nye':
+        e = RM ? 0 : easeSine(u);
+        return {c:[39.1838, -106.8196], z:(n ? 14.55 : 14.95) + 0.25 * e, p:76 - 4 * e, b:184 + 8 * e};   /* the whole torch-lit face of Ajax + sky */
+      case 'midnight':
+        e = RM ? 0 : easeSine(u);
+        return {c:[39.1860, -106.8196], z:(n ? 14.3 : 14.7) - 0.45 * e, p:76 - 6 * e, b:196 - 12 * e};
+      case 'end':
+        e = RM ? 0 : easeSine(Math.min(1, u));
+        return {c:VALLEY, z:(n ? 10.0 : 10.55) - 0.15 * e, p:48, b:-10 + 22 * e};
+    }
+  }
+  function establishing(d){
+    /* frame the day's stops ourselves: cameraForBounds double-counts the map padding */
+    var pts = d.stops.map(function(s){ return P[s.p].c; }).concat(d.town ? [] : [P.home.c]);
+    var la0 = 90, la1 = -90, lo0 = 180, lo1 = -180;
+    pts.forEach(function(c){ la0 = Math.min(la0, c[0]); la1 = Math.max(la1, c[0]); lo0 = Math.min(lo0, c[1]); lo1 = Math.max(lo1, c[1]); });
+    var lat = (la0 + la1) / 2, k = Math.cos(lat * Math.PI / 180);
+    var wM = Math.max(600, (lo1 - lo0) * 111320 * k), hM = Math.max(600, (la1 - la0) * 110540);
+    var fr = T.el.querySelector('.vt-frame'), pad = tourPad(), top = T.el.querySelector('.vt-top').offsetHeight;
+    var aw = Math.max(200, fr.clientWidth - pad.left - pad.right), ah = Math.max(160, fr.clientHeight - (pad.top - top) - (pad.bottom - T.el.querySelector('.vt-bot').offsetHeight));
+    var span = Math.max(wM / aw, hM / ah);   /* metres per pixel needed */
+    var z = Math.log(40075016.686 * k / (512 * span)) / Math.LN2 - 0.55;   /* −0.55: the tilt shows more ground */
+    return {c:[lat, (lo0 + lo1) / 2], z:clamp(z, 7.5, 14.2), b:-24};
+  }
+
+  /* ---------- light follows the clock ---------- */
+  var LK = [[0,1,0],[360,0.9,0.15],[450,0.25,0.55],[540,0,0.1],[870,0,0.15],[960,0.1,0.75],[1020,0.45,0.85],[1080,0.78,0.4],[1140,0.95,0.1],[1500,1,0]];
+  function lightAt(min){
+    for (var i = 1; i < LK.length; i++) if (min <= LK[i][0]){ var a = LK[i-1], b = LK[i], t = (min - a[0]) / (b[0] - a[0]); return [lerp(a[1], b[1], t), lerp(a[2], b[2], t)]; }
+    return [1, 0];
+  }
+  function hx(c){ return [parseInt(c.slice(1,3),16), parseInt(c.slice(3,5),16), parseInt(c.slice(5,7),16)]; }
+  function mix(a, b, t){ var x = hx(a), y = hx(b); return 'rgb(' + Math.round(lerp(x[0],y[0],t)) + ',' + Math.round(lerp(x[1],y[1],t)) + ',' + Math.round(lerp(x[2],y[2],t)) + ')'; }
+  function mixH(a, b, t){ var x = hx(a), y = hx(b), h = function(v){ v = Math.round(v).toString(16); return v.length < 2 ? '0' + v : v; };
+    return '#' + h(lerp(x[0],y[0],t)) + h(lerp(x[1],y[1],t)) + h(lerp(x[2],y[2],t)); }
+  function applyLight(n, w){
+    var L0 = T.light;
+    if (L0 && Math.abs(L0[0] - n) < 0.012 && Math.abs(L0[1] - w) < 0.012) return;
+    T.light = [n, w];
+    var hz = mixH(mixH('#e9f1f6', '#f6c27a', w), '#1d2d50', n), sky = mixH(mixH('#7fb2e4', '#8ea4d2', w), '#050b1c', n), fog = mixH(mixH('#eef3f6', '#f1d6b0', w), '#0c1630', n);
+    try { m3.setSky({'sky-color':sky, 'horizon-color':hz, 'fog-color':fog, 'sky-horizon-blend':0.55, 'horizon-fog-blend':0.55, 'fog-ground-blend':0.22,
+      'atmosphere-blend':['interpolate',['linear'],['zoom'],0,1,10,1,13,0]}); } catch(e){}
+    try { m3.setPaintProperty('img', 'raster-brightness-max', 1 - 0.6 * n); m3.setPaintProperty('img', 'raster-saturation', -0.05 - 0.3 * n); } catch(e){}
+    try { if (m3.getLayer('bld')) m3.setPaintProperty('bld', 'fill-extrusion-color', mixH(mixH('#f1e8d2', '#f3cf9a', w * 0.6), '#4a5263', n)); } catch(e){}
+    try { m3.setPaintProperty('vxt-glow', 'line-opacity', 0.28 + 0.5 * n); } catch(e){}
+    if (T.el){ T.el.style.setProperty('--vt-night', n.toFixed(3)); T.el.style.setProperty('--vt-warm', w.toFixed(3)); T.el.classList.toggle('vt-n', n > 0.6);   /* NOT 'night': the page owns a global .night card style */ }
+  }
+
+  /* ---------- player DOM ---------- */
+  function tourPad(){
+    var fr = T && T.el ? T.el.querySelector('.vt-frame') : null, W = fr ? fr.clientWidth : innerWidth, H = fr ? fr.clientHeight : innerHeight;
+    var top = T && T.el ? T.el.querySelector('.vt-top').offsetHeight : 52, bot = T && T.el ? T.el.querySelector('.vt-bot').offsetHeight : 90;
+    if (W < 640) return {top: top + Math.min(230, H * 0.30), bottom: bot + Math.min(240, H * 0.30), left: 16, right: 16};
+    return {top: top + 24, bottom: bot + Math.min(220, H * 0.30), left: 24, right: Math.min(360, W * 0.30)};
+  }
+  function fmtT(ms){ var s = Math.max(0, Math.round(ms / 1000)); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
+  function daysUntil(){
+    var t = mtToday(); if (t >= TRIP_START) return null;
+    return Math.round((Date.parse(TRIP_START + 'T00:00:00Z') - Date.parse(t + 'T00:00:00Z')) / 864e5);
+  }
+  function musicState(){
+    var A = window.AspenMusic; if (!A) return null;
+    try { var a = typeof A.audio === 'function' ? A.audio() : A.audio; if (a && typeof a.paused === 'boolean') return !a.paused; } catch(e){}
+    return !!T.musicOn;
+  }
+  function buildPlayer(){
+    var st = stageEl(), el = document.createElement('div');
+    el.className = 'vt' + (T.narrow ? ' narrow' : ''); el.setAttribute('role', 'region'); el.setAttribute('aria-label', 'Trip tour');
+    var hasMusic = !!window.AspenMusic;
+    el.innerHTML =
+      '<div class="vt-frame">'
+      + '<canvas class="vt-fx" aria-hidden="true"></canvas><div class="vt-tint" aria-hidden="true"></div><div class="vt-vig" aria-hidden="true"></div><div class="vt-dip" aria-hidden="true"></div>'
+      + '<div class="vt-title vt-z" aria-hidden="true"></div>'
+      + '<div class="vt-chap vt-z" aria-hidden="true"></div>'
+      + '<div class="vt-lt vt-z" aria-hidden="true"></div>'
+      + '<figure class="vt-photo vt-z" aria-hidden="true"><div class="vt-ph"><img alt=""></div><figcaption></figcaption></figure>'
+      + '<div class="vt-end vt-z" aria-hidden="true"></div>'
+      + '<button type="button" class="vt-resume" hidden>' + ICON.play + 'Resume tour</button>'
+      + '</div>'
+      + '<div class="vt-top"><div class="vt-brand"><span>Aspen</span><i>the tour</i></div><div class="vt-where" aria-hidden="true"></div>'
+      + '<div class="vt-tr">' + (hasMusic ? '<button type="button" class="vt-btn vt-mus" aria-pressed="false" aria-label="Music">' + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>' + '</button>' : '')
+      + '<button type="button" class="vt-btn vt-x" aria-label="Exit the tour (Esc)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></div>'
+      + '<div class="vt-bot"><div class="vt-ctrls">'
+      + '<div class="vt-scrub" role="slider" tabindex="0" aria-label="Tour timeline" aria-valuemin="0"></div>'
+      + '<div class="vt-row"><button type="button" class="vt-btn vt-prev" aria-label="Previous stop">' + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 6v12M18 6l-8 6 8 6z"/></svg></button>'
+      + '<button type="button" class="vt-btn vt-pp" aria-label="Pause"></button>'
+      + '<button type="button" class="vt-btn vt-next" aria-label="Next stop">' + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 6v12M6 6l8 6-8 6z"/></svg></button>'
+      + '<span class="vt-time" aria-hidden="true">0:00 / 0:00</span><span class="vt-chl" aria-hidden="true"></span></div>'
+      + '</div></div>'
+      + '<div class="vt-sr" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"></div>';
+    st.appendChild(el);
+    T.el = el; T.fx = el.querySelector('.vt-fx'); T.dip = el.querySelector('.vt-dip');
+    var q = function(s){ return el.querySelector(s); };
+    q('.vt-x').addEventListener('click', function(){ exitTour(); });
+    q('.vt-pp').addEventListener('click', function(){ togglePlay(); });
+    q('.vt-prev').addEventListener('click', function(){ skip(-1); });
+    q('.vt-next').addEventListener('click', function(){ skip(1); });
+    q('.vt-resume').addEventListener('click', function(){ play(); });
+    if (hasMusic) q('.vt-mus').addEventListener('click', function(){ setMusic(!musicState()); });
+    var sc = q('.vt-scrub'), drag = false;
+    var seekX = function(x){ var r = sc.getBoundingClientRect(); seek(clamp((x - r.left) / r.width, 0, 1) * T.tl.total, true); };
+    sc.addEventListener('pointerdown', function(e){ drag = true; try { sc.setPointerCapture(e.pointerId); } catch(_){} seekX(e.clientX); });
+    sc.addEventListener('pointermove', function(e){ if (drag) seekX(e.clientX); });
+    sc.addEventListener('pointerup', function(){ drag = false; });
+    sc.addEventListener('pointercancel', function(){ drag = false; });
+    var wake = function(){ showUi(); };
+    el.addEventListener('pointermove', wake); el.addEventListener('pointerdown', wake);
+    buildScrub(); showUi(); syncPP();
+  }
+  function buildScrub(){
+    var sc = T.el.querySelector('.vt-scrub'), tl = T.tl, h = '';
+    var segs = [];
+    if (tl.shots[0].k === 'title') segs.push({t0:0, t1:tl.chapters.length ? tl.chapters[0].t0 : tl.total, lbl:'Open'});
+    tl.chapters.forEach(function(c, i){ segs.push({t0:c.t0, t1: i === tl.chapters.length - 1 ? tl.total : tl.chapters[i+1].t0, lbl:c.d.r, c:c}); });
+    segs.forEach(function(g){
+      var w = (g.t1 - g.t0) / tl.total * 100, ticks = '';
+      if (g.c) g.c.stops.forEach(function(s){ ticks += '<i class="tk' + (s.star ? ' st' : '') + '" style="left:' + ((s.t0 - g.t0) / (g.t1 - g.t0) * 100).toFixed(2) + '%"></i>'; });
+      h += '<div class="vt-seg" title="' + esc(g.c ? 'Day ' + g.c.d.r + ' · ' + g.c.d.t : 'Opening') + '" style="flex:0 0 ' + w.toFixed(3) + '%"><b><s></s></b>' + ticks + '</div>';
+    });
+    sc.innerHTML = h; sc.setAttribute('aria-valuemax', Math.round(tl.total / 1000));
+    T.segs = segs; T.segEls = [].slice.call(sc.querySelectorAll('.vt-seg'));
+  }
+  function syncScrub(){
+    var t = T.t;
+    T.segs.forEach(function(g, i){
+      var f = clamp((t - g.t0) / (g.t1 - g.t0), 0, 1), el = T.segEls[i];
+      el.firstChild.firstChild.style.transform = 'scaleX(' + f.toFixed(4) + ')';
+      el.classList.toggle('on', t >= g.t0 && t < g.t1);
+    });
+    var sc = T.el.querySelector('.vt-scrub'); sc.setAttribute('aria-valuenow', Math.round(t / 1000)); sc.setAttribute('aria-valuetext', fmtT(t) + ' of ' + fmtT(T.tl.total));
+    T.el.querySelector('.vt-time').textContent = fmtT(t) + ' / ' + fmtT(T.tl.total);
+  }
+  function syncPP(){
+    var b = T.el.querySelector('.vt-pp'), r = T.el.querySelector('.vt-resume'), ended = T.t >= T.tl.total;
+    b.innerHTML = T.playing ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>';
+    b.setAttribute('aria-label', T.playing ? 'Pause (Space)' : 'Play (Space)');
+    r.hidden = T.playing || !T.dragged || ended;
+    T.el.classList.toggle('paused', !T.playing);
+    if (T.playing) armHide(); else showUi(true);
+    var mb = T.el.querySelector('.vt-mus'); if (mb) mb.setAttribute('aria-pressed', !!musicState());
+  }
+  function showUi(stay){
+    if (!T || !T.el) return;
+    T.el.classList.add('ui'); clearTimeout(T.hideT);
+    if (!stay) armHide();
+  }
+  function armHide(){ clearTimeout(T.hideT); T.hideT = setTimeout(function(){ if (T && T.playing) T.el.classList.remove('ui'); }, 3000); }
+  function setMusic(on){
+    var A = window.AspenMusic; if (!A) return;
+    try { if (on) A.play(); else A.pause(); } catch(e){}
+    T.musicOn = on; T.musicByTour = on;
+    try { localStorage.setItem('aspenTourMusic', on ? '1' : '0'); } catch(e){}
+    setTimeout(function(){ if (T) syncPP(); }, 120);
+  }
+
+  /* ---------- overlays per shot ---------- */
+  function setZone(sel, html){
+    var el = T.el.querySelector(sel);
+    if (html == null){ el.classList.remove('on'); el.setAttribute('aria-hidden', 'true'); return; }
+    el.innerHTML = html; el.setAttribute('aria-hidden', 'false');
+    el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
+  }
+  function factHtml(f){ return f ? '<p class="vt-fact"><b>Did you know</b>' + esc(f[0]) + '</p>' : ''; }
+  function camClear(){
+    /* MapLibre 5: the transform knows the eye position (altitude incl. the terrain exaggeration) */
+    try { var tr = m3.transform, ll = tr.getCameraLngLat(), g = m3.queryTerrainElevation(ll);
+      return g == null ? 1e9 : tr.getCameraAltitude() - g; } catch(e){ return 1e9; }
+  }
+  /* Downtown's evening walks as short chapters for the tour engine */
+  function townDays(){
+    return TOWN.walks.map(function(w){
+      var dd = dayById(w.d), chain = [w.legs[0][0]].concat(w.legs.map(function(l){ return l[1]; }));
+      var stops = chain.map(function(k, i){
+        var ds = dd.stops.filter(function(x){ return x.p === k; })[0];
+        return {p:k, time: ds ? ds.time : w.when.replace(/ → .*/, ''), what: ds ? ds.what : P[k].a, star: ds ? ds.star : (i === chain.length - 1 ? 1 : 0), via: i ? w.legs[i-1][2] : null};
+      });
+      var legs = w.legs.map(function(l){ var t = townLeg(l); return {from:l[0], to:l[1], via:l[2], pts:t.pts, r: t.r ? {min:t.r.min, mi:Math.round(t.r.m / 160.934) / 10} : null}; });
+      return {id:w.d, r:dd.r, t:w.t, date:dd.date, iso:dd.iso, stops:stops, legs:legs, town:true, walk:w};
+    });
+  }
+  function onShot(sh){
+    T.pcap = null;
+    var d = sh.d, el = T.el, sr = el.querySelector('.vt-sr');
+    el.setAttribute('data-k', sh.k);
+    el.querySelector('.vt-where').textContent = d ? 'Day ' + d.r + ' · ' + d.t : (sh.k === 'title' ? 'The week' : '');
+    el.querySelector('.vt-chl').textContent = d ? 'Day ' + d.r + ' · ' + d.t : '';
+    var title = null, chap = null, lt = null, end = null, ph = null;
+    if (sh.k === 'title'){
+      var ask = window.AspenMusic && T.musicAsk;
+      title = '<div class="vt-kick">The Wright Family</div><h2>Aspen</h2><div class="vt-dates">Dec 27, 2026 – Jan 3, 2027</div><p class="vt-sub">Seven nights on Red Mountain.</p>'
+        + (ask ? '<div class="vt-ask"><span>Play with music?</span><button type="button" data-mus="1">♪ Yes</button><button type="button" data-mus="0">No thanks</button></div>' : '');
+      sr.textContent = 'Aspen — the tour. December 27, 2026 to January 3, 2027.';
+    } else if (sh.k === 'chapter'){
+      var line = d.town ? [d.walk.legs.map(function(l, i){ return (i ? '' : P[l[0]].s + ' → ') + P[l[1]].s; }).join(' → ') + (d.walk.note ? '. ' + d.walk.note : ''), null] : CHAP[d.id];
+      chap = '<div class="vt-num">' + esc(d.r) + '</div><div class="vt-ct"><div class="vt-ey">Day ' + esc(d.r) + ' · ' + esc(d.town ? d.walk.when : d.date) + '</div><h3>' + esc(d.t) + '</h3>'
+        + (line ? '<p class="vt-line">' + esc(line[0]) + '</p>' + factHtml(line[1]) : '') + '</div>';
+      sr.textContent = 'Day ' + d.r + ', ' + d.date + ': ' + d.t + '. ' + (line ? line[0] : '');
+    } else if (sh.k === 'leg'){
+      var lg = sh.leg, v = VIA[lg.via] || VIA.drive, km = lg.path.rawLen / 1000, txt;
+      if (d.town && lg.r) txt = lg.via === 'walk' ? blocks(lg.path.rawLen) + ' block' + (blocks(lg.path.rawLen) === 1 ? '' : 's') + ' · ~' + lg.r.min + ' min walk' : '~' + lg.r.min + ' min drive';
+      else if ((lg.via === 'drive' || lg.via === 'walk') && lg.r) txt = '~' + fmtMin(lg.r.min) + ' ' + v.l + ' · ' + lg.r.mi + ' mi';
+      else txt = v.l;
+      lt = '<div class="vt-ey">Day ' + esc(d.r) + ' · on the way</div><h4>' + esc(P[lg.from].s) + ' <span>→</span> ' + esc(P[lg.to].s) + '</h4>'
+        + '<span class="vt-chip vt-' + lg.via + '">' + ICON[v.ic] + esc(txt) + '</span>';
+      sr.textContent = P[lg.from].s + ' to ' + P[lg.to].s + ', ' + txt;
+    } else if (sh.k === 'stop' || sh.k === 'nye'){
+      var s = sh.s, pl = P[sh.p];
+      var you = sh.mine === 'you' ? '<b class="vt-you">You</b>' : '';
+      lt = '<div class="vt-ey">Day ' + esc(d.r) + ' · ' + esc(s.time) + you + '</div>'
+        + '<h4>' + esc(sh.k === 'nye' ? 'Gondola Plaza' : pl.n) + '</h4>'
+        + '<p class="vt-what">' + esc(s.what) + '</p>'
+        + (s.who ? '<p class="vt-who">' + esc(s.who) + '</p>' : '')
+        + (sh.brief ? '' : factHtml(FACTS[sh.p]));
+      if (!sh.brief && pl.ph && pl.ph.length){ var pi = Math.min(sh.ph, pl.ph.length - 1); ph = pl.ph[pi]; }
+      sr.textContent = s.time + ', ' + pl.n + '. ' + s.what + (FACTS[sh.p] && !sh.brief ? '. Did you know: ' + FACTS[sh.p][0] : '');
+    } else if (sh.k === 'midnight'){
+      title = '<div class="vt-kick">Thursday night · Dec 31</div><h2 class="vt-mid">Midnight</h2><div class="vt-dates">Happy 2027</div>';
+      sr.textContent = 'Midnight. Happy 2027.';
+    } else if (sh.k === 'end'){
+      var du = daysUntil(), day = sh.scope !== 'all' ? dayById(sh.scope) : null, nx = day ? DAYS[DAYS.indexOf(day) + 1] : null;
+      if (sh.scope === 'town') end = '<div class="vt-kick">Downtown Aspen · on foot</div><h2>Everything’s a few blocks apart</h2><p class="vt-sub">1 block ≈ 330 ft ≈ 1½ min on foot</p>';
+      else end = day
+        ? '<div class="vt-kick">Day ' + esc(day.r) + ' · ' + esc(day.date) + '</div><h2>That was ' + esc(day.t) + '</h2>'
+        : '<div class="vt-kick">The Wright Family · Aspen</div><h2>See you on the mountain</h2><p class="vt-sub">' + (du != null ? du + ' day' + (du === 1 ? '' : 's') + ' until Aspen' : 'Until next time') + '</p>';
+      end += '<div class="vt-endb"><button type="button" class="vt-cta1" data-act="replay">' + ICON.play + 'Replay</button>'
+        + (nx ? '<button type="button" data-act="next">Day ' + esc(nx.r) + ' · ' + esc(nx.t) + ' &rsaquo;</button>' : '')
+        + (day || sh.scope === 'town' ? '<button type="button" data-act="all">The whole week</button>' : '')
+        + '<button type="button" data-act="exit">Back to the map</button></div>';
+      sr.textContent = day ? 'End of day ' + day.r + '.' : 'See you on the mountain.';
+    }
+    setZone('.vt-title', title); setZone('.vt-chap', chap); setZone('.vt-lt', lt); setZone('.vt-end', end);
+    var fig = el.querySelector('.vt-photo');
+    if (ph){
+      var im = fig.querySelector('img'); im.src = img(ph[0]); fig.querySelector('figcaption').textContent = ph[1];
+      fig.classList.remove('on'); void fig.offsetWidth; fig.classList.add('on'); fig.setAttribute('aria-hidden', 'false');
+    } else { fig.classList.remove('on'); fig.setAttribute('aria-hidden', 'true'); }
+    var a = el.querySelector('.vt-ask');
+    if (a) [].forEach.call(a.querySelectorAll('button'), function(b){ b.addEventListener('click', function(){ T.musicAsk = false; setMusic(b.getAttribute('data-mus') === '1'); a.remove(); }); });
+    var eb = el.querySelector('.vt-end');
+    [].forEach.call(eb.querySelectorAll('[data-act]'), function(b){
+      b.addEventListener('click', function(){
+        var act = b.getAttribute('data-act'), sc = T.tl.scope;
+        if (act === 'replay'){ seek(0, true); play(); }
+        else if (act === 'exit') exitTour();
+        else if (act === 'all') restart('all');
+        else if (act === 'next'){ var dd = dayById(sc), nn = DAYS[DAYS.indexOf(dd) + 1]; if (nn) restart(nn.id); }
+      });
+    });
+    if (sh.k === 'end'){ var f1 = eb.querySelector('.vt-cta1'); if (f1) setTimeout(function(){ try { f1.focus({preventScroll:true}); } catch(e){} }, 400); }
+    syncPins(sh); T.fwOn = (sh.k === 'nye' || sh.k === 'midnight') && !RM;
+    if (!T.fwOn) T.parts = [];
+  }
+
+  /* ---------- tour map layers: progressive route, glow, head dot, pins ---------- */
+  function addTourLayers(){
+    ['vxr-halo','vxr-drive','vxr-walk','vxr-sled','vxr-lift','vxr-ski'].forEach(function(id){ try { m3.setLayoutProperty(id, 'visibility', 'none'); } catch(e){} });
+    m3.addSource('vxt', {type:'geojson', data:{type:'FeatureCollection', features:[]}});
+    var base = {type:'line', source:'vxt', layout:{'line-join':'round', 'line-cap':'round'}};
+    var lay = function(id, filter, paint){ m3.addLayer(L3(base, {id:id, filter:filter, paint:paint})); };
+    lay('vxt-glow', ['in', ['get','via'], ['literal',['drive','trip','walk','sled']]], {'line-color':'#ffd98a', 'line-width':['interpolate',['linear'],['zoom'],10,8,16,14], 'line-blur':6, 'line-opacity':0.3});
+    lay('vxt-halo', ['!=', ['get','via'], 'lift'], {'line-color':'rgba(8,16,30,.6)', 'line-width':['match',['get','via'],'walk',7,'drive',8,'trip',6,5], 'line-blur':1});
+    lay('vxt-drive', ['in', ['get','via'], ['literal',['drive','trip']]], {'line-color':'#F0C46A', 'line-width':['interpolate',['linear'],['zoom'],10,3,16,5]});
+    lay('vxt-walk', ['==', ['get','via'], 'walk'], {'line-color':'#8ff0b8', 'line-width':5, 'line-dasharray':[0.1, 1.8]});
+    lay('vxt-sled', ['==', ['get','via'], 'sled'], {'line-color':'#9ed8fb', 'line-width':3.6, 'line-dasharray':[2.4, 1.6]});
+    lay('vxt-lift', ['==', ['get','via'], 'lift'], {'line-color':'#F6EAC4', 'line-width':2.8, 'line-dasharray':[0.6, 2]});
+    lay('vxt-ski', ['==', ['get','via'], 'ski'], {'line-color':'#ffffff', 'line-width':2.8, 'line-dasharray':[3, 2]});
+    var h = document.createElement('div'); h.className = 'vt-head';
+    T.head = new window.maplibregl.Marker({element:h}).setLngLat([P.home.c[1], P.home.c[0]]).addTo(m3); h.style.display = 'none';
+  }
+  function removeTourLayers(){
+    if (!m3) return;
+    ['vxt-glow','vxt-halo','vxt-drive','vxt-walk','vxt-sled','vxt-lift','vxt-ski'].forEach(function(id){ try { if (m3.getLayer(id)) m3.removeLayer(id); } catch(e){} });
+    try { if (m3.getSource('vxt')) m3.removeSource('vxt'); } catch(e){}
+    ['vxr-halo','vxr-drive','vxr-walk','vxr-sled','vxr-lift','vxr-ski'].forEach(function(id){ try { m3.setLayoutProperty(id, 'visibility', 'visible'); } catch(e){} });
+  }
+  function lineFeat(ll, via){ return {type:'Feature', properties:{via:via}, geometry:{type:'LineString', coordinates:ll.map(function(c){ return [c[1], c[0]]; })}}; }
+  function routeData(sh, u){
+    var feats = [], t = T.t, tl = T.tl;
+    if (sh.k === 'end' || sh.k === 'title'){
+      if (!T.allLines){ T.allLines = [];
+        if (tl.scope === 'town') TOWN.walks.forEach(function(w){ w.legs.forEach(function(l){ var tg = townLeg(l); T.allLines.push(lineFeat(tg.pts, tg.via)); }); });
+        else (tl.scope === 'all' ? DAYS : [dayById(tl.scope)]).forEach(function(d){ d.stops.forEach(function(s, i){ var lg = legFor(d, i); if (!lg) return;
+          var pts = lg.r && lg.r.g ? decode(lg.r.g) : [P[lg.from].c, P[lg.to].c]; T.allLines.push(lineFeat(pts, lg.via === 'drive' ? 'trip' : lg.via)); }); }); }
+      return sh.k === 'end' ? T.allLines : [];
+    }
+    if (sh.ch < 0) return feats;
+    var chap = tl.chapters[sh.ch];
+    tl.shots.forEach(function(x){
+      if (x.ch !== sh.ch) return;
+      if (x.k === 'leg'){
+        if (x.t0 + x.dur <= t) feats.push(lineFeat(x.leg.path.ll, x.leg.via));
+        else if (x === sh) feats.push(lineFeat(rawUpTo(x.leg.path, RM ? 1 : easeIO(u)), x.leg.via));
+      } else if ((x.k === 'stop' || x.k === 'nye') && x.leg && x.t0 <= t){
+        /* legs we cut past (short hops, reduced motion) appear complete when we arrive */
+        var shown = tl.shots.some(function(y){ return y.k === 'leg' && y.leg === x.leg; });
+        if (!shown) feats.push(lineFeat(x.leg.path.ll, x.leg.via));
+      }
+    });
+    return feats;
+  }
+  function syncPins(sh){
+    var want = {};
+    if (sh.ch >= 0 && sh.k !== 'end'){
+      var chap = T.tl.chapters[sh.ch];
+      chap.stops.forEach(function(x){ if (x.t0 <= T.t + 1) want[x.p] = 1; });
+    }
+    Object.keys(T.pins).forEach(function(k){ if (!want[k] || T.pinCh !== sh.ch){ T.pins[k].remove(); delete T.pins[k]; } });
+    T.pinCh = sh.ch;
+    Object.keys(want).forEach(function(k){
+      if (T.pins[k]) return;
+      var pl = P[k], chap = T.tl.chapters[sh.ch], el = document.createElement('div'), col = (CAT[pl.cat] || CAT.home).c;
+      el.className = 'vx-m3 vt-pin';
+      el.innerHTML = '<div class="vx-pin' + (k === 'home' ? ' home' : '') + '" style="--c:' + col + '">' + (k === 'home' ? ICON.house : '<b>' + esc((chap.lbl[k] || ['']).join('·')) + '</b>') + '</div>';
+      el.style.width = el.style.height = '32px';
+      T.pins[k] = new window.maplibregl.Marker({element:el, anchor:'bottom', opacityWhenCovered:'0.55'}).setLngLat([pl.c[1], pl.c[0]]).addTo(m3);
+    });
+  }
+
+  /* ---------- fireworks (canvas, projected over Ajax) ---------- */
+  var FW_COL = ['#ffd98a','#fff3d6','#f2a7a0','#ffffff','#e8c26a','#ff8c6b'];
+  function fireworks(dt){
+    var cv = T.fx, fr = cv.parentNode, W = fr.clientWidth, H = fr.clientHeight, dpr = Math.min(2, window.devicePixelRatio || 1);
+    if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)){ cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+    var ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+    if (!T.fwOn && !T.parts.length) return;
+    if (T.fwOn && T.playing){
+      T.fwClock = (T.fwClock || 0) - dt;
+      if (T.fwClock <= 0){
+        T.fwClock = 300 + Math.random() * 450;
+        var cx = W * (T.narrow ? 0.5 : 0.42);   /* the camera puts Ajax's face here; keep clear of the photo column */
+        var x = clamp(cx + (Math.random() - 0.5) * W * 0.6, W * 0.12, W * 0.88), y = H * (0.1 + Math.random() * 0.24);
+        var col = FW_COL[Math.floor(Math.random() * FW_COL.length)], n = T.narrow ? 60 : 84, sp = (T.narrow ? 0.15 : 0.21) * (0.75 + Math.random() * 0.5);
+        for (var i = 0; i < n; i++){ var a = Math.PI * 2 * i / n + Math.random() * 0.1, v = sp * (0.65 + Math.random() * 0.45);
+          T.parts.push({x:x, y:y, vx:Math.cos(a) * v, vy:Math.sin(a) * v, life:1400 + Math.random() * 700, age:0, c: Math.random() < 0.18 ? '#ffffff' : col}); }
+      }
+    }
+    ctx.globalCompositeOperation = 'lighter';
+    var keep = [];
+    for (var j = 0; j < T.parts.length; j++){
+      var p = T.parts[j]; if (T.playing){ p.age += dt; p.vy += 0.00012 * dt; p.vx *= 0.995; p.vy *= 0.995; p.x += p.vx * dt; p.y += p.vy * dt; }
+      var k = 1 - p.age / p.life; if (k <= 0) continue; keep.push(p);
+      ctx.fillStyle = p.c;
+      ctx.globalAlpha = k * k * 0.22; ctx.beginPath(); ctx.arc(p.x, p.y, 4 + 4 * k, 0, Math.PI * 2); ctx.fill();   /* glow */
+      ctx.globalAlpha = k * k; ctx.beginPath(); ctx.arc(p.x, p.y, 1.5 + 1.4 * k, 0, Math.PI * 2); ctx.fill();
+      if (p.age < 500){ ctx.globalAlpha = (1 - p.age / 500) * 0.5; ctx.strokeStyle = p.c; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - p.vx * 90, p.y - p.vy * 90); ctx.stroke(); }
+    }
+    T.parts = keep; ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+  }
+
+  /* ---------- the loop ---------- */
+  function shotAt(t){
+    var S = T.tl.shots, i = clamp(T.si || 0, 0, S.length - 1);
+    while (i < S.length - 1 && t >= S[i].t0 + S[i].dur) i++;
+    while (i > 0 && t < S[i].t0) i--;
+    return i;
+  }
+  function frame(now){
+    if (!T) return;
+    var dt = T.last ? clamp(now - T.last, 0, 100) : 16; T.last = now;   /* cap so a stalled tab doesn't jump */
+    if (T.playing){
+      T.t = Math.min(T.tl.total, T.t + dt);
+      if (T.t >= T.tl.total){ T.playing = false; T.t = T.tl.total; syncPP(); }
+    }
+    var i = shotAt(Math.min(T.t, T.tl.total - 1)), sh = T.tl.shots[i];
+    if (i !== T.si || T.force){ T.si = i; onShot(sh); }
+    var u = clamp((T.t - sh.t0) / sh.dur, 0, 1);
+    /* playing: every frame. Paused (button, not a drag): re-assert every 400 ms so the
+       terrain-clamped centre settles once DEM tiles arrive. Dragged: hands off. */
+    var camOn = T.playing || T.force || (!T.dragged && now - (T.lastCam || 0) > 400), c = null;
+    if (camOn){
+      c = camAt(sh, u); T.lastCam = now;
+      if (c){
+        if (T.pcap != null) c.p = Math.min(c.p, T.pcap);
+        m3.jumpTo({center:[c.c[1], c.c[0]], zoom:c.z, pitch:c.p, bearing:c.b});
+        /* terrain guard: if the eye would be within 90 m of the ground (e.g. walking north out of the
+           gondola plaza with Ajax behind us), tilt toward top-down for the rest of this shot */
+        if (camClear() < 90) T.pcap = Math.max(28, c.p - 4);
+      }
+    }
+    /* route: ~20 Hz is plenty for the draw */
+    if (now - (T.lastRoute || 0) > 50 || T.force){
+      T.lastRoute = now;
+      var src = m3.getSource('vxt'); if (src) src.setData({type:'FeatureCollection', features:routeData(sh, u)});
+      if (sh.k === 'stop' || sh.k === 'nye') syncPins(sh);
+      var hd = T.head && T.head.getElement();
+      if (sh.k === 'leg' && !RM){ var hp = pathPos(sh.leg.path, easeIO(u)); T.head.setLngLat([hp[1], hp[0]]); hd.style.display = ''; } else if (hd) hd.style.display = 'none';
+    }
+    /* light: shot clock time, eased so cuts don't pop */
+    var m = sh.k === 'leg' ? lerp(sh.tod0, sh.tod1, smooth(0.15, 0.95, u)) : sh.tod;
+    T.tod = T.tod == null || T.force ? m : T.tod + (m - T.tod) * clamp(dt / 450, 0, 1);
+    var L = lightAt(T.tod); applyLight(L[0], L[1]);
+    if (T.pr) tourPRFrame(sh, c, L[0]);   /* photoreal close-ups ride on the same camera */
+    /* dip to black around cuts */
+    var into = T.t - sh.t0, left = sh.t0 + sh.dur - T.t, nx = T.tl.shots[i + 1], a = 0;
+    if (sh.cut) a = Math.max(a, 1 - smooth(0, RM ? 350 : 650, into));
+    if (nx && nx.cut) a = Math.max(a, 1 - smooth(0, RM ? 250 : 420, left));
+    if (T.flash) { a = Math.max(a, T.flash); T.flash = Math.max(0, T.flash - dt / 320); }
+    if ((sh.k === 'end' && u >= 1) || !T.playing) a = 0;   /* never hold a black frame while paused */
+    T.dip.style.opacity = a.toFixed(3);
+    fireworks(dt);
+    if (now - (T.lastScrub || 0) > 120 || T.force){ T.lastScrub = now; syncScrub(); }
+    T.force = false;
+    T.raf = requestAnimationFrame(frame);
+  }
+
+  /* ---------- transport ---------- */
+  function play(){ if (!T) return; if (T.t >= T.tl.total) T.t = 0; T.playing = true; T.userPaused = false; T.dragged = false; T.force = true; T.flash = T.flash || 0.35; syncPP(); }
+  function pause(user){ if (!T) return; T.playing = false; T.userPaused = !!user; syncPP(); }
+  function togglePlay(){ if (!T) return; if (T.playing) pause(true); else play(); }
+  function seek(t, flash){ if (!T) return; T.t = clamp(t, 0, T.tl.total - 1); T.force = true; T.parts = []; if (flash) T.flash = 0.6; showUi(); }
+  function skip(dir){
+    var S = T.tl.shots, marks = S.filter(function(s){ return s.k !== 'leg'; }).map(function(s){ return s.t0; });
+    var t = T.t, target;
+    if (dir > 0){ target = null; for (var i = 0; i < marks.length; i++) if (marks[i] > t + 50){ target = marks[i]; break; } if (target == null) target = T.tl.total - 1; }
+    else { target = 0; for (var j = marks.length - 1; j >= 0; j--) if (marks[j] < t - 1200){ target = marks[j]; break; } }
+    seek(target, true);
+  }
+  function skipChapter(dir){
+    var cs = T.tl.chapters.map(function(c){ return c.t0; }), t = T.t, target = dir > 0 ? T.tl.total - 1 : 0;
+    if (dir > 0){ for (var i = 0; i < cs.length; i++) if (cs[i] > t + 50){ target = cs[i]; break; } }
+    else { for (var j = cs.length - 1; j >= 0; j--) if (cs[j] < t - 1200){ target = cs[j]; break; } }
+    seek(target, true);
+  }
+  function tourUserInput(){ if (!T) return; T.dragged = true; if (T.playing) pause(true); else syncPP(); }
+  function onKey(e){
+    if (!T) return;
+    var tg = e.target; if (tg && /input|textarea|select/i.test(tg.tagName)) return;
+    if (e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); exitTour(); return; }
+    if (e.key === ' ' || e.key === 'k'){ if (tg && tg.tagName === 'BUTTON' && e.key === ' ') return; e.preventDefault(); togglePlay(); }
+    else if (e.key === 'ArrowRight'){ e.preventDefault(); e.shiftKey ? skipChapter(1) : skip(1); }
+    else if (e.key === 'ArrowLeft'){ e.preventDefault(); e.shiftKey ? skipChapter(-1) : skip(-1); }
+    else if (e.key === 'PageDown'){ e.preventDefault(); skipChapter(1); }
+    else if (e.key === 'PageUp'){ e.preventDefault(); skipChapter(-1); }
+    else if (e.key === 'm' && window.AspenMusic){ setMusic(!musicState()); }
+    else return;
+    showUi();
+  }
+  function onResize(){
+    if (!T || !m3) return;
+    T.narrow = T.el.clientWidth < 640; T.el.classList.toggle('narrow', T.narrow);
+    try { m3.setPadding(tourPad()); } catch(e){}
+    T.tl.shots.forEach(function(s){ if (s.k === 'chapter') s.est = null; });
+    T.force = true;
+  }
+
+  /* ---------- entry + exit ---------- */
+  function whenReady(cb, tries){
+    tries = tries || 0;
+    if (!T) return;
+    if (m3 && m3Ready) { cb(); return; }
+    if (!is3d || tries > 300){ abortTour('The 3D map didn’t load — check the connection.'); return; }
+    setTimeout(function(){ whenReady(cb, tries + 1); }, 100);
+  }
+  function startTour(scope, from){
+    if (T) return;
+    if (scope !== 'all' && scope !== 'town' && !dayById(scope)) scope = 'all';
+    if (scope === 'town' && !TOWN) scope = 'all';
+    if (!webglOK()){
+      var reel = document.querySelector('[data-reel]');
+      if (reel){ reel.click(); } else toast('The 3D tour needs WebGL, which this browser has turned off.');
+      return;
+    }
+    var vx = $('vx'); if (!vx) return;
+    if (prOn) closePR();
+    hideOffer(); if (map) map.closePopup();
+    var opened = !is3d, wasFull = vx.classList.contains('full');
+    T = {scope:scope, from:from || document.activeElement, opened:opened, wasFull:wasFull, t:0, playing:false, pins:{}, parts:[], si:-1, force:true,
+      narrow:false, musicAsk:false, prevCur:cur};
+    try { var mv = localStorage.getItem('aspenTourMusic'); T.musicAsk = window.AspenMusic && mv == null && !musicState(); if (mv === '1' && window.AspenMusic && !musicState()) setMusic(true); } catch(e){}
+    document.body.classList.add('vt-on');
+    if (!wasFull) toggleFull(true);
+    tourPending = true;
+    if (opened) open3d();
+    /* player chrome goes up immediately (black frame + loader) so the click feels instant */
+    T.tl = {shots:[{k:'title', t0:0, dur:1, ch:-1}], chapters:[], total:1, scope:scope};
+    buildPlayer(); T.el.classList.add('loading');
+    T.narrow = T.el.clientWidth < 640; T.el.classList.toggle('narrow', T.narrow);
+    T.dip.style.opacity = '1';
+    document.addEventListener('keydown', onKey, true);
+    window.addEventListener('resize', onResize);
+    whenReady(beginTour);
+  }
+  function beginTour(){
+    if (!T) return;
+    tourPending = null; closePop3();
+    townGround();   /* the tour needs terrain-clamped centres again */
+    tourPRStart();   /* Cesium loads in the background; close-ups switch to it once tiles are ready */
+    m3Markers.forEach(function(r){ r.el.style.display = 'none'; });
+    try { m3.resize(); } catch(e){}
+    T.narrow = T.el.clientWidth < 640; T.el.classList.toggle('narrow', T.narrow);
+    try { m3.setPadding(tourPad()); } catch(e){}
+    addTourLayers();
+    var at = m3.getContainer().querySelector('.maplibregl-ctrl-attrib'); if (at) at.classList.remove('maplibregl-compact-show');
+    T.tl = buildTimeline(T.scope);
+    buildScrub();
+    T.el.classList.remove('loading');
+    T.si = -1; T.t = 0; T.force = true; T.playing = true; T.last = 0;
+    syncPP(); showUi();
+    T.raf = requestAnimationFrame(frame);
+  }
+  function restart(scope){
+    if (!T) return;
+    T.scope = scope; T.tl = buildTimeline(scope); T.allLines = null; buildScrub();
+    Object.keys(T.pins).forEach(function(k){ T.pins[k].remove(); }); T.pins = {};
+    T.si = -1; T.t = 0; T.force = true; T.flash = 1; play();
+  }
+  function abortTour(msg){ exitTour(); if (msg) toast(msg); }
+  function exitTour(fromTabLeave){
+    if (!T) return;
+    var t = T; T = null; tourPending = null;
+    cancelAnimationFrame(t.raf); clearTimeout(t.hideT);
+    document.removeEventListener('keydown', onKey, true);
+    window.removeEventListener('resize', onResize);
+    if (t.musicByTour && window.AspenMusic){ try { window.AspenMusic.pause(); } catch(e){} }
+    Object.keys(t.pins || {}).forEach(function(k){ t.pins[k].remove(); });
+    if (t.head) t.head.remove();
+    tourPREnd(t);
+    if (t.el) t.el.remove();
+    document.body.classList.remove('vt-on');
+    if (m3){
+      removeTourLayers();
+      try { m3.setPadding({top:0, bottom:0, left:0, right:0}); } catch(e){}
+      m3Markers.forEach(function(r){ r.el.style.display = ''; });
+      theme3d();
+    }
+    if (!t.wasFull) toggleFull(false);
+    if (fromTabLeave) return;
+    if (t.opened && is3d) close3d();
+    else if (m3) update3d(true);
+    try { var f = t.from && document.contains(t.from) ? t.from : document.querySelector('.vt-go'); if (f) f.focus({preventScroll:true}); } catch(e){}
+  }
+
+  /* ---------- the "▶ Play the tour" entry on the Map tab ---------- */
+  function buildCta(){
+    var vx = $('vx'); if (!vx || vx.querySelector('.vt-cta')) return;
+    var box = document.createElement('div'); box.className = 'vt-cta';
+    box.innerHTML = '<button type="button" class="vt-go" data-scope="all"><span class="vt-gi">' + ICON.play + '</span><span class="vt-gt"><b>Play the tour</b><small>The whole week in 3D · about 4 min</small></span></button>'
+      + '<button type="button" class="vt-go2" data-scope="day" hidden>' + ICON.play + '<span></span></button>';
+    vx.insertBefore(box, vx.firstChild);
+    box.querySelector('.vt-go').addEventListener('click', function(e){ startTour('all', e.currentTarget); });
+    box.querySelector('.vt-go2').addEventListener('click', function(e){ if (dayById(cur) || cur === 'town') startTour(cur, e.currentTarget); });
+    syncCta();
+  }
+  function syncCta(){
+    var b = document.querySelector('#vx .vt-go2'); if (!b) return;
+    var d = dayById(cur); b.hidden = !d && cur !== 'town';
+    if (d) b.querySelector('span').textContent = 'Play Day ' + d.r + ' · ' + d.t;
+    else if (cur === 'town') b.querySelector('span').textContent = 'Play the evening walks';
+  }
+
+  /* =====================================================================
+     PHOTOREAL (v40) — Google Photorealistic 3D Tiles through Cesium ion.
+     CesiumJS is loaded only when Photoreal is chosen (or a tour starts and can use it).
+     The ion token is restricted to griffinw1.github.io + 127.0.0.1:8791, assets:read —
+     it is meant to be public. MapLibre stays the default 3D and is the fallback.
+     Pins are DOM elements projected every frame, so the same collision handling
+     (declutterTown) keeps text from overlapping. Google's attribution stays on screen.
+     ===================================================================== */
+  var CESIUM_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6ImV0RGVoeGVHb05TNWpYdS0iLCJqdGkiOiJlYWEwMTliNy03MzEyLTRjZTEtYWM5MS02ZjdhNThlMTIxZDYiLCJpZCI6NTUwNTEzLCJzdWIiOiJHV3JpZ2h0MSIsImlzcyI6Imh0dHBzOi8vYXBpLmNlc2l1bS5jb20iLCJhdWQiOiJBc3BlbiB0cmlwIiwiaWF0IjoxNzk0ODE0ODUzfQ.nkowh2NFsq4RjFKUE_bDMmIqbw2z3UsX6dkxY0USv2U";
+  var CS_CDN = 'https://cdn.jsdelivr.net/npm/cesium@1.121.0/Build/Cesium/';
+  var CS_SRI = {js:'sha384-q9nNk8suPYjCO59e/4iaSYbUEDnj0FxTd2QoWXfFeF0+L5FSerVuCAjKXM/EYiD9', css:'sha384-ghEeMdcWWzRv/BPeUcX835vcKDGrxvROXisl/Btpv3GeekBUXTSPVcFJpI1Tcrgp'};
+  var GEOID = -16;   /* Aspen: WGS84 ellipsoid sits ~16 m above the geoid (heights in ELEV are orthometric) */
+  var ML_VFOV = 0.6435011087932844;   /* MapLibre's vertical field of view (36.87°) */
+  var csPromise = null, prOn = false, PRV = null, prFailed = false;
+  function prAvailable(){ return !!CESIUM_TOKEN && !prFailed && webglOK(); }
+  function loadCesium(){
+    if (window.Cesium) return Promise.resolve(window.Cesium);
+    if (csPromise) return csPromise;
+    window.CESIUM_BASE_URL = CS_CDN;
+    csPromise = new Promise(function(res, rej){
+      if (!document.querySelector('link[data-cs]')){
+        var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = CS_CDN + 'Widgets/widgets.css';
+        l.integrity = CS_SRI.css; l.crossOrigin = 'anonymous'; l.setAttribute('data-cs', ''); document.head.appendChild(l);
+      }
+      var s = document.createElement('script'); s.src = CS_CDN + 'Cesium.js'; s.async = true; s.integrity = CS_SRI.js; s.crossOrigin = 'anonymous';
+      s.onload = function(){ window.Cesium ? res(window.Cesium) : rej(new Error('cesium missing')); };
+      s.onerror = function(){ csPromise = null; s.remove(); rej(new Error('cesium load failed')); };
+      document.head.appendChild(s);
+    });
+    return csPromise;
+  }
+  function placeH(k){ return ((ELEV && ELEV[k]) || 2420) + GEOID; }
+  /* a Cesium viewer in `el`. Resolves {v, ts, ready:Promise, destroy()} */
+  function makePR(el){
+    return loadCesium().then(function(C){
+      C.Ion.defaultAccessToken = CESIUM_TOKEN;
+      var credits = document.createElement('div'); credits.className = 'vx-prcred'; el.appendChild(credits);
+      var v = new C.Viewer(el, {globe:false, skyAtmosphere:new C.SkyAtmosphere(), timeline:false, animation:false, baseLayerPicker:false, geocoder:false,
+        homeButton:false, sceneModePicker:false, navigationHelpButton:false, fullscreenButton:false, infoBox:false, selectionIndicator:false,
+        creditContainer:credits, requestRenderMode:false, useBrowserRecommendedResolution:true, msaaSamples:1});
+      v.scene.skyBox.show = false;
+      v.scene.backgroundColor = C.Color.fromCssColorString('#9fc4e4');
+      v.scene.screenSpaceCameraController.enableCollisionDetection = true;
+      var rec = {C:C, v:v, el:el, failed:0, destroyed:false};
+      rec.ready = C.createGooglePhotorealistic3DTileset(undefined, {maximumScreenSpaceError: COARSE ? 28 : 14, showCreditsOnScreen:true,
+        cacheBytes: (COARSE ? 256 : 768) * 1024 * 1024}).then(function(ts){
+        if (rec.destroyed) return null;
+        rec.ts = ts; v.scene.primitives.add(ts);
+        ts.tileFailed.addEventListener(function(){ if (++rec.failed > 25) rec.bad = true; });
+        return ts;
+      });
+      rec.destroy = function(){ rec.destroyed = true; try { v.destroy(); } catch(e){} };
+      return rec;
+    });
+  }
+  /* MapLibre camera params → Cesium camera (same framing). MapLibre's padding is reproduced by
+     moving the look-at target on the ground (an off-centre frustum breaks Cesium's tile culling). */
+  function prCam(rec, cam, k, pad){
+    var C = rec.C, v = rec.v, cv = v.scene.canvas, W = cv.clientWidth || 1, H = cv.clientHeight || 1;
+    var fr = v.camera.frustum;
+    fr.fov = W > H ? 2 * Math.atan(Math.tan(ML_VFOV / 2) * W / H) : ML_VFOV;
+    var lat = cam.c[0], mpp = 40075016.686 * Math.cos(lat * Math.PI / 180) / (512 * Math.pow(2, cam.z));
+    var range = 0.5 * H / Math.tan(ML_VFOV / 2) * mpp;
+    var tlat = cam.c[0], tlng = cam.c[1];
+    if (pad){
+      var dx = pad.left + (W - pad.left - pad.right) / 2 - W / 2, dy = pad.top + (H - pad.top - pad.bottom) / 2 - H / 2;
+      var h = cam.b * Math.PI / 180, fwd = dy * mpp / Math.max(0.25, Math.cos(cam.p * Math.PI / 180)), rt = -dx * mpp;
+      var east = fwd * Math.sin(h) + rt * Math.cos(h), north = fwd * Math.cos(h) - rt * Math.sin(h);
+      tlat += north / 110540; tlng += east / (111320 * Math.cos(lat * Math.PI / 180));
+    }
+    var target = C.Cartesian3.fromDegrees(tlng, tlat, k ? placeH(k) : 2420 + GEOID);
+    v.camera.lookAt(target, new C.HeadingPitchRange(C.Math.toRadians(cam.b), -C.Math.toRadians(90 - cam.p), range));
+    v.camera.lookAtTransform(C.Matrix4.IDENTITY);
+  }
+  /* DOM pins over Cesium: project every frame */
+  function prPins(rec, list){
+    var layer = rec.pinLayer;
+    if (!layer){ layer = rec.pinLayer = document.createElement('div'); layer.className = 'vx-prpins'; rec.el.appendChild(layer);
+      rec.v.scene.postRender.addEventListener(function(){ prProject(rec); }); }
+    layer.innerHTML = ''; rec.pins = [];
+    list.forEach(function(p){
+      var el = document.createElement('div'); el.className = p.cls; el.innerHTML = p.html;
+      if (p.click) el.addEventListener('click', p.click);
+      layer.appendChild(el);
+      rec.pins.push({el:el, pos:rec.C.Cartesian3.fromDegrees(P[p.k].c[1], P[p.k].c[0], placeH(p.k) + 6), anchor:p.anchor || 'bottom'});
+    });
+    prProject(rec);
+  }
+  function prProject(rec){
+    if (!rec.pins || rec.destroyed) return;
+    var C = rec.C, sc = rec.v.scene, tmp = new C.Cartesian2();
+    rec.pins.forEach(function(p){
+      var s = sc.cartesianToCanvasCoordinates(p.pos, tmp);
+      if (!s){ p.el.style.display = 'none'; return; }
+      p.el.style.display = '';
+      var w = p.el.offsetWidth, h = p.el.offsetHeight;
+      p.el.style.transform = 'translate(' + Math.round(s.x - (p.anchor === 'center' ? 11 : w / 2)) + 'px,' + Math.round(s.y - (p.anchor === 'center' ? 11 : h)) + 'px)';
+    });
+  }
+  function prLines(rec, feats){
+    var C = rec.C, v = rec.v;
+    (rec.lines || []).forEach(function(e){ v.entities.remove(e); }); rec.lines = [];
+    var COL = {drive:'#F0C46A', trip:'#F0C46A', walk:'#8ff0b8', sled:'#9ed8fb', lift:'#F6EAC4', ski:'#ffffff'};
+    feats.forEach(function(f){
+      var c = f.geometry.coordinates; if (c.length < 2) return;
+      var flat = []; c.forEach(function(p){ flat.push(p[0], p[1]); });
+      rec.lines.push(v.entities.add({polyline:{positions:C.Cartesian3.fromDegreesArray(flat), width: f.properties.via === 'walk' ? 6 : 5, clampToGround:true,
+        material: f.properties.via === 'walk' || f.properties.via === 'lift' || f.properties.via === 'ski'
+          ? new C.PolylineDashMaterialProperty({color:C.Color.fromCssColorString(COL[f.properties.via] || '#F0C46A'), dashLength:12})
+          : new C.PolylineGlowMaterialProperty({glowPower:0.18, color:C.Color.fromCssColorString(COL[f.properties.via] || '#F0C46A')})}}));
+    });
+  }
+
+  /* ---------- explorer: the "Photoreal" button ---------- */
+  function openPR(){
+    if (prOn || !prAvailable()) { if (!prAvailable()) toast('Photoreal 3D isn’t available here.'); return; }
+    if (is3d) close3d();
+    var st = stageEl(), mapEl = $('vxMap'); if (!st || !mapEl) return;
+    prOn = true; hideOffer(); if (map) map.closePopup();
+    st.classList.add('is3d', 'ispr');
+    var el = document.createElement('div'); el.id = 'vxpr'; el.className = 'vx-3d vx-pr'; el.setAttribute('role', 'region'); el.setAttribute('aria-label', 'Photorealistic 3D map');
+    el.innerHTML = '<div class="vx-3dload"><span class="sp" aria-hidden="true"></span>Loading photoreal 3D…</div>';
+    mapEl.parentNode.insertBefore(el, mapEl.nextSibling);
     syncTools();
+    makePR(el).then(function(rec){
+      if (!prOn){ rec.destroy(); return; }
+      PRV = rec;
+      return rec.ready.then(function(ts){
+        if (!prOn || !ts) return;
+        var ld = el.querySelector('.vx-3dload'); if (ld) ld.remove();
+        drawPR(true);
+        rec.v.camera.moveEnd.addEventListener(function(){ if (townOn) declutterSoon(); });
+      });
+    }).catch(function(e){
+      prFailed = true; console.warn('[AspenMap photoreal]', e && e.message);
+      toast('Photoreal 3D couldn’t load — showing the standard 3D map.'); closePR(); open3d();
+    });
   }
-  document.addEventListener('keydown', function(e){ if (flyRun && e.key === 'Escape') stopFly(); });
+  function drawPR(fly){
+    if (!PRV || !PRV.ts) return;
+    var v = view3d(), d = dayById(cur);
+    prLines(PRV, v.feats);
+    prPins(PRV, v.pins.filter(function(p){ return cur !== 'trip' || !P[p.k].town; }).map(function(p){
+      var pl = P[p.k], col = (CAT[pl.cat] || CAT.home).c;
+      if (p.town) return {k:p.k, anchor:'center', cls:'vx-m3 tw', html:townPinHtml(p.k), click:function(){ setActive(p.i, true, true, false); }};
+      return {k:p.k, cls:'vx-m3', html:'<div class="vx-pin' + (p.k === 'home' ? ' home' : '') + (p.star ? ' star' : '') + (p.small ? ' small' : '') + '" style="--c:' + col + '">' + (p.k === 'home' ? ICON.house : '<b>' + esc(p.label) + '</b>') + '</div>',
+        click:function(){ if (p.i >= 0) setActive(p.i, true, true, false); }};
+    }));
+    var pts = cur === 'town' ? [TOWN.b[0], TOWN.b[1]] : v.pins.filter(function(p){ return cur !== 'trip' || (p.k !== 'den' && p.k !== 'vail'); }).map(function(p){ return P[p.k].c; });
+    var C = PRV.C, bs = C.BoundingSphere.fromPoints(pts.map(function(c){ return C.Cartesian3.fromDegrees(c[1], c[0], 2420 + GEOID); }));
+    var off = new C.HeadingPitchRange(C.Math.toRadians(cur === 'town' ? 194 : 8), C.Math.toRadians(-38), Math.max(900, bs.radius * 2.7));
+    if (fly && !RM) PRV.v.camera.flyToBoundingSphere(bs, {offset:off, duration:2.2}); else PRV.v.camera.viewBoundingSphere(bs, off);
+    PRV.v.camera.lookAtTransform(C.Matrix4.IDENTITY);
+    legend(cur === 'town' ? 'town' : (cur === 'trip' ? 'trip' : 'day'));
+    if (townOn) setTimeout(declutterSoon, 2400);
+  }
+  function prFlyTo(c, k){
+    if (!PRV || !PRV.ts) return;
+    var C = PRV.C, bs = new C.BoundingSphere(C.Cartesian3.fromDegrees(c[1], c[0], placeH(k)), 60);
+    PRV.v.camera.flyToBoundingSphere(bs, {offset:new C.HeadingPitchRange(PRV.v.camera.heading, C.Math.toRadians(-32), TOWNSET[k] ? 420 : 1500), duration: RM ? 0 : 1.6});
+  }
+  function closePR(){
+    if (!prOn && !PRV) return;
+    prOn = false;
+    if (PRV){ PRV.destroy(); PRV = null; }
+    var el = $('vxpr'); if (el) el.remove();
+    var st = stageEl(); if (st) st.classList.remove('is3d', 'ispr');
+    syncTools();
+    if (map) setTimeout(function(){ map.invalidateSize(); fitCurrent(false); checkOffer(); }, 40);
+  }
+
+  /* ---------- the tour's photoreal close-ups ---------- */
+  var PR_SHOTS = {home:1, wildfig:1, bellyup:1, casatua:1, frenchalp:1, s316:1, matsuhisa:1, jbar:1, whitehouse:1, gondola:1, tavern:1, highlands:1, snowmass:1, downtown:1, buttermilk:1};
+  function tourPRStart(){
+    if (!prAvailable() || !T || T.pr) return;
+    var st = stageEl(), el = document.createElement('div'); el.className = 'vt-pr'; el.setAttribute('aria-hidden', 'true');
+    st.insertBefore(el, T.el);
+    T.pr = {el:el, rec:null, ok:false};
+    var mine = T;
+    makePR(el).then(function(rec){
+      if (T !== mine){ rec.destroy(); return; }
+      T.pr.rec = rec;
+      return rec.ready.then(function(ts){ if (T === mine && ts) { T.pr.ok = true; T.force = true; } });
+    }).catch(function(e){ if (T === mine && T.pr){ T.pr.ok = false; T.pr.dead = true; } console.warn('[AspenMap tour] photoreal off:', e && e.message); });
+  }
+  function tourPRWants(sh){ return !!(T && T.pr && T.pr.ok && !T.pr.dead && !(T.pr.rec && T.pr.rec.bad) && sh.k === 'stop' && !sh.brief && PR_SHOTS[sh.p]); }
+  function tourPRFrame(sh, cam, n){
+    var pr = T && T.pr; if (!pr || !pr.rec || !pr.ok) return;
+    var want = tourPRWants(sh), ts = pr.rec.ts;
+    if (!want){
+      /* pre-position on the next close-up so its tiles are already streaming when we get there */
+      var nx = T.tl.shots[T.si + 1];
+      if (nx && tourPRWants(nx) && pr.pre !== nx){ pr.pre = nx; try { prCam(pr.rec, camAt(nx, 0), nx.p, tourPad()); } catch(e){} }
+      pr.el.classList.remove('on'); T.el.classList.remove('pr'); pr.shot = null; return;
+    }
+    if (cam) prCam(pr.rec, cam, sh.p, tourPad());
+    if (pr.shot !== sh){ pr.shot = sh; pr.shown = false;
+      prLines(pr.rec, routeData(sh, 1));
+      prPins(pr.rec, [{k:sh.p, cls:'vx-m3 vt-pin', html:T.pins[sh.p] ? T.pins[sh.p].getElement().innerHTML : '<div class="vx-pin" style="--c:#9B2D2A"><b></b></div>'}]);
+    }
+    /* only cut to photoreal once the close-up's tiles are in — never show a grey half-loaded city */
+    if (!pr.shown && ts && ts.tilesLoaded) pr.shown = true;
+    pr.el.classList.toggle('on', !!pr.shown); T.el.classList.toggle('pr', !!pr.shown);
+    pr.el.style.setProperty('--vt-night', n.toFixed(3));
+  }
+  function tourPREnd(t){
+    if (!t || !t.pr) return;
+    if (t.pr.rec) t.pr.rec.destroy();
+    if (t.pr.el) t.pr.el.remove();
+  }
+
 
   /* ---------- public ---------- */
   function railActive(id, initial){
@@ -8405,14 +9643,16 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     townOn = false;
     railActive(id, initial);
     renderHead(id); renderStops(id);
-    cur = id; syncTools();
+    cur = id; syncTools(); syncCta();
     if (is3d) update3d(animate);
+    if (prOn) drawPR(animate);
     if (!map) return;
     /* stop any in-flight flyTo first: its pending moveend→openPopup would otherwise fire on the NEW view */
     map.stop(); dropGo();
     map.closePopup(); activeIdx = -1;
     if (id === 'trip') renderTrip(animate); else renderDay(dayById(id), animate);
     applyOverlays(); checkOffer();
+    var vm = $('vxMap'); if (vm) vm.classList.remove('vx-town');
     swapAnim();
   }
   function ensure(){
@@ -8424,17 +9664,18 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     if (m3) setTimeout(function(){ if (m3){ m3.resize(); theme3d(); } }, 60);
   }
   window.AspenMap = {ensure:ensure, refresh:refresh, show:show, town:function(){ enterTown(true); },
-    open3d:function(){ open3d(); }, close3d:function(){ close3d(); }, fly:function(){ startFly(); },
+    open3d:function(){ open3d(); }, close3d:function(){ close3d(); },
+    tour:{play:function(){ startTour('all'); }, day:function(id){ startTour(id || cur); }, exit:function(){ exitTour(); }, get state(){ return T; }},
     get map(){ return map; }, get map3d(){ return m3; }, get view(){ return cur; }};
 
   /* ---------- boot: markup now, Leaflet when the tab first opens ---------- */
-  buildDayRail(); buildTools(); syncTools();
+  buildDayRail(); buildTools(); buildCta(); syncTools();
   cur = TODAY_DAY || 'trip'; show(cur, false, true);
   var sec = $('valley');
   function maybe(){
     if (!sec) return;
     if (sec.classList.contains('active') || !sec.classList.contains('panel')) setTimeout(ensure, 70);
-    else if (is3d) close3d();   /* leaving the Map tab disposes the WebGL map */
+    else { if (T) exitTour(true); if (is3d) close3d(); if (prOn) closePR(); }   /* leaving the Map tab ends the tour + disposes the WebGL map */
   }
   if (sec){
     new MutationObserver(maybe).observe(sec, {attributes:true, attributeFilter:['class']});
@@ -10475,6 +11716,11 @@ if(D.readyState==='loading'){D.addEventListener('DOMContentLoaded',init);}else{i
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a||a.target)return;
  try{var u=new URL(a.href,location.href);}catch(x){return;} if(!/^https?:$/.test(u.protocol)||u.origin===location.origin)return;
  a.target='_blank';a.rel='noopener';},true);
+</script>
+<script>/* outfits: "Need help?" opens the layering guide */
+(function(){var b=document.getElementById('ofHelpBtn'),d=document.getElementById('ofHelp'),x=document.getElementById('ofHelpX');
+ if(!b||!d||!d.showModal)return; b.addEventListener('click',function(){d.showModal();}); x.addEventListener('click',function(){d.close();});
+ d.addEventListener('click',function(e){if(e.target===d)d.close();});})();
 </script>
 <style>
 .wip-switch{position:fixed;left:14px;top:58px;z-index:60;padding:3px 4px;color:var(--gold,#b0863a);opacity:.32;
