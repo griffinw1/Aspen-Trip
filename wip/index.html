@@ -11676,10 +11676,10 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       chapter({d:d1, title:'Snowmass + Buttermilk', ey:'Day I · Mon Dec 28', line:'Lessons at Buttermilk; the rest take on Snowmass.'});
       add({k:'hold', dur:6200, tod:9 * 60 + 45, place:'buttermilk',
         lt:{ey:'Day I · 9:45 AM · Summit Express', t:'Buttermilk · first lesson', w: you(['marcy', 'stella']) && W.p ? W.p.snow : 'Marcy + Stella, Max 5 Adult First-Time lesson.', fact:FACTS.buttermilk, you:you(['marcy', 'stella'])},
-        cam:function(u){ return {t:P.buttermilk.c.concat([placeH('buttermilk') + 150]), hd:205 + 14 * u, pt:-19, r:1500}; }});
+        cam:function(u){ return {t:P.buttermilk.c.concat([placeH('buttermilk') + 150]), hd:205 + 14 * u, pt:-27, r:1250}; }});
       add({k:'hold', dur:6200, tod:11 * 60, place:'snowmass',
         lt:{ey:'Day I · 9:00 AM · Snowmass', t:'Snowmass', w: you(['griffin', 'ben', 'marco']) && W.p ? W.p.snow : 'Griffin, Ben + Marco — Elk Camp, then the Big Burn.', fact:FACTS.snowmass, you:you(['griffin', 'ben', 'marco'])},
-        cam:function(u){ return {t:P.snowmass.c.concat([placeH('snowmass') + 300]), hd:200 + 18 * u, pt:-18, r:2600}; }});
+        cam:function(u){ return {t:P.snowmass.c.concat([placeH('snowmass') + 300]), hd:200 + 18 * u, pt:-27, r:1900}; }});
     }
     /* ---- Day II ---- */
     if (want('d2') && !townOnly){
@@ -11687,7 +11687,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       chapter({d:d2, title:'Ajax', ey:'Day II · Tue Dec 29', line:'Up the Silver Queen, Bonnie’s at noon, Casa Tua at 7.'});
       add({k:'gondola', dur:9500, tod:9 * 60 + 20,
         lt:{ey:'Day II · 9:15 AM · Silver Queen Gondola', t:'Up Aspen Mountain', w: you(['jim']) ? 'Your sightseeing ride — 14 minutes to the summit.' : '14 minutes from Gondola Plaza to the 11,212-ft summit.', fact:FACTS.gondola, you:you(['jim', 'griffin', 'ben', 'marco'])},
-        cam:function(u, v){ return {t:v.ll.concat([v.h]), hd:v.hd + 82, pt:-4 - 6 * u, r:170}; }});
+        cam:function(u, v){ return {t:v.ll.concat([v.h]), hd:v.hd + 82, pt:-12 - 6 * u, r:170}; }});
       var wc = walk('d2'); if (wc) walkShots(wc);
     }
     /* ---- Day III ---- */
@@ -11700,7 +11700,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
         cam:function(u, v){ return {t:v.ll.concat([v.h + 1]), hd:v.hd + 6, pt:-20, r:140}; }});
       add({k:'hold', dur:6500, tod:11 * 60, place:'bells',
         lt:{ey:'Day III · ~11:00 AM · Maroon Lake', t:'The Maroon Bells', w:'The turnaround — and the photo.', fact:FACTS.bells},
-        cam:function(u){ return {t:[39.072, -106.988, 3900], hd:228 + 6 * u, pt:-5, r:8200 - 600 * u}; }});
+        cam:function(u){ return {t:[39.072, -106.988, 3900], hd:228 + 6 * u, pt:-16, r:6000 - 500 * u}; }});
       var w3 = walk('d3'); if (w3) walkShots(w3);
     }
     /* ---- Day IV ---- */
@@ -11709,13 +11709,13 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       chapter({d:d4, title:'New Year’s Eve', ey:'Day IV · Thu Dec 31', line:'Highlands by day — torchlight, fireworks and Matsuhisa by night.'});
       add({k:'hold', dur:6000, tod:12 * 60, place:'highlands',
         lt:{ey:'Day IV · Aspen Highlands', t:'Highland Bowl', w:'The last ski day of 2026.', fact:FACTS.highlands, you:you(['griffin', 'ben', 'marco', 'stella', 'marcy'])},
-        cam:function(u){ return {t:[39.130, -106.856, 3500], hd:188 + 10 * u, pt:-11, r:6200}; }});
+        cam:function(u){ return {t:[39.130, -106.856, 3500], hd:188 + 10 * u, pt:-28, r:3300}; }});
       add({k:'hold', dur: RM ? 6000 : 10500, tod:20 * 60, place:'nyeplaza', fw:[39.1792, -106.8203, 650],
         lt:{ey:'Day IV · 8:00 PM · Gondola Plaza', t:'Fireworks over Ajax', w:'Torchlight down the face at ~7:30, fireworks at 8.', fact:FACTS.nyeplaza},
-        cam:function(u){ return {t:[39.1812, -106.8197, placeH('nyeplaza') + 260], hd:184 + 6 * u, pt:-10, r:1900 - 150 * u}; }});
+        cam:function(u){ return {t:[39.1812, -106.8197, placeH('nyeplaza') + 260], hd:184 + 6 * u, pt:-20, r:1500 - 120 * u}; }});
       var w4 = walk('d4'); if (w4) walkShots(w4);
       add({k:'midnight', dur: RM ? 4500 : 6500, tod:24 * 60, fw:[39.1792, -106.8203, 650],
-        cam:function(u){ return {t:[39.1840, -106.8200, placeH('nyeplaza') + 120], hd:192 - 12 * u, pt:-20, r:2600}; }});
+        cam:function(u){ return {t:[39.1840, -106.8200, placeH('nyeplaza') + 120], hd:192 - 12 * u, pt:-26, r:2000}; }});
     }
     /* ---- Day V ---- */
     if (want('d5') && !townOnly){
@@ -11731,7 +11731,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       chapter({d:d6, title:'Closing night', ey:'Day VI · Sat Jan 2', line:'Last day on Snowmass, then Steakhouse 316 and a nightcap at the J-Bar.'});
       add({k:'hold', dur:5500, tod:11 * 60, place:'snowmass',
         lt:{ey:'Day VI · Snowmass', t:'One more on Snowmass', w:'All six — the family ski day.', you:true},
-        cam:function(u){ return {t:P.snowmass.c.concat([placeH('snowmass') + 250]), hd:150 + 20 * u, pt:-20, r:2300}; }});
+        cam:function(u){ return {t:P.snowmass.c.concat([placeH('snowmass') + 250]), hd:150 + 20 * u, pt:-27, r:1800}; }});
       var w6 = walk('d6'); if (w6) walkShots(w6);
     }
     /* ---- Day VII ---- */
@@ -11740,7 +11740,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       chapter({d:d7, title:'Home', ey:'Day VII · Sun Jan 3', line:'Checkout at 10, over Vail Pass, and AA 1832 out of Denver.'});
       add({k:'hold', dur:5500, tod:10 * 60, place:'home',
         lt:{ey:'Day VII · 10:00 AM', t:'Checkout', w:'Last look from Red Mountain.'},
-        cam:function(u){ return {t:P.home.c.concat([placeH('home') + 2]), hd:200 - 20 * u, pt:-24, r:420 + 200 * u}; }});
+        cam:function(u){ return {t:P.home.c.concat([placeH('home') + 2]), hd:200 - 20 * u, pt:-28, r:400 + 140 * u}; }});
       add({k:'plane', dur:8000, tod:16 * 60 + 22, plane:'aa', mode:'takeoff', rw:[[39.864092, -104.6872], [39.897017, -104.686815]],
         lt:{ey:'Day VII · 4:22 PM · DEN', t:'AA 1832 · Denver → Dallas', w: you(['marco']) ? 'Your UA 2076 leaves at 6:00 PM.' : 'Wheels up 4:22 — Dallas by 7:30.', you:you(AA_FIVE)},
         cam:function(u, v){ return {t:v.ll.concat([v.h + 3]), hd:v.hd - 80 + 10 * u, pt:-7, r:170}; }});
@@ -11918,7 +11918,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     var warm = PF && PF.tl === FM.tl && PF.done[sh0.rg + ':1'];
     /* the very first hold may take a moment (cold start); after that: short, shorter if the prefetcher got there first */
     var close = isClose(list.filter(function(s){ return s.k !== 'card'; })[0]);
-    var cap = FM.gates === 1 ? (COARSE ? 10000 : 7000) : close ? (warm ? 6000 : 10000) : warm ? 3000 : (COARSE ? 7000 : 6000);
+    var cap = FM.gates === 1 ? (COARSE ? 10000 : 7000) : close ? (warm ? 5000 : (COARSE ? 8000 : 7000)) : warm ? 3000 : (COARSE ? 7000 : 6000);
     FM.gate = {list:list, i:0, views:[], vi:0, t0:performance.now(), stage:'prep', from:fromShot, rg:sh0.rg, cap:cap};
     pfMark(FM.tl, sh0.rg);
     /* if this chapter opens with the photo reveal, playback may run through it while tiles load */
@@ -11929,7 +11929,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       /* v43: hold only for the opening frame (at moving-shot detail); the rest streams in while it plays,
          and the background prefetcher has usually loaded it already */
       var lead = list.filter(function(s){ return s.k !== 'card'; })[0], close = isClose(lead);
-      var vs = gateViews(list, FM.tl).slice(0, 2).map(function(c){ c.sse = close ? SSE_HOLD : Math.max(c.sse || 0, SSE_MOVE); return c; });
+      var vs = gateViews(list, FM.tl).slice(0, 2).map(function(c){ c.sse = close ? Math.round((SSE_HOLD + SSE_MOVE) / 2) : Math.max(c.sse || 0, SSE_MOVE); return c; });   /* v47: close-ups open at mid detail, sharpen during the hold */
       if (0) list.forEach(function(s){ (s.k === 'title' || s.k === 'card' || s.k === 'end' ? [0, 1] : [0, 0.5, 1])   /* start, middle and end of every camera path (3 samples keeps Google's tile quota sane) */.forEach(function(u){ var c = shotCam(s, u); if (c){ c.sse = (s.k === 'plane' || s.k === 'car') ? FM.sseMove : FM.sseHold; vs.push(c); } }); });   /* gate each view at the detail it will actually play at */
       FM.gate.views = vs; FM.gate.stage = 'views'; FM.gate.vt = 0;
     });
@@ -11947,7 +11947,9 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       return false;
     }
     if (!g.vt){ var gv = g.views[g.vi]; if (gv.sse && ts) ts.maximumScreenSpaceError = gv.sse; applyCam(C, FM.v, gv); g.vt = now; return false; }
-    var ready = sceneReady() && now - g.vt > 260;
+    var left = 0; if (!FM.lite && ts){ var sx = ts.statistics || {}; left = (sx.numberOfPendingRequests || 0) + (sx.numberOfTilesProcessing || 0); }
+    g.near = (!FM.lite && now - g.vt > 700 && left <= 2) ? (g.near || 0) + 1 : 0;   /* v47: "nearly there" ×2 frames is enough */
+    var ready = (sceneReady() && now - g.vt > 260) || g.near >= 3;
     var timeout = now - g.vt > Math.min(7000, g.cap);
     if (ready || timeout){ if (timeout) FM.slow = (FM.slow || 0) + 1; g.vi++; g.vt = 0; }
     if (now - g.t0 > g.cap) return finishGate();   /* never sit on black longer than this */
