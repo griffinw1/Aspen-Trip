@@ -11551,15 +11551,15 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       var dfw = [[32.878993, -97.050926], [32.91581, -97.050736]], den34 = [[39.864092, -104.6872], [39.897017, -104.686815]];
       add({k:'plane', dur:9000, tod:8 * 60 + 36, plane:'aa', mode:'takeoff', rw:dfw,
         lt:{ey:'Day 0 · 8:36 AM · DFW', t:'AA 2357 · Dallas → Denver', w: you(AA_FIVE) ? 'You’re on this one — wheels up 8:36, Denver by 9:51.' : 'Griffin, Stella, Ben, Marcy + Jim — wheels up 8:36.', you:you(AA_FIVE)},
-        cam:function(u, v){ return {t:v.ll.concat([v.h + 3]), hd:v.hd + 72 - 12 * u, pt:-15, r:230}; }});
+        cam:function(u, v){ return {t:v.ll.concat([v.h + 3]), hd:v.hd + 62 - 14 * u, pt:-16, r:170 + 30 * u}; }});
       add({k:'plane', dur:5200, tod:8 * 60 + 40, plane:'aa', mode:'climb', rw:dfw,
         cam:function(u, v){ return {t:v.ll.concat([v.h]), hd:v.hd + 14, pt:-12 - 4 * u, r:200 + 60 * u}; }});
       add({k:'plane', dur:7500, tod:9 * 60 + 25, plane:'aa', mode:'cruise', at:[38.93, -103.55], hd0:303,
         lt:{ey:'Day 0 · somewhere over eastern Colorado', t:'The Front Range, dead ahead', w:'Denver International sits 5,434 ft up; the Rockies rise right behind it.', fact:null},
-        cam:function(u, v){ return {t:v.ll.concat([v.h]), hd:v.hd - 34 + 6 * u, pt:-3, r:420}; }});
+        cam:function(u, v){ return {t:v.ll.concat([v.h]), hd:v.hd - 28 + 10 * u, pt:-8, r:150 - 20 * u}; }});
       add({k:'plane', dur: you(['marco']) ? 7000 : 5200, tod:9 * 60 + 56, plane:'ua', mode:'land', rw:[[39.828321, -104.66056], [39.861256, -104.660175]],
         lt:{ey:'Day 0 · 9:58 AM · DEN 35L', t:'UA 1891 · Minneapolis → Denver', w: you(['marco']) ? 'That’s you, Marco — 7 minutes behind them. Meet at baggage claim.' : 'Marco lands 7 minutes later. Everyone meets at baggage claim.', you:you(['marco'])},
-        cam:function(u, v){ return {t:v.ll.concat([v.h]), hd:v.hd + 96, pt:-6, r:260}; }});
+        cam:function(u, v){ return {t:v.ll.concat([v.h]), hd:v.hd + 128 - 10 * u, pt:-11, r:190}; }});
       add({k:'plane', dur:10000, tod:9 * 60 + 51, plane:'aa', mode:'land', rw:den34,
         lt:{ey:'Day 0 · 9:51 AM · DEN 34R', t:'Touchdown, Denver', w:'Bags, the car, and west on I-70.', fact:FACTS.den},
         cam:function(u, v){ return {t:v.ll.concat([v.h]), hd:v.hd + 6, pt:-13 - 3 * u, r:230 + 30 * u}; }});
@@ -11729,12 +11729,12 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     hd0 = brg(rw[0], rw[1]);
     if (sh.mode === 'takeoff'){   /* roll from 400 m in, rotate at ~1,900 m, climb at ~8° */
       var e = RM ? 0.6 : u; s = 400 + 2600 * Math.pow(e, 1.55);
-      var air = Math.max(0, s - 2100); h = g + 2.6 + air * Math.tan(8 * Math.PI / 180) * smooth(0, 300, air);
+      var air = Math.max(0, s - 2100); h = g + 3.25 + air * Math.tan(8 * Math.PI / 180) * smooth(0, 300, air);
       pitch = 9 * smooth(1850, 2250, s);
-      return {ll:offsetLL(rw[0], hd0, s), hd:hd0, h:h, pitch:pitch, roll:0};
+      return {ll:offsetLL(rw[0], hd0, s), hd:hd0, h:h, pitch:pitch, roll:0, gear: s < 2750};
     }
     if (sh.mode === 'climb'){
-      s = 3000 + 4200 * u; h = g + 2.6 + (s - 2100) * Math.tan(8 * Math.PI / 180);
+      s = 3000 + 4200 * u; h = g + 3.25 + (s - 2100) * Math.tan(8 * Math.PI / 180);
       return {ll:offsetLL(rw[0], hd0, s), hd:hd0 + 6 * smooth(0.2, 1, u), h:h, pitch:9, roll:-8 * Math.sin(u * Math.PI)};
     }
     /* land: 3° glideslope to a touchdown 350 m past the threshold, flare, roll-out */
@@ -11742,9 +11742,9 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     s = -3000 + 4300 * (1 - Math.pow(1 - f, 1.35));      /* metres from threshold, decelerating */
     var hAbove = s < td ? (td - s) * Math.tan(3 * Math.PI / 180) : 0;
     hAbove *= (1 - 0.55 * smooth(td - 420, td, s));      /* flare */
-    h = g + 2.6 + hAbove;
+    h = g + 3.25 + hAbove;
     pitch = s < td ? 2.5 + 3.5 * smooth(td - 420, td, s) : 5 * (1 - smooth(td, td + 400, s));
-    return {ll:offsetLL(rw[0], hd0, s), hd:hd0, h:h, pitch:pitch, roll:0};
+    return {ll:offsetLL(rw[0], hd0, s), hd:hd0, h:h, pitch:pitch, roll:0, gear:true};
   }
   function vehState(sh, u){
     var p = sh.vp; if (!p) return null;
@@ -11797,9 +11797,13 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     var defs = {aa:'airliner_aa.glb', ua:'airliner_ua.glb', gondola:'gondola.glb', sled:'sled.glb'};   /* the car is lights only in-scene */
     var out = {};
     return Promise.all(Object.keys(defs).map(function(k){
-      return C.Model.fromGltfAsync({url:MODELS + defs[k], forwardAxis:C.Axis.X, upAxis:C.Axis.Y, minimumPixelSize: k === 'aa' || k === 'ua' ? 48 : (k === 'car' ? 30 : 16), maximumScale:20000,
+      return C.Model.fromGltfAsync({url:MODELS + defs[k] + (k === 'aa' || k === 'ua' ? '?v=46' : ''), forwardAxis:C.Axis.X, upAxis:C.Axis.Y, minimumPixelSize: k === 'aa' || k === 'ua' ? 18 : (k === 'car' ? 30 : 16), maximumScale:20000,
         show:false, scene:v.scene}).then(function(m){ v.scene.primitives.add(m); out[k] = m; }).catch(function(e){ console.warn('[film] model', k, e && e.message); });
     })).then(function(){ return out; });
+  }
+  function setGear(m, down){   /* v46: the airliners carry a separate 'gear' node */
+    if (!m || m.gearDown === down) return;
+    try { var n = m.getNode('gear'); if (n){ n.show = down; m.gearDown = down; } } catch(e){}   /* not ready yet: try next frame */
   }
   function placeModel(C, m, ll, h, hd, pitch, roll){
     if (!m) return;
@@ -11836,9 +11840,25 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     return Promise.resolve();
   }
 
+  /* ---------- v46: lite (satellite globe) for the flight ---------- */
+  function liteShot(sh, tl){
+    if (!sh) return false;
+    if (sh.k === 'card'){ tl = tl || (FM && FM.tl); var nx = tl && tl.shots[tl.shots.indexOf(sh) + 1]; return !!(nx && nx.k === 'plane'); }
+    return sh.k === 'plane';
+  }
+  function setLite(on){
+    if (!FM || !FM.globe || !FM.ts) on = false;
+    if (!FM || FM.lite === on) return;
+    FM.lite = on;
+    if (FM.globe) FM.globe.show = on;
+    if (FM.ts) FM.ts.show = !on;   /* hidden = Google stops streaming tiles while we fly */
+  }
+  function sceneReady(){ return FM.lite ? !!(FM.globe && FM.globe.tilesLoaded) : !!(FM.ts && FM.ts.tilesLoaded); }
+
   /* ---------- tile gating ---------- */
   function gateChapter(fromShot){
     var tl = FM.tl, sh0 = tl.shots[fromShot], ci = sh0.ch, list = [];
+    setLite(liteShot(sh0, tl));
     for (var i = fromShot; i < tl.shots.length && (tl.shots[i].rg === sh0.rg || i === fromShot); i++){
       var s = tl.shots[i];
       if (s.k === 'reveal') continue;   /* photo reveal: no tiles */
@@ -11877,7 +11897,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       return false;
     }
     if (!g.vt){ var gv = g.views[g.vi]; if (gv.sse && ts) ts.maximumScreenSpaceError = gv.sse; applyCam(C, FM.v, gv); g.vt = now; return false; }
-    var ready = ts && ts.tilesLoaded && now - g.vt > 260;
+    var ready = sceneReady() && now - g.vt > 260;
     var timeout = now - g.vt > Math.min(7000, g.cap);
     if (ready || timeout){ if (timeout) FM.slow = (FM.slow || 0) + 1; g.vi++; g.vt = 0; }
     if (now - g.t0 > g.cap) return finishGate();   /* never sit on black longer than this */
@@ -11897,7 +11917,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
           sh.vp.h = hs;
         }).catch(function(){}));
       }
-      if (sh.k === 'plane' && sh.rw){
+      if (sh.k === 'plane' && sh.rw && !FM.lite){   /* lite flight: the runway is the terrain itself, keep the terrain height */
         var a = sh.rw[0], b = sh.rw[1], pts = [0.15, 0.3, 0.5, 0.7].map(function(f){ return C.Cartographic.fromDegrees(lerp(a[1], b[1], f), lerp(a[0], b[0], f)); });
         jobs.push(sc.sampleHeightMostDetailed(pts, ex).then(function(r){
           var hs = r.map(function(c){ return c && c.height; }).filter(function(h){ return h != null && isFinite(h); }).sort(function(x, y){ return x - y; });
@@ -12096,6 +12116,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       FM.si = i;
       var rkey = sh.rg + ':' + (FM.seekGen || 0);
       if (FM.gatedRg !== rkey){ FM.gatedRg = rkey; FM.force = false; gateChapter(i); filmOverlay(sh); return; }
+      setLite(liteShot(sh, tl));
       enterShot(sh);
     }
     FM.force = false;
@@ -12106,7 +12127,8 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       var nxs = sh.k === 'card' ? tl.shots[i + 1] : sh;
       var budget = isClose(nxs) ? (COARSE ? 7000 : 6000) : (COARSE ? 5000 : 4000);
       var stx = FM.ts.statistics || {}, left = (stx.numberOfPendingRequests || 0) + (stx.numberOfTilesProcessing || 0);
-      if (FM.ts.tilesLoaded || left <= 3) FM.stallSeen++; else FM.stallSeen = 0;
+      if (FM.lite) left = FM.globe.tilesLoaded ? 0 : 99;
+      if ((!FM.lite && FM.ts.tilesLoaded) || left <= 3) FM.stallSeen++; else FM.stallSeen = 0;
       if (FM.stallSeen < 2 && now - FM.stallT < budget){ T.t = sh.t0; FM.stalling = true; FM.el.classList.add('gating'); }
       else if (FM.stalling){ FM.stalling = false; FM.el.classList.remove('gating'); }
     } else if (FM.stalling){ FM.stalling = false; FM.el.classList.remove('gating'); }
@@ -12115,7 +12137,15 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     if (T.playing || !T.dragged){ var cam = sh.cam ? sh.cam(u, st || {ll:[0, 0], hd:0, h:0}) : (sh.k === 'card' ? shotCam(sh, 0) : null); if (cam) applyCam(C, v, cam, true); }
     /* models */
     hideModels(sh);
-    if (sh.k === 'plane' && st){ placeModel(C, FM.mod[sh.plane], st.ll, st.h, st.hd, st.pitch, st.roll); }
+    if (sh.k === 'plane' && st){
+      if (FM.lite && sh.rw && FM.globe){
+        var gh = null; try { gh = FM.globe.getHeight(C.Cartographic.fromDegrees(st.ll[1], st.ll[0])); } catch(e){}
+        if (FM.ghShot !== sh){ FM.ghShot = sh; FM.gh = null; }
+        if (gh != null && isFinite(gh) && Math.abs(gh - (sh.g0 || 0)) < 80) FM.gh = FM.gh == null ? gh : FM.gh + (gh - FM.gh) * 0.15;
+        if (FM.gh != null) st.h += Math.max(0, FM.gh - (sh.g0 || 0));
+      }
+      placeModel(C, FM.mod[sh.plane], st.ll, st.h, st.hd, st.pitch, st.roll); setGear(FM.mod[sh.plane], !!st.gear);
+    }
     carLights(sh, st);
     if (sh.k === 'sled' && st){ placeModel(C, FM.mod.sled, st.ll, st.h + 0.1, st.hd, 0, 0); }
     if (sh.k === 'gondola' && st){ placeModel(C, FM.mod.gondola, st.ll, st.h - 3.2, st.hd + 90, 0, 0); }
@@ -12274,7 +12304,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       ]).then(function(r){
         if (PF !== me){ try { v.destroy(); } catch(e){} return null; }
         me.ts = r[0]; me.terr = r[1]; v.scene.primitives.add(me.ts);
-        ['airliner_aa.glb', 'airliner_ua.glb', 'gondola.glb', 'sled.glb'].forEach(function(f){ try { fetch(MODELS + f).catch(function(){}); } catch(e){} });
+        ['airliner_aa.glb?v=46', 'airliner_ua.glb?v=46', 'gondola.glb', 'sled.glb'].forEach(function(f){ try { fetch(MODELS + f).catch(function(){}); } catch(e){} });
         pfKick();
         return me;
       });
@@ -12331,7 +12361,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
   function pfKick(){
     var me = PF; if (!me || !me.ts || me.cur != null || !me.q.length) return;
     var tl = me.tl, job = me.q.shift(), rg = +job.split(':')[0], pass = +job.split(':')[1]; me.cur = job;
-    var list = tl.shots.filter(function(s){ return s.rg === rg && s.k !== 'reveal'; });
+    var list = tl.shots.filter(function(s){ return s.rg === rg && s.k !== 'reveal' && !liteShot(s, tl); });
     Promise.all(me.terr ? list.map(prepShot) : []).then(function(){
       if (PF !== me || me.tl !== tl) return;
       if (!me.terr){ list = list.filter(function(s){ return s.k !== 'car' && s.k !== 'walk' && s.k !== 'sled' && !(s.k === 'plane' && s.rw); }); }
@@ -12394,6 +12424,15 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       v.scene.skyBox.show = false; v.scene.backgroundColor = C.Color.fromCssColorString('#9fc4e4');
       v.scene.screenSpaceCameraController.enableInputs = true;
       FM.C = C; FM.v = v;
+      try {
+        var gl = new C.Globe(C.Ellipsoid.WGS84); gl.show = false; gl.showGroundAtmosphere = true; gl.depthTestAgainstTerrain = false;   /* the plane always draws over the runway, never half-buried */
+        gl.baseColor = C.Color.fromCssColorString('#c9d2d8'); gl.maximumScreenSpaceError = COARSE ? 2.5 : 1.6; gl.tileCacheSize = COARSE ? 120 : 260;
+        gl.preloadSiblings = false; gl.preloadAncestors = true;
+        v.scene.globe = gl;
+        gl.imageryLayers.addImageryProvider(new C.UrlTemplateImageryProvider({url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+          maximumLevel:19, credit:new C.Credit('Imagery © Esri, Maxar, Earthstar Geographics')}));
+        FM.globe = gl;
+      } catch(e){ console.warn('[film] lite globe', e && e.message); FM.globe = null; }
       addCarLights(C, v);
       FM.porch = v.entities.add({position:C.Cartesian3.fromDegrees(P.home.c[1], P.home.c[0], placeH('home') + 5), show:false,   /* porch lights */
         point:{pixelSize:26, color:C.Color.fromCssColorString('#ffcf7a').withAlpha(0.55), outlineColor:C.Color.fromCssColorString('#ffe9b8').withAlpha(0.25), outlineWidth:14, disableDepthTestDistance:Number.POSITIVE_INFINITY}});
@@ -12411,6 +12450,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
         if (T !== mine) return;
         FM.ts = r[0]; FM.terr = r[1]; FM.mod = r[2];
         v.scene.primitives.add(FM.ts);
+        if (FM.globe && FM.terr) FM.globe.terrainProvider = FM.terr;
         FM.ts.tileFailed.addEventListener(function(){ FM.fails = (FM.fails || 0) + 1; });
         FM.tiles = 0; FM.ts.tileLoad.addEventListener(function(){ FM.tiles++; });
         /* user drags pause the film (camera hands-off until Resume) */
