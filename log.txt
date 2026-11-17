@@ -75,3 +75,5 @@ Mon Nov 16 14:08:30 MT | Matsuhisa            | 2026-12-16 | party 6 | start -> 
 Mon Nov 16 14:08:30 MT | Matsuhisa            | 2026-12-17 | party 6 | start -> http403
 Mon Nov 16 15:40:16 MT | French Alpine Bistro | 2026-12-15 | party 6 | http403 -> open
 Mon Nov 16 15:42:07 MT | French Alpine Bistro | 2026-12-15 | party 6 | open -> http403
+Mon Nov 16 17:00:00 MT | Wild Fig             | 2026-12-16 | party 2 | request -> book1
+Mon Nov 16 17:00:01 MT | Wild Fig             | 2026-12-16 | party 6 | request -> book1
