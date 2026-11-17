@@ -155,3 +155,6 @@ Tue Nov 17 11:01:09 MT | Steakhouse 316       | 2026-12-17 | party 6 | error:Tim
 Tue Nov 17 11:38:04 MT | Casa Tua             | 2026-12-17 | party 6 | book18 -> book13
 Tue Nov 17 12:42:00 MT | Wild Fig             | 2026-12-16 | party 2 | book19 -> book18
 Tue Nov 17 12:47:00 MT | Wild Fig             | 2026-12-16 | party 2 | book18 -> book19
+Tue Nov 17 12:55:00 MT | Wild Fig             | 2026-12-16 | party 2 | book19 -> book18
+Tue Nov 17 13:11:29 MT | Casa Tua             | 2026-12-18 | party 6 | request -> error:TimeoutError
+Tue Nov 17 13:12:05 MT | Casa Tua             | 2026-12-18 | party 6 | error:TimeoutError -> request
