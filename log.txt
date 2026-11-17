@@ -95,3 +95,6 @@ Mon Nov 16 18:45:01 MT | Wild Fig             | 2026-12-16 | party 2 | book7 -> 
 Mon Nov 16 18:48:16 MT | French Alpine Bistro | 2026-12-15 | party 6 | http403 -> open
 Mon Nov 16 18:50:06 MT | French Alpine Bistro | 2026-12-15 | party 6 | open -> http403
 Mon Nov 16 19:00:01 MT | Wild Fig             | 2026-12-16 | party 2 | book8 -> book9
+Mon Nov 16 19:15:01 MT | Wild Fig             | 2026-12-16 | party 2 | book9 -> book10
+Mon Nov 16 19:15:01 MT | Wild Fig             | 2026-12-16 | party 6 | book7 -> book8
+Mon Nov 16 19:30:00 MT | Wild Fig             | 2026-12-16 | party 2 | book10 -> book11
