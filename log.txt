@@ -152,3 +152,4 @@ Tue Nov 17 10:00:07 MT | Steakhouse 316       | 2026-12-17 | party 2 | request -
 Tue Nov 17 10:00:07 MT | Steakhouse 316       | 2026-12-17 | party 6 | request -> book13
 Tue Nov 17 11:00:34 MT | Steakhouse 316       | 2026-12-17 | party 6 | book13 -> error:TimeoutError
 Tue Nov 17 11:01:09 MT | Steakhouse 316       | 2026-12-17 | party 6 | error:TimeoutError -> book13
+Tue Nov 17 11:38:04 MT | Casa Tua             | 2026-12-17 | party 6 | book18 -> book13
