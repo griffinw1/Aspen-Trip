@@ -1489,6 +1489,30 @@ body.dark .vx-tool[aria-pressed="true"]{background:var(--gold);color:#0a1622;}
 .vx-seg button:focus-visible,.vx-tool:focus-visible,.vx-expand:focus-visible{outline:2px solid var(--gold);outline-offset:1px;}
 .vx-tools-r{position:absolute;top:56px;right:10px;z-index:800;display:flex;flex-direction:column;gap:6px;}
 .vx-tool.sq{width:38px;height:38px;padding:0;justify-content:center;}
+/* v49: zoom pair + rotate slider */
+.vx-zoom{display:flex;flex-direction:column;border:1px solid var(--glass-line);border-radius:9px;overflow:hidden;box-shadow:0 6px 16px -10px rgba(0,0,0,.45);}
+.vx-zoom .vx-tool.sq{border:0;border-radius:0;box-shadow:none;font:400 22px/1 var(--sans);}
+.vx-zoom .vx-tool.sq + .vx-tool.sq{border-top:1px solid var(--glass-line);}
+#vxMap .leaflet-control-zoom{display:none!important;}
+.vx-rotwrap{position:relative;}
+.vx-rot{position:absolute;right:calc(100% + 10px);top:50%;transform:translateY(-50%);width:min(300px,calc(100vw - 110px));padding:10px 12px 12px;border-radius:12px;
+  background:var(--glass-2);border:1px solid var(--glass-line);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 14px 34px -14px rgba(0,0,0,.5);color:var(--snow);z-index:801}
+.vx-rot[hidden]{display:none}
+.vx-rot-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;font:600 10.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase}
+.vx-rot-top b{margin-left:auto;font:500 13px/1 var(--sans);letter-spacing:.02em;text-transform:none;min-width:58px;text-align:right}
+.vx-rot input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;margin:0;cursor:grab;touch-action:pan-y}
+.vx-rot input[type=range]:active{cursor:grabbing}
+.vx-rot input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:99px;background:linear-gradient(90deg,var(--glass-line),var(--gold,#C49A4A) 50%,var(--glass-line))}
+.vx-rot input[type=range]::-moz-range-track{height:6px;border-radius:99px;background:linear-gradient(90deg,var(--glass-line),var(--gold,#C49A4A) 50%,var(--glass-line))}
+.vx-rot input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-8px;border-radius:50%;background:#fff;border:2px solid var(--gold,#C49A4A);box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.vx-rot input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--gold,#C49A4A);box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.vx-rot-ticks{display:flex;justify-content:space-between;font:600 9.5px/1 var(--sans);letter-spacing:.1em;opacity:.65;padding:0 4px;margin-top:2px}
+.vx-rot-row{display:flex;gap:6px;margin-top:10px}
+.vx-rot-row button{flex:1;padding:8px 6px;border-radius:8px;border:1px solid var(--glass-line);background:transparent;color:inherit;font:600 10.5px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.vx-rot-row button[aria-pressed=true]{background:var(--gold,#C49A4A);border-color:var(--gold,#C49A4A);color:#14202e}
+.vx-rot-spd{display:flex;align-items:center;gap:8px;margin-top:10px;font:500 11px/1 var(--sans);opacity:.85}
+.vx-rot-spd input{flex:1}
+@media (max-width:560px){.vx-rot{left:auto;right:calc(100% + 8px);top:0;bottom:auto;transform:none;width:min(260px,calc(100vw - 90px))}}
 .vx-expand{position:absolute;top:10px;right:10px;z-index:800;width:38px;height:38px;display:grid;place-items:center;border-radius:9px;
   border:1px solid var(--glass-line);background:var(--glass-2);color:var(--snow);cursor:pointer;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   box-shadow:0 6px 16px -10px rgba(0,0,0,.45);}
@@ -4572,15 +4596,18 @@ body.gated .wh-fab{display:none;}
       <div class="tl star"><div class="tl-time">4:00 PM</div><div class="tl-title">Check In &middot; 42 Nighthawk Drive</div><p class="tl-body">Host walk-through, pick rooms. All four mountains visible from the living room. First order of business: the hot tub.</p><div class="media" data-m="d0_checkin"></div></div>
       <div class="tl"><div class="tl-time">~4:15 PM</div><div class="tl-title">Griffin + Marco &rarr; FMS Downtown &middot; Rentals</div><p class="tl-body">Drop the bags and drive straight down (about 10 min) to Four Mountain Sports Downtown, 520 E Durant Ave. <strong>It closes at 5 PM</strong>, not 7. Griffin gets skis, boots and poles; Marco gets his snowboard and boots. Pickup after 2 PM the day before is free. Boot fitting takes a while, so don&rsquo;t dawdle. Bring the gear back to the house.</p><p class="tl-note">Running late from I-70? Call (970) 920-2337. The fallback is FMS Snowmass Base Village at 8 AM Mon. Marcy + Stella&rsquo;s lesson gear comes with their lesson package at Buttermilk. Ben brings his own skis.</p></div>
       <div class="tl"><div class="tl-time">~7:00 PM</div><div class="tl-title">Head Downtown</div><p class="tl-body">Everyone rides down together around 6:45. The rentals are already at the house, so you leave fully loaded tomorrow. Park for the evening in the Rio Grande garage (427 Rio Grande Pl), a 10-minute walk to the Little Nell, or drop everyone at the door first.</p><div class="media" data-m="d0_downtown"></div></div>
-      <div class="tl star"><div class="tl-time">7:30 PM</div><div class="tl-title">Welcome Dinner &middot; Element 47</div><p class="tl-body">The Little Nell&rsquo;s restaurant, 675 E Durant Ave, right at the base of Aspen Mountain. Seasonal mountain cooking and one of the biggest wine lists in town, a proper way to start the trip. Dinner runs until about 9:15, then it&rsquo;s straight to Cloonee.</p><p class="tl-note"><strong>Booked: table for 6 at 7:30 PM.</strong> Tell the server when you sit down that you have a 9:30 show, so the courses keep moving. Changes: (970) 920-6330.</p><div class="rl rl-stop" data-rest="element47"><span class="rl-name">Element 47</span><div class="rl-pills">
+      <div class="tl star"><div class="tl-time">7:30 PM</div><div class="tl-title">Welcome Dinner &middot; Element 47</div><p class="tl-body">The Little Nell&rsquo;s restaurant, 675 E Durant Ave, right at the base of Aspen Mountain. Seasonal mountain cooking and one of the biggest wine lists in town, a proper way to start the trip. Dinner runs until about 9:15, then it&rsquo;s straight to Cloonee.</p><p class="tl-note"><strong>Booked: table for 6 at 7:30 PM.</strong> Tell the server when you sit down that you have a 9:30 show, so the courses keep moving. Changes: (970) 920-6331.</p><div class="media" data-m="d0_e47"></div><div class="rl rl-stop" data-rest="element47"><span class="rl-name">Element 47</span><div class="rl-pills">
+      <a class="rl-pill" href="https://www.thelittlenell.com/-/media/thelittlenell/menus/element-47/2026/element47dinner093026.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
+      <a class="rl-pill" href="https://www.thelittlenell.com/-/media/thelittlenell/menus/element-47/2026/element47winelist81726.pdf" target="_blank" rel="noopener">Wine list <span class="rl-ext">PDF</span></a>
       <a class="rl-pill" href="https://www.thelittlenell.com/dine/element-47" target="_blank" rel="noopener">Website</a>
-      <a class="rl-pill" href="tel:+19709206330">Call (970) 920-6330</a>
+      <a class="rl-pill" href="tel:+19709206331">Call (970) 920-6331</a>
       <a class="rl-pill rl-wear" href="#outfits" data-outfit="wildfig">What to wear →</a>
-  </div><details class="rl-more"><summary>Hours, dress &amp; tips</summary><dl class="rl-info">
-      <dt>Hours</dt><dd>Dinner from 6 PM. <em class="rl-unv">(unverified: winter closing time)</em></dd>
+  </div><div class="rl-order"><span class="rl-order-k">What to order</span><span class="rl-order-v">Steak Tartare with black truffle (to share) · Brillat-Savarin &amp; truffle pasta · Cross Creek Wagyu or The Nell Wellington · Baked Alaska for the table</span></div><details class="rl-more"><summary>Hours, dress, order &amp; tips</summary><dl class="rl-info">
+      <dt>Hours</dt><dd>Dinner Wed&ndash;Sun, 6&ndash;9 PM (Sunday Dec 27 is an open night). Winter season opens Nov 20.</dd>
       <dt>Dress</dt><dd>&ldquo;Aspen casual&rdquo;: no posted dress code. Nice jeans and a sweater or button-up are fine; it is the Little Nell, so lean polished.</dd>
-      <dt>Book</dt><dd><strong>Booked</strong>: table for 6, Sun Dec 27, 7:30 PM. Changes: (970) 920-6330 or element47@thelittlenell.com.</dd>
-      <dt>Tips</dt><dd>Tell the server when you sit down that you have a 9:30 show, so the courses keep moving. Belly Up is a 3-minute walk.</dd>
+      <dt>Book</dt><dd><strong>Booked</strong>: table for 6, Sun Dec 27, 7:30 PM. Changes: (970) 920-6331 or element47@thelittlenell.com.</dd>
+      <dt>Order</dt><dd>Steak Tartare with black truffle (to share) · Brillat-Savarin &amp; truffle pasta · Cross Creek Wagyu or The Nell Wellington · Baked Alaska for the table. It&rsquo;s &agrave; la carte (no tasting menu); the menu pairs a glass of wine with each main.</dd>
+      <dt>Tips</dt><dd>Order starters and mains together and tell the server you have a 9:15 hard stop for a 9:30 show. Belly Up is a 3-minute walk. A 22% service charge is added automatically for 6 or more. Cancelling inside 48 hours (or not showing) is $100 per person. The wine list runs 600+ labels: ask the sommelier for one bottle per course.</dd>
   </dl></details></div></div>
       <div class="tl"><div class="tl-time">~9:15 PM</div><div class="tl-title">Walk to Belly Up &middot; 3 min</div><p class="tl-body">Out the Little Nell&rsquo;s front door, walk west on Durant Ave to Galena St and turn right. Belly Up is a few doors up on Galena (~160 m). Doors opened at 8:30, so the floor will be filling up; Cloonee goes on at 9:30. <a href="https://www.google.com/maps/dir/?api=1&amp;origin=39.18685,-106.81748&amp;destination=39.18743,-106.81896&amp;travelmode=walking" target="_blank" rel="noopener">Walking directions &rarr;</a></p><p class="tl-note">The other two walk back to the garage and take the Suburban (and Griffin&rsquo;s rentals) home, 5 min up Red Mountain. The driver skips the wine at dinner.</p></div>
       <div class="tl star"><div class="tl-time">9:30 PM</div><div class="tl-title">Cloonee &middot; Belly Up Aspen</div><p class="tl-body">The house DJ at Aspen&rsquo;s famous music club, 450 S Galena St, around the corner from FMS Downtown. Doors 8:30 PM, Cloonee on at 9:30. <strong>4 GA tickets bought</strong> &mdash; general admission is the standing dance floor.</p><p class="tl-note"><strong>21+ &mdash; bring photo ID.</strong> Tickets live in the Belly Up app / phone wallet (no screenshots or paper), and anyone walking in with Griffin doesn&rsquo;t need a transfer. If someone arrives separately, Griffin transfers their ticket after 4 PM on Sat Dec 26 (tickets can&rsquo;t be sent earlier).</p><p class="tl-note">Getting home: it&rsquo;s a Sunday, so no free late-night taxi, and the Downtowner stops at 11 PM. Uber/Lyft or High Mountain Taxi (970) 925-8294 up Red Mountain (~5 min). Lessons start 8:45 AM tomorrow, and it&rsquo;s the first night at 8,000 ft &mdash; pace the drinks.</p><div class="media" data-m="d0_bellyup"></div></div>
@@ -4874,24 +4901,29 @@ body.gated .wh-fab{display:none;}
   <div class="rest reveal">
 
     <div class="restcard">
-      <div class="body" style="grid-column:1/-1">
-        <div class="rhead"><span class="rname">Element 47</span><span class="rprice">~$150/pp &middot; Day 0 &middot; Sun Dec 27</span></div>
+      <div class="ph" data-m="rest_e47"></div>
+      <div class="body">
+        <div class="rhead"><span class="rname">Element 47</span><span class="rprice">~$180/pp &middot; Day 0 &middot; Sun Dec 27</span></div>
         <div class="rtype">The Little Nell &middot; base of the gondola &middot; <strong>the welcome dinner &mdash; booked, 7:30 PM &times; 6</strong></div>
         <dl class="rkv">
-          <dt>Address</dt><dd>675 E Durant Ave, Aspen (inside the Little Nell) &middot; (970) 920-6330</dd>
+          <dt>Address</dt><dd>675 E Durant Ave, Aspen (inside the Little Nell) &middot; (970) 920-6331</dd>
+          <dt>Order</dt><dd>Steak Tartare with black truffle (to share) · Brillat-Savarin &amp; truffle pasta · Cross Creek Wagyu or The Nell Wellington · Baked Alaska for the table</dd>
           <dt>Then</dt><dd>Straight to Cloonee at Belly Up, a 3-minute walk (show at 9:30)</dd>
         </dl>
         <div class="rl" data-rest="element47">
   <div class="rl-pills">
+      <a class="rl-pill" href="https://www.thelittlenell.com/-/media/thelittlenell/menus/element-47/2026/element47dinner093026.pdf" target="_blank" rel="noopener">Menu <span class="rl-ext">PDF</span></a>
+      <a class="rl-pill" href="https://www.thelittlenell.com/-/media/thelittlenell/menus/element-47/2026/element47winelist81726.pdf" target="_blank" rel="noopener">Wine list <span class="rl-ext">PDF</span></a>
       <a class="rl-pill" href="https://www.thelittlenell.com/dine/element-47" target="_blank" rel="noopener">Website</a>
-      <a class="rl-pill" href="tel:+19709206330">Call (970) 920-6330</a>
+      <a class="rl-pill" href="tel:+19709206331">Call (970) 920-6331</a>
       <a class="rl-pill rl-wear" href="#outfits" data-outfit="wildfig">What to wear →</a>
   </div>
   <dl class="rl-info">
-      <dt>Hours</dt><dd>Dinner from 6 PM. <em class="rl-unv">(unverified: winter closing time)</em></dd>
+      <dt>Hours</dt><dd>Dinner Wed&ndash;Sun, 6&ndash;9 PM (Sunday Dec 27 is an open night). Winter season opens Nov 20.</dd>
       <dt>Dress</dt><dd>&ldquo;Aspen casual&rdquo;: no posted dress code. Nice jeans and a sweater or button-up are fine; it is the Little Nell, so lean polished.</dd>
-      <dt>Book</dt><dd><strong>Booked</strong>: table for 6, Sun Dec 27, 7:30 PM. Changes: (970) 920-6330 or element47@thelittlenell.com.</dd>
-      <dt>Tips</dt><dd>Tell the server when you sit down that you have a 9:30 show, so the courses keep moving. Belly Up is a 3-minute walk.</dd>
+      <dt>Book</dt><dd><strong>Booked</strong>: table for 6, Sun Dec 27, 7:30 PM. Changes: (970) 920-6331 or element47@thelittlenell.com.</dd>
+      <dt>Order</dt><dd>Steak Tartare with black truffle (to share) · Brillat-Savarin &amp; truffle pasta · Cross Creek Wagyu or The Nell Wellington · Baked Alaska for the table. It&rsquo;s &agrave; la carte (no tasting menu); the menu pairs a glass of wine with each main.</dd>
+      <dt>Tips</dt><dd>Order starters and mains together and tell the server you have a 9:15 hard stop for a 9:30 show. Belly Up is a 3-minute walk. A 22% service charge is added automatically for 6 or more. Cancelling inside 48 hours (or not showing) is $100 per person. The wine list runs 600+ labels: ask the sommelier for one bottle per course.</dd>
   </dl>
         </div>
       </div>
@@ -5134,7 +5166,7 @@ body.gated .wh-fab{display:none;}
     <tr><td>NYE dinner</td><td>Matsuhisa omakase &middot; 6 &times; ~$280 (+ sake)</td><td><strong>~$1,680&ndash;2,100</strong></td></tr>
     <tr><td>Day 6 dinner</td><td>Steakhouse 316 &middot; 6 &times; ~$180</td><td><strong>~$1,080</strong></td></tr>
     <tr><td>Day 4 lunch</td><td>Merry-Go-Round (Highlands) &middot; 6 &times; ~$30</td><td><strong>~$180</strong></td></tr>
-    <tr><td>Day 0 dinner</td><td>Element 47 &middot; 6 &times; ~$150</td><td><strong>~$900</strong></td></tr>
+    <tr><td>Day 0 dinner</td><td>Element 47 &middot; 6 &times; ~$180 (incl. 22% service)</td><td><strong>~$1,080</strong></td></tr>
     <tr><td>Day 0 concert</td><td>Cloonee @ Belly Up &middot; 4 GA tickets</td><td><strong>Paid</strong></td></tr>
     <tr><td>Day 2 dinner</td><td>Casa Tua &middot; 6 &times; ~$225</td><td><strong>~$1,350</strong></td></tr>
     <tr><td>Casual dinner</td><td>Day 1 out &middot; White House Tavern / Meat &amp; Cheese</td><td><strong>~$300</strong></td></tr>
@@ -5145,8 +5177,8 @@ body.gated .wh-fab{display:none;}
 
   <div class="card reveal" style="margin-top:8px">
     <div class="grid2">
-      <div><div class="info-sub">Estimated subtotal</div><div class="info-title" style="color:var(--evergreen)">~$19,650&ndash;20,550</div><p class="note-sans">Activities + food &mdash; excludes lodging &amp; flights</p></div>
-      <div><div class="info-sub">Per person (&divide; 6)</div><div class="info-title" style="color:var(--evergreen)">~$3,275&ndash;3,425</div><p class="note-sans">Excludes lodging &amp; flights</p></div>
+      <div><div class="info-sub">Estimated subtotal</div><div class="info-title" style="color:var(--evergreen)">~$19,830&ndash;20,730</div><p class="note-sans">Activities + food &mdash; excludes lodging &amp; flights</p></div>
+      <div><div class="info-sub">Per person (&divide; 6)</div><div class="info-title" style="color:var(--evergreen)">~$3,305&ndash;3,455</div><p class="note-sans">Excludes lodging &amp; flights</p></div>
     </div>
     <p class="note" style="margin-top:14px">Then add your two known costs: <strong>Lodging</strong> (42 Nighthawk &mdash; confirmed, your rate) and <strong>Flights</strong> (5 booked &mdash; your fare; Marco&rsquo;s United flights are his own).</p>
     <p class="note-sans" style="margin-top:8px">Estimates only &mdash; the swing factors are whether Griffin buys his own ski clothes, NYE drinks, and how many meals you eat out vs cook in. Marco books MSP &harr; DEN himself (booked).</p>
@@ -5196,7 +5228,7 @@ body.gated .wh-fab{display:none;}
       <div class="crow"><div><div class="cr-name">French Alpine Bistro</div><div class="cr-meta">Day 3 &middot; 400 E Hopkins &middot; (970) 925-1566</div></div><a class="cr-flat" href="https://www.opentable.com" target="_blank" rel="noopener">OpenTable</a></div>
       <div class="crow"><div><div class="cr-name">Pine Creek Cookhouse</div><div class="cr-meta">Optional splurge &middot; sleigh dinner</div></div><a class="cr-tel" href="tel:9709251044">(970) 925-1044</a></div>
       <div class="crow"><div><div class="cr-name">Casa Tua</div><div class="cr-meta">Day 2 dinner &middot; Tue Dec 29 &middot; SevenRooms or phone &middot; 403 S Galena</div></div><a class="cr-tel" href="tel:9709207277">(970) 920-7277</a></div>
-      <div class="crow"><div><div class="cr-name">Element 47</div><div class="cr-meta">Day 0 welcome dinner &middot; Sun Dec 27, 7:30 PM &middot; booked for 6 &middot; The Little Nell, 675 E Durant</div></div><a class="cr-tel" href="tel:9709206330">(970) 920-6330</a></div>
+      <div class="crow"><div><div class="cr-name">Element 47</div><div class="cr-meta">Day 0 welcome dinner &middot; Sun Dec 27, 7:30 PM &middot; booked for 6 &middot; The Little Nell, 675 E Durant</div></div><a class="cr-tel" href="tel:9709206331">(970) 920-6331</a></div>
       <div class="crow"><div><div class="cr-name">Meat &amp; Cheese</div><div class="cr-meta">Walk-in backup &middot; no reservations &middot; 319 E Hopkins</div></div><a class="cr-flat" href="https://www.opentable.com" target="_blank" rel="noopener">Walk in</a></div>
       <div class="crow"><div><div class="cr-name">Belly Up Aspen</div><div class="cr-meta">Cloonee &middot; Sun Dec 27 &middot; doors 8:30 &middot; 450 S Galena &middot; 21+</div></div><a class="cr-tel" href="tel:9705449800">(970) 544-9800</a></div>
     </div>
@@ -8069,6 +8101,14 @@ body.gated .wh-fab{display:none;}
     d0_drive:{p:[
       ['d0_drive_open','High country on the way in — an empty road and snow-capped peaks','alexandra avelar','UNS','https://unsplash.com/photos/Xoj0SQRKFpo'],
       ['d0_canyon_3','I-70 through Glenwood Canyon — the river runs right beside the road','kahunapulej','BYNCSA2',FL+'94937042@N00/348432554']]},
+    d0_e47:{p:[
+      ['d0_e47_1','Steak Tartare under shaved black truffle, with tallow chips and a glass of red','The Little Nell','C','https://www.thelittlenell.com/dine/element-47'],
+      ['d0_e47_3','A winter plate: braised meat over squash purée with Parmigiano and pomegranate','The Little Nell','C','https://www.thelittlenell.com/dine'],
+      ['d0_e47_2','Element 47 private dining, set for a party: tall candles, lemons and rows of stemware','The Little Nell','C','https://www.thelittlenell.com/dine/element-47/private-dining']]},
+    rest_e47:{p:[
+      ['d0_e47_1','Steak Tartare under shaved black truffle, with tallow chips and a glass of red','The Little Nell','C','https://www.thelittlenell.com/dine/element-47'],
+      ['d0_e47_3','A winter plate: braised meat over squash purée with Parmigiano and pomegranate','The Little Nell','C','https://www.thelittlenell.com/dine'],
+      ['d0_e47_2','Element 47 private dining, set for a party: tall candles, lemons and rows of stemware','The Little Nell','C','https://www.thelittlenell.com/dine/element-47/private-dining']]},
     d0_bellyup:{p:[
       ['d0_bellyup_1','A packed floor at Belly Up','Belly Up Aspen','C','https://bellyupaspen.com/galleries/gallery-2025/'],
       ['d0_bellyup_2','The stage from the floor','Belly Up Aspen','C','https://bellyupaspen.com/galleries/gallery-2025/'],
@@ -9029,7 +9069,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     {id:'flights', booked:true, title:'Flights · American', when:'Out AA 2357 Sun Dec 27, 8:36 AM Dallas → 9:51 AM Denver · Back AA 1832 Sun Jan 3, 4:22 PM Denver → 7:30 PM Dallas', note:'Confirmation code is in the AA email · Griffin, Stella, Marcy, Jim, Ben'},
     {id:'car', booked:true, title:'Car · 2026 Chevrolet Suburban High Country (Turo)', when:'Black · 4WD · pick up Denver airport Sun Dec 27 · return Sun Jan 3'},
     {id:'snowmobile', booked:true, title:'Snowmobile tour · T-Lazy-7', when:'Wed Dec 30 · 9:30 AM · Klondike Lunch · 3 doubles', note:'Helmets only — everyone (Jim too) brings warm clothes, snow boots and gloves. (970) 925-4614'},
-    {id:'wildfig', booked:true, title:'Welcome dinner · Element 47 (The Little Nell)', when:'Sun Dec 27 · 7:30 PM · table for 6 · 675 E Durant', note:'Then straight to Belly Up (3-min walk). Changes: (970) 920-6330'},
+    {id:'wildfig', booked:true, title:'Welcome dinner · Element 47 (The Little Nell)', when:'Sun Dec 27 · 7:30 PM · table for 6 · 675 E Durant', note:'Then straight to Belly Up (3-min walk). Changes: (970) 920-6331'},
     {id:'lifts', booked:true, title:'Lift tickets · Griffin, Ben, Stella, Marcy', when:'Griffin + Ben 4-Day from Mon Dec 28 · Stella 3-Day from Tue Dec 29 · Marcy 2-Day from Thu Dec 31', note:'Marco’s is the only one still to buy. Pick up the Aspen Cards at a Pickup Box with the QR code from the email.'},
     {id:'concert', booked:true, title:'Cloonee at Belly Up · 4 tickets', when:'Sun Dec 27 · doors 8:30 PM · show 9:30 PM · 450 S Galena'}
   ];
@@ -9405,7 +9445,13 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       + '<button class="vx-tool keep vx-flybtn" data-t="fly" hidden title="Play this day as a 3D film">' + ICON.play + '<span>Play this day</span></button>'
       ;
     var right = $('vxToolsR');
-    if (right) right.innerHTML = '<button class="vx-tool sq vx-orbit" data-t="orbit" hidden aria-pressed="false" title="Orbit: slowly circle around the middle of the map. Tip: hold Control (⌃) and drag to swivel and tilt yourself." aria-label="Orbit around the middle of the map">' + '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/><circle cx="12" cy="12" r="2.2"/></svg>' + '</button>'
+    if (right) right.innerHTML = '<div class="vx-zoom" role="group" aria-label="Zoom"><button class="vx-tool sq" data-t="zin" title="Zoom in (or pinch / scroll on the map)" aria-label="Zoom in">+</button><button class="vx-tool sq" data-t="zout" title="Zoom out" aria-label="Zoom out">&minus;</button></div>'
+      + '<div class="vx-rotwrap"><button class="vx-tool sq vx-orbit" data-t="orbit" hidden aria-pressed="false" aria-expanded="false" title="Rotate the 3D view: drag the slider, or let it spin" aria-label="Rotate the 3D view">' + '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/><circle cx="12" cy="12" r="2.2"/></svg>' + '</button>'
+      + '<div class="vx-rot" id="vxRot" hidden role="group" aria-label="Rotate the view"><div class="vx-rot-top"><span>Rotate</span><b id="vxRotV">N · 0°</b></div>'
+      + '<input type="range" id="vxRotR" min="0" max="360" step="1" value="0" aria-label="Map heading in degrees">'
+      + '<div class="vx-rot-ticks" aria-hidden="true"><span>N</span><span>E</span><span>S</span><span>W</span><span>N</span></div>'
+      + '<div class="vx-rot-row"><button type="button" data-rot="spin" aria-pressed="false">&#9654; Spin</button><button type="button" data-rot="north">Face north</button></div>'
+      + '<label class="vx-rot-spd"><span>Speed</span><input type="range" id="vxRotS" min="2" max="30" step="1" value="7" aria-label="Spin speed"></label></div></div>'
       + '<button class="vx-tool sq" data-t="locate" title="How far am I from the house?" aria-label="Show my location">' + ICON.locate + '</button>'
       + '<button class="vx-tool sq" data-t="fit" title="Fit the map to this day" aria-label="Fit the map to this day">' + ICON.fit + '</button>';
     [].forEach.call(t.querySelectorAll('[data-base]'), function(b){ b.addEventListener('click', function(){ setBase(b.getAttribute('data-base')); }); });
@@ -9419,7 +9465,8 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
         if (k === 'pistes'){ prefs.pistes = !pistesOn(); savePrefs(); applyOverlays(); if (pistesOn() && map && map.getZoom() < 9) toast('Zoom in to see the ski runs.'); }
         else if (k === 'rings'){ prefs.rings = !prefs.rings; savePrefs(); applyOverlays(); }
         else if (k === 'locate'){ locate(); }
-        else if (k === 'orbit'){ if (ORB) stopOrbit(); else startOrbit(); }
+        else if (k === 'orbit'){ rotPanel(); }
+        else if (k === 'zin' || k === 'zout'){ zoomBy(k === 'zin' ? 1 : -1); }
         else if (k === 'fit'){ if (is3d) frame3d(true); else fitCurrent(); }
         else if (k === 'town'){ if (townOn) show(townPrev || 'trip', true); else enterTown(true); }
         else if (k === '3d'){   /* one 3D button: Photoreal by default, Simple if chosen or if Photoreal can't load */
@@ -9432,11 +9479,79 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     var ex = $('vxExpand');
     if (ex){ ex.innerHTML = ICON.expand; ex.addEventListener('click', function(){ toggleFull(); }); }
   }
+  /* v49: zoom buttons (2D Leaflet, simple 3D MapLibre, photoreal Cesium) */
+  function zoomBy(dir){
+    try {
+      if (prOn && PRV && PRV.v){
+        var C = PRV.C, v = PRV.v, cam = v.camera, sc = v.scene, cv = sc.canvas, mid = new C.Cartesian2(cv.clientWidth / 2, cv.clientHeight / 2), p = null;
+        try { p = sc.pickPosition(mid); } catch(e){}
+        var dist = p ? C.Cartesian3.distance(cam.positionWC, p) : Math.max(300, cam.positionCartographic.height);
+        var total = dir > 0 ? dist * 0.42 : -dist * 0.72, t0 = performance.now(), done = 0;
+        (function step(now){ var u = Math.min(1, (now - t0) / 320), e = 1 - Math.pow(1 - u, 3), want = total * e; cam.moveForward(want - done); done = want; if (u < 1) requestAnimationFrame(step); })(t0);
+      } else if (is3d && m3){ if (dir > 0) m3.zoomIn(); else m3.zoomOut(); }
+      else if (map){ if (dir > 0) map.zoomIn(); else map.zoomOut(); }
+    } catch(e){}
+  }
+  /* v49: rotate slider — drag to swivel the 3D view around the middle of the screen; Spin = the old orbit, with a speed */
+  var ROT = {tgt:null};
+  function rotTarget(){
+    if (!(prOn && PRV && PRV.v)) return null;
+    var C = PRV.C, v = PRV.v, sc = v.scene, cv = sc.canvas, mid = new C.Cartesian2(cv.clientWidth / 2, cv.clientHeight / 2), tgt = null;
+    try { tgt = sc.pickPosition(mid); } catch(e){}
+    if (!tgt){ var ray = v.camera.getPickRay(mid); tgt = ray && sc.globe ? sc.globe.pick(ray, sc) : null; }
+    if (!tgt){ tgt = C.Cartesian3.add(v.camera.positionWC, C.Cartesian3.multiplyByScalar(v.camera.directionWC, 3000, new C.Cartesian3()), new C.Cartesian3()); }
+    return {t:tgt, p:v.camera.pitch, r:C.Cartesian3.distance(v.camera.positionWC, tgt)};
+  }
+  function getHeading(){
+    try { if (prOn && PRV && PRV.v) return (PRV.C.Math.toDegrees(PRV.v.camera.heading) % 360 + 360) % 360; if (is3d && m3) return (m3.getBearing() % 360 + 360) % 360; } catch(e){}
+    return 0;
+  }
+  function setHeading(deg){
+    try {
+      if (prOn && PRV && PRV.v){ var C = PRV.C, v = PRV.v; if (!ROT.tgt) ROT.tgt = rotTarget(); var T0 = ROT.tgt;
+        v.camera.lookAt(T0.t, new C.HeadingPitchRange(C.Math.toRadians(deg), T0.p, T0.r)); v.camera.lookAtTransform(C.Matrix4.IDENTITY); }
+      else if (is3d && m3) m3.setBearing(deg);
+    } catch(e){}
+  }
+  var DIRS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  function rotSync(){
+    var R = $('vxRotR'), V = $('vxRotV'); if (!R || !V) return;
+    var h = Math.round(getHeading()); if (document.activeElement !== R || ORB) R.value = h;
+    V.textContent = DIRS[Math.round(h / 45) % 8] + ' · ' + h + '°';
+    var sp = document.querySelector('#vxRot [data-rot="spin"]'); if (sp){ sp.setAttribute('aria-pressed', !!ORB); sp.innerHTML = ORB ? '&#10074;&#10074; Pause' : '&#9654; Spin'; }
+  }
+  function rotPanel(open){
+    var P = $('vxRot'), b = document.querySelector('#vxToolsR [data-t="orbit"]'); if (!P) return;
+    if (open == null) open = P.hidden;
+    if (!(is3d || prOn)) open = false;
+    P.hidden = !open; if (b){ b.setAttribute('aria-expanded', open); b.setAttribute('aria-pressed', open || !!ORB); }
+    if (open){ ROT.tgt = null; rotSync(); }
+  }
+  (function wireRot(){
+    var tries = 0;
+    (function wait(){
+      var R = $('vxRotR'); if (!R){ if (tries++ < 60) setTimeout(wait, 500); return; }
+      var S = $('vxRotS');
+      R.addEventListener('pointerdown', function(){ if (ORB) stopOrbit(); ROT.tgt = null; });
+      R.addEventListener('focus', function(){ ROT.tgt = null; });
+      R.addEventListener('input', function(){ if (ORB) stopOrbit(); setHeading(+R.value); rotSync(); });
+      if (S) S.addEventListener('input', function(){ if (ORB) ORB.speed = +S.value; });
+      document.getElementById('vxRot').addEventListener('click', function(e){
+        var k = e.target.closest && e.target.closest('[data-rot]'); if (!k) return; k = k.getAttribute('data-rot');
+        if (k === 'spin'){ if (ORB) stopOrbit(); else startOrbit(); }
+        else if (k === 'north'){ if (ORB) stopOrbit(); ROT.tgt = null; var from = getHeading(), d = ((360 - from + 540) % 360) - 180, t0 = performance.now();
+          (function step(now){ var u = Math.min(1, (now - t0) / 600), e2 = 1 - Math.pow(1 - u, 3); setHeading((from + d * e2 + 360) % 360); rotSync(); if (u < 1) requestAnimationFrame(step); })(t0); }
+        rotSync();
+      });
+      document.addEventListener('pointerdown', function(e){ var P = $('vxRot'); if (P && !P.hidden && !e.target.closest('.vx-rotwrap')) rotPanel(false); }, true);
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape'){ var P = $('vxRot'); if (P && !P.hidden) rotPanel(false); } });
+    })();
+  })();
   /* v44: Orbit — the camera circles the point in the middle of the screen (~7°/s). Any touch, drag or scroll stops it. */
   var ORB = null;
   function startOrbit(){
     if (ORB || !(is3d || prOn)) return;
-    var o = ORB = {last:0, raf:0, off:[]};
+    var o = ORB = {last:0, raf:0, off:[], speed:+(($('vxRotS') || {}).value || 7)};
     if (prOn && PRV && PRV.v){
       var C = PRV.C, v = PRV.v, sc = v.scene, cv = sc.canvas;
       var mid = new C.Cartesian2(cv.clientWidth / 2, cv.clientHeight / 2), tgt = null;
@@ -9455,21 +9570,23 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     function step(now){
       if (ORB !== o) return;
       var dt = o.last ? Math.min(now - o.last, 60) : 16; o.last = now;
-      var deg = 7 * dt / 1000;
+      var deg = (o.speed || 7) * dt / 1000;
       try {
         if (o.pr){ var P = o.pr; P.h += P.C.Math.toRadians(deg);
           P.v.camera.lookAt(P.tgt, new P.C.HeadingPitchRange(P.h, P.p, P.r)); P.v.camera.lookAtTransform(P.C.Matrix4.IDENTITY); }
         else if (m3) m3.setBearing(m3.getBearing() + deg);
       } catch(e){ stopOrbit(); return; }
+      if (!(o.n = (o.n || 0) + 1) || o.n % 4 === 0) rotSync();
       o.raf = requestAnimationFrame(step);
     }
     o.raf = requestAnimationFrame(step);
-    syncTools();
+    syncTools(); rotSync();
   }
   function stopOrbit(){
     var o = ORB; if (!o) return; ORB = null;
     cancelAnimationFrame(o.raf); o.off.forEach(function(f){ try { f(); } catch(e){} });
-    var ob = document.querySelector('#vxToolsR [data-t="orbit"]'); if (ob) ob.setAttribute('aria-pressed', 'false');
+    var ob = document.querySelector('#vxToolsR [data-t="orbit"]'); if (ob) ob.setAttribute('aria-pressed', String(!!($('vxRot') && !$('vxRot').hidden)));
+    rotSync();
   }
   /* Safari passes the trackpad's two-finger twist to pages: turn it into a swivel (Chrome doesn't send it). */
   (function(){
@@ -9499,9 +9616,9 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       [].forEach.call(md.querySelectorAll('[data-m3]'), function(b){ b.setAttribute('aria-pressed', (b.getAttribute('data-m3') === 'pr') === !!prOn); }); }
     if (d3){ d3.setAttribute('aria-pressed', !!(is3d || prOn)); d3.setAttribute('aria-label', is3d ? 'Back to the flat map' : 'Open the 3D view'); }
     var ob = document.querySelector('#vxToolsR [data-t="orbit"]');
-    if (ob){ ob.hidden = !(is3d || prOn); ob.setAttribute('aria-pressed', !!ORB); }
-    if (!(is3d || prOn) && ORB) stopOrbit();
-    if ((is3d || prOn) && !syncTools.tipped){ syncTools.tipped = true; setTimeout(function(){ if (is3d || prOn) toast('Tip: hold Control (⌃) and drag to swivel and tilt · or tap ↻ to orbit.'); }, 1400); }
+    if (ob){ ob.hidden = !(is3d || prOn); ob.setAttribute('aria-pressed', !!ORB || !!($('vxRot') && !$('vxRot').hidden)); }
+    if (!(is3d || prOn)){ if (ORB) stopOrbit(); rotPanel(false); }
+    if ((is3d || prOn) && !syncTools.tipped){ syncTools.tipped = true; setTimeout(function(){ if (is3d || prOn) toast('Tip: tap ↻ for a rotate slider · + and − to zoom · or hold Control (⌃) and drag to tilt.'); }, 1400); }
     if (fl){
       fl.hidden = !dayById(cur) && cur !== 'town';
       var fs = fl.querySelector('span'); if (fs) fs.textContent = cur === 'town' ? 'Play the walks' : 'Play this day';
@@ -14026,6 +14143,7 @@ function galHTML(){
     '<h2 id="egGalT">' + (p ? esc2(PPL[p]) + '&rsquo;s secrets' : 'Your secrets') + '</h2>' +
     '<p class="eg-gsum"><b>' + n + '</b> of ' + EGGS + ' found &middot; <b>' + g + '</b> golden snowflake' + (g === 1 ? '' : 's') + ' &middot; <b>' + tk + '</b> hint token' + (tk === 1 ? '' : 's') + '</p>' +
     (p ? '' : '<p class="eg-gnote">You haven&rsquo;t picked who you are, so finds aren&rsquo;t being kept. <button type="button" data-eg="pick">Pick who you are</button></p>') +
+    (p && Object.keys(r).length ? '<button type="button" class="eg-reset" data-eg="reset">Reset ' + esc2(PPL[p]) + '&rsquo;s secrets</button>' : '') +
     '<button type="button" class="eg-close" data-eg="close" aria-label="Close the secret gallery"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>';
   /* golden snowflakes strip */
   h += '<section class="eg-gold" aria-label="Golden snowflakes"><div class="eg-gl"><span class="eg-gfl">' + flakeSVG() + '</span><div><b>Golden snowflakes</b><span>Now and then a golden one drifts down with the snow. Catch it. Every 3 earn a hint token; 5 unlock something golden.</span>' +
@@ -14064,6 +14182,7 @@ function openGallery(){
       else if (a === 'pick'){ closeGallery(); try { W.AspenWho.openPicker(); } catch(x){} }
       else if (a === 'replay'){ closeGallery(); setTimeout(function(){ replay(id); }, RM ? 0 : 280); }
       else if (a === 'hint') spendHint(id);
+      else if (a === 'reset'){ var pr = me(); if (pr && W.confirm('Reset all of ' + PPL[pr] + '’s secrets (trail, wild secrets and golden snowflakes)? This can’t be undone.')){ saveRec(pr, {}); try { if (W.AspenSync && W.AspenSync.scan) W.AspenSync.scan(); } catch(x){} syncFound(); paintEggs(false); renderGal(); } }
       else if (a === 'gh'){ setGH(!H.classList.contains('eg-gh')); renderGal(); var t = gal.querySelector('[data-eg="gh"]'); if (t) t.focus({preventScroll:true}); }
     });
     gal.addEventListener('keydown', function(e){
@@ -16082,6 +16201,8 @@ var ASTRO=(function(){
 .gate-tour{display:block;margin:12px auto 0;padding:9px 18px;border-radius:99px;border:1px solid rgba(196,154,74,.55);background:transparent;color:var(--gold,#B0863A);
   font:600 11px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .2s,border-color .2s}
 .gate-tour:hover,.gate-tour:focus-visible{background:rgba(196,154,74,.12);border-color:var(--gold,#B0863A)}
+.eg-reset{margin:10px 0 0;padding:6px 12px;border-radius:99px;border:1px solid rgba(212,175,106,.45);background:transparent;color:inherit;font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;opacity:.8}
+.eg-reset:hover{opacity:1;border-color:#d4af6a}
 .gate-tour-wrap{margin:16px auto 0;max-width:40ch;display:flex;flex-direction:column;align-items:center;gap:7px}
 .gate-tour-wrap .gate-tour{margin:0;padding:12px 22px;font-size:12px}
 .gate-tour-wrap.rec .gate-tour{border-color:var(--gold,#B0863A);background:rgba(196,154,74,.12);animation:gtPulse 2.4s ease-in-out infinite}
