@@ -13992,6 +13992,7 @@ function dropHTML(){
     '<div class="eg-dstats"><div><b>' + n + '<i>/' + EGGS + '</i></b><span>found</span></div><div><b>' + g + '</b><span>golden &#10052;&#65038;</span></div><div><b>' + tk + '</b><span>hint' + (tk === 1 ? '' : 's') + '</span></div></div>' +
     '<p class="eg-dgold"><span class="eg-pips" aria-hidden="true">' + pips(g) + '</span>' + esc2(goldLine(r, p)) + '</p>' +
     (nx ? '<p class="eg-dclue"><small>' + (n ? 'The next clue' : 'Where it begins') + '</small>' + esc2(INFO[nx].clue) + '</p>' : '<p class="eg-dclue"><small>Complete</small>All fourteen found. Legend.</p>') +
+    (W.AspenWild ? W.AspenWild.dropLine() : '') +
     '<button type="button" class="eg-dopen" data-eg="gal"><span>Open the secret gallery</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>';
 }
 function toggleDrop(chip){ if (drop && !drop.hidden) closeDrop(); else openDrop(chip); }
@@ -14049,7 +14050,7 @@ function galHTML(){
       h += '<li class="eg-c locked"><span class="eg-rn">' + RN[i] + '</span><span class="eg-frost" aria-hidden="true"></span>' + body + '</li>';
     }
   });
-  h += '</ol><p class="eg-gfoot">Each secret you find whispers a clue to the next. Your gallery is yours alone and follows you to every device.</p></div>';
+  h += '</ol>' + (W.AspenWild ? W.AspenWild.section() : '') + '<p class="eg-gfoot">Each secret you find whispers a clue to the next. Your gallery is yours alone and follows you to every device.</p></div>';
   return h;
 }
 function openGallery(){
@@ -14212,7 +14213,7 @@ function eggs2Init(){
   migrate(); paintEggs(false); applyGH(); goldInit();
   W.addEventListener('aspen:who', function(){ setTimeout(function(){ migrate(); paintEggs(false); applyGH(); }, 0); });
   W.addEventListener('aspen:sync', function(e){ if (e.detail && e.detail.key === KEY2){ paintEggs(false); applyGH(); } });
-  W.AspenEggs = {openGallery:openGallery, closeGallery:closeGallery, spawnGold:function(){ if (GF.el) dropGold(); spawnGold(); }, state:function(){ var p = me(), r = rec(p); return {who:p, found:foundIds(r), gold:goldOf(r), tokens:tokensOf(r)}; }, chain:CHAIN.slice()};
+  W.AspenEggs = {_card:card, _paint:function(g){ try { paintEggs(g); } catch(e){} }, openGallery:openGallery, closeGallery:closeGallery, spawnGold:function(){ if (GF.el) dropGold(); spawnGold(); }, state:function(){ var p = me(), r = rec(p); return {who:p, found:foundIds(r), gold:goldOf(r), tokens:tokensOf(r)}; }, chain:CHAIN.slice()};
 }
 syncFound();
 function fx(cls, ms, html){
@@ -16224,6 +16225,767 @@ if(gb&&!D.getElementById('gateTour')){
     '<small class="gate-tour-note">A one-minute tour of everything here. <b>Recommended for your first visit, or if it&rsquo;s been a while.</b></small>';
   gb.parentNode.insertBefore(wrap,gb.nextSibling);D.getElementById('gateTour').addEventListener('click',start);
 }
+})();
+</script>
+
+<style>
+/* ===== v47 wild secrets (no order — stumble into them). Lives in the gallery next to the 14-step trail. ===== */
+.wd-fx{position:fixed;inset:0;pointer-events:none;z-index:9990;overflow:hidden}
+.wd-hit{pointer-events:auto;cursor:pointer}
+.wd-yeti,.wd-moose,.wd-glove,.wd-starhit{background:none;border:0;padding:0;margin:0;-webkit-appearance:none;appearance:none;color:inherit;font:inherit}
+.wd-starhit{margin:-42px 0 0 -42px}
+/* 1 avalanche */
+.wd-pile{position:fixed;left:0;right:0;bottom:0;height:0;z-index:9991;pointer-events:none;transition:height .35s cubic-bezier(.2,.8,.3,1)}
+.wd-pile svg{position:absolute;left:0;bottom:0;width:100%;height:100%;filter:drop-shadow(0 -6px 14px rgba(40,60,80,.18))}
+.wd-pile.go{transition:transform 1.4s cubic-bezier(.55,0,.8,.4),opacity 1.4s;transform:translateY(110%) skewX(-8deg);opacity:.2}
+.wd-puff{position:absolute;border-radius:50%;background:#fff;box-shadow:0 0 12px rgba(255,255,255,.9);opacity:.95}
+/* 2 snowballs */
+.wd-ball{position:fixed;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#e6eef5 60%,#b9c8d6);box-shadow:0 2px 6px rgba(30,50,70,.3);z-index:9992;pointer-events:none}
+.wd-splat{position:fixed;z-index:9991;pointer-events:none;transform:translate(-50%,-50%)}
+.wd-splat svg{display:block;filter:drop-shadow(0 2px 3px rgba(30,50,70,.25))}
+/* 3 yeti / 4 moose / critters */
+.wd-yeti{position:fixed;bottom:calc(6px + env(safe-area-inset-bottom,0px));left:-90px;width:74px;height:96px;z-index:9993;pointer-events:auto;cursor:pointer;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}
+.wd-yeti svg{width:100%;height:100%;animation:wdBob .5s ease-in-out infinite alternate}
+@keyframes wdBob{to{transform:translateY(-4px) rotate(2deg)}}
+.wd-print{position:fixed;width:10px;height:14px;border-radius:50% 50% 45% 45%;background:rgba(120,140,160,.28);z-index:9989;pointer-events:none;transition:opacity 4s}
+.wd-moose{position:absolute;right:14px;bottom:-4px;width:110px;height:110px;z-index:5;cursor:pointer;transform:translateY(100%);transition:transform .9s cubic-bezier(.2,.9,.3,1.2);filter:drop-shadow(0 4px 8px rgba(0,0,0,.35))}
+.wd-moose.up{transform:translateY(8%)}
+.wd-moose.bolt{transition:transform 1s cubic-bezier(.5,0,.9,.5);transform:translate(160%,10%) rotate(8deg)}
+/* 5 shooting star */
+.wd-star{position:fixed;width:150px;height:2px;z-index:9992;pointer-events:none;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,248,220,.95));border-radius:2px;box-shadow:0 0 10px rgba(255,240,200,.9)}
+.wd-star::after{content:"";position:absolute;right:-4px;top:-3px;width:8px;height:8px;border-radius:50%;background:#fffbe8;box-shadow:0 0 14px 4px rgba(255,236,170,.95)}
+.wd-starhit{position:fixed;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;z-index:9993;pointer-events:auto;cursor:pointer}
+/* 6 lost glove */
+.wd-glove{position:absolute;width:30px;height:30px;z-index:6;cursor:pointer;transform:rotate(-24deg);filter:drop-shadow(0 2px 3px rgba(0,0,0,.3));transition:transform .2s}
+.wd-glove:hover{transform:rotate(-10deg) scale(1.12)}
+.wd-carry{position:fixed;left:16px;bottom:calc(64px + env(safe-area-inset-bottom,0px));z-index:9994;display:flex;align-items:center;gap:8px;padding:8px 12px 8px 8px;border-radius:99px;background:rgba(20,32,46,.86);color:#f3ead7;font:500 12px/1.2 'Jost',sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25);pointer-events:auto}
+.wd-carry svg{width:22px;height:22px}
+/* 7 frost */
+.wd-frost{position:fixed;inset:0;z-index:9989;pointer-events:none;opacity:0;transition:opacity 1.2s;
+  background:radial-gradient(ellipse at center,rgba(255,255,255,0) 42%,rgba(232,244,255,.55) 72%,rgba(245,251,255,.92) 100%)}
+.wd-frost svg{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen;opacity:.9;-webkit-mask-image:radial-gradient(ellipse at center,transparent 38%,#000 78%);mask-image:radial-gradient(ellipse at center,transparent 38%,#000 78%)}
+.wd-frost.on{opacity:1;transition:opacity 9s ease-in}
+.wd-frost.thaw{opacity:0;transition:opacity 1.1s;filter:blur(6px)}
+/* 8 chairlift / 9 gondola */
+.wd-cable{position:fixed;top:0;bottom:0;width:2px;background:linear-gradient(#5b6670,#2e353c);z-index:9990;pointer-events:none;opacity:.8}
+.wd-chair{position:fixed;width:58px;height:70px;margin-left:-29px;z-index:9991;pointer-events:none}
+.wd-gondola{position:fixed;right:10px;width:46px;height:62px;z-index:9991;pointer-events:none;transition:opacity .4s}
+.wd-gcable{position:fixed;right:32px;top:0;bottom:0;width:2px;background:rgba(60,70,80,.55);z-index:9990;pointer-events:none;transition:opacity .4s}
+/* 10 bluebird */
+.wd-blue{position:fixed;inset:0;z-index:9988;pointer-events:none;opacity:0;transition:opacity 2s;
+  background:radial-gradient(circle at 86% 8%,rgba(255,252,230,.9),rgba(255,240,190,.35) 9%,rgba(120,190,255,0) 26%),linear-gradient(180deg,rgba(64,150,240,.22),rgba(120,190,255,0) 45%)}
+.wd-blue.on{opacity:1}
+.wd-blue i{position:absolute;border-radius:50%;background:rgba(255,255,255,.18);box-shadow:0 0 30px rgba(255,255,255,.3)}
+/* 11 snowplow */
+.wd-cover{position:absolute;inset:0;z-index:4;pointer-events:none;background:#f4f7f9;
+  background-image:radial-gradient(rgba(170,190,205,.35) 1px,transparent 1.5px),radial-gradient(rgba(255,255,255,.9) 1px,transparent 1.5px);background-size:9px 9px,13px 13px}
+.wd-plow{position:absolute;bottom:18%;width:120px;height:70px;margin-left:-60px;z-index:5;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(0,0,0,.35))}
+.wd-cord{position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(255,255,255,.0) 0 6px,rgba(255,255,255,.22) 6px 8px);mix-blend-mode:screen;opacity:0;transition:opacity 1s}
+.wd-stamp{position:absolute;left:50%;top:42%;z-index:6;transform:translate(-50%,-50%) rotate(-8deg) scale(1.6);opacity:0;padding:10px 18px;border:3px solid #fff;border-radius:8px;color:#fff;font:700 clamp(16px,3vw,26px)/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase;text-shadow:0 2px 8px rgba(0,0,0,.4);box-shadow:0 0 0 2px rgba(0,0,0,.08);transition:transform .45s cubic-bezier(.2,1.4,.4,1),opacity .3s;pointer-events:none;white-space:nowrap}
+.wd-stamp.on{opacity:1;transform:translate(-50%,-50%) rotate(-8deg) scale(1)}
+/* 12 ice crack */
+.wd-crack{position:absolute;inset:0;z-index:7;pointer-events:none;overflow:hidden;border-radius:inherit}
+.wd-crack svg{position:absolute;width:100%;height:100%}
+.wd-crack path{fill:none;stroke:#6f97bd;stroke-width:1.8;filter:drop-shadow(0 0 1.5px rgba(255,255,255,.95));stroke-dasharray:400;stroke-dashoffset:400;animation:wdCrk .5s ease-out forwards}
+@keyframes wdCrk{to{stroke-dashoffset:0}}
+body.dark .wd-crack path{stroke:rgba(225,242,255,.95);filter:drop-shadow(0 0 1px rgba(40,90,140,.9))}
+.wd-ice{position:absolute;inset:0;z-index:6;pointer-events:none;border-radius:inherit;background:linear-gradient(135deg,rgba(200,230,255,.35),rgba(255,255,255,.1) 40%,rgba(180,220,255,.3));transition:opacity 1.2s}
+@keyframes wdShake{0%,100%{transform:none}20%{transform:translateX(-4px) rotate(-.4deg)}40%{transform:translateX(4px) rotate(.4deg)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+.wd-shake{animation:wdShake .45s}
+/* 13 hot chocolate */
+.wd-mug{position:absolute;right:14px;bottom:12px;z-index:8;width:64px;pointer-events:none;transform:translateY(30px);opacity:0;transition:transform .7s cubic-bezier(.2,1.3,.4,1),opacity .4s}
+.wd-mug.on{transform:none;opacity:1}
+.wd-mug span{position:absolute;right:72px;bottom:18px;white-space:nowrap;padding:6px 10px;border-radius:99px;background:rgba(20,32,46,.86);color:#f3ead7;font:500 12px/1 'Jost',sans-serif}
+.wd-steam{animation:wdSteam 2.4s ease-in-out infinite;transform-origin:center bottom}
+@keyframes wdSteam{0%{opacity:0;transform:translateY(6px) scaleY(.8)}40%{opacity:.8}100%{opacity:0;transform:translateY(-10px) scaleY(1.2)}}
+/* 14 trail-map mode */
+html.wd-trail body{background-image:repeating-radial-gradient(circle at 20% 30%,rgba(31,77,56,0) 0 38px,rgba(31,77,56,.06) 38px 39px),repeating-radial-gradient(circle at 80% 70%,rgba(31,77,56,0) 0 52px,rgba(31,77,56,.05) 52px 53px)!important}
+html.wd-trail .panel h2::before{content:"";display:inline-block;width:.55em;height:.55em;border-radius:50%;background:#2f9e44;margin-right:.35em;vertical-align:.08em}
+html.wd-trail .sub-head::before{content:"";display:inline-block;width:.75em;height:.75em;background:#1c64d6;margin-right:.5em;vertical-align:-.05em}
+html.wd-trail .tl-title::before{content:"";display:inline-block;width:.5em;height:.5em;background:#111;transform:rotate(45deg);margin-right:.5em;vertical-align:.1em}
+html.wd-trail .tl.star .tl-title::before{box-shadow:.62em 0 0 #111}
+body.dark.wd-trailx{}
+html.wd-trail body.dark .tl-title::before{background:#f3ead7}html.wd-trail body.dark .tl.star .tl-title::before{box-shadow:.62em 0 0 #f3ead7}
+.wd-trailtag{position:fixed;top:calc(64px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:9994;padding:6px 12px;border-radius:6px;background:#1c64d6;color:#fff;font:700 11px/1 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase;pointer-events:auto;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.2)}
+/* 15 goofy-footed */
+.wd-goofy{display:inline-block;animation:wdGoof 1.2s cubic-bezier(.3,1.4,.4,1) both;transform-origin:center}
+@keyframes wdGoof{0%{transform:none}50%{transform:scaleX(-1) rotate(-8deg) translateY(-6px)}100%{transform:scaleX(-1)}}
+.wd-board{position:fixed;z-index:9992;width:84px;height:22px;pointer-events:none}
+/* 16 honk */
+.wd-beam{position:fixed;width:180px;height:180px;margin:-90px 0 0 -90px;border-radius:50%;z-index:9992;pointer-events:none;background:radial-gradient(circle,rgba(255,250,225,.95),rgba(255,240,180,.4) 30%,rgba(255,240,180,0) 65%);mix-blend-mode:screen;opacity:0}
+.wd-honk{position:fixed;z-index:9993;pointer-events:none;font:900 clamp(26px,5vw,44px)/1 'Jost',sans-serif;color:#ffd84d;-webkit-text-stroke:2px #1b2a22;letter-spacing:.04em;transform:translate(-50%,-50%) rotate(-10deg)}
+/* 17 stamp (pizza graduate) */
+.wd-grad{position:absolute;right:10px;top:-14px;z-index:9;pointer-events:none;width:132px;height:132px;transform:rotate(14deg) scale(2.4);opacity:0;transition:transform .5s cubic-bezier(.2,1.5,.4,1),opacity .25s}
+.wd-grad.on{transform:rotate(14deg) scale(1);opacity:1}
+/* 18 chopsticks */
+.wd-chop{position:fixed;width:120px;height:90px;margin:-70px 0 0 -14px;z-index:9995;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(0,0,0,.3))}
+.wd-sushi{position:fixed;width:40px;height:26px;margin:-13px 0 0 -20px;z-index:9994;pointer-events:none}
+/* 19 fondue */
+.wd-drip path{animation:wdDrip 2.6s cubic-bezier(.4,0,.6,1) forwards}
+@keyframes wdDrip{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+/* 20 club */
+.wd-club{position:fixed;inset:0;z-index:9988;pointer-events:none;mix-blend-mode:screen;opacity:0;transition:opacity .3s}
+.wd-club.on{opacity:1}
+.wd-club i{position:absolute;left:50%;top:-30%;width:220vmax;height:220vmax;margin-left:-110vmax;background:conic-gradient(from 0deg,rgba(255,0,140,.0) 0 8deg,rgba(255,0,140,.35) 10deg,rgba(255,0,140,0) 14deg 60deg,rgba(0,220,255,.32) 64deg,rgba(0,220,255,0) 70deg 130deg,rgba(255,220,0,.3) 134deg,rgba(255,220,0,0) 140deg 200deg,rgba(140,80,255,.35) 204deg,rgba(140,80,255,0) 210deg 360deg);animation:wdSpin 2.2s linear infinite}
+.wd-club i+i{animation-direction:reverse;animation-duration:3.1s;opacity:.7}
+@keyframes wdSpin{to{transform:rotate(360deg)}}
+@keyframes wdBeat{0%,100%{transform:none}12%{transform:scale(1.012)}}
+body.wd-beat .panel.active{animation:wdBeat .5s ease-out 8}
+/* 21 rodeo */
+@keyframes wdSkid{0%{transform:none}25%{transform:translateX(-14px) rotate(-3deg)}55%{transform:translateX(10px) rotate(2deg)}80%{transform:translateX(-4px) rotate(-1deg)}100%{transform:none}}
+.wd-skid{animation:wdSkid .7s cubic-bezier(.3,1.2,.5,1)}
+.wd-spray{position:fixed;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 6px rgba(255,255,255,.9);z-index:9993;pointer-events:none}
+/* 31 snow day / 33 boarding pass / 35 3am */
+.wd-pill{position:fixed;top:calc(62px + env(safe-area-inset-top,0px));left:50%;z-index:9994;transform:translate(-50%,-140%);transition:transform .6s cubic-bezier(.2,1.2,.4,1);padding:9px 16px;border-radius:99px;background:linear-gradient(135deg,#1F4D38,#2b6a4e);color:#fff;font:600 13px/1.2 'Jost',sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.25);pointer-events:auto;white-space:nowrap}
+.wd-pill.on{transform:translate(-50%,0)}
+.wd-pass{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:9994;width:min(320px,calc(100vw - 32px));perspective:900px;transform:translateX(130%);transition:transform .8s cubic-bezier(.2,1.2,.4,1);cursor:pointer}
+.wd-pass.on{transform:none}
+.wd-pass-in{position:relative;transform-style:preserve-3d;transition:transform .8s}
+.wd-pass.flip .wd-pass-in{transform:rotateY(180deg)}
+.wd-pass-f,.wd-pass-b{backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:14px 16px;background:#fffdf7;color:#1b2a22;box-shadow:0 18px 40px rgba(0,0,0,.28);font:400 12px/1.35 'Jost',sans-serif}
+.wd-pass-b{position:absolute;inset:0;transform:rotateY(180deg);display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#1F4D38,#14202e);color:#f3ead7;font:500 italic 20px/1.2 'Cormorant Garamond',serif}
+.wd-pass-f b{display:block;font:600 28px/1 'Jost',sans-serif;letter-spacing:.04em}
+.wd-pass-f small{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7E8B83}
+.wd-pass-row{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-top:8px}
+.wd-pass-bar{height:28px;margin-top:10px;background:repeating-linear-gradient(90deg,#1b2a22 0 2px,transparent 2px 4px,#1b2a22 4px 5px,transparent 5px 8px)}
+.wd-sleep{position:fixed;inset:0;z-index:9996;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,rgba(28,40,70,.9),rgba(8,12,24,.96));color:#e8eefb;text-align:center;opacity:0;transition:opacity .8s;pointer-events:auto;cursor:pointer}
+.wd-sleep.on{opacity:1}
+.wd-sleep h3{font:400 italic clamp(26px,5vw,40px)/1.15 'Cormorant Garamond',serif;margin:18px 0 8px}
+.wd-sleep p{font:400 14px/1.4 'Jost',sans-serif;opacity:.75;margin:0}
+.wd-z{position:absolute;font:600 22px/1 'Jost',sans-serif;color:#cfd9f2;animation:wdZ 3s ease-in infinite;opacity:0}
+@keyframes wdZ{0%{opacity:0;transform:translate(0,0) scale(.6)}20%{opacity:1}100%{opacity:0;transform:translate(40px,-90px) scale(1.4)}}
+/* 32 christmas */
+html.wd-xmas #navlinks > a::after,html.wd-xmas #navlinks > .navmore > a::after{content:"";position:absolute;left:50%;bottom:-11px;width:7px;height:9px;margin-left:-3.5px;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;background:radial-gradient(circle at 35% 30%,#fff,var(--orn,#c0392b) 45%);box-shadow:0 1px 2px rgba(0,0,0,.3)}
+html.wd-xmas #navlinks > a:nth-child(3n+1)::after{--orn:#c49a4a}html.wd-xmas #navlinks > a:nth-child(3n+2)::after{--orn:#1f6d4a}
+html.wd-xmas #navlinks > a{position:relative}
+/* finale */
+.wd-ticket{position:fixed;inset:0;z-index:10006;display:flex;align-items:center;justify-content:center;background:rgba(10,14,22,.78);opacity:0;transition:opacity .5s;padding:16px}
+.wd-ticket.on{opacity:1}
+.wd-tk{position:relative;width:min(560px,100%);border-radius:18px;padding:28px 26px 22px;color:#2a1d05;text-align:center;
+  background:linear-gradient(115deg,#a97c2c,#f6e3a8 22%,#d9ae52 40%,#fff3c9 52%,#c49a4a 70%,#f2d58f 88%,#a97c2c);background-size:220% 100%;animation:wdFoil 5s ease-in-out infinite alternate;box-shadow:0 30px 80px rgba(0,0,0,.5);transform:rotate(-2deg) scale(.8);transition:transform .7s cubic-bezier(.2,1.4,.4,1)}
+.wd-ticket.on .wd-tk{transform:rotate(-2deg) scale(1)}
+@keyframes wdFoil{to{background-position:100% 0}}
+.wd-tk::before,.wd-tk::after{content:"";position:absolute;top:50%;width:30px;height:30px;margin-top:-15px;border-radius:50%;background:rgba(10,14,22,.92)}
+.wd-tk::before{left:-15px}.wd-tk::after{right:-15px}
+.wd-tk small{display:block;font:700 10px/1 'Jost',sans-serif;letter-spacing:.32em;text-transform:uppercase}
+.wd-tk h2{font:500 clamp(34px,7vw,52px)/1 'Cormorant Garamond',serif;margin:10px 0 6px}
+.wd-tk p{font:400 14px/1.45 'Jost',sans-serif;margin:6px auto 14px;max-width:38ch}
+.wd-tk .wd-names{font:600 11px/1.6 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;opacity:.8}
+.wd-tk button{margin:14px 6px 0;padding:11px 18px;border-radius:99px;border:2px solid #2a1d05;background:#2a1d05;color:#f6e3a8;font:600 12px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.wd-tk button.alt{background:transparent;color:#2a1d05}
+/* gallery section */
+.wd-gsec{margin:34px 0 8px}
+.wd-gsec h3{font:500 26px/1.1 'Cormorant Garamond',serif;margin:0 0 4px}
+.wd-gsec>p{margin:0 0 14px;font:400 13px/1.45 'Jost',sans-serif;opacity:.75}
+.wd-ggrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.wd-gc{position:relative;border-radius:12px;padding:12px 12px 10px;min-height:96px;background:rgba(255,255,255,.06);border:1px solid rgba(212,175,106,.28);display:flex;flex-direction:column;gap:4px}
+.wd-gc .wd-ic{font-size:22px;line-height:1}
+.wd-gc b{font:600 13px/1.2 'Jost',sans-serif}
+.wd-gc span{font:400 11.5px/1.35 'Jost',sans-serif;opacity:.75}
+.wd-gc.locked{background:repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 8px,rgba(255,255,255,.06) 8px 16px)}
+.wd-gc.locked b{letter-spacing:.3em}
+.wd-gc button{margin-top:auto;align-self:flex-start;padding:5px 10px;border-radius:99px;border:1px solid rgba(212,175,106,.5);background:transparent;color:inherit;font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.wd-gtk{display:flex;align-items:center;gap:14px;margin:4px 0 16px;padding:14px 16px;border-radius:14px;background:linear-gradient(115deg,#a97c2c,#f6e3a8 40%,#c49a4a);color:#2a1d05}
+.wd-gtk b{font:600 15px/1.2 'Jost',sans-serif}.wd-gtk span{font:400 12.5px/1.35 'Jost',sans-serif}
+.wd-gtk button{margin-left:auto;padding:9px 14px;border-radius:99px;border:0;background:#2a1d05;color:#f6e3a8;font:600 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;white-space:nowrap}
+.wd-gtk.locked{background:rgba(255,255,255,.06);color:inherit;border:1px dashed rgba(212,175,106,.45)}
+.eg-dwild{margin:8px 0 0;font:400 12px/1.4 'Jost',sans-serif;opacity:.85}
+.eg-dwild b{font-weight:600}
+@media (prefers-reduced-motion:reduce){.wd-yeti svg,.wd-club i,.wd-steam,.wd-z,.wd-tk{animation:none!important}}
+</style>
+<script>
+/* ===== v47 wild secrets — 26 un-ordered secrets you stumble into + the Golden Ticket finale.
+   Finds live in the same per-person record as the trail ('aspenEggs_v2' → {person: {'w_<id>': foundAt}}), so they sync
+   across devices like everything else. API: window.AspenWild = {list, found, play(id), force(id), section(), dropLine(), total}. */
+(function(){
+'use strict';
+var D = document, W = window, H = D.documentElement, B = D.body;
+if (!B || W.AspenWild) return;
+var mq = function(q){ try { return W.matchMedia(q).matches; } catch(e){ return false; } };
+var RM = mq('(prefers-reduced-motion:reduce)'), COARSE = mq('(pointer:coarse)'), FINE = mq('(hover:hover) and (pointer:fine)');
+var $ = function(s, r){ return (r || D).querySelector(s); }, $$ = function(s, r){ return [].slice.call((r || D).querySelectorAll(s)); };
+var KEY = 'aspenEggs_v2', PPL = {griffin:'Griffin', marco:'Marco', stella:'Stella', ben:'Ben', marcy:'Marcy', jim:'Jim'};
+var BDAYS = {};   /* person: 'MM-DD' — fill in to switch on the birthday secret */
+var replaying = false, guest = {};
+
+/* ---------- the list (order = gallery order only; there is no sequence) ---------- */
+var LIST = [
+  {id:'avalanche', ic:'🏔️', n:'Avalanche', how:'Kept pulling at the bottom of the page', whisper:'The snow piles up somewhere low. Keep pushing.'},
+  {id:'snowball', ic:'⚪', n:'Snowball fight', how:'Clicked the empty snow ten times, fast', whisper:'Empty snow is perfect packing snow. Rapid-fire.'},
+  {id:'yeti', ic:'🦍', n:'The yeti', how:'Caught him walking by', whisper:'Something big and white wanders by. Not every visit.'},
+  {id:'moose', ic:'🫎', n:'Moose on Red Mountain', how:'Spotted the moose at the house', whisper:'The house has a shy neighbour. Keep visiting.'},
+  {id:'star', ic:'🌠', n:'Wish upon a star', how:'Caught a shooting star', whisper:'The night sky (dark mode) isn’t always still.'},
+  {id:'glove', ic:'🧤', n:'Lost glove', how:'Returned a lost glove to the house', whisper:'Someone drops a glove somewhere new every day.'},
+  {id:'frost', ic:'🧊', n:'Frozen solid', how:'Sat still until the screen froze', whisper:'Stay perfectly still for a minute.'},
+  {id:'chair', ic:'🚡', n:'Chairlift', how:'Rode the timeline’s chairlift', whisper:'On a ski day, linger on the line that runs down the day.'},
+  {id:'gondola', ic:'🚠', n:'Silver Queen', how:'Rode the gondola to the top of Ajax day', whisper:'On Ajax day, the ride goes all the way up.'},
+  {id:'bluebird', ic:'🔵', n:'Bluebird morning', how:'Was here at sunrise, Aspen time', whisper:'Early light. Aspen time.'},
+  {id:'plow', ic:'🚜', n:'Snowplow', how:'Plowed a day banner clean', whisper:'Day banners get snowed in. Clear one, side to side.'},
+  {id:'ice', ic:'❄️', n:'Thin ice', how:'Tapped one card until it cracked', whisper:'Knock on a card. Then knock some more.'},
+  {id:'cocoa', ic:'☕', n:'Hot chocolate', how:'Lingered on a restaurant', whisper:'Stay with a restaurant long enough and dessert comes.'},
+  {id:'trail', ic:'🟢', n:'Trail-map mode', how:'Turned the page into a trail map', whisper:'The logo knows a trick. Shift-click it (or hold it).'},
+  {id:'goofy', ic:'🏂', n:'Goofy-footed', how:'Flipped Marco around', whisper:'Somebody rides the other way round. Tap his name, again and again.'},
+  {id:'honk', ic:'📯', n:'Honk honk', how:'Honked the Suburban', whisper:'The car on the Travel tab has a horn.'},
+  {id:'grad', ic:'🍕', n:'Pizza graduate', how:'Read all of the lesson plan', whisper:'Read the Buttermilk lesson plan like you mean it.'},
+  {id:'chop', ic:'🥢', n:'Chopsticks', how:'Picked up sushi at Matsuhisa', whisper:'Matsuhisa’s photos are within reach. Grab one.'},
+  {id:'fondue', ic:'🧀', n:'Fondue night', how:'Held on to French Alpine', whisper:'Hold on to the fondue place. Don’t let go.'},
+  {id:'club', ic:'🎛️', n:'Bass drop', how:'Tapped out the beat at Belly Up', whisper:'Night one has a beat. Tap it out, four on the floor.'},
+  {id:'rodeo', ic:'🏁', n:'Snowmobile rodeo', how:'Flung the snowmobile photo', whisper:'The snowmobile wants to go fast. Throw it.'},
+  {id:'speedrun', ic:'⏱️', n:'Booking speedrun', how:'Hammered “Do this next”', whisper:'The most important card on Booking. Tap it like you mean it.'},
+  {id:'snowday', ic:'🌨️', n:'Snow day', how:'Was here while it was snowing in Aspen', whisper:'Check in while it’s really snowing in Aspen.'},
+  {id:'xmas', ic:'🎄', n:'Christmas', how:'Visited on Christmas Eve or Day', whisper:'Some days are merrier than others.'},
+  {id:'pass', ic:'🎫', n:'Boarding pass', how:'Flipped your boarding pass', whisper:'The week before we fly, something slides in.'},
+  {id:'owl', ic:'🦉', n:'Night owl', how:'Was here at 3 in the morning', whisper:'Some secrets are only awake when you shouldn’t be.'},
+  {id:'bday', ic:'🎂', n:'Birthday', how:'Visited on someone’s birthday', whisper:'One day a year, it’s all about you.', cond:function(){ return Object.keys(BDAYS).length > 0; }}
+];
+var INFO = {}; LIST.forEach(function(x){ INFO[x.id] = x; });
+function live(){ return LIST.filter(function(x){ return !x.cond || x.cond(); }); }
+
+/* ---------- storage (same record as the trail; synced as a personal key) ---------- */
+function who(){ var w = null; try { w = (W.AspenWho && W.AspenWho.get) ? W.AspenWho.get() : localStorage.getItem('aspenWho'); } catch(e){} return PPL[w] ? w : null; }
+function all(){ try { var o = JSON.parse(localStorage.getItem(KEY) || '{}'); return o && typeof o === 'object' && !Array.isArray(o) ? o : {}; } catch(e){ return {}; } }
+function rec(p){ var o = p && all()[p]; return o && typeof o === 'object' ? o : {}; }
+function save(p, r){ var o = all(); o[p] = r; try { localStorage.setItem(KEY, JSON.stringify(o)); } catch(e){} try { if (W.AspenSync && W.AspenSync.scan) W.AspenSync.scan(); } catch(e){} }
+function has(id){ var p = who(); return p ? !!rec(p)['w_' + id] : !!guest[id]; }
+function count(){ var p = who(), r = rec(p); return live().filter(function(x){ return p ? r['w_' + x.id] : guest[x.id]; }).length; }
+function card(o){ var E = W.AspenEggs; if (E && E._card) { E._card(o); return; } toast('<b>' + esc(o.t) + '</b>' + (o.clue ? ' · ' + esc(o.clue) : '')); }
+function toast(html){ var t = D.createElement('div'); t.className = 'egg-toast'; t.setAttribute('role', 'status'); t.innerHTML = html; B.appendChild(t);
+  requestAnimationFrame(function(){ t.classList.add('show'); }); setTimeout(function(){ t.classList.remove('show'); setTimeout(function(){ t.remove(); }, 420); }, 3200); }
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function find(id){
+  if (replaying || !INFO[id]) return;
+  var p = who(), I = INFO[id];
+  if (!p){ if (guest[id]) return; guest[id] = 1;
+    card({k:'A wild secret!', t:I.n, clue:'Pick who you are to keep it. Wild secrets have no order — stumble into the rest.', pick:1}); return; }
+  var r = rec(p); if (r['w_' + id]) return;
+  r['w_' + id] = Date.now(); save(p, r);
+  try { if (W.AspenEggs && W.AspenEggs._paint) W.AspenEggs._paint(true); } catch(e){}
+  var n = count(), T = live().length;
+  setTimeout(function(){
+    card({k:'Wild secret · ' + n + ' of ' + T, t:I.ic + '  ' + I.n, clue: n >= T ? 'Every wild secret. The Golden Ticket is yours.' : I.how + '. No order to these: ' + (T - n) + ' still out there.', clueK:''});
+    if (n >= T) setTimeout(function(){ ticket(); }, 2600);
+  }, 700);
+}
+
+/* ---------- shared helpers ---------- */
+function busy(){ return B.classList.contains('gated') || B.classList.contains('vt-on') || !!$('.eg-gal.on') || D.hidden; }
+function activePanel(){ var p = $('.panel.active'); return p ? p.id : ''; }
+function activeDay(){ var d = $('#itinerary .daypanel.active'); return activePanel() === 'itinerary' && d ? d.id : ''; }
+function layer(cls){ var e = D.createElement('div'); e.className = 'wd-fx ' + (cls || ''); B.appendChild(e); return e; }
+function later(ms, f){ return setTimeout(f, ms); }
+function interactive(t){ return !!(t && t.closest && t.closest('a,button,input,select,textarea,label,summary,[role="button"],[contenteditable],.leaflet-container,.maplibregl-map,.vt,canvas,video,iframe,[data-eg],.eg-gal,.eg-card,.wd-hit,.wd-yeti,.wd-glove,.wd-carry,.wd-pass,.wd-pill,.wd-ticket')); }
+function anim(el, k, o){ try { return el.animate ? el.animate(k, o) : null; } catch(e){ return null; } }
+function aspenNow(){ try { var s = new Date().toLocaleString('en-US', {timeZone:'America/Denver', hour12:false, month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'}); var m = s.match(/(\d+)\/(\d+),?\s+(\d+):(\d+)/); return {mo:+m[1], d:+m[2], h:+m[3] % 24, mi:+m[4]}; } catch(e){ var n = new Date(); return {mo:n.getMonth() + 1, d:n.getDate(), h:n.getHours(), mi:n.getMinutes()}; } }
+function dayKey(){ var n = new Date(); return n.getFullYear() * 400 + n.getMonth() * 32 + n.getDate(); }
+function hash(n){ n = (n ^ 61) ^ (n >>> 16); n = n + (n << 3); n = n ^ (n >>> 4); n = Math.imul(n, 0x27d4eb2d); return (n ^ (n >>> 15)) >>> 0; }
+function confetti(n){ try { if (W.TK && W.TK.test) { W.TK.test('confetti'); return; } } catch(e){} burst(innerWidth / 2, innerHeight / 3, n || 40, ['#C49A4A', '#1F4D38', '#9B2D2A', '#E8D9B0']); }
+function burst(x, y, n, cols){
+  if (RM) return; var L = layer();
+  for (var i = 0; i < n; i++){ var s = D.createElement('i'); s.className = 'wd-spray'; s.style.left = x + 'px'; s.style.top = y + 'px'; if (cols) s.style.background = cols[i % cols.length]; L.appendChild(s);
+    var a = Math.random() * Math.PI * 2, v = 60 + Math.random() * 160;
+    anim(s, [{transform:'translate(0,0)', opacity:1}, {transform:'translate(' + Math.cos(a) * v + 'px,' + (Math.sin(a) * v + 80) + 'px)', opacity:0}], {duration:900 + Math.random() * 600, easing:'cubic-bezier(.2,.7,.4,1)', fill:'forwards'}); }
+  later(1700, function(){ L.remove(); });
+}
+function snowBurst(n){ try { if (W.snowBurst) W.snowBurst(n); } catch(e){} }
+var music = function(){ try { var a = W.AspenMusic && W.AspenMusic.audio; a = typeof a === 'function' ? a() : a; return !!(a && !a.paused && !a.muted && a.volume > 0); } catch(e){ return false; } };
+
+/* ---------- SVG art ---------- */
+var ART = {
+  yeti:'<svg viewBox="0 0 74 96"><ellipse cx="37" cy="58" rx="26" ry="32" fill="#f4f7fa" stroke="#c9d4de" stroke-width="2"/><ellipse cx="37" cy="26" rx="18" ry="17" fill="#f4f7fa" stroke="#c9d4de" stroke-width="2"/><ellipse cx="37" cy="30" rx="11" ry="9" fill="#7b8aa0"/><circle cx="32" cy="27" r="2.2" fill="#fff"/><circle cx="42" cy="27" r="2.2" fill="#fff"/><circle cx="32" cy="27.4" r="1.1" fill="#1b2a22"/><circle cx="42" cy="27.4" r="1.1" fill="#1b2a22"/><path d="M32 34q5 3 10 0" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M12 50q-10 14-4 24M62 50q10 14 4 24" stroke="#e6edf3" stroke-width="10" stroke-linecap="round" fill="none"/><rect x="22" y="84" width="11" height="10" rx="4" fill="#7b8aa0"/><rect x="41" y="84" width="11" height="10" rx="4" fill="#7b8aa0"/><path d="M30 12l-3-6M44 12l3-6" stroke="#c9d4de" stroke-width="2" stroke-linecap="round"/><path d="M50 70l14-4 2 8z" fill="#E8D9B0"/></svg>',
+  moose:'<svg viewBox="0 0 110 110"><path d="M20 30c-8-14 2-24 10-18 2-8 12-8 12 2 6-8 16-2 10 8l-8 8M90 30c8-14-2-24-10-18-2-8-12-8-12 2-6-8-16-2-10 8l8 8" fill="#7a5a3a" stroke="#5a3f26" stroke-width="2"/><path d="M38 40q17-8 34 0l4 30q2 22-10 30H44q-12-8-10-30z" fill="#6b4a2f"/><ellipse cx="55" cy="92" rx="14" ry="10" fill="#5a3f26"/><circle cx="48" cy="56" r="3" fill="#1a120b"/><circle cx="62" cy="56" r="3" fill="#1a120b"/><circle cx="49" cy="55" r="1" fill="#fff"/><circle cx="63" cy="55" r="1" fill="#fff"/><ellipse cx="50" cy="94" rx="2" ry="3" fill="#2a1a0e"/><ellipse cx="60" cy="94" rx="2" ry="3" fill="#2a1a0e"/><path d="M34 44l-10 4 8 6zM76 44l10 4-8 6z" fill="#6b4a2f"/></svg>',
+  glove:'<svg viewBox="0 0 30 30"><path d="M8 27V14l-3-5c-1-2 1-4 3-2l3 4V5c0-2 3-2 3 0v6V3c0-2 3-2 3 0v8V4c0-2 3-2 3 0v8V7c0-2 3-2 3 0v11c0 6-3 9-8 9z" fill="#9B2D2A" stroke="#6e1f1d" stroke-width="1"/><rect x="7" y="23" width="13" height="5" rx="1.5" fill="#E8D9B0"/></svg>',
+  chair:'<svg viewBox="0 0 58 70"><path d="M29 0v22" stroke="#2e353c" stroke-width="2.4"/><circle cx="29" cy="4" r="4" fill="#5b6670"/><path d="M12 22h34" stroke="#2e353c" stroke-width="2.4"/><path d="M14 22v30h30V22" stroke="#2e353c" stroke-width="2.4" fill="none"/><rect x="12" y="46" width="34" height="6" rx="2" fill="#1F4D38"/><rect x="14" y="30" width="30" height="16" rx="3" fill="#2b6a4e"/><circle cx="22" cy="40" r="4" fill="#C49A4A"/><circle cx="36" cy="40" r="4" fill="#9B2D2A"/><path d="M12 56h34" stroke="#2e353c" stroke-width="2"/></svg>',
+  gondola:'<svg viewBox="0 0 46 62"><path d="M23 0v12" stroke="#3a4148" stroke-width="2.4"/><circle cx="23" cy="4" r="4" fill="#5b6670"/><rect x="5" y="12" width="36" height="46" rx="9" fill="#d9dee3" stroke="#8a949c" stroke-width="1.5"/><rect x="9" y="18" width="28" height="18" rx="4" fill="#33465a"/><path d="M9 27h28" stroke="#4d6378"/><rect x="5" y="44" width="36" height="6" fill="#C49A4A"/></svg>',
+  plow:'<svg viewBox="0 0 120 70"><rect x="34" y="18" width="50" height="30" rx="5" fill="#f2b31b" stroke="#a87a0a" stroke-width="2"/><rect x="62" y="6" width="22" height="18" rx="3" fill="#f2b31b" stroke="#a87a0a" stroke-width="2"/><rect x="66" y="9" width="14" height="10" rx="2" fill="#2f4458"/><circle cx="46" cy="54" r="10" fill="#1d1d1d"/><circle cx="76" cy="54" r="10" fill="#1d1d1d"/><circle cx="46" cy="54" r="4" fill="#888"/><circle cx="76" cy="54" r="4" fill="#888"/><path d="M84 30l10 0 18 24-28 6z" fill="#cfd5db" stroke="#7a838b" stroke-width="2"/><rect x="72" y="2" width="6" height="5" rx="1" fill="#ff8a00"/></svg>',
+  mug:'<svg viewBox="0 0 64 72"><path class="wd-steam" d="M22 6q-6 8 0 14t0 14" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/><path class="wd-steam" style="animation-delay:.8s" d="M34 4q-6 8 0 14t0 14" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/><path d="M10 34h40v24q0 12-12 12H22q-12 0-12-12z" fill="#9B2D2A"/><path d="M50 40q12 0 10 10t-10 8" stroke="#9B2D2A" stroke-width="5" fill="none"/><ellipse cx="30" cy="34" rx="20" ry="5" fill="#6b3a1f"/><circle cx="24" cy="32" r="4" fill="#fff"/><circle cx="32" cy="31" r="4.5" fill="#fff"/><circle cx="38" cy="33" r="3.5" fill="#fff"/></svg>',
+  chop:'<svg viewBox="0 0 120 90"><path d="M118 4L22 70" stroke="#3b2414" stroke-width="5" stroke-linecap="round"/><path d="M116 14L26 80" stroke="#5a3a20" stroke-width="5" stroke-linecap="round"/><path d="M118 4l-22 15M116 14l-22 15" stroke="#9B2D2A" stroke-width="6" stroke-linecap="round"/></svg>',
+  sushi:'<svg viewBox="0 0 40 26"><rect x="3" y="12" width="34" height="12" rx="6" fill="#fffaf2" stroke="#e2d9cc"/><path d="M2 12q18-14 36 0q-4 5-18 4T2 12z" fill="#ff7b54"/><path d="M8 9l4 3M16 6l4 4M24 6l4 4M31 8l3 3" stroke="#ffd2bf" stroke-width="1.6" stroke-linecap="round"/><rect x="16" y="11" width="8" height="13" fill="#1d2b1a"/></svg>',
+  board:'<svg viewBox="0 0 84 22"><rect x="2" y="5" width="80" height="12" rx="6" fill="#9B2D2A" stroke="#5e1a18" stroke-width="2"/><path d="M14 11h56" stroke="#E8D9B0" stroke-width="2" stroke-dasharray="5 4"/><rect x="24" y="3" width="10" height="16" rx="2" fill="#1b2a22"/><rect x="50" y="3" width="10" height="16" rx="2" fill="#1b2a22"/></svg>',
+  pizza:'<svg viewBox="0 0 132 132"><circle cx="66" cy="66" r="60" fill="none" stroke="#9B2D2A" stroke-width="4"/><circle cx="66" cy="66" r="52" fill="none" stroke="#9B2D2A" stroke-width="1.6" stroke-dasharray="3 3"/><path id="wdArc" d="M22 66a44 44 0 0 1 88 0" fill="none"/><text font-family="Jost,sans-serif" font-weight="700" font-size="11" letter-spacing="2.5" fill="#9B2D2A"><textPath href="#wdArc" startOffset="50%" text-anchor="middle">CERTIFIED PIZZA</textPath></text><text x="66" y="104" text-anchor="middle" font-family="Jost,sans-serif" font-weight="700" font-size="11" letter-spacing="2.5" fill="#9B2D2A">GRADUATE</text><path d="M50 52l32 0-16 32z" fill="#f2b31b" stroke="#9B2D2A" stroke-width="2.4" stroke-linejoin="round"/><circle cx="60" cy="59" r="3" fill="#9B2D2A"/><circle cx="71" cy="58" r="2.6" fill="#9B2D2A"/><circle cx="66" cy="69" r="2.4" fill="#9B2D2A"/></svg>',
+  moon:'<svg viewBox="0 0 120 120" width="120" height="120"><circle cx="60" cy="60" r="38" fill="#f4e9c9"/><circle cx="76" cy="48" r="34" fill="#141c30"/><circle cx="44" cy="70" r="4" fill="#e3d6ae"/><circle cx="52" cy="84" r="2.6" fill="#e3d6ae"/></svg>'
+};
+function splatSVG(s){ var p = 'M50 8', n = 12; for (var i = 1; i <= n; i++){ var a = i / n * Math.PI * 2, r = 30 + (i % 2 ? 18 : 6) * (0.6 + Math.random() * 0.6); p += ' Q' + (50 + Math.cos(a - 0.26) * 46).toFixed(1) + ' ' + (50 + Math.sin(a - 0.26) * 46).toFixed(1) + ' ' + (50 + Math.cos(a) * r).toFixed(1) + ' ' + (50 + Math.sin(a) * r).toFixed(1); }
+  return '<svg viewBox="0 0 100 100" width="' + s + '" height="' + s + '"><path d="' + p + 'Z" fill="#fbfdff" stroke="#d5e0ea" stroke-width="1.5"/><circle cx="40" cy="42" r="6" fill="#fff"/></svg>'; }
+
+/* ================= the secrets ================= */
+var FX = {};
+
+/* 1 · avalanche: keep scrolling/pulling past the bottom */
+var pile = null, pulls = 0, pullT = 0;
+function pileEl(){ if (pile) return pile; pile = D.createElement('div'); pile.className = 'wd-pile';
+  pile.innerHTML = '<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M0 40V18Q8 6 16 14T32 10T48 16T64 8T80 14T100 10V40Z" fill="#fbfdff"/><path d="M0 22Q10 12 20 18T40 14T60 20T80 12T100 16" stroke="#dfe8f0" stroke-width="1.2" fill="none"/></svg>';
+  B.appendChild(pile); return pile; }
+function atBottom(){ return innerHeight + scrollY >= D.documentElement.scrollHeight - 6; }
+function pull(){
+  if (busy()) return; var now = Date.now();
+  if (now - pullT > 1600) pulls = 0; pullT = now; pulls++;
+  var el = pileEl(); el.classList.remove('go'); el.style.height = Math.min(pulls * 4.5, 32) + 'vh';
+  clearTimeout(pull.t); pull.t = later(1800, function(){ if (pile && !pile.classList.contains('go')) pile.style.height = '0'; pulls = 0; });
+  if (pulls >= 7){ pulls = 0; FX.avalanche(); }
+}
+FX.avalanche = function(){
+  var el = pileEl(); el.style.height = '34vh';
+  later(RM ? 50 : 350, function(){
+    if (!RM){ var L = layer(); for (var i = 0; i < 26; i++){ var s = D.createElement('i'); s.className = 'wd-puff'; var z = 10 + Math.random() * 34;
+      s.style.cssText = 'width:' + z + 'px;height:' + z + 'px;left:' + (Math.random() * 100) + '%;bottom:' + (Math.random() * 30) + 'vh'; L.appendChild(s);
+      anim(s, [{transform:'translate(0,0)', opacity:.95}, {transform:'translate(' + (40 + Math.random() * 80) + 'px,' + (120 + Math.random() * 200) + 'px)', opacity:0}], {duration:1300 + Math.random() * 500, easing:'ease-in', fill:'forwards'}); }
+      later(2000, function(){ L.remove(); }); }
+    el.classList.add('go'); snowBurst(80);
+    later(1500, function(){ el.classList.remove('go'); el.style.transition = 'none'; el.style.height = '0'; requestAnimationFrame(function(){ el.style.transition = ''; }); });
+    find('avalanche');
+  });
+};
+W.addEventListener('wheel', function(e){ if (e.deltaY > 0 && atBottom()) pull(); }, {passive:true});
+(function(){ var y0 = null; W.addEventListener('touchstart', function(e){ y0 = atBottom() ? e.touches[0].clientY : null; }, {passive:true});
+  W.addEventListener('touchend', function(e){ if (y0 == null) return; var t = e.changedTouches[0]; if (t && y0 - t.clientY > 40 && atBottom()) pull(); y0 = null; }, {passive:true}); })();
+
+/* 2 · snowball fight: rapid clicks on empty background */
+var sb = {n:0, t:0};
+function throwBall(x, y, big){
+  if (RM){ splat(x, y, big); return; }
+  var b = D.createElement('i'); b.className = 'wd-ball'; B.appendChild(b);
+  var sx = innerWidth / 2 + (Math.random() - 0.5) * 200, sy = innerHeight + 30;
+  var a = anim(b, [{left:sx + 'px', top:sy + 'px', transform:'scale(1.3)'}, {left:(sx + x) / 2 + 'px', top:Math.min(sy, y) - 120 + 'px', transform:'scale(1)', offset:.5}, {left:x - 11 + 'px', top:y - 11 + 'px', transform:'scale(.8)'}], {duration:420, easing:'cubic-bezier(.3,.6,.5,1)', fill:'forwards'});
+  var done = function(){ b.remove(); splat(x, y, big); };
+  if (a) a.onfinish = done; else done();
+}
+function splat(x, y, big){
+  var s = D.createElement('div'); s.className = 'wd-splat'; s.style.left = x + 'px'; s.style.top = y + 'px'; s.innerHTML = splatSVG(big ? Math.min(innerWidth, 520) : 70 + Math.random() * 30); B.appendChild(s);
+  anim(s, [{transform:'translate(-50%,-50%) scale(.3)'}, {transform:'translate(-50%,-50%) scale(1.08)', offset:.25}, {transform:'translate(-50%,-50%) scale(1)'}], {duration:260, fill:'forwards'});
+  later(big ? 2600 : 1800, function(){ anim(s, [{opacity:1, transform:'translate(-50%,-50%) scale(1)'}, {opacity:0, transform:'translate(-50%,-40%) scale(.9,.6)'}], {duration:900, fill:'forwards'}); later(950, function(){ s.remove(); }); });
+}
+FX.snowball = function(){ throwBall(innerWidth / 2, innerHeight / 2, true); find('snowball'); };
+D.addEventListener('pointerdown', function(e){
+  if (e.button || busy() || interactive(e.target)) return;
+  var now = Date.now(); sb.n = now - sb.t < 650 ? sb.n + 1 : 1; sb.t = now;
+  if (sb.n >= 3 && sb.n < 10) throwBall(e.clientX, e.clientY, false);
+  if (sb.n >= 10){ sb.n = 0; throwBall(e.clientX, e.clientY, true); find('snowball'); }
+}, true);
+
+/* 3 · the yeti: rare walk-by */
+FX.yeti = function(force){
+  if ($('.wd-yeti')) return;
+  var y = D.createElement('button'); y.type = 'button'; y.className = 'wd-yeti'; y.setAttribute('aria-label', 'A yeti! Catch him'); y.innerHTML = ART.yeti; B.appendChild(y);
+  var dur = RM ? 9000 : 16000, t0 = performance.now(), caught = false, lastPrint = 0, dir = Math.random() < .5 ? 1 : -1;
+  if (dir < 0) y.style.transform = 'scaleX(-1)';
+  (function step(now){
+    if (caught || !y.isConnected) return;
+    var u = (now - t0) / dur, x = dir > 0 ? -90 + u * (innerWidth + 180) : innerWidth + 90 - u * (innerWidth + 180);
+    y.style.left = x + 'px';
+    if (!RM && now - lastPrint > 380){ lastPrint = now; var p = D.createElement('i'); p.className = 'wd-print'; p.style.left = (x + 30 + (Math.round(now / 380) % 2 ? 8 : -8)) + 'px'; p.style.bottom = (4 + (Math.round(now / 380) % 2 ? 2 : 0)) + 'px'; B.appendChild(p); later(60, function(){ p.style.opacity = '0'; }); later(4200, function(){ p.remove(); }); }
+    if (u < 1) requestAnimationFrame(step); else y.remove();
+  })(t0);
+  y.addEventListener('click', function(){ caught = true; var r = y.getBoundingClientRect();
+    anim(y, [{transform:(dir < 0 ? 'scaleX(-1) ' : '') + 'rotate(0)'}, {transform:(dir < 0 ? 'scaleX(-1) ' : '') + 'rotate(-12deg) translateY(-10px)'}, {transform:(dir < 0 ? 'scaleX(-1) ' : '') + 'scale(0)', opacity:0}], {duration:700, fill:'forwards'});
+    burst(r.left + r.width / 2, r.top + r.height / 2, 30); later(720, function(){ y.remove(); }); find('yeti'); });
+};
+function yetiMaybe(){ if (has('yeti')) return; if (Math.random() < 1 / 10) later(20000 + Math.random() * 70000, function(){ if (!busy()) FX.yeti(); }); }
+
+/* 4 · moose at the house (Lodging tab, sometimes) */
+FX.moose = function(){
+  var host = $('#lodging .lg-door') || $('#lodging .lg-door-ph') || $('#lodging'); if (!host || $('.wd-moose')) return;
+  if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+  var m = D.createElement('button'); m.type = 'button'; m.className = 'wd-moose wd-hit'; m.setAttribute('aria-label', 'A moose! Tap it'); m.innerHTML = ART.moose; host.appendChild(m);
+  host.style.overflow = host.style.overflow || 'hidden';
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ m.classList.add('up'); }); });
+  var gone = later(9000, function(){ m.classList.remove('up'); later(900, function(){ m.remove(); }); });
+  m.addEventListener('click', function(e){ e.stopPropagation(); clearTimeout(gone); m.classList.add('bolt'); var r = m.getBoundingClientRect(); burst(r.left + 20, r.bottom - 10, 18, ['#c8b79a', '#fff']); later(1100, function(){ m.remove(); }); find('moose'); });
+};
+var lodgingSeen = 0;
+function onPanel(id){
+  if (id === 'lodging' && !has('moose')){ lodgingSeen++; if (lodgingSeen % 3 === 2 || Math.random() < 0.2) later(2600, function(){ if (activePanel() === 'lodging' && !busy()) FX.moose(); }); }
+}
+
+/* 5 · shooting star (dark mode) */
+FX.star = function(){
+  var x0 = innerWidth * (0.15 + Math.random() * 0.5), y0 = 60 + innerHeight * Math.random() * 0.25, dx = innerWidth * 0.35, dy = innerHeight * 0.18, dur = RM ? 2600 : 1800;
+  var s = D.createElement('i'); s.className = 'wd-star'; B.appendChild(s);
+  var hit = D.createElement('button'); hit.type = 'button'; hit.className = 'wd-starhit'; hit.setAttribute('aria-label', 'A shooting star! Make a wish'); B.appendChild(hit);
+  var ang = Math.atan2(dy, dx) * 180 / Math.PI, t0 = performance.now(), caught = false;
+  (function step(now){
+    var u = Math.min(1, (now - t0) / dur), x = x0 + dx * u, y = y0 + dy * u;
+    s.style.left = (x - 150) + 'px'; s.style.top = y + 'px'; s.style.transformOrigin = '100% 50%'; s.style.transform = 'rotate(' + ang + 'deg)'; s.style.opacity = String(u < .1 ? u * 10 : u > .8 ? (1 - u) * 5 : 1);
+    hit.style.left = x + 'px'; hit.style.top = y + 'px';
+    if (u < 1 && !caught) requestAnimationFrame(step); else { s.remove(); if (!caught) hit.remove(); }
+  })(t0);
+  hit.addEventListener('click', function(){ caught = true; var r = hit.getBoundingClientRect(); hit.remove(); s.remove(); burst(r.left + 42, r.top + 42, 34, ['#fffbe8', '#ffe7a8', '#E8D9B0']);
+    var WISH = ['A bluebird powder day on Highlands.', 'No lift lines on Ajax.', 'Marcy linking turns by Day II.', 'Matsuhisa finds a table for six.', 'Nobody forgets their ID at Belly Up.', 'Hot tub, stars, and nowhere to be.'];
+    toast('🌠 <b>Your wish:</b> ' + WISH[Math.floor(Math.random() * WISH.length)]); find('star'); });
+};
+function starLoop(){ later(40000 + Math.random() * 70000, function(){ if (B.classList.contains('dark') && !busy() && Math.random() < 0.6) FX.star(); starLoop(); }); }
+
+/* 6 · the lost glove: a new spot every day, return it to the house */
+var GLOVE_SPOTS = ['#travel .card', '#ski .card', '#dining .restcard', '#contacts .crow', '#packing .card', '#budget .card', '#itinerary .daypanel .tl', '#lodging .lg-room'];
+function placeGlove(){
+  if (has('glove') || $('.wd-glove') || carrying()) return;
+  var spots = []; GLOVE_SPOTS.forEach(function(s){ spots = spots.concat($$(s)); }); if (!spots.length) return;
+  var el = spots[hash(dayKey()) % spots.length];
+  if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+  var g = D.createElement('button'); g.type = 'button'; g.className = 'wd-glove wd-hit'; g.setAttribute('aria-label', 'Someone’s lost glove'); g.innerHTML = ART.glove;
+  var c = hash(dayKey() + 7) % 4; g.style[c < 2 ? 'top' : 'bottom'] = '6px'; g.style[c % 2 ? 'left' : 'right'] = '8px';
+  el.appendChild(g);
+  g.addEventListener('click', function(e){ e.stopPropagation(); e.preventDefault(); try { sessionStorage.setItem('aspenWildGlove', '1'); } catch(x){} g.remove(); carryPill(); toast('🧤 Someone dropped a glove. Bring it back to the house.'); });
+}
+function carrying(){ try { return sessionStorage.getItem('aspenWildGlove') === '1'; } catch(e){ return false; } }
+function carryPill(){ if ($('.wd-carry')) return; var p = D.createElement('div'); p.className = 'wd-carry'; p.innerHTML = ART.glove + '<span>Carrying a lost glove &middot; return it to the house</span>'; B.appendChild(p); }
+FX.glove = function(){ carryPill(); var p = $('.wd-carry'); later(400, function(){ returnGlove(); }); };
+function returnGlove(){ try { sessionStorage.removeItem('aspenWildGlove'); } catch(e){} var p = $('.wd-carry'); if (p){ var r = p.getBoundingClientRect(); anim(p, [{transform:'none', opacity:1}, {transform:'translate(' + (innerWidth / 2 - r.left) + 'px,-' + (innerHeight / 2) + 'px) scale(.3)', opacity:0}], {duration:700, easing:'ease-in', fill:'forwards'}); later(720, function(){ p.remove(); }); }
+  later(500, function(){ confetti(40); }); find('glove'); }
+D.addEventListener('click', function(e){ if (carrying() && e.target.closest && e.target.closest('#lodging')) returnGlove(); }, true);
+
+/* 7 · frozen solid: sit still for a minute */
+var idleT = Date.now(), frost = null, frostT = 0;
+function poke(){ idleT = Date.now(); if (frost && frost.classList.contains('on')){ var full = Date.now() - frostT > 6500; frost.classList.remove('on'); frost.classList.add('thaw'); var f = frost; frost = null; later(1200, function(){ f.remove(); }); if (full){ burst(innerWidth / 2, innerHeight / 2, 40, ['#e8f4ff', '#fff', '#cfe6ff']); find('frost'); } } }
+['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll'].forEach(function(ev){ W.addEventListener(ev, poke, {passive:true}); });
+FX.frost = function(){ if (frost) return; frost = D.createElement('div'); frost.className = 'wd-frost';
+  frost.innerHTML = '<svg><filter id="wdIce"><feTurbulence type="fractalNoise" baseFrequency=".012 .03" numOctaves="4" seed="7"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.6 -.75"/></filter><rect width="100%" height="100%" filter="url(#wdIce)"/></svg>';
+  B.appendChild(frost); frostT = Date.now(); requestAnimationFrame(function(){ requestAnimationFrame(function(){ if (frost) frost.classList.add('on'); }); }); };
+setInterval(function(){ if (!frost && !busy() && Date.now() - idleT > 60000) FX.frost(); }, 2000);
+
+/* 8 · chairlift: linger on a ski day's timeline line */
+var SKI = {d1:1, d2:1, d4:1, d6:1}, chairArm = null;
+function spineX(tl){ var r = tl.getBoundingClientRect(), cs = getComputedStyle(tl, '::before'), l = parseFloat(cs.left); return r.left + (isFinite(l) ? l + (parseFloat(cs.width) || 2) / 2 : 14); }
+FX.chair = function(x){
+  if ($('.wd-chair')) return; x = x || (function(){ var tl = $('#itinerary .daypanel.active .timeline'); return tl ? spineX(tl) : 40; })();
+  var cab = D.createElement('i'); cab.className = 'wd-cable'; cab.style.left = (x - 1) + 'px'; B.appendChild(cab);
+  var c = D.createElement('div'); c.className = 'wd-chair'; c.style.left = x + 'px'; c.innerHTML = ART.chair; B.appendChild(c);
+  var a = anim(c, [{top:innerHeight + 10 + 'px', transform:'rotate(4deg)'}, {top:innerHeight / 2 + 'px', transform:'rotate(-3deg)', offset:.5}, {top:'-90px', transform:'rotate(2deg)'}], {duration:RM ? 2500 : 5200, easing:'linear', fill:'forwards'});
+  var end = function(){ c.remove(); cab.remove(); }; if (a) a.onfinish = end; else later(5200, end);
+  find('chair');
+};
+D.addEventListener('pointermove', function(e){
+  if (busy() || !SKI[activeDay()]) { chairArm = null; return; }
+  var tl = e.target.closest && e.target.closest('#itinerary .daypanel.active .timeline'); if (!tl){ chairArm = null; return; }
+  var x = spineX(tl); if (Math.abs(e.clientX - x) > 18){ chairArm = null; return; }
+  if (!chairArm) chairArm = {t:Date.now(), x:x}; else if (Date.now() - chairArm.t > 1800){ chairArm = null; FX.chair(x); }
+}, {passive:true});
+(function(){ var lp = 0; D.addEventListener('touchstart', function(e){ if (!SKI[activeDay()]) return; var t = e.touches[0], tl = e.target.closest && e.target.closest('#itinerary .daypanel.active .timeline'); if (!tl) return; var x = spineX(tl); if (Math.abs(t.clientX - x) > 26) return;
+  lp = later(900, function(){ FX.chair(x); }); }, {passive:true}); ['touchend', 'touchmove', 'touchcancel'].forEach(function(ev){ D.addEventListener(ev, function(){ clearTimeout(lp); }, {passive:true}); }); })();
+
+/* 9 · Silver Queen: scroll Ajax day (Day II) to the very top of the mountain */
+var gon = null;
+function gondolaTick(){
+  var on = activeDay() === 'd2' && !busy(), d = $('#d2');
+  if (!on || !d){ if (gon){ gon.c.style.opacity = '0'; gon.g.style.opacity = '0'; } return; }
+  var r = d.getBoundingClientRect(), prog = Math.max(0, Math.min(1, (innerHeight - r.top) / (r.height + innerHeight * 0.2)));
+  if (prog < 0.12){ if (gon){ gon.c.style.opacity = '0'; gon.g.style.opacity = '0'; } return; }
+  if (!gon){ gon = {c:D.createElement('i'), g:D.createElement('div')}; gon.c.className = 'wd-gcable'; gon.g.className = 'wd-gondola'; gon.g.innerHTML = ART.gondola; B.appendChild(gon.c); B.appendChild(gon.g); }
+  gon.c.style.opacity = '1'; gon.g.style.opacity = '1';
+  gon.g.style.top = ((1 - prog) * (innerHeight - 80) + 10) + 'px';
+  if (prog > 0.97 && !has('gondola')){ burst(innerWidth - 34, 60, 22, ['#fff', '#E8D9B0']); find('gondola'); }
+}
+W.addEventListener('scroll', function(){ if (!gondolaTick.q){ gondolaTick.q = 1; requestAnimationFrame(function(){ gondolaTick.q = 0; gondolaTick(); }); } }, {passive:true});
+FX.gondola = function(){ var c = D.createElement('i'), g = D.createElement('div'); c.className = 'wd-gcable'; g.className = 'wd-gondola'; g.innerHTML = ART.gondola; B.appendChild(c); B.appendChild(g);
+  var a = anim(g, [{top:innerHeight - 70 + 'px'}, {top:'10px'}], {duration:RM ? 1500 : 3800, easing:'ease-in-out', fill:'forwards'}); later(RM ? 1600 : 4000, function(){ c.remove(); g.remove(); }); find('gondola'); };
+
+/* 10 · bluebird morning: sunrise in Aspen (7:00–7:59 AM MT) */
+FX.bluebird = function(){ var b = layer('wd-blue'); b.className = 'wd-blue';
+  for (var i = 0; i < 5; i++){ var o = D.createElement('i'), z = 20 + i * 18; o.style.cssText = 'width:' + z + 'px;height:' + z + 'px;right:' + (8 + i * 9) + '%;top:' + (6 + i * 9) + '%'; b.appendChild(o); }
+  requestAnimationFrame(function(){ b.classList.add('on'); }); later(replaying ? 6000 : 45000, function(){ b.classList.remove('on'); later(2100, function(){ b.remove(); }); }); find('bluebird'); };
+
+/* 11 · snowplow: drag across a day banner */
+D.addEventListener('pointerdown', function(e){
+  var bn = e.target.closest && e.target.closest('.daybanner'); if (!bn || e.button || busy() || interactive(e.target)) return;
+  var r = bn.getBoundingClientRect(), x0 = e.clientX, st = null, maxP = 0;
+  function mv(ev){
+    var dx = ev.clientX - x0;
+    if (!st){ if (Math.abs(dx) < 26) return; st = {dir:dx > 0 ? 1 : -1}; st.cover = D.createElement('div'); st.cover.className = 'wd-cover'; st.plow = D.createElement('div'); st.plow.className = 'wd-plow'; st.plow.innerHTML = ART.plow; if (st.dir < 0) st.plow.style.transform = 'scaleX(-1)'; bn.appendChild(st.cover); bn.appendChild(st.plow); }
+    var p = Math.max(0, Math.min(1, (ev.clientX - r.left) / r.width)); st.plow.style.left = (p * 100) + '%';
+    var cut = st.dir > 0 ? p : 1 - p; maxP = Math.max(maxP, cut);
+    st.cover.style.clipPath = st.dir > 0 ? 'inset(0 0 0 ' + (maxP * 100) + '%)' : 'inset(0 ' + (maxP * 100) + '% 0 0)';
+    if (maxP > 0.9 && !st.done){ st.done = true; up(); FX.plowDone(bn, st); }
+  }
+  function up(){ D.removeEventListener('pointermove', mv); D.removeEventListener('pointerup', up); D.removeEventListener('pointercancel', up);
+    if (st && !st.done){ var s = st; anim(s.cover, [{opacity:1}, {opacity:0}], {duration:500, fill:'forwards'}); later(520, function(){ s.cover.remove(); s.plow.remove(); }); } }
+  D.addEventListener('pointermove', mv); D.addEventListener('pointerup', up); D.addEventListener('pointercancel', up);
+}, true);
+FX.plowDone = function(bn, st){
+  if (st){ st.cover.remove(); anim(st.plow, [{opacity:1}, {opacity:0}], {duration:600, fill:'forwards'}); later(620, function(){ st.plow.remove(); }); }
+  var cord = D.createElement('div'); cord.className = 'wd-cord'; bn.appendChild(cord);
+  var tag = D.createElement('div'); tag.className = 'wd-stamp'; tag.textContent = 'Fresh corduroy'; bn.appendChild(tag);
+  requestAnimationFrame(function(){ cord.style.opacity = '1'; tag.classList.add('on'); });
+  later(3200, function(){ cord.style.opacity = '0'; tag.classList.remove('on'); later(1000, function(){ cord.remove(); tag.remove(); }); });
+  find('plow');
+};
+FX.plow = function(){ var bn = $('#itinerary .daypanel.active .daybanner') || $('.daybanner'); if (!bn) return; var st = {cover:D.createElement('div'), plow:D.createElement('div'), dir:1}; st.cover.className = 'wd-cover'; st.plow.className = 'wd-plow'; st.plow.innerHTML = ART.plow; bn.appendChild(st.cover); bn.appendChild(st.plow);
+  var t0 = performance.now(); (function step(n){ var u = Math.min(1, (n - t0) / 1600); st.plow.style.left = u * 100 + '%'; st.cover.style.clipPath = 'inset(0 0 0 ' + u * 100 + '%)'; if (u < 1) requestAnimationFrame(step); else FX.plowDone(bn, st); })(t0); };
+
+/* 12 · thin ice: tap the same card 7 times */
+var CARDS = '.card,.restcard,.tl,.bookcard,.crow,.bk-card,.lg-room,.dtable,.of-card,.groc', ice = {el:null, n:0, t:0};
+D.addEventListener('pointerdown', function(e){
+  if (e.button || busy()) return; var c = e.target.closest && e.target.closest(CARDS); if (!c) return;
+  var now = Date.now(); if (c !== ice.el || now - ice.t > 900){ ice.el = c; ice.n = 0; } ice.t = now; ice.n++;
+  if (ice.n === 7){ ice.n = 0; FX.ice(c, e.clientX, e.clientY); }
+}, true);
+FX.ice = function(c, x, y){
+  c = c || $$('.panel.active .card,.panel.active .tl,.panel.active .restcard').filter(function(x){ var q = x.getBoundingClientRect(); return q.width > 40 && q.bottom > 0 && q.top < innerHeight; })[0]; if (!c) return;
+  var r = c.getBoundingClientRect(); if (!(r.width > 4 && r.height > 4)) return; x = x == null ? r.left + r.width / 2 : x; y = y == null ? r.top + r.height / 2 : y;
+  if (getComputedStyle(c).position === 'static') c.style.position = 'relative';
+  var px = (x - r.left) / r.width * 100, py = (y - r.top) / r.height * 100, d = '';
+  for (var i = 0; i < 9; i++){ var a = i / 9 * Math.PI * 2 + Math.random() * .4, len = 30 + Math.random() * 60, mx = px, my = py; d += 'M' + px.toFixed(1) + ' ' + py.toFixed(1);
+    for (var k = 1; k <= 4; k++){ mx += Math.cos(a + (Math.random() - .5) * .9) * len / 4; my += Math.sin(a + (Math.random() - .5) * .9) * len / 4 * (r.width / Math.max(r.height, 1)); d += ' L' + mx.toFixed(1) + ' ' + my.toFixed(1); } }
+  var ic = D.createElement('div'); ic.className = 'wd-ice'; var cr = D.createElement('div'); cr.className = 'wd-crack';
+  cr.innerHTML = '<svg viewBox="0 0 100 100" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="' + d + '"/></svg>'; c.appendChild(ic); c.appendChild(cr);
+  c.classList.remove('wd-shake'); void c.offsetWidth; c.classList.add('wd-shake');
+  later(2600, function(){ ic.style.opacity = '0'; anim(cr, [{opacity:1}, {opacity:0}], {duration:1200, fill:'forwards'}); later(1300, function(){ ic.remove(); cr.remove(); c.classList.remove('wd-shake'); }); });
+  find('ice');
+};
+
+/* 13 · hot chocolate: linger on a restaurant */
+var cocoa = {el:null, t:0};
+function cocoaOn(el){
+  if (!el || el.querySelector('.wd-mug')) return;
+  if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+  var m = D.createElement('div'); m.className = 'wd-mug'; m.innerHTML = ART.mug + '<span>Save room for dessert</span>'; el.appendChild(m);
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ m.classList.add('on'); }); });
+  later(5200, function(){ m.classList.remove('on'); later(700, function(){ m.remove(); }); }); find('cocoa');
+}
+D.addEventListener('pointermove', function(e){ if (busy() || !FINE) return; var el = e.target.closest && e.target.closest('.restcard,.rl-stop'); if (el !== cocoa.el){ cocoa.el = el; cocoa.t = Date.now(); return; } if (el && Date.now() - cocoa.t > 10000){ cocoa.t = Infinity; cocoaOn(el.closest('.restcard') || el.closest('.tl') || el); } }, {passive:true});
+(function(){ var lp = 0; D.addEventListener('touchstart', function(e){ var el = e.target.closest && e.target.closest('.restcard'); if (!el || interactive(e.target)) return; lp = later(1300, function(){ cocoaOn(el); }); }, {passive:true}); ['touchend', 'touchmove', 'touchcancel'].forEach(function(ev){ D.addEventListener(ev, function(){ clearTimeout(lp); }, {passive:true}); }); })();
+FX.cocoa = function(){ cocoaOn($('.panel.active .restcard') || $('.panel.active .tl') || $('.panel.active .card')); };
+
+/* 14 · trail-map mode: shift-click (or hold) the logo */
+function trail(on){
+  H.classList.toggle('wd-trail', on); var tg = $('.wd-trailtag');
+  if (on && !tg){ tg = D.createElement('button'); tg.type = 'button'; tg.className = 'wd-trailtag'; tg.textContent = '● ■ ◆  Trail map mode · tap to exit'; tg.addEventListener('click', function(){ trail(false); }); B.appendChild(tg); }
+  if (!on && tg) tg.remove();
+  try { sessionStorage.setItem('aspenWildTrail', on ? '1' : ''); } catch(e){}
+  if (on) find('trail');
+}
+FX.trail = function(){ trail(!H.classList.contains('wd-trail')); };
+D.addEventListener('click', function(e){ var b = e.target.closest && e.target.closest('.brand'); if (b && e.shiftKey){ e.preventDefault(); e.stopPropagation(); FX.trail(); } }, true);
+(function(){ var lp = 0; D.addEventListener('pointerdown', function(e){ if (!(e.target.closest && e.target.closest('.brand'))) return; lp = later(1200, function(){ lp = -1; FX.trail(); }); });
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(function(ev){ D.addEventListener(ev, function(){ if (lp > 0) clearTimeout(lp); }); });
+  D.addEventListener('click', function(e){ if (lp === -1 && e.target.closest && e.target.closest('.brand')){ e.preventDefault(); e.stopPropagation(); lp = 0; } }, true); })();
+
+/* 15 · goofy-footed: tap Marco's name three times */
+var gm = {el:null, n:0, t:0};
+D.addEventListener('click', function(e){
+  var el = e.target; if (!el || !el.textContent || el.textContent.length > 60 || !/\bMarco\b/.test(el.textContent) || busy()) return;
+  var now = Date.now(); if (el !== gm.el || now - gm.t > 1500){ gm.el = el; gm.n = 0; } gm.t = now; gm.n++;
+  if (gm.n >= 3){ gm.n = 0; FX.goofy(el); }
+}, true);
+FX.goofy = function(el){
+  el = el || $$('strong,b,td,span,.cr-name').filter(function(x){ return x.offsetParent && /^Marco\b/.test(x.textContent.trim()); })[0]; if (!el) return;
+  el.classList.remove('wd-goofy'); void el.offsetWidth; el.classList.add('wd-goofy');
+  var r = el.getBoundingClientRect(), bd = D.createElement('div'); bd.className = 'wd-board'; bd.innerHTML = ART.board; B.appendChild(bd);
+  anim(bd, [{left:'-90px', top:r.bottom + 2 + 'px', transform:'rotate(0)'}, {left:r.left + r.width / 2 - 42 + 'px', top:r.bottom + 2 + 'px', transform:'rotate(-6deg)', offset:.5}, {left:innerWidth + 'px', top:r.bottom - 30 + 'px', transform:'rotate(-24deg)'}], {duration:RM ? 900 : 1600, easing:'ease-in-out', fill:'forwards'});
+  later(1700, function(){ bd.remove(); }); later(4000, function(){ el.classList.remove('wd-goofy'); });
+  find('goofy');
+};
+
+/* 16 · honk honk: the Suburban on the Travel tab */
+function suburbanCard(t){ var c = t && t.closest && t.closest('#travel .card'); return c && /Suburban/.test(c.textContent) && !interactive(t) ? c : null; }
+D.addEventListener('click', function(e){ var c = suburbanCard(e.target); if (c && !busy()) FX.honk(c); }, true);
+FX.honk = function(c){
+  c = c || $$('#travel .card').filter(function(x){ return /Suburban/.test(x.textContent); })[0]; var r = c ? c.getBoundingClientRect() : {left:innerWidth / 2 - 100, top:innerHeight / 2, width:200, height:100};
+  [0.3, 0.7].forEach(function(f){ var b = D.createElement('i'); b.className = 'wd-beam'; b.style.left = (r.left + r.width * f) + 'px'; b.style.top = (r.top + r.height * 0.55) + 'px'; B.appendChild(b);
+    anim(b, [{opacity:0}, {opacity:1, offset:.15}, {opacity:.2, offset:.35}, {opacity:1, offset:.5}, {opacity:0}], {duration:1100, fill:'forwards'}); later(1150, function(){ b.remove(); }); });
+  ['HONK', 'HONK!'].forEach(function(w, i){ later(i * 330, function(){ var h = D.createElement('div'); h.className = 'wd-honk'; h.textContent = w; h.style.left = (r.left + r.width * (0.3 + i * 0.45)) + 'px'; h.style.top = (r.top + 10) + 'px'; B.appendChild(h);
+    anim(h, [{transform:'translate(-50%,-50%) rotate(' + (i ? 8 : -10) + 'deg) scale(.4)', opacity:0}, {transform:'translate(-50%,-90%) rotate(' + (i ? 8 : -10) + 'deg) scale(1.1)', opacity:1, offset:.3}, {transform:'translate(-50%,-140%) rotate(' + (i ? 8 : -10) + 'deg) scale(1)', opacity:0}], {duration:1000, fill:'forwards'}); later(1050, function(){ h.remove(); }); }); });
+  if (music()) try { var A = new (W.AudioContext || W.webkitAudioContext)(), t = A.currentTime; [0, 0.33].forEach(function(o){ [370, 466].forEach(function(f){ var os = A.createOscillator(), g = A.createGain(); os.type = 'sawtooth'; os.frequency.value = f; g.gain.setValueAtTime(0, t + o); g.gain.linearRampToValueAtTime(0.06, t + o + 0.02); g.gain.setValueAtTime(0.06, t + o + 0.22); g.gain.linearRampToValueAtTime(0, t + o + 0.28); os.connect(g); g.connect(A.destination); os.start(t + o); os.stop(t + o + 0.3); }); }); later(1200, function(){ A.close(); }); } catch(e){}
+  find('honk');
+};
+
+/* 17 · pizza graduate: read the whole Buttermilk lesson plan */
+function lessonBlock(){ var h = $$('#ski .sub-head').filter(function(x){ return /Lessons/.test(x.textContent); })[0]; if (!h) return null; var n = h.nextElementSibling; if (n && n.offsetParent && n.offsetHeight > 30) return n; var p = h.parentElement; return p && p.offsetParent && p.offsetHeight > 20 ? p : null; }
+FX.grad = function(el){
+  el = el || lessonBlock(); if (!el || el.querySelector('.wd-grad')) return;
+  if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+  var s = D.createElement('div'); s.className = 'wd-grad'; s.innerHTML = ART.pizza; el.appendChild(s);
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ s.classList.add('on'); }); }); later(150, function(){ el.classList.remove('wd-shake'); void el.offsetWidth; el.classList.add('wd-shake'); });
+  if (who() === 'marcy') later(700, function(){ toast('🍕 Marcy, you’re officially ready for Buttermilk.'); });
+  later(6000, function(){ anim(s, [{opacity:1}, {opacity:0}], {duration:700, fill:'forwards'}); later(720, function(){ s.remove(); }); });
+  find('grad');
+};
+(function(){ var seen = 0, el = null;
+  setInterval(function(){
+    if (busy() || activePanel() !== 'ski' || has('grad')){ seen = 0; return; }
+    el = el && el.isConnected ? el : lessonBlock(); if (!el) return;
+    var r = el.getBoundingClientRect(), vis = Math.max(0, Math.min(r.bottom, innerHeight) - Math.max(r.top, 0)) / Math.max(1, Math.min(r.height, innerHeight));
+    seen = vis > 0.85 ? seen + 1 : 0; if (seen >= 7) { seen = 0; FX.grad(el); }
+  }, 1000); })();
+
+/* 18 · chopsticks: grab a Matsuhisa photo */
+function matsuhisa(t){ var m = t && t.closest && t.closest('[data-m^="d4_mat"],[data-m="rest_matsuhisa"],[data-rest="matsuhisa"]'); if (m) return m; var rc = t && t.closest && t.closest('.restcard'); return rc && /Matsuhisa/.test((rc.querySelector('.rname') || {}).textContent || '') ? rc : null; }
+FX.chop = function(x, y){
+  x = x == null ? innerWidth / 2 : x; y = y == null ? innerHeight / 2 : y;
+  var ch = D.createElement('div'); ch.className = 'wd-chop'; ch.innerHTML = ART.chop; var su = D.createElement('div'); su.className = 'wd-sushi'; su.innerHTML = ART.sushi; B.appendChild(su); B.appendChild(ch);
+  var pos = function(px, py){ ch.style.left = px + 'px'; ch.style.top = py + 'px'; su.style.left = px + 'px'; su.style.top = py + 'px'; }; pos(x, y);
+  anim(ch, [{transform:'rotate(10deg)'}, {transform:'rotate(0)'}], {duration:300, fill:'forwards'});
+  var drop = function(){ D.removeEventListener('pointermove', mv); D.removeEventListener('pointerup', drop); D.removeEventListener('pointercancel', drop);
+    anim(ch, [{opacity:1}, {opacity:0, transform:'translate(30px,-30px) rotate(-12deg)'}], {duration:400, fill:'forwards'});
+    var r = su.getBoundingClientRect(); anim(su, [{transform:'translate(0,0) rotate(0)'}, {transform:'translate(0,' + (innerHeight - r.top - 40) + 'px) rotate(200deg)', offset:.7}, {transform:'translate(0,' + (innerHeight - r.top - 60) + 'px) rotate(180deg)'}], {duration:1100, easing:'cubic-bezier(.5,0,.8,.6)', fill:'forwards'});
+    later(1800, function(){ ch.remove(); anim(su, [{opacity:1}, {opacity:0}], {duration:500, fill:'forwards'}); later(520, function(){ su.remove(); }); }); find('chop'); };
+  var mv = function(ev){ pos(ev.clientX, ev.clientY); };
+  if (replaying){ later(900, drop); return; }
+  D.addEventListener('pointermove', mv); D.addEventListener('pointerup', drop); D.addEventListener('pointercancel', drop);
+  later(4000, function(){ if (ch.isConnected && ch.style.opacity !== '0') drop(); });
+};
+(function(){ var st = null;
+  D.addEventListener('pointerdown', function(e){ var m = matsuhisa(e.target); if (!m || e.button || busy()) return; st = {x:e.clientX, y:e.clientY, t:Date.now(), touch:e.pointerType === 'touch'};
+    if (st.touch) st.lp = later(600, function(){ if (st){ var s = st; st = null; FX.chop(s.x, s.y); } }); }, true);
+  D.addEventListener('pointermove', function(e){ if (!st) return; var d = Math.hypot(e.clientX - st.x, e.clientY - st.y);
+    if (st.touch){ if (d > 12){ clearTimeout(st.lp); st = null; } return; }
+    if (d > 30){ st = null; FX.chop(e.clientX, e.clientY); } }, true);
+  D.addEventListener('pointerup', function(){ if (st){ clearTimeout(st.lp); st = null; } }, true);
+  D.addEventListener('dragstart', function(e){ if (matsuhisa(e.target)) e.preventDefault(); }, true); })();
+
+/* 19 · fondue night: hold on to French Alpine */
+function frenchAlpine(t){ var a = t && t.closest && t.closest('[data-rest="frenchalpine"],[data-m^="d3_fa"],[data-m="rest_frenchalpine"]'); if (a) return a; var rc = t && t.closest && t.closest('.restcard,.tl'); return rc && /French Alpine/.test((rc.querySelector('.rname,.tl-title') || {}).textContent || '') ? rc : null; }
+FX.fondue = function(){
+  var L = layer(), n = Math.max(7, Math.round(innerWidth / 70)), w = innerWidth, svg = '<svg width="' + w + '" height="' + innerHeight + '" style="position:absolute;inset:0" class="wd-drip"><defs><linearGradient id="wdCh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7a0"/><stop offset="1" stop-color="#f2c14e"/></linearGradient></defs>';
+  for (var i = 0; i < n; i++){ var x = (i + Math.random() * .6) * w / n, len = innerHeight * (0.25 + Math.random() * 0.6), ww = 18 + Math.random() * 26;
+    svg += '<path style="animation-delay:' + (Math.random() * 0.5).toFixed(2) + 's;animation-duration:' + (RM ? 0.01 : 2 + Math.random() * 1.6).toFixed(2) + 's" d="M' + (x - ww) + ' 0H' + (x + ww) + 'V' + (len - ww) + 'a' + ww + ' ' + ww + ' 0 0 1 -' + 2 * ww + ' 0Z" fill="url(#wdCh)" opacity=".92"/>'; }
+  svg += '<rect width="' + w + '" height="26" fill="url(#wdCh)"/></svg>';
+  L.innerHTML = svg; later(4200, function(){ anim(L, [{opacity:1}, {opacity:0}], {duration:900, fill:'forwards'}); later(950, function(){ L.remove(); }); });
+  toast('🧀 Fondue night. Dip, don’t double-dip.'); find('fondue');
+};
+(function(){ var lp = 0; D.addEventListener('pointerdown', function(e){ if (e.button || busy() || !frenchAlpine(e.target)) return; lp = later(1200, function(){ lp = 0; FX.fondue(); }); }, true);
+  ['pointerup', 'pointercancel'].forEach(function(ev){ D.addEventListener(ev, function(){ clearTimeout(lp); }, true); });
+  D.addEventListener('pointermove', function(e){ if (lp && Math.abs(e.movementX || 0) + Math.abs(e.movementY || 0) > 6) { clearTimeout(lp); lp = 0; } }, true); })();
+
+/* 20 · bass drop: tap a steady beat on the Cloonee stop (or the space bar on Day 0) */
+var beat = [];
+function tapBeat(){
+  var now = Date.now(); beat = beat.filter(function(t){ return now - t < 3000; }); beat.push(now);
+  if (beat.length >= 4){ var g = []; for (var i = beat.length - 3; i < beat.length; i++) g.push(beat[i] - beat[i - 1]);
+    var avg = (g[0] + g[1] + g[2]) / 3, ok = avg > 220 && avg < 950 && g.every(function(x){ return Math.abs(x - avg) < avg * 0.35; });
+    if (ok){ beat = []; FX.club(); } }
+}
+FX.club = function(){
+  var c = layer('wd-club'); c.className = 'wd-club'; c.innerHTML = '<i></i><i></i>'; requestAnimationFrame(function(){ c.classList.add('on'); });
+  if (!RM) B.classList.add('wd-beat');
+  later(4200, function(){ c.classList.remove('on'); B.classList.remove('wd-beat'); later(400, function(){ c.remove(); }); });
+  toast('🎛️ Cloonee drops the bass. See you on the floor, 9:30.'); find('club');
+};
+D.addEventListener('pointerdown', function(e){ var tl = e.target.closest && e.target.closest('#d0 .tl'); if (tl && /Cloonee/.test(tl.textContent) && !interactive(e.target)) tapBeat(); }, true);
+D.addEventListener('keydown', function(e){ if (e.code === 'Space' && activeDay() === 'd0' && !(e.target.closest && e.target.closest('input,textarea,select,[contenteditable]'))) tapBeat(); });
+
+/* 21 · snowmobile rodeo: fling the T-Lazy-7 photo */
+FX.rodeo = function(el, x, y){
+  el = el || $('[data-m="d3_tlazy7"]'); if (el){ el.classList.remove('wd-skid'); void el.offsetWidth; el.classList.add('wd-skid'); later(800, function(){ el.classList.remove('wd-skid'); }); var r = el.getBoundingClientRect(); x = x == null ? r.left + r.width * .5 : x; y = y == null ? r.bottom - 20 : y; }
+  burst(x || innerWidth / 2, y || innerHeight / 2, 46, ['#fff', '#eef5fb', '#dbe8f3']); find('rodeo');
+};
+(function(){ var tr = null;
+  D.addEventListener('pointerdown', function(e){ var m = e.target.closest && e.target.closest('[data-m="d3_tlazy7"]'); tr = m && !busy() ? {el:m, pts:[[e.clientX, e.clientY, performance.now()]]} : null; }, true);
+  D.addEventListener('pointermove', function(e){ if (!tr) return; var now = performance.now(); tr.pts.push([e.clientX, e.clientY, now]); tr.pts = tr.pts.filter(function(p){ return now - p[2] < 140; });
+    var a = tr.pts[0], b = tr.pts[tr.pts.length - 1], v = Math.hypot(b[0] - a[0], b[1] - a[1]) / Math.max(1, b[2] - a[2]);
+    if (v > 1.4 && b[2] - a[2] > 40){ var el = tr.el; tr = null; FX.rodeo(el, e.clientX, e.clientY); } }, true);
+  D.addEventListener('pointerup', function(){ tr = null; }, true);
+  /* phones: the carousel swallows pointer moves while it scrolls — a fast flick of the photo strip counts too */
+  D.addEventListener('scroll', function(e){ var m = e.target && e.target.closest && e.target.closest('[data-m="d3_tlazy7"]'); if (!m || busy()) return; var now = performance.now(), x = e.target.scrollLeft;
+    if (m._wl && now - m._wl.t < 120 && Math.abs(x - m._wl.x) / Math.max(1, now - m._wl.t) > 2.2){ m._wl = null; FX.rodeo(m); return; } m._wl = {t:now, x:x}; }, true); })();
+
+/* 22 · booking speedrun: hammer "Do this next" */
+var sr = {n:0, t:0};
+D.addEventListener('pointerdown', function(e){ var h = e.target.closest && e.target.closest('#booking .bk-next'); if (!h || busy()) return; var now = Date.now(); sr.n = now - sr.t < 700 ? sr.n + 1 : 1; sr.t = now; if (sr.n >= 5){ sr.n = 0; FX.speedrun(h); } }, true);
+FX.speedrun = function(h){
+  h = h || $('#booking .bk-next'); confetti(70); if (h){ h.classList.remove('wd-shake'); void h.offsetWidth; h.classList.add('wd-shake'); }
+  toast(who() === 'marcy' ? '⏱️ World-record booking pace. <b>Marcy approves.</b>' : '⏱️ Speedrun! (Marcy is still the one actually booking it.)'); find('speedrun');
+};
+
+/* 31 · snow day: it's really snowing in Aspen right now */
+FX.snowday = function(){ pill('🌨️ It’s snowing in Aspen right now'); snowBurst(220); find('snowday'); };
+function pill(text){ var p = $('.wd-pill'); if (p) p.remove(); p = D.createElement('div'); p.className = 'wd-pill'; p.setAttribute('role', 'status'); p.textContent = text; B.appendChild(p);
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ p.classList.add('on'); }); }); p.addEventListener('click', function(){ p.classList.remove('on'); });
+  later(9000, function(){ p.classList.remove('on'); later(700, function(){ p.remove(); }); }); }
+function snowCheck(){
+  var c = null; try { c = JSON.parse(sessionStorage.getItem('aspenWildWx') || 'null'); } catch(e){}
+  var go = function(snowing){ if (snowing) later(2500, function(){ if (!busy()) FX.snowday(); }); };
+  if (c && Date.now() - c.t < 30 * 60000){ go(c.s); return; }
+  try { fetch('https://api.open-meteo.com/v1/forecast?latitude=39.19&longitude=-106.82&current=weather_code,snowfall').then(function(r){ return r.json(); }).then(function(j){
+    var cur = j && j.current || {}, code = +cur.weather_code, s = (code >= 71 && code <= 77) || code === 85 || code === 86 || +cur.snowfall > 0;
+    try { sessionStorage.setItem('aspenWildWx', JSON.stringify({t:Date.now(), s:s})); } catch(e){} go(s); }).catch(function(){}); } catch(e){}
+}
+
+/* 32 · Christmas: ornaments on the menu, a star instead of the snowflake */
+FX.xmas = function(){ H.classList.add('wd-xmas'); var f = $('#snowEgg'); if (f && !f.dataset.wdx){ f.dataset.wdx = f.innerHTML; f.textContent = '★'; f.style.color = '#d9ae52'; }
+  if (replaying) later(7000, function(){ H.classList.remove('wd-xmas'); if (f && f.dataset.wdx){ f.innerHTML = f.dataset.wdx; delete f.dataset.wdx; f.style.color = ''; } });
+  pill('🎄 Merry Christmas from Red Mountain'); find('xmas'); };
+
+/* 33 · boarding pass: the week before we fly */
+FX.pass = function(){
+  if ($('.wd-pass')) return; var p = who(), mc = p === 'marco';
+  var el = D.createElement('div'); el.className = 'wd-pass'; el.setAttribute('role', 'button'); el.setAttribute('tabindex', '0'); el.setAttribute('aria-label', 'Your boarding pass. Tap to flip');
+  el.innerHTML = '<div class="wd-pass-in"><div class="wd-pass-f"><small>' + (mc ? 'United' : 'American') + ' &middot; Boarding pass</small>' +
+    '<div class="wd-pass-row"><div><b>' + (mc ? 'MSP' : 'DFW') + '</b>' + (mc ? 'Minneapolis' : 'Dallas') + '</div><div style="font-size:20px">✈</div><div style="text-align:right"><b>DEN</b>Denver</div></div>' +
+    '<div class="wd-pass-row"><div><small>Flight</small>' + (mc ? 'UA 1891' : 'AA 2357') + '</div><div><small>Date</small>Sun Dec 27</div><div><small>Departs</small>' + (mc ? '8:30 AM' : '8:36 AM') + '</div><div><small>Passenger</small>' + esc(p ? PPL[p] : 'You') + '</div></div>' +
+    '<div class="wd-pass-bar"></div></div><div class="wd-pass-b">See you at baggage claim.<br>Then: Aspen.</div></div>';
+  B.appendChild(el); requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.classList.add('on'); }); });
+  var flip = function(){ el.classList.toggle('flip'); find('pass'); later(3500, function(){ el.classList.remove('on'); later(900, function(){ el.remove(); }); }); };
+  el.addEventListener('click', flip); el.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip(); } });
+  if (replaying) later(1200, flip);
+  later(20000, function(){ if (el.isConnected && !el.classList.contains('flip')){ el.classList.remove('on'); later(900, function(){ el.remove(); }); } });
+};
+
+/* 35 · night owl: 2–4 AM on your own clock */
+FX.owl = function(){
+  if ($('.wd-sleep')) return; var s = D.createElement('div'); s.className = 'wd-sleep'; s.setAttribute('role', 'dialog'); s.setAttribute('aria-label', 'Night owl');
+  s.innerHTML = '<div style="position:relative">' + ART.moon + '<span class="wd-z" style="left:90px;top:10px">z</span><span class="wd-z" style="left:100px;top:0;animation-delay:1s">z</span><span class="wd-z" style="left:112px;top:-8px;animation-delay:2s">Z</span>' +
+    '<h3>It’s ' + new Date().toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'}) + '. Go to sleep.</h3><p>You’ll ski tomorrow. (Tap to keep planning anyway.)</p></div>';
+  B.appendChild(s); requestAnimationFrame(function(){ s.classList.add('on'); });
+  var close = function(){ s.classList.remove('on'); later(820, function(){ s.remove(); }); }; s.addEventListener('click', close); later(replaying ? 3500 : 12000, close);
+  find('owl');
+};
+
+/* 34 · birthday (only once BDAYS is filled in) */
+FX.bday = function(){ var p = who(), n = p ? PPL[p] : 'you'; confetti(90); pill('🎂 Happy birthday, ' + n + '!'); find('bday'); };
+
+/* ---------- the Golden Ticket (all wild secrets found) ---------- */
+function ticket(){
+  if ($('.wd-ticket')) return; var p = who();
+  var t = D.createElement('div'); t.className = 'wd-ticket'; t.setAttribute('role', 'dialog'); t.setAttribute('aria-label', 'Golden ticket');
+  t.innerHTML = '<div class="wd-tk"><small>Admit one &middot; Red Mountain &middot; Dec 27 – Jan 3</small><h2>The Golden Ticket</h2>' +
+    '<p>' + esc(p ? PPL[p] : 'You') + ' found every wild secret on the page. Legend status: permanent.</p>' +
+    '<div class="wd-names">Griffin &middot; Marco &middot; Stella &middot; Ben &middot; Marcy &middot; Jim</div>' +
+    '<button type="button" data-wd="trailer">Roll the trailer</button><button type="button" class="alt" data-wd="close">Close</button></div>';
+  B.appendChild(t); requestAnimationFrame(function(){ t.classList.add('on'); }); later(300, function(){ confetti(120); });
+  t.addEventListener('click', function(e){ var b = e.target.closest('[data-wd]'); if (!b && e.target !== t) return; var a = b ? b.getAttribute('data-wd') : 'close';
+    t.classList.remove('on'); later(500, function(){ t.remove(); });
+    if (a === 'trailer') try { try { W.AspenEggs && W.AspenEggs.closeGallery && W.AspenEggs.closeGallery(); } catch(x){} var m = $('#navlinks a[href="#valley"]'); if (m) m.click(); later(900, function(){ W.AspenMap && W.AspenMap.tour && W.AspenMap.tour.play(); }); } catch(x){} });
+}
+
+/* ---------- gallery section + dropdown line (called by the trail engine) ---------- */
+function section(){
+  var p = who(), r = rec(p), L = live(), n = count(), done = n >= L.length;
+  var h = '<section class="wd-gsec" aria-label="Wild secrets"><h3>Wild secrets</h3><p><b>' + n + '</b> of ' + L.length + ' found. No order and no clues, just whispers. Stumble into them.</p>';
+  h += done ? '<div class="wd-gtk"><div><b>The Golden Ticket</b><br><span>Every wild secret found.</span></div><button type="button" data-wdg="ticket">Open it</button></div>'
+            : '<div class="wd-gtk locked"><div><b>The Golden Ticket</b><br><span>Find every wild secret to unlock it.</span></div></div>';
+  h += '<ul class="wd-ggrid">';
+  L.forEach(function(x){ var f = p ? r['w_' + x.id] : guest[x.id];
+    h += f ? '<li class="wd-gc"><span class="wd-ic" aria-hidden="true">' + x.ic + '</span><b>' + esc(x.n) + '</b><span>' + esc(x.how) + '</span><button type="button" data-wdg="play" data-id="' + x.id + '">Replay</button></li>'
+           : '<li class="wd-gc locked"><span class="wd-ic" aria-hidden="true">✦</span><b>???</b><span>' + esc(x.whisper) + '</span></li>'; });
+  return h + '</ul></section>';
+}
+function dropLine(){ return '<p class="eg-dwild">Wild secrets: <b>' + count() + '</b> of ' + live().length + ' &middot; no order, just stumble</p>'; }
+D.addEventListener('click', function(e){ var b = e.target.closest && e.target.closest('[data-wdg]'); if (!b) return; e.preventDefault(); e.stopPropagation();
+  var a = b.getAttribute('data-wdg'); try { W.AspenEggs.closeGallery(); } catch(x){}
+  if (a === 'ticket') later(300, ticket); else later(300, function(){ play(b.getAttribute('data-id')); }); }, true);
+
+function play(id){ var f = FX[id]; if (!f) return; replaying = true; try { f(); } catch(e){ console.warn('[wild]', id, e && e.message); } later(50, function(){ replaying = false; }); }
+function force(id){ var f = FX[id]; if (f) f(); }
+
+/* ---------- boot: timers, dates, tab watch ---------- */
+function boot(){
+  try { if (sessionStorage.getItem('aspenWildTrail') === '1') trail(true); } catch(e){}
+  if (carrying()) carryPill();
+  later(1500, placeGlove);
+  yetiMaybe(); starLoop(); snowCheck();
+  var A = aspenNow(), n = new Date(), h = n.getHours();
+  if (A.h === 7 && !has('bluebird')) later(3000, function(){ if (!busy()) FX.bluebird(); });
+  if (A.mo === 12 && (A.d === 24 || A.d === 25)) later(2000, FX.xmas);
+  if (A.mo === 12 && A.d >= 20 && A.d <= 26){ var k = 'aspenWildPass' + A.d; try { if (!localStorage.getItem(k)){ localStorage.setItem(k, '1'); later(6000, function(){ if (!busy()) FX.pass(); }); } } catch(e){} }
+  if (h >= 2 && h < 4 && !has('owl')) later(2500, function(){ if (!busy()) FX.owl(); });
+  var p = who(), md = ('0' + (n.getMonth() + 1)).slice(-2) + '-' + ('0' + n.getDate()).slice(-2); if (p && BDAYS[p] === md) later(2500, FX.bday);
+  /* tab changes → moose, glove placement for lazily-built tabs */
+  var last = activePanel();
+  new MutationObserver(function(){ var a = activePanel(); if (a !== last){ last = a; onPanel(a); later(400, placeGlove); gondolaTick(); } }).observe(D.querySelector('main') || B, {subtree:true, attributes:true, attributeFilter:['class']});
+  onPanel(last);
+}
+if (B.classList.contains('gated')) W.addEventListener('aspen:enter', function(){ later(600, boot); }, {once:true}); else later(800, boot);
+
+W.AspenWild = {list:LIST.map(function(x){ return x.id; }), get total(){ return live().length; }, get found(){ return count(); }, play:play, force:force, section:section, dropLine:dropLine, ticket:ticket, _find:find};
 })();
 </script>
 
