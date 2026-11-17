@@ -132,6 +132,8 @@ section{padding:74px 0;position:relative;}
 .badge.confirmed{color:#1F4D38;border-color:rgba(31,77,56,.5);background:rgba(31,77,56,.1);}
 .badge.urgent{color:#9B2D2A;border-color:rgba(155,45,42,.45);background:rgba(155,45,42,.09);}
 .badge.tbd{color:#6f7d75;border-color:rgba(126,139,131,.45);background:rgba(126,139,131,.12);}
+body.dark .badge.confirmed{color:#9BD8B0;border-color:rgba(155,216,176,.5);background:rgba(155,216,176,.1);}
+body.dark .badge.urgent{color:#F0A49E;border-color:rgba(240,164,158,.5);background:rgba(240,164,158,.1);}
 
 .plate{position:relative;border-radius:8px;overflow:hidden;border:1px solid var(--glass-line);box-shadow:0 20px 44px -26px var(--ink-shadow);cursor:zoom-in;}
 .plate img{width:100%;height:100%;object-fit:cover;filter:saturate(1) contrast(1.02) brightness(1.0);transition:transform .8s ease;}
@@ -4374,14 +4376,14 @@ body.gated .wh-fab{display:none;}
 
   <div class="sub-head reveal">Lift Tickets</div>
   <table class="dtable reveal">
-    <tr><td>Griffin</td><td><strong>4-Day lift ticket from Mon Dec 28</strong> &mdash; Dec 28 (optional), 29, 31, Jan 2. If he skips Dec 28, that day becomes resort credit, not a refund.</td></tr>
-    <tr><td>Ben</td><td><strong>4-Day lift ticket from Mon Dec 28</strong> &mdash; Dec 28, 29, 31, Jan 2 &middot; brings own skis</td></tr>
-    <tr><td>Marco</td><td><strong>4-Day lift ticket from Mon Dec 28</strong> &mdash; Dec 28, 29, 31, Jan 2 &middot; <strong>snowboards</strong> (same ticket as skiers; riders are allowed on all four mountains)</td></tr>
-    <tr><td>Stella</td><td>Dec 28 covered by her lesson package &middot; <strong>3-Day lift ticket from Tue Dec 29</strong> (Dec 29, 31, Jan 2)</td></tr>
-    <tr><td>Marcy</td><td>Dec 28 + 29 covered by her lesson packages &middot; <strong>2-Day lift ticket from Thu Dec 31</strong> (Dec 31 + Jan 2)</td></tr>
+    <tr><td>Griffin</td><td><strong>4-Day lift ticket from Mon Dec 28</strong> &middot; <span class="badge confirmed">Bought</span> &mdash; Dec 28 (optional), 29, 31, Jan 2. If he skips Dec 28, that day becomes resort credit, not a refund.</td></tr>
+    <tr><td>Ben</td><td><strong>4-Day lift ticket from Mon Dec 28</strong> &middot; <span class="badge confirmed">Bought</span> &mdash; Dec 28, 29, 31, Jan 2 &middot; brings own skis</td></tr>
+    <tr><td>Marco</td><td><strong>4-Day lift ticket from Mon Dec 28</strong> &middot; <span class="badge urgent">Still to buy</span> &mdash; Dec 28, 29, 31, Jan 2 &middot; <strong>snowboards</strong> (same ticket as skiers; riders are allowed on all four mountains)</td></tr>
+    <tr><td>Stella</td><td>Dec 28 covered by her lesson package &middot; <strong>3-Day lift ticket from Tue Dec 29</strong> (Dec 29, 31, Jan 2) &middot; <span class="badge confirmed">Bought</span></td></tr>
+    <tr><td>Marcy</td><td>Dec 28 + 29 covered by her lesson packages &middot; <strong>2-Day lift ticket from Thu Dec 31</strong> (Dec 31 + Jan 2) &middot; <span class="badge confirmed">Bought</span></td></tr>
     <tr><td>Jim</td><td>Not skiing &middot; <strong>Winter Sightseeing Ticket</strong>, listed (&ldquo;from&rdquo;) &middot; Silver Queen Gondola 9 AM&ndash;3:30 PM up, last ride down 4 PM &middot; buy online ahead (it can sell out), full refund if cancelled 48 hrs ahead</td></tr>
   </table>
-  <p class="note reveal" style="margin-top:10px"><strong>Buy by Fri Nov 27</strong> &mdash; 30+ days ahead is the best price (up to 25% off 4-day tickets, up to 15% off 2&ndash;3 day tickets). The Flex Pass isn&rsquo;t an option this season, so these are regular multi-day tickets: a 4-Day is any 4 days in a 6-day window, a 3-Day is 3 in 5, and a 2-Day is 2 in 3, so each one exactly covers our days. One ticket works at all four mountains. Completely unused tickets get a full refund. Unused days on a partly used ticket become resort credit (call 800-525-6200 within 14 days). The Aspen Card comes free with the ticket; print it at a Pickup Box. aspensnowmass.com &middot; (877) 308-7859.</p>
+  <p class="note reveal" style="margin-top:10px"><strong>Bought for Griffin, Ben, Stella and Marcy. Only Marco&rsquo;s is left: buy it by Fri Nov 27</strong> &mdash; 30+ days ahead is the best price (up to 25% off 4-day tickets, up to 15% off 2&ndash;3 day tickets). The Flex Pass isn&rsquo;t an option this season, so these are regular multi-day tickets: a 4-Day is any 4 days in a 6-day window, a 3-Day is 3 in 5, and a 2-Day is 2 in 3, so each one exactly covers our days. One ticket works at all four mountains. Completely unused tickets get a full refund. Unused days on a partly used ticket become resort credit (call 800-525-6200 within 14 days). The Aspen Card comes free with the ticket; print it at a Pickup Box. aspensnowmass.com &middot; (877) 308-7859.</p>
 
   <div class="grid2 reveal" style="margin-top:30px;align-items:start">
     <div>
@@ -5095,7 +5097,7 @@ body.gated .wh-fab{display:none;}
   </div>
   <div id="bkApp" aria-live="polite">
     <noscript>
-      <p><b>Booked:</b> Element 47 (Sun Dec 27, 7:30 PM, 6 people). <b>Still to book:</b> Buttermilk first-time lessons for Marcy (Dec 28 + 29) and Stella (Dec 28) &mdash; (877) 308-7859, book now &middot; Lift tickets + ski rentals by Fri Nov 27 &middot; Casa Tua on SevenRooms Sun Nov 29 &middot; French Alpine Bistro on Mon Nov 30 &middot; Matsuhisa on Tue Dec 1 &middot; Steakhouse 316 on Thu Dec 3 &middot; Ski clothes by Dec 13 &middot; Iron Mountain Hot Springs by Dec 15 &middot; Belly Up ticket transfers by Dec 20.</p>
+      <p><b>Booked:</b> Element 47 (Sun Dec 27, 7:30 PM, 6 people). <b>Still to book:</b> Buttermilk first-time lessons for Marcy (Dec 28 + 29) and Stella (Dec 28) &mdash; (877) 308-7859, book now &middot; Marco&rsquo;s lift ticket + ski rentals by Fri Nov 27 &middot; Casa Tua on SevenRooms Sun Nov 29 &middot; French Alpine Bistro on Mon Nov 30 &middot; Matsuhisa on Tue Dec 1 &middot; Steakhouse 316 on Thu Dec 3 &middot; Ski clothes by Dec 13 &middot; Iron Mountain Hot Springs by Dec 15 &middot; Belly Up ticket transfers by Dec 20.</p>
     </noscript>
   </div>
 </div>
@@ -8863,15 +8865,15 @@ more:['Includes lift ticket, skis, boots and helmet. 10 AM – 3 PM. Be at the b
      say:'Text Griffin the airline, flight numbers and times so they go on the page.',
      more:['He meets AA 2357 at Denver baggage claim (lands 9:51 AM) and rides in the Suburban both ways.']},
 
-    {id:'mountain', kind:'by', date:'2026-11-27', who:'Marcy', forWho:'Griffin, Ben, Marco, Stella, Marcy',
-     title:'Buy lift tickets',
+    {id:'mountain', kind:'by', date:'2026-11-27', who:'Marcy', forWho:'Marco',
+     title:'Buy Marco’s lift ticket',
      when:'Buy by Fri Nov 27 (safe) · true last day Sat Nov 28, ~11:59 PM MT (12:59 AM CT)',
-     why:'The Flex Pass is sold out for this season. Regular multi-day lift tickets are the plan now. Buying 30+ days ahead saves the most.',
+     why:'Everyone else’s lift tickets are bought (Griffin, Ben, Stella, Marcy). Marco’s 4-Day is the only one left, and buying 30+ days ahead saves the most.',
      how:[{t:'web',label:'Lift tickets',v:'https://www.aspensnowmass.com/visit/tickets-and-passes/lift-tickets'},
           {t:'tel',label:'Call (877) 308-7859',v:'+18773087859'}],
-     say:'Buy Lift Tickets → Age → Number of Days → tap > to December → tap the start date → skip "Need Rentals?" and "Resort Charge" → Add To Cart. One per person.\nGriffin, Ben, Marco: ADULT · 4-Day · Mon Dec 28.\nStella: ADULT · 3-Day · Tue Dec 29.\nMarcy: ADULT · 2-Day · Thu Dec 31.\nText Griffin the total. Keep confirmation numbers private.',
+     say:'Buy Lift Tickets → Age → Number of Days → tap > to December → tap the start date → skip "Need Rentals?" and "Resort Charge" → Add To Cart.\nMarco: ADULT · 4-Day · Mon Dec 28.\nText Griffin the total. Keep confirmation numbers private.',
 more:['The Flex Pass is gone. These regular tickets fit our days: 4 days in a 6-day window, 3 in 5, 2 in 3.',
-      'Ben and Marco don’t have Ikon passes, so all five need tickets.',
+      'Marco doesn’t have an Ikon pass, so he needs this ticket. He snowboards; the same ticket covers riders on all four mountains.',
       'Unused tickets get a full refund. Unused days on a used ticket become resort credit (call 800-525-6200 within 14 days).',
       'Each ticket comes with a free Aspen Card. Pick it up at a Pickup Box with the QR code from the email.']},
 
@@ -8978,6 +8980,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     {id:'car', booked:true, title:'Car · Chevrolet Suburban (Turo)', when:'Pick up Denver airport Sun Dec 27 · return Sun Jan 3'},
     {id:'snowmobile', booked:true, title:'Snowmobile tour · T-Lazy-7', when:'Wed Dec 30 · 9:30 AM · Klondike Lunch · 3 doubles', note:'Helmets only — everyone (Jim too) brings warm clothes, snow boots and gloves. (970) 925-4614'},
     {id:'wildfig', booked:true, title:'Welcome dinner · Element 47 (The Little Nell)', when:'Sun Dec 27 · 7:30 PM · table for 6 · 675 E Durant', note:'Then straight to Belly Up (3-min walk). Changes: (970) 920-6330'},
+    {id:'lifts', booked:true, title:'Lift tickets · Griffin, Ben, Stella, Marcy', when:'Griffin + Ben 4-Day from Mon Dec 28 · Stella 3-Day from Tue Dec 29 · Marcy 2-Day from Thu Dec 31', note:'Marco’s is the only one still to buy. Pick up the Aspen Cards at a Pickup Box with the QR code from the email.'},
     {id:'concert', booked:true, title:'Cloonee at Belly Up · 4 tickets', when:'Sun Dec 27 · doors 8:30 PM · show 9:30 PM · 450 S Galena'}
   ];
 
@@ -14715,7 +14718,8 @@ var BOOK={
  wildfig:['all','marcy','Element 47 · Sun Dec 27, 7:30 PM × 6','booked','2026-11-16'],
  lessons:['marcy stella','marcy','Buttermilk lessons (Marcy Dec 28 + 29 · Stella Dec 28)','overdue · book now','2026-09-30'],
  marco:['marco','marco','Marco’s United flights','booked','2026-11-15'],
- mountain:['@skiers','marcy','Lift tickets','by Fri Nov 27','2026-11-27'],
+ mountain:['marco','marcy','Marco’s lift ticket','by Fri Nov 27','2026-11-27'],
+ lifts:['griffin ben stella marcy','marcy','Lift tickets','bought','2026-11-16'],
  rentals:['griffin stella marcy marco','marcy','Ski + snowboard rentals (FMS)','by Fri Nov 27','2026-11-27'],
  casatua:['all','marcy','Casa Tua · Tue Dec 29, 7 PM','call Sun Nov 29','2026-11-29'],
  frenchalpine:['all','marcy','French Alpine Bistro · Wed Dec 30','Mon Nov 30','2026-11-30'],
