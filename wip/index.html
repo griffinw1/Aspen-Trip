@@ -8027,19 +8027,13 @@ body.gated .wh-fab{display:none;}
 })();
 </script>
 <script>
-/* ---- easter eggs: click the hero snowflake / Konami "let it snow" ---- */
+/* ---- easter eggs: click the hero snowflake "let it snow" ---- */
 (function(){
   function toast(msg){var t=document.createElement('div');t.className='egg-toast';t.innerHTML=msg;document.body.appendChild(t);
     requestAnimationFrame(function(){t.classList.add('show');});
     setTimeout(function(){t.classList.remove('show');setTimeout(function(){if(t.parentNode){t.parentNode.removeChild(t);}},420);},2200);}
   var egg=document.getElementById('snowEgg');
   if(egg){egg.addEventListener('click',function(ev){ev.stopPropagation();if(window.snowBurst){window.snowBurst(110);}});}
-  var seq=[38,38,40,40,37,39,37,39,66,65],pos=0;
-  document.addEventListener('keydown',function(e){
-    var k=e.keyCode;
-    if(k===seq[pos]){pos++;if(pos===seq.length){pos=0;if(window.snowBurst){window.snowBurst(260);}toast('&#10052;&#65038;&nbsp; Let it snow &nbsp;&#10052;&#65038;');}}
-    else{pos=(k===seq[0])?1:0;}
-  });
 })();
 </script>
 <script>
@@ -9546,6 +9540,17 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       document.addEventListener('pointerdown', function(e){ var P = $('vxRot'); if (P && !P.hidden && !e.target.closest('.vx-rotwrap')) rotPanel(false); }, true);
       document.addEventListener('keydown', function(e){ if (e.key === 'Escape'){ var P = $('vxRot'); if (P && !P.hidden) rotPanel(false); } });
     })();
+  })();
+  /* v50: secret VI — one full turn of the 3D valley (any method) fires 'aspen:map-360' */
+  (function(){
+    var last = null, acc = 0, still = 0, fired = false;
+    setInterval(function(){
+      if (fired || !(is3d || prOn)){ last = null; acc = 0; return; }
+      var h = getHeading();
+      if (last != null){ var d = ((h - last + 540) % 360) - 180; if (Math.abs(d) > 0.4){ acc += d; still = 0; } else if (++still > 20){ acc = 0; } }
+      last = h;
+      if (Math.abs(acc) >= 355){ fired = true; try { window.dispatchEvent(new CustomEvent('aspen:map-360')); } catch(e){} }
+    }, 250);
   })();
   /* v44: Orbit — the camera circles the point in the middle of the screen (~7°/s). Any touch, drag or scroll stops it. */
   var ORB = null;
@@ -14011,8 +14016,8 @@ var INFO = {
   powder:{n:'Powder day', how:'Typed what every skier prays for', clue:'Pink peaks at dusk promise a storm. By morning there are fourteen fresh inches. Type what every skier prays for.', hint:'Type “powder”.'},
   pizza:{n:'Pizza, French fries', how:'Typed the beginner’s first lesson', clue:'Deep snow is no place for a first-timer. At Buttermilk the very first lesson is shaped like dinner. Type it.', hint:'Type “pizza”.'},
   marco:{n:'Goofy-footed', how:'Typed the snowboarder’s name', clue:'One of us skipped the French fries entirely and rides sideways. Type his name.', hint:'Type “marco”.'},
-  konami:{n:'Thirty extra lives', how:'Entered the old cheat code', clue:'The most famous cheat code ever: up, up, down, down, left, right, left, right, B, A. On a keyboard, use the arrow keys. On a phone, swipe it — up, up, down, down, left, right, left, right — then tap twice.', hint:'Keyboard: ↑ ↑ ↓ ↓ ← → ← → B A. Phone: swipe ↑ ↑ ↓ ↓ ← → ← → anywhere, then tap twice.'},
-  aurora:{n:'Northern lights', how:'Traded the sun for the moon, seven times', clue:'Extra lives won’t bring night to Red Mountain. Trade the sun for the moon, seven times, quickly.', hint:'Tap the moon/sun button in the top bar 7 times within 5 seconds.'},
+  konami:{n:'Full 360', how:'Spun the whole valley one full turn', clue:'Riders spin. Open the map in 3D and turn the whole valley one full circle: drag the ↻ rotate slider all the way round, or let it Spin.', hint:'Map tab → 3D → tap ↻ → drag the slider through a full 360°, or tap Spin and let it go round once.'},
+  aurora:{n:'Northern lights', how:'Traded the sun for the moon, seven times', clue:'One full turn won’t bring night to Red Mountain. Trade the sun for the moon, seven times, quickly.', hint:'Tap the moon/sun button in the top bar 7 times within 5 seconds.'},
   steam:{n:'Hot-tub steam', how:'Found the hot tub after dark', clue:'While the sky dances, something on the deck breathes clouds. Go and look after dark.', hint:'Lodging → room walk-through → “Deck & Hot Tub”, at night in Aspen or in dark mode.'},
   globe:{n:'Snow globe', how:'Held down the last snowflake', clue:'Everything settles at the very bottom of the page. Hold the last snowflake, and the world shakes.', hint:'Press and hold the ❄ crest at the very bottom of the page for about a second.'},
   shake:{n:'Blizzard', how:'Shook the phone', clue:'A glass globe isn’t the only thing you can shake. Try the phone in your hand.', hint:'On a phone, shake it hard three times. On an iPhone, tap “Tilt to look ✦” in the footer first.'},
@@ -14219,7 +14224,7 @@ function replay(id){
   replaying = true;
   try {
     var R = {
-      flake:function(){ snow(110); }, konami:function(){ snow(260); toast('&#10052;&#65038;&nbsp; Let it snow &nbsp;&#10052;&#65038;'); },
+      flake:function(){ snow(110); }, konami:function(){ spin360(); },
       aspen:function(){ fx('tk-glow', 3700); toast('Alpenglow &middot; 4:45 PM &middot; the peaks turn pink'); },
       powder:function(){ buf = 'powde'; D.dispatchEvent(new KeyboardEvent('keydown', {key:'r'})); },
       pizza:function(){ toast('Pizza&hellip; pizza&hellip; <b>French fries!</b> &nbsp;&middot;&nbsp; Marcy, Buttermilk, Day I'); },
@@ -14722,29 +14727,10 @@ if (!ON.eggs) return;
 /* existing eggs count toward the tally */
 var flakeBtn = $('#snowEgg'); if (flakeBtn) flakeBtn.addEventListener('click', function(){ egg('flake'); });
 
-/* phone version of the cheat code: swipe up, up, down, down, left, right, left, right, then tap twice (B, A) */
-(function(){
-  var seq = '', x0 = 0, y0 = 0, t0 = 0, WANT = 'UUDDLRLRTT';
-  D.addEventListener('touchstart', function(e){ if (e.touches.length !== 1) { seq = ''; return; } x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now(); }, {passive:true});
-  D.addEventListener('touchend', function(e){
-    var c = e.changedTouches && e.changedTouches[0]; if (!c) return;
-    var dx = c.clientX - x0, dy = c.clientY - y0, ax = Math.abs(dx), ay = Math.abs(dy), m;
-    if (Date.now() - t0 > 900) { seq = ''; return; }
-    if (ax < 12 && ay < 12) m = 'T';
-    else if (ax > 40 && ax > ay * 1.4) m = dx < 0 ? 'L' : 'R';
-    else if (ay > 40 && ay > ax * 1.4) m = dy < 0 ? 'U' : 'D';
-    else { seq = ''; return; }
-    if (m === 'T' && seq.length < 8) { seq = ''; return; }   /* taps only count at the end */
-    seq = (seq + m).slice(-WANT.length);
-    if (seq === WANT){ seq = ''; egg('konami'); }
-    else if (WANT.indexOf(seq) !== 0){ seq = WANT.indexOf(m) === 0 ? m : ''; }
-  }, {passive:true});
-})();
-/* typed words: aspen · powder · marco · pizza (+ Konami tally) */
-var buf = '', KON = 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba', kb = '';
+/* typed words: aspen · powder · marco · pizza */
+var buf = '';
 D.addEventListener('keydown', function(e){
   var t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
-  kb = (kb + e.key).slice(-KON.length); if (kb === KON) egg('konami');
   if (!e.key || e.key.length !== 1 || e.metaKey || e.ctrlKey) return;
   buf = (buf + e.key.toLowerCase()).slice(-8);
   if (/aspen$/.test(buf)){ buf = ''; egg('aspen'); fx('tk-glow', 3700); toast('Alpenglow &middot; 4:45 PM &middot; the peaks turn pink'); }
@@ -14755,6 +14741,18 @@ D.addEventListener('keydown', function(e){
   else if (/pizza$/.test(buf)){ buf = ''; egg('pizza'); toast('Pizza&hellip; pizza&hellip; <b>French fries!</b> &nbsp;&middot;&nbsp; Marcy, Buttermilk, Day I'); }
 });
 
+/* secret VI: the valley went round once → a board lands a 360 */
+function spin360(){
+  snow(200); toast('Clean 360 &middot; the whole valley, one full turn');
+  if (RM || !B.animate) return;
+  var b = D.createElement('div'); b.setAttribute('aria-hidden', 'true');
+  b.style.cssText = 'position:fixed;left:50%;top:46%;z-index:9995;pointer-events:none;font-size:clamp(64px,12vw,120px);line-height:1;filter:drop-shadow(0 8px 14px rgba(0,0,0,.3))';
+  b.textContent = '\uD83C\uDFC2'; B.appendChild(b);
+  var a = b.animate([{transform:'translate(-50%,40vh) rotate(0deg) scale(.6)', opacity:0}, {transform:'translate(-50%,-50%) rotate(200deg) scale(1.1)', opacity:1, offset:.45},
+    {transform:'translate(-50%,-60%) rotate(360deg) scale(1)', opacity:1, offset:.75}, {transform:'translate(-50%,-50%) rotate(360deg) scale(1)', opacity:0}], {duration:1700, easing:'cubic-bezier(.3,.7,.3,1)', fill:'forwards'});
+  a.onfinish = function(){ b.remove(); };
+}
+W.addEventListener('aspen:map-360', function(){ egg('konami'); spin360(); });
 /* Marco's snowboard carves a heel-toe S across the screen */
 function board(){
   toast('Marco drops in &mdash; strapped in, goofy, sending it');
