@@ -226,6 +226,8 @@ body.dark .map-chip.active .cd,body.dark .map-chip.active{color:#10202c;}
 .rest{display:grid;grid-template-columns:1fr;gap:22px;}
 .restcard{display:grid;grid-template-columns:0.92fr 1.1fr;gap:0;background:var(--glass);border:1px solid var(--glass-line);border-radius:9px;overflow:hidden;box-shadow:0 16px 40px -28px var(--ink-shadow);}
 .restcard .ph{position:relative;min-height:230px;cursor:zoom-in;overflow:hidden;}
+/* v53: tall cards (wine/Beli) stretched the photo into a narrow sliver — keep it a fixed 4:5 frame that rides along while you read */
+@media (min-width:1101px){.restcard{overflow:clip;align-items:start}.restcard .ph,.restcard .ph.mph{align-self:start;aspect-ratio:4/5;min-height:0;position:sticky;top:84px}}
 .restcard .ph .bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(1) contrast(1.02) brightness(.98);transition:transform .8s ease;}
 .restcard .ph:hover .bg{transform:scale(1.05);}
 .restcard .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,0) 62%,rgba(255,255,255,.45));}
