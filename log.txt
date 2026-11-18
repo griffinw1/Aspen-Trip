@@ -180,3 +180,5 @@ Tue Nov 17 13:38:07 MT | Steakhouse 316       | 2026-12-18 | party 2 | start -> 
 Tue Nov 17 13:38:07 MT | Steakhouse 316       | 2026-12-18 | party 6 | start -> request
 Tue Nov 17 17:00:01 MT | Wild Fig             | 2026-12-17 | party 2 | request -> book1
 Tue Nov 17 17:00:01 MT | Wild Fig             | 2026-12-17 | party 6 | request -> book1
+Tue Nov 17 17:15:01 MT | Wild Fig             | 2026-12-17 | party 2 | book1 -> book2
+Tue Nov 17 17:15:01 MT | Wild Fig             | 2026-12-17 | party 6 | book1 -> book2
