@@ -319,3 +319,4 @@ Wed Nov 18 13:54:06 MT | Steakhouse 316       | 2026-12-18 | party 2 | book7 -> 
 Wed Nov 18 14:04:04 MT | Casa Tua             | 2026-12-18 | party 6 | book11 -> book13
 Wed Nov 18 14:05:04 MT | Casa Tua             | 2026-12-18 | party 2 | book18 -> book14
 Wed Nov 18 14:05:04 MT | Casa Tua             | 2026-12-18 | party 6 | book13 -> book11
+Wed Nov 18 16:12:03 MT | Casa Tua             | 2026-12-17 | party 6 | book13 -> book12
