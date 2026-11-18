@@ -197,3 +197,22 @@ Tue Nov 17 19:00:00 MT | Wild Fig             | 2026-12-17 | party 2 | book8 -> 
 Tue Nov 17 19:15:01 MT | Wild Fig             | 2026-12-17 | party 2 | book9 -> book10
 Tue Nov 17 19:15:01 MT | Wild Fig             | 2026-12-17 | party 6 | book7 -> book8
 == run end Tue Nov 17 19:23:00 MT
+== run start Tue Nov 17 19:23:44 MT
+Tue Nov 17 19:23:45 MT | Wild Fig             | 2026-12-16 | party 2 | start -> book18
+Tue Nov 17 19:23:45 MT | Wild Fig             | 2026-12-16 | party 6 | start -> book2
+Tue Nov 17 19:23:46 MT | Wild Fig             | 2026-12-17 | party 2 | start -> book10
+Tue Nov 17 19:23:46 MT | Wild Fig             | 2026-12-17 | party 6 | start -> book8
+Tue Nov 17 19:23:46 MT | Wild Fig             | 2026-12-18 | party 2 | start -> request
+Tue Nov 17 19:23:47 MT | Wild Fig             | 2026-12-18 | party 6 | start -> request
+Tue Nov 17 19:23:47 MT | Casa Tua             | 2026-12-16 | party 2 | start -> book18
+Tue Nov 17 19:23:48 MT | Casa Tua             | 2026-12-16 | party 6 | start -> book18
+Tue Nov 17 19:23:49 MT | Casa Tua             | 2026-12-17 | party 2 | start -> book18
+Tue Nov 17 19:23:49 MT | Casa Tua             | 2026-12-17 | party 6 | start -> book13
+Tue Nov 17 19:23:50 MT | Casa Tua             | 2026-12-18 | party 2 | start -> request
+Tue Nov 17 19:23:50 MT | Casa Tua             | 2026-12-18 | party 6 | start -> request
+Tue Nov 17 19:23:51 MT | Steakhouse 316       | 2026-12-16 | party 2 | start -> book17
+Tue Nov 17 19:23:51 MT | Steakhouse 316       | 2026-12-16 | party 6 | start -> book17
+Tue Nov 17 19:23:52 MT | Steakhouse 316       | 2026-12-17 | party 2 | start -> book9
+Tue Nov 17 19:23:52 MT | Steakhouse 316       | 2026-12-17 | party 6 | start -> book13
+Tue Nov 17 19:23:52 MT | Steakhouse 316       | 2026-12-18 | party 2 | start -> request
+Tue Nov 17 19:23:53 MT | Steakhouse 316       | 2026-12-18 | party 6 | start -> request
