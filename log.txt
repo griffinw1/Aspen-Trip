@@ -361,3 +361,7 @@ Wed Nov 18 19:02:55 MT | Steakhouse 316       | 2026-12-19 | party 2 | start -> 
 Wed Nov 18 19:02:55 MT | Steakhouse 316       | 2026-12-19 | party 6 | start -> request
 Wed Nov 18 19:15:01 MT | Wild Fig             | 2026-12-18 | party 2 | book9 -> book10
 Wed Nov 18 19:15:01 MT | Wild Fig             | 2026-12-18 | party 6 | book7 -> book8
+Wed Nov 18 19:30:01 MT | Wild Fig             | 2026-12-18 | party 2 | book10 -> book11
+Wed Nov 18 19:37:12 MT | Steakhouse 316       | 2026-12-17 | party 6 | book13 -> error:HTTPError
+Wed Nov 18 19:38:05 MT | Steakhouse 316       | 2026-12-17 | party 6 | error:HTTPError -> book13
+Wed Nov 18 19:45:01 MT | Wild Fig             | 2026-12-18 | party 2 | book11 -> book12
