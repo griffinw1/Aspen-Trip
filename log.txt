@@ -435,3 +435,6 @@ Thu Nov 19 09:07:06 MT | Casa Tua             | 2026-12-19 | party 6 | book17 ->
 Thu Nov 19 09:08:06 MT | Casa Tua             | 2026-12-19 | party 6 | book11 -> book10
 Thu Nov 19 09:12:06 MT | Casa Tua             | 2026-12-19 | party 6 | book10 -> book12
 Thu Nov 19 09:13:07 MT | Casa Tua             | 2026-12-19 | party 6 | book12 -> book10
+Thu Nov 19 09:37:03 MT | Casa Tua             | 2026-12-19 | party 6 | book10 -> book11
+Thu Nov 19 09:41:04 MT | Casa Tua             | 2026-12-19 | party 6 | book11 -> book10
+Thu Nov 19 09:42:04 MT | Casa Tua             | 2026-12-19 | party 6 | book10 -> book9
