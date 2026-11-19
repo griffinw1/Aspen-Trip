@@ -406,3 +406,5 @@ Thu Nov 19 00:51:52 MT | Steakhouse 316       | 2026-12-19 | party 2 | start -> 
 Thu Nov 19 00:51:52 MT | Steakhouse 316       | 2026-12-19 | party 6 | start -> request
 Thu Nov 19 00:51:53 MT | Steakhouse 316       | 2026-12-20 | party 2 | start -> request
 Thu Nov 19 00:51:53 MT | Steakhouse 316       | 2026-12-20 | party 6 | start -> request
+Thu Nov 19 05:20:02 MT | Casa Tua             | 2026-12-18 | party 6 | book11 -> book9
+Thu Nov 19 05:25:02 MT | Casa Tua             | 2026-12-18 | party 6 | book9 -> book11
