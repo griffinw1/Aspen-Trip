@@ -605,3 +605,5 @@ Fri Nov 20 10:16:00 MT | Wild Fig             | 2026-12-19 | party 2 | book19 ->
 Fri Nov 20 10:18:06 MT | Steakhouse 316       | 2026-12-20 | party 6 | book5 -> request
 Fri Nov 20 10:20:02 MT | Casa Tua             | 2026-12-19 | party 2 | book12 -> book11
 Fri Nov 20 10:21:00 MT | Wild Fig             | 2026-12-19 | party 2 | book18 -> book19
+Fri Nov 20 11:35:25 MT | Wild Fig             | 2026-12-20 | party 2 | request -> error:TimeoutError
+Fri Nov 20 11:36:01 MT | Wild Fig             | 2026-12-20 | party 2 | error:TimeoutError -> request
