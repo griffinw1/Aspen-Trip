@@ -594,3 +594,7 @@ Fri Nov 20 09:05:04 MT | Casa Tua             | 2026-12-20 | party 6 | book14 ->
 Fri Nov 20 09:09:03 MT | Casa Tua             | 2026-12-20 | party 6 | book11 -> book10
 Fri Nov 20 09:30:03 MT | Casa Tua             | 2026-12-19 | party 6 | book13 -> book9
 Fri Nov 20 09:42:03 MT | Casa Tua             | 2026-12-20 | party 6 | book10 -> book9
+Fri Nov 20 09:57:03 MT | Casa Tua             | 2026-12-19 | party 2 | book17 -> book12
+Fri Nov 20 10:00:06 MT | Steakhouse 316       | 2026-12-20 | party 2 | request -> book9
+Fri Nov 20 10:00:06 MT | Steakhouse 316       | 2026-12-20 | party 6 | request -> book11
+Fri Nov 20 10:01:22 MT | Steakhouse 316       | 2026-12-20 | party 6 | book11 -> book5
