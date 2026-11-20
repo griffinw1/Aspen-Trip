@@ -16335,7 +16335,7 @@ body.dark .rl-beli{background:rgba(155,216,176,.07);border-color:rgba(155,216,17
 body.dark .rl-beli-score{background:transparent;color:#9BD8B0;border-color:#9BD8B0}
 .eg-reset{margin:10px 0 0;padding:6px 12px;border-radius:99px;border:1px solid rgba(212,175,106,.45);background:transparent;color:inherit;font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;opacity:.8}
 .eg-reset:hover{opacity:1;border-color:#d4af6a}
-.gate-tour-wrap{margin:16px auto 0;max-width:40ch;display:flex;flex-direction:column;align-items:center;gap:7px}
+.gate-tour-wrap{margin:4px auto 16px;max-width:40ch;display:flex;flex-direction:column;align-items:center;gap:7px}
 .gate-tour-wrap .gate-tour{margin:0;padding:12px 22px;font-size:12px}
 .gate-tour-wrap.rec .gate-tour{border-color:var(--gold,#B0863A);background:rgba(196,154,74,.12);animation:gtPulse 2.4s ease-in-out infinite}
 @keyframes gtPulse{0%,100%{box-shadow:0 0 0 0 rgba(212,175,106,0)}50%{box-shadow:0 0 0 7px rgba(212,175,106,.18)}}
@@ -16476,7 +16476,7 @@ if(gb&&!D.getElementById('gateTour')){
   wrap.innerHTML=(rec?'<span class="gate-rec">'+(away&&done?'Welcome back &middot; recommended':'Recommended')+'</span>':'')+
     '<button type="button" id="gateTour" class="gate-tour">Show me around &#10022;</button>'+
     '<small class="gate-tour-note">A one-minute tour of everything here. <b>Recommended for your first visit, or if it&rsquo;s been a while.</b></small>';
-  gb.parentNode.insertBefore(wrap,gb.nextSibling);D.getElementById('gateTour').addEventListener('click',start);
+  var put=function(){if(wrap.nextSibling!==gb)gb.parentNode.insertBefore(wrap,gb);};put();setTimeout(put,0);addEventListener('load',put);D.addEventListener('aspen:who-ready',put);D.getElementById('gateTour').addEventListener('click',start);
 }
 })();
 </script>
