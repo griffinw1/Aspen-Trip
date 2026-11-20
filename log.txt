@@ -486,3 +486,5 @@ Thu Nov 19 17:00:00 MT | Wild Fig             | 2026-12-19 | party 2 | request -
 Thu Nov 19 17:00:01 MT | Wild Fig             | 2026-12-19 | party 6 | request -> book1
 Thu Nov 19 17:15:01 MT | Wild Fig             | 2026-12-19 | party 2 | book1 -> book2
 Thu Nov 19 17:15:01 MT | Wild Fig             | 2026-12-19 | party 6 | book1 -> book2
+Thu Nov 19 17:30:00 MT | Wild Fig             | 2026-12-19 | party 2 | book2 -> book3
+Thu Nov 19 17:30:01 MT | Wild Fig             | 2026-12-19 | party 6 | book2 -> book3
