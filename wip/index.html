@@ -11832,7 +11832,7 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       var sp = ROUTES['d3:1'] ? decode(ROUTES['d3:1'].g) : null;
       if (sp) add({k:'sled', dur: RM ? 7000 : 13000, tod:10 * 60 + 15, pts:sp,
         lt:{ey:'Day III · 9:30 AM · T-Lazy-7', t:'Maroon Creek Road, on snow', w: you(['jim']) && W.p ? W.p.sled : 'Three doubles, everyone in their own warm kit — helmets from the ranch.', fact:FACTS.tlazy7, you:true},
-        cam:function(u, v){ return {t:v.ll.concat([v.h + 1.2]), hd:v.hd + 32 - 24 * easeSine(u), pt:-33 - 3 * u, r:26 + 6 * u}; }});
+        cam:function(u, v){ var e = easeSine(u), a = offsetLL(v.ll, v.hd + 180, 13); return {t:a.concat([v.h + 2]), hd:v.hd + 12 - 20 * e, pt:-14 + 3 * e, r:54 + 30 * e}; }});
       add({k:'hold', dur:6500, tod:11 * 60, place:'bells',
         lt:{ey:'Day III · ~11:00 AM · Maroon Lake', t:'The Maroon Bells', w:'The turnaround — and the photo.', fact:FACTS.bells},
         cam:function(u){ return {t:[39.072, -106.988, 3900], hd:228 + 6 * u, pt:-16, r:6000 - 500 * u}; }});
@@ -11984,10 +11984,10 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
 
   /* ---------- models ---------- */
   function loadModels(C, v){
-    var defs = {aa:'airliner_aa.glb', ua:'airliner_ua.glb', gondola:'gondola.glb', sled:'sled.glb', car:'suv.glb'};   /* v51: a real black Suburban (+ its lights at night) */
+    var defs = {aa:'airliner_aa.glb', ua:'airliner_ua.glb', gondola:'gondola.glb', sled:'sled.glb', sled2:'sled.glb', sled3:'sled.glb', car:'suv.glb'};   /* v51: a real black Suburban (+ its lights at night) */
     var out = {};
     return Promise.all(Object.keys(defs).map(function(k){
-      return C.Model.fromGltfAsync({url:MODELS + defs[k] + (k === 'aa' || k === 'ua' ? '?v=46' : k === 'sled' || k === 'car' ? '?v=51' : ''), forwardAxis:C.Axis.X, upAxis:C.Axis.Y, minimumPixelSize: k === 'aa' || k === 'ua' ? 18 : k === 'sled' ? 6 : (k === 'car' ? 30 : 16), maximumScale:20000,
+      return C.Model.fromGltfAsync({url:MODELS + defs[k] + (k === 'aa' || k === 'ua' ? '?v=46' : k.indexOf('sled') === 0 || k === 'car' ? '?v=51' : ''), forwardAxis:C.Axis.X, upAxis:C.Axis.Y, minimumPixelSize: k === 'aa' || k === 'ua' ? 18 : k.indexOf('sled') === 0 ? 6 : (k === 'car' ? 30 : 16), maximumScale:20000,
         show:false, scene:v.scene}).then(function(m){ v.scene.primitives.add(m); out[k] = m; }).catch(function(e){ console.warn('[film] model', k, e && e.message); });
     })).then(function(){ return out; });
   }
@@ -12381,7 +12381,13 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
     }
     if (sh.k === 'car' && st && FM.mod.car){ placeModel(C, FM.mod.car, st.ll, st.h + 0.02, st.hd, clamp(st.slope || 0, -12, 12), 0); }
     carLights(sh, st);
-    if (sh.k === 'sled' && st){ placeModel(C, FM.mod.sled, st.ll, st.h + 0.15, st.hd, clamp(st.slope || 0, -18, 18), 0); sledSpray(C, st, dt); } else if (FM.spray) sledSpray(C, null, dt);
+    if (sh.k === 'sled' && st){
+      if (FM.slShot !== sh){ FM.slShot = sh; FM.slOff = 0; FM.slT = 0; }
+      if (now - (FM.slT || 0) > 330){ FM.slT = now; try { var sg = FM.v.scene.sampleHeight(C.Cartographic.fromDegrees(st.ll[1], st.ll[0]), Object.keys(FM.mod).map(function(k){ return FM.mod[k]; }).filter(Boolean)); if (sg != null && isFinite(sg)) FM.slWant = clamp(sg - st.h, 0, 12); } catch(e){} }
+      FM.slOff += ((FM.slWant || 0) - FM.slOff) * Math.min(1, dt / 250); st.h += FM.slOff;
+      placeModel(C, FM.mod.sled, st.ll, st.h + 0.15, st.hd, clamp(st.slope || 0, -18, 18), 0);
+      ['sled2', 'sled3'].forEach(function(k, n){ if (!FM.mod[k] || !sh.vp) return; var q = vAt(sh.vp, Math.max(0, st.s - 13 * (n + 1)) ); placeModel(C, FM.mod[k], offsetLL(q.ll, q.hd + 90, n ? -1.4 : 1.4), q.h + FM.slOff + 0.15, q.hd, clamp(q.slope || 0, -18, 18), 0); });
+      sledSpray(C, st, dt); } else if (FM.spray) sledSpray(C, null, dt);
     if (sh.k === 'gondola' && st){ placeModel(C, FM.mod.gondola, st.ll, st.h - 3.2, st.hd + 90, 0, 0); }
     walkFx(C, sh, st);
     revealFrame(sh, u);
@@ -12450,13 +12456,13 @@ more:['Tickets only appear about 4 PM MT the day before the show, so they cannot
       var a = p.age / 900; if (!st || a >= 1){ p.e.show = false; continue; }
       var ll = offsetLL(p.ll, p.hd + 90, p.vx * a * 3);
       p.e.position = C.Cartesian3.fromDegrees(ll[1], ll[0], p.h + p.up * Math.sin(a * Math.PI) * 1.2);
-      p.e.point.pixelSize = 6 + 14 * a; p.e.point.color = C.Color.WHITE.withAlpha(0.75 * (1 - a)); p.e.show = true;
+      p.e.point.pixelSize = 3 + 7 * a; p.e.point.color = C.Color.WHITE.withAlpha(0.45 * (1 - a)); p.e.show = true;
     }
   }
   function hideModels(sh){
-    var M = FM.mod; ['aa', 'ua', 'car', 'sled', 'gondola', 'studio'].forEach(function(k){
+    var M = FM.mod; ['aa', 'ua', 'car', 'sled', 'sled2', 'sled3', 'gondola', 'studio'].forEach(function(k){
       if (!M[k]) return;
-      var keep = (sh.k === 'plane' && sh.plane === k) || (sh.k === k);
+      var keep = (sh.k === 'plane' && sh.plane === k) || (sh.k === k) || (sh.k === 'sled' && k.indexOf('sled') === 0);
       if (!keep) M[k].show = false;
     });
   }
