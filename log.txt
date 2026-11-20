@@ -643,3 +643,5 @@ Fri Nov 20 15:10:04 MT | Casa Tua             | 2026-12-20 | party 2 | book18 ->
 Fri Nov 20 15:10:04 MT | Casa Tua             | 2026-12-20 | party 6 | book9 -> book12
 Fri Nov 20 15:47:02 MT | Casa Tua             | 2026-12-19 | party 2 | book13 -> book17
 Fri Nov 20 15:47:02 MT | Casa Tua             | 2026-12-19 | party 6 | book10 -> book8
+Fri Nov 20 16:21:02 MT | Casa Tua             | 2026-12-19 | party 2 | book17 -> book15
+Fri Nov 20 16:21:02 MT | Casa Tua             | 2026-12-19 | party 6 | book8 -> book10
