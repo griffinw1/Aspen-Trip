@@ -585,3 +585,7 @@ Fri Nov 20 07:19:57 MT | Steakhouse 316       | 2026-12-21 | party 2 | start -> 
 Fri Nov 20 07:19:57 MT | Steakhouse 316       | 2026-12-21 | party 6 | start -> request
 Fri Nov 20 08:05:03 MT | Casa Tua             | 2026-12-19 | party 2 | book11 -> book17
 Fri Nov 20 08:21:01 MT | Wild Fig             | 2026-12-19 | party 6 | book15 -> book14
+Fri Nov 20 09:00:04 MT | Casa Tua             | 2026-12-20 | party 2 | request -> book18
+Fri Nov 20 09:00:04 MT | Casa Tua             | 2026-12-20 | party 6 | request -> book18
+Fri Nov 20 09:01:05 MT | Casa Tua             | 2026-12-19 | party 6 | book8 -> book13
+Fri Nov 20 09:02:04 MT | Casa Tua             | 2026-12-20 | party 6 | book18 -> book11
