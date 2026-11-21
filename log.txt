@@ -645,3 +645,5 @@ Fri Nov 20 15:47:02 MT | Casa Tua             | 2026-12-19 | party 2 | book13 ->
 Fri Nov 20 15:47:02 MT | Casa Tua             | 2026-12-19 | party 6 | book10 -> book8
 Fri Nov 20 16:21:02 MT | Casa Tua             | 2026-12-19 | party 2 | book17 -> book15
 Fri Nov 20 16:21:02 MT | Casa Tua             | 2026-12-19 | party 6 | book8 -> book10
+Fri Nov 20 17:00:00 MT | Wild Fig             | 2026-12-20 | party 2 | request -> book1
+Fri Nov 20 17:00:01 MT | Wild Fig             | 2026-12-20 | party 6 | request -> book1
