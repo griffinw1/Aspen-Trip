@@ -680,3 +680,4 @@ Fri Nov 20 18:51:42 MT | Steakhouse 316       | 2026-12-20 | party 2 | start -> 
 Fri Nov 20 18:51:42 MT | Steakhouse 316       | 2026-12-20 | party 6 | start -> request
 Fri Nov 20 18:51:43 MT | Steakhouse 316       | 2026-12-21 | party 2 | start -> request
 Fri Nov 20 18:51:43 MT | Steakhouse 316       | 2026-12-21 | party 6 | start -> request
+Fri Nov 20 19:00:00 MT | Wild Fig             | 2026-12-20 | party 2 | book8 -> book9
