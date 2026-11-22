@@ -878,3 +878,5 @@ Sun Nov 22 00:01:11 MT | Casa Tua             | 2026-12-23 | party 2 | start -> 
 Sun Nov 22 00:01:12 MT | Casa Tua             | 2026-12-23 | party 6 | start -> request
 Sun Nov 22 00:01:14 MT | Steakhouse 316       | 2026-12-23 | party 2 | start -> request
 Sun Nov 22 00:01:15 MT | Steakhouse 316       | 2026-12-23 | party 6 | start -> request
+Sun Nov 22 01:01:28 MT | Casa Tua             | 2026-12-22 | party 6 | request -> error:TimeoutError
+Sun Nov 22 01:02:04 MT | Casa Tua             | 2026-12-22 | party 6 | error:TimeoutError -> request
