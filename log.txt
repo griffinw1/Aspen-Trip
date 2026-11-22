@@ -917,3 +917,4 @@ Sun Nov 22 09:00:04 MT | Casa Tua             | 2026-12-22 | party 6 | request -
 Sun Nov 22 09:00:30 MT | Steakhouse 316       | 2026-12-21 | party 2 | book9 -> error:TimeoutError
 Sun Nov 22 09:01:08 MT | Steakhouse 316       | 2026-12-21 | party 2 | error:TimeoutError -> book9
 Sun Nov 22 09:16:05 MT | Casa Tua             | 2026-12-22 | party 6 | book20 -> book17
+Sun Nov 22 09:18:04 MT | Casa Tua             | 2026-12-22 | party 6 | book17 -> book20
