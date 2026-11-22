@@ -826,3 +826,4 @@ Sat Nov 21 18:15:01 MT | Wild Fig             | 2026-12-21 | party 2 | book5 -> 
 Sat Nov 21 18:15:01 MT | Wild Fig             | 2026-12-21 | party 6 | book5 -> book6
 Sat Nov 21 18:30:01 MT | Wild Fig             | 2026-12-21 | party 2 | book6 -> book7
 Sat Nov 21 18:30:01 MT | Wild Fig             | 2026-12-21 | party 6 | book6 -> book7
+Sat Nov 21 18:45:00 MT | Wild Fig             | 2026-12-21 | party 2 | book7 -> book8
