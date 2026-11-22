@@ -951,3 +951,4 @@ Sun Nov 22 11:18:03 MT | Casa Tua             | 2026-12-22 | party 2 | book16 ->
 Sun Nov 22 12:04:07 MT | Steakhouse 316       | 2026-12-22 | party 2 | book9 -> book7
 Sun Nov 22 12:05:04 MT | Casa Tua             | 2026-12-22 | party 2 | book20 -> book15
 Sun Nov 22 12:05:04 MT | Casa Tua             | 2026-12-22 | party 6 | book14 -> book13
+== run end Sun Nov 22 12:20:00 MT
