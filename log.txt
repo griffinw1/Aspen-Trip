@@ -1049,3 +1049,8 @@ Sun Nov 22 20:00:04 MT | Wild Fig             | 2026-12-22 | party 2 | book12 ->
 Sun Nov 22 20:15:01 MT | Wild Fig             | 2026-12-22 | party 2 | book13 -> book14
 Sun Nov 22 20:30:01 MT | Wild Fig             | 2026-12-22 | party 2 | book14 -> book15
 Sun Nov 22 20:45:01 MT | Wild Fig             | 2026-12-22 | party 2 | book15 -> book16
+Sun Nov 22 21:00:01 MT | Wild Fig             | 2026-12-22 | party 2 | book16 -> book17
+Sun Nov 22 21:02:25 MT | Wild Fig             | 2026-12-21 | party 2 | book19 -> error:TimeoutError
+Sun Nov 22 21:03:00 MT | Wild Fig             | 2026-12-21 | party 2 | error:TimeoutError -> book19
+Sun Nov 22 21:06:30 MT | Steakhouse 316       | 2026-12-21 | party 6 | book5 -> error:TimeoutError
+Sun Nov 22 21:07:07 MT | Steakhouse 316       | 2026-12-21 | party 6 | error:TimeoutError -> book5
