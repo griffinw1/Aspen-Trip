@@ -1102,3 +1102,4 @@ Mon Nov 23 01:04:00 MT | Wild Fig             | 2026-12-22 | party 2 | error:Tim
 Mon Nov 23 01:14:00 MT | Wild Fig             | 2026-12-22 | party 2 | book19 -> book18
 Mon Nov 23 02:01:27 MT | Wild Fig             | 2026-12-24 | party 2 | request -> error:TimeoutError
 Mon Nov 23 02:02:01 MT | Wild Fig             | 2026-12-24 | party 2 | error:TimeoutError -> request
+Mon Nov 23 03:39:02 MT | Casa Tua             | 2026-12-22 | party 2 | book13 -> book11
